@@ -1,4 +1,4 @@
-# MockStocks
+# Porfol.io
 A safe learning environment for novice investors
 
 ## Project Documents 
