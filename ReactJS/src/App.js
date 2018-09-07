@@ -1,19 +1,94 @@
-import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, {Component} from 'react';
+
+import SignIn from './Pages/SignIn';
+import CreateUser from './Pages/CreateUser';
+import firebase from './base';
+
+import {Route, Switch, Redirect} from 'react-router-dom';
+
+// How to disable warnings in a file /* eslint-disable */
+
+import './Static/CSS/App.css';
+import 'font-awesome/css/font-awesome.min.css';
 
 class App extends Component {
+
+  constructor() {
+    super();
+
+    this.state = {
+      uid: null,
+      user: null,
+    }
+  }
+
+  componentWillMount() {
+    this.getUserFromsessionStorage();
+    let self = this;
+    firebase.auth().onAuthStateChanged(
+      (user) => {
+        if (user) {
+          // finished signing in
+          self.authHandler(user)
+        } else {
+          // finished signing out
+          self.setState({uid: null}, () => {
+            // window.location.reload();
+          });
+        }
+      }
+    )
+  }
+
+  getUserFromsessionStorage() {
+    const uid = sessionStorage.getItem('uid');
+    if (!uid) return;
+    this.setState({uid})
+  }
+
+  authHandler = (user) => {
+    sessionStorage.setItem('uid', user.uid);
+    this.setState({uid: user.uid, user: user})
+  };
+
+  signedIn = () => {
+    return this.state.uid
+  };
+
   render() {
+    const data = {
+      user: this.state.user,
+      uid: this.state.uid,
+    }
+  
     return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title">Welcome to React</h1>
-        </header>
-        <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
-        </p>
-      </div>
+      <Switch>
+
+        <Route path='/Portfol.io/SignIn' render={() => (
+          !this.signedIn()
+            ? <SignIn/>
+            : <Redirect to={`/Portfol.io/Home`}/>
+        )}/>
+
+        <Route path='/Portfol.io/CreateAccount' render={() => (
+          !this.signedIn()
+            ? <CreateUser/>
+            : <Redirect to={`/Portfol.io/Home`}/>
+        )}/>
+
+        <Route render={() => {
+          return (
+            <Redirect to={`/Portfol.io/Home`} />
+          )
+        }}/>
+
+        {/* <Route render={() => {
+          !this.signedIn()
+          ? <Redirect to={`/Portfol.io/SignIn`} />
+          : <Redirect to={`/Portfol.io/Home`} />
+        }}/> */}
+
+      </Switch>
     );
   }
 }
