@@ -24,8 +24,20 @@ article {
     width: 100%;
 }
 
+.imgCol {
+    position: relative;
+}
+
+.logo {
+    width: 100px !important;
+    position: absolute;
+    text-align: center;
+    bottom: 0;
+    margin-bottom: 28px;
+}
+
 .left-half {
-    background: url(../Static/Images/blueSignIn.jpg) no-repeat right top fixed;
+    background: url(../Images/blueSignIn.jpg) no-repeat right top fixed;
     -webkit-background-size: cover;
     -moz-background-size: cover;
     -o-background-size: cover;
@@ -38,25 +50,6 @@ article {
 .right-half {
     position: absolute;
     right: 0;
-    width: 50%;
-}
-
-.imgCol {
-    position: relative;
-}
-
-.logo {
-    position: absolute;
-    text-align: center;
-    bottom: 0;
-    margin-bottom: 28px;
-}
-
-.firstName {
-    width: 50%;
-}
-
-.lastName {
     width: 50%;
 }
 
@@ -92,6 +85,3 @@ article {
         height: 50px;
     }
 }
-
-
-

@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import './CreateUser.css';
+import '../Static/CSS/CreateUser.css';
 
 import {Input, Button} from 'mdbreact';
 import {Form, Row, Col, Alert} from 'reactstrap';
@@ -43,10 +43,7 @@ class CreateUser extends Component {
       else {
         let self = this;
         //creates user with email and password
-        fireauth.createUserWithEmailAndPassword(target.email.value, target.password.value)
-          .then((userData) => {
-
-          }).catch((error) => {
+        fireauth.createUserWithEmailAndPassword(target.email.value, target.password.value).catch((error) => {
             // Handle error
               self.setState({visible: true, message: error.message});
           });
@@ -67,23 +64,6 @@ class CreateUser extends Component {
     this.setState({ visible: false });
   };
 
-  /**
-     * 
-     * Creates random ID for user in database
-     * 
-     * 
-     */
-
-  makeid = () => {
-    let text = "";
-    let possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-    
-    for (var i = 0; i < 15; i++)
-        text += possible.charAt(Math.floor(Math.random() * possible.length));
-    
-    return text;
-  }
-
   render() {
     return (
       <section className="container">
@@ -92,9 +72,8 @@ class CreateUser extends Component {
           <article>
             <Row>
               <Col className='imgCol' sm='0' md='3'>
-                <img className='logo' src={'https://upload.wikimedia.org/wikipedia/commons/7/7a/Dell_EMC_logo.svg'} alt="Dell EMC" />
+                {/* <img className='logo' src={'https://upload.wikimedia.org/wikipedia/commons/7/7a/Dell_EMC_logo.svg'} alt="Dell EMC" /> */}
               </Col>
-              {/* <Col xs='0' md='1'/> */}
               <Col className='text' sm='12' md='7'>
                 Lets Start by Signing Up!
               </Col>

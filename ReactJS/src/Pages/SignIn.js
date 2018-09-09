@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import './SignIn.css';
+import '../Static/CSS/SignIn.css';
 
 import {Input, Button} from 'mdbreact';
 import {Form, Row, Col, Alert} from 'reactstrap';
@@ -56,9 +56,9 @@ class SignIn extends Component {
           <article>
             <Row>
               <Col className='imgCol' sm='0' md='4'>
-                <img className='logo' src={'https://upload.wikimedia.org/wikipedia/commons/7/7a/Dell_EMC_logo.svg'} alt="Dell EMC" />
+                {/* <img className='logo' src={'https://upload.wikimedia.org/wikipedia/commons/7/7a/Dell_EMC_logo.svg'} alt="Dell EMC" /> */}
               </Col>
-              <Col className='text' sm='12' md='7'>Welcome to the ITAtlas!
+              <Col className='text' sm='12' md='7'>Welcome to the Portfol.io!
               </Col>
             </Row>
             <Alert color="primary" isOpen={this.state.visible} toggle={this.onDismiss}>

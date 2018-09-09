@@ -2,6 +2,8 @@ import React, {Component} from 'react';
 
 import SignIn from './Pages/SignIn';
 import CreateUser from './Pages/CreateUser';
+import Home from './Pages/Home';
+
 import firebase from './base';
 
 import {Route, Switch, Redirect} from 'react-router-dom';
@@ -66,7 +68,7 @@ class App extends Component {
 
         <Route path='/Portfol.io/Home' render={() => (
           this.signedIn()
-            ? <p>Home Page!</p>
+            ? <Home />
             : <Redirect to={`/Portfol.io/SignIn`}/>
         )}/>
 
