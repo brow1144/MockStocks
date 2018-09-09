@@ -64,6 +64,12 @@ class App extends Component {
     return (
       <Switch>
 
+        <Route path='/Portfol.io/Home' render={() => (
+          this.signedIn()
+            ? <p>Home Page!</p>
+            : <Redirect to={`/Portfol.io/SignIn`}/>
+        )}/>
+
         <Route path='/Portfol.io/SignIn' render={() => (
           !this.signedIn()
             ? <SignIn/>
@@ -81,12 +87,6 @@ class App extends Component {
             <Redirect to={`/Portfol.io/Home`} />
           )
         }}/>
-
-        {/* <Route render={() => {
-          !this.signedIn()
-          ? <Redirect to={`/Portfol.io/SignIn`} />
-          : <Redirect to={`/Portfol.io/Home`} />
-        }}/> */}
 
       </Switch>
     );
