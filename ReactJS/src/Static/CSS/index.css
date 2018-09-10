@@ -2,11 +2,16 @@
 
 html {
   zoom: 80%;
+  background-color: #1B1B1D !important;
+  color: whitesmoke !important;
+}
+
+Body {
+  overflow-x: hidden;
 }
 
 body {
   margin: 0;
   padding: 0;
   font-family: 'Source Sans Pro', sans-serif;
-  color: #606060;
 }

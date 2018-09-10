@@ -1,0 +1,24 @@
+.title {
+  font-size: 1.5em;
+  text-align: center;
+  padding-top: 1.3em;
+  background-color: #1B1B1D;
+  color: whitesmoke;
+}
+
+.navText {
+  text-align: center;
+  padding-top: 2.2em;
+  background-color: #1B1B1D;
+  color: whitesmoke;
+}
+
+.navText:hover {
+  color: #009ddb;
+  cursor: pointer;
+}
+
+.blackBack {
+  background-color: #1B1B1D !important;
+  color: whitesmoke !important;
+}
