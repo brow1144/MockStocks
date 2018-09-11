@@ -8,7 +8,6 @@ import '../Static/CSS/NavBar.css';
 class NavBar extends Component {
   render() {
 
-    // Finally, render it!
     return (
       <div>
         <Row>

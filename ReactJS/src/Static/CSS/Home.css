@@ -1,0 +1,63 @@
+/*  
+  Available Google fonts: 
+  Source Code/Sans/Serif Pro,
+  Roboto
+*/
+
+/*
+body {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  width: 100vw;
+  height: 100vh;
+  background-color: #123;
+}
+
+.card-wide.mdl-card {
+  min-width: 512px;
+  margin:5px;
+}
+
+.card-wide > .mdl-card__title {
+  color: #fff;
+  background: url('https://s3-us-west-2.amazonaws.com/s.cdpn.io/194840/nebula-blue-orange-3.jpg') center / cover;
+}
+
+.mdl-card__title-text {
+  font-family: 'Roboto';
+  font-size: 1.5rem;
+  text-shadow: 1px 2px 3px #444;
+}
+
+.card-wide > .mdl-card__menu {
+  color: #fff;
+}
+
+.container {
+  width: 90vw;
+  display: flex;
+  flex-direction: row;
+}
+
+@media (max-width: 524px) {
+  .card-wide.mdl-card {
+    width: 90vw;
+  }
+}
+
+@media (max-width: 1024px) {
+    .container {
+    flex-direction: column;
+  }
+}
+
+
+.toggle-button {
+  position: fixed;
+  right: 10vw;
+  top: 5px;
+  z-index: 100;
+}
+
+*/
