@@ -1,10 +1,16 @@
 let express = require('express');
-let mongoose = require('mongoose');
+
+let controller = require('./controllers/controller');
 
 let app = express();
 
 // connect to the database
 
+
+// run controllers
+controller(app);
+
 // listen to port
-app.listen(3000);
-console.log("Now listening on port 3000.");
+app.listen(3000, () => {
+  console.log("Now listening on port 3000.");
+});
