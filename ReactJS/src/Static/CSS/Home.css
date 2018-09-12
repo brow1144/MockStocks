@@ -6,3 +6,17 @@
   color: whitesmoke !important;
   fill: whitesmoke !important;
 }
+
+.stockTitle {
+  color: whitesmoke;
+  font-weight: 500;
+}
+
+.stockPrice {
+  color: whitesmoke;
+  font-weight: 30;
+}
+
+.navStyles {
+  color: #FFFFFF;
+}
