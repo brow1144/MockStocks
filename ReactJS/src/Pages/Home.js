@@ -7,13 +7,10 @@ import HighchartsReact from 'highcharts-react-official'
 
 import {Row, Col} from 'reactstrap';
 
-import moment from 'moment';
-
 import axios from 'axios';
 
-// import '../Static/CSS/Home.css';
+import '../Static/CSS/Home.css';
 // import '../../node_modules/highcharts/css/themes/dark-unica.css';
-// import '../../node_modules/highcharts/css/highcharts.css';
 
 class Home extends Component {
   
@@ -27,35 +24,41 @@ class Home extends Component {
 
   componentWillMount() {
     let self = this
-    axios.get('https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY&symbol=DVMT&interval=1min&apikey=WIOGAHD0RJEEZ59V')
+    axios.get('https://www.alphavantage.co/query?function=TIME_SERIES_MONTHLY_ADJUSTED&symbol=AAPL&apikey=WIOGAHD0RJEEZ59V')
       .then(function (response) {
         // handle success
-    
         let stockData = []
-        let data = response.data['Time Series (1min)']
+        let data = response.data['Monthly Adjusted Time Series']
+
         for (let i in data) {
-          let temp = []
-          temp.push(parseInt(moment(i).unix()))
-          temp.push(parseFloat(data[i]['4. close']))
-          stockData.unshift(temp)
-        }        
+          stockData.unshift({
+            x: new Date(i).getTime(),
+            y: parseFloat(data[i]['5. adjusted close']),
+          })
+        }  
+
         self.setState({stockData})
+
       })
       .catch(function (error) {
         // handle error
+        console.log(`Oh no! Our API didn't respond. Please refresh and try again`)
+        console.log(`Btw here is the error message\n\n`)
         console.log(error);
       })
-      .then(function () {
-        // always executed
-      });
 
   }
 
   render() { 
 
     const stockOptions = {
-      rangeSelector: {
-        selected: 1
+
+      chart: {
+        color: 'whitesmoke',
+        backgroundColor: '#1B1B1D',
+        style: {
+            color: 'whitesmoke',
+        }
       },
 
       title: {
@@ -65,27 +68,34 @@ class Home extends Component {
       series: [{
           name: 'AAPL',
           data: this.state.stockData,
-          tooltip: {
-              valueDecimals: 2
-          }
-      }]
+      }],
+
+      xAxis: {
+        type: 'datetime',
+        labels: {
+          formatter: function() {
+             return Highcharts.dateFormat('%e %b', this.value*1000); // milliseconds not seconds
+          },
+        }
+      }
     }
 
     return (
       <div>
         <NavBar />
 
-        {/* <Row>
-          <Col sm='2'/>
-          <Col sm='8'> */}
-            {/* <HighchartsReact
+        <Row className='blackBackground'>
+          <Col  sm='2'/>
+          <Col  sm='8'> 
+            <HighchartsReact
+              className='highcharts-container'
               highcharts={Highcharts}
               constructorType={'stockChart'}
               options={stockOptions}
-            /> */}
-          {/* </Col>
+            />
+          </Col>
           <Col sm='2'/>
-        </Row> */}
+        </Row>
         
       </div>
     );

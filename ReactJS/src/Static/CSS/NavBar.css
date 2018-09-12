@@ -6,6 +6,11 @@
   color: whitesmoke;
 }
 
+.title:hover {
+  color: #009ddb;
+  cursor: pointer;
+}
+
 .navText {
   text-align: center;
   padding-top: 2.2em;
