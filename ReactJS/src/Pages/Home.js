@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 
-import NavBar from '../Components/NavBar'
+// import NavBar from '../Components/NavBar'
 import StockList from '../Components/StockList'
 
 import Highcharts from 'highcharts/highstock'
@@ -59,7 +59,6 @@ class Home extends Component {
   render() { 
 
     const stockOptions = {
-
       chart: {
         color: 'whitesmoke',
         backgroundColor: '#1B1B1D',
@@ -67,71 +66,43 @@ class Home extends Component {
             color: 'whitesmoke',
         }
       },
-
       series: [{
           name: 'AAPL',
           data: this.state.stockData,
       }],
-
       xAxis: {
         type: 'datetime',
         dateTimeLabelFormats: {
           day: '%h:%M'
         },
       },
-
       tooltip: {
         valueDecimals: 2,
         valuePrefix: '$',
         valueSuffix: ' USD'
       },
-
     }
 
     return (
-      <div>
-        <div style={{height: 'fixed'}} className='navbar-fixed'>
-          <NavBar />     
-        </div>
+      <Row style={{marginBottom: '1000em'}} className='blackBackground body_div'>
+        <Col md='1'/>
+        <Col style={{paddingTop: '7em'}} md='6'> 
+          <h1 className='stockTitle'>Apple</h1>
+          <h2 className='stockPrice'>${this.state.currentPrice}</h2>
+          <HighchartsReact
+            className='highcharts-container'
+            highcharts={Highcharts}
+            constructorType={'stockChart'}
+            options={stockOptions}
+          />
+        </Col>
+        <Col md='1'/>
+        <Col style={{paddingTop: '6em'}} md='2'>
+          <StockList />
+        </Col>
 
-        <Row style={{marginBottom: '1000em'}} className='blackBackground body_div'>
-          <Col md='1'/>
-          <Col style={{paddingTop: '7em'}} md='6'> 
-            <h1 className='stockTitle'>Apple</h1>
-            <h2 className='stockPrice'>${this.state.currentPrice}</h2>
-            <HighchartsReact
-              className='highcharts-container'
-              highcharts={Highcharts}
-              constructorType={'stockChart'}
-              options={stockOptions}
-            />
-          </Col>
-          <Col md='1'/>
-          <Col style={{paddingTop: '6em'}} md='2'>
-            <StockList />
-          </Col>
-
-          <Col md='1'/>
-        </Row>
-
-
-        {/* <br />
-        <br />
-        <br />
-        <br />
-        <br />
-        <br />
-        <br />
-        <br />
-        <br />
-        <br />
-        <br />
-        <br />
-        <br />
-        <br />
-        <br /> */}
-
-      </div>
+        <Col md='1'/>
+      </Row>
     );
   }
 }

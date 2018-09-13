@@ -1,17 +1,15 @@
-import React, {Component} from 'react';
+import React, {Component} from 'react'
 
-import SignIn from './Pages/SignIn';
-import CreateUser from './Pages/CreateUser';
-import Home from './Pages/Home';
+import SignIn from './Pages/SignIn'
+import CreateUser from './Pages/CreateUser'
+import Main from './Main'
 
-import firebase from './base';
+import firebase from './base'
 
-import {Route, Switch, Redirect} from 'react-router-dom';
+import {Route, Switch, Redirect} from 'react-router-dom'
 
-// How to disable warnings in a file /* eslint-disable */
-
-import './Static/CSS/App.css';
-import 'font-awesome/css/font-awesome.min.css';
+import './Static/CSS/App.css'
+import 'font-awesome/css/font-awesome.min.css'
 
 class App extends Component {
 
@@ -68,7 +66,7 @@ class App extends Component {
 
         <Route path='/Portfol.io/Home' render={() => (
           this.signedIn()
-            ? <Home />
+            ? <Main />
             : <Redirect to={`/Portfol.io/SignIn`}/>
         )}/>
 
