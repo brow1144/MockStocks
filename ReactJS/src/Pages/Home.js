@@ -90,11 +90,13 @@ class Home extends Component {
 
     return (
       <div>
-        <NavBar />     
+        <div style={{height: 'fixed'}} className='navbar-fixed'>
+          <NavBar />     
+        </div>
 
-        <Row style={{paddingTop: '1.5em'}} className='blackBackground'>
-          <Col sm='1'/>
-          <Col sm='7'> 
+        <Row style={{marginBottom: '1000em'}} className='blackBackground body_div'>
+          <Col md='1'/>
+          <Col style={{paddingTop: '7em'}} md='6'> 
             <h1 className='stockTitle'>Apple</h1>
             <h2 className='stockPrice'>${this.state.currentPrice}</h2>
             <HighchartsReact
@@ -104,13 +106,31 @@ class Home extends Component {
               options={stockOptions}
             />
           </Col>
-          <Col sm='1'/>
-          <Col sm='2'>
+          <Col md='1'/>
+          <Col style={{paddingTop: '6em'}} md='2'>
             <StockList />
           </Col>
 
-          <Col sm='1'/>
+          <Col md='1'/>
         </Row>
+
+
+        {/* <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br /> */}
+
       </div>
     );
   }
