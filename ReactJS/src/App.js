@@ -3,6 +3,7 @@ import React, {Component} from 'react'
 import SignIn from './Pages/SignIn'
 import CreateUser from './Pages/CreateUser'
 import Main from './Main'
+import Games from './Pages/Games'
 
 import firebase from './base'
 
@@ -67,6 +68,12 @@ class App extends Component {
         <Route path='/Portfol.io/Home' render={() => (
           this.signedIn()
             ? <Main />
+            : <Redirect to={`/Portfol.io/SignIn`}/>
+        )}/>
+
+        <Route path='/Portfol.io/Games' render={() => (
+          this.signedIn()
+            ? <Games />
             : <Redirect to={`/Portfol.io/SignIn`}/>
         )}/>
 
