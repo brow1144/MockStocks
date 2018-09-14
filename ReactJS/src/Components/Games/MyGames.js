@@ -1,16 +1,16 @@
 import React, {Component} from 'react'
 
-import '../Static/CSS/CreateGame.css'
+import '../../Static/CSS/MyGames.css'
 
-class CreateGame extends Component {
+class MyGames extends Component {
 
     render() {
         return (
             <div>
-                Create Game
+                List of Games
             </div>
         );
     }
 }
 
-export default CreateGame;
+export default MyGames;

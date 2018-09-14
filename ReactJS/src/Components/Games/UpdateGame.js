@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 
-import '../Static/CSS/UpdateGame.css'
+import '../../Static/CSS/UpdateGame.css'
 
 class UpdateGame extends Component {
 

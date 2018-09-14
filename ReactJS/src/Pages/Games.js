@@ -36,17 +36,17 @@ class Games extends Component {
         <div className='navbar-fixed'>
           <NavBar/>
         </div>
-        <Row style={{marginBottom: '1000em', paddingTop: '7em'}} className='blackBackground body_div'>
+        <Row style={{paddingTop: '7em'}} className='blackBackground body_div'>
           <Col md='2'/>
           <Col md='3'>
-            <h2 style={{color: 'whitesmoke'}}>Leaderboard</h2>
+            <h5 style={{color: 'whitesmoke'}}>Leaderboard</h5>
           </Col>
           <Col md='1'/>
           <Col md='3'>
-            <h2 style={{color: 'whitesmoke'}}>My Stocks</h2>
+            <h5 style={{color: 'whitesmoke'}}>My Stocks</h5>
           </Col>
           <Col md='2'>
-            <h2 style={{color: 'whitesmoke'}}>Active Games</h2>
+            <h5 style={{color: 'whitesmoke'}}>Active Games</h5>
           </Col>
           <Col md='1'/>
         </Row>
