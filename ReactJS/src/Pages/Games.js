@@ -1,10 +1,12 @@
 import React, {Component} from 'react';
 import '../Static/CSS/CreateUser.css';
 
-import {Input, Button} from 'mdbreact';
-import {Form, Row, Col, Alert} from 'reactstrap';
-import NavBar from '../Components/NavBar'
-import '../Static/CSS/Home.css'
+//import {Input, Button} from 'mdbreact';
+import { Row, Col } from 'reactstrap';
+import NavBar from '../Components/NavBar';
+import MyStocks from '../Components/Games/MyStocks';
+import Leaderboard from '../Components/Games/Leaderboard';
+import '../Static/CSS/Home.css';
 
 class Games extends Component {
 
@@ -37,14 +39,19 @@ class Games extends Component {
           <NavBar/>
         </div>
         <Row style={{paddingTop: '7em'}} className='blackBackground body_div'>
-          <Col md='2'/>
+          <Col>
+          </Col>
+        </Row>
+        <Row className='blackBackground body_div'>
+          <Col md='1'/>
           <Col md='3'>
-            <h5 style={{color: 'whitesmoke'}}>Leaderboard</h5>
+            <Leaderboard/>
           </Col>
           <Col md='1'/>
           <Col md='3'>
-            <h5 style={{color: 'whitesmoke'}}>My Stocks</h5>
+            <MyStocks/>
           </Col>
+          <Col md='1'/>
           <Col md='2'>
             <h5 style={{color: 'whitesmoke'}}>Active Games</h5>
           </Col>
