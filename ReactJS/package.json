@@ -2,6 +2,7 @@
   "name": "portfolio",
   "version": "0.1.0",
   "private": true,
+  "license": "UNLICENSED", 
   "dependencies": {
     "axios": "^0.18.0",
     "bootstrap": "^4.1.3",
@@ -9,7 +10,6 @@
     "font-awesome": "^4.7.0",
     "highcharts": "^6.1.2",
     "highcharts-react-official": "^1.4.0",
-    "less": "^3.8.1",
     "mdbreact": "^4.7.0",
     "moment": "^2.22.2",
     "react": "^16.5.0",
@@ -19,8 +19,8 @@
     "reactstrap": "^6.4.0"
   },
   "devDependencies": {
-    "jest": "^23.6.0",
-    "react-scripts": "1.1.5"
+    "react-scripts": "1.1.5",
+    "mock-local-storage": "^1.0.5"
   },
   "scripts": {
     "start": "react-scripts start",
