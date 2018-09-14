@@ -7,7 +7,5 @@ it('renders without crashing', () => {
   const div = document.createElement('div');
   ReactDOM.render(<Router><App /></Router>, div);
   ReactDOM.unmountComponentAtNode(div);
-});
-it('Checking Shit', () => {
-  expect(true).toBe(true)
-});
+})
+
