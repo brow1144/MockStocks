@@ -7,7 +7,7 @@ class CreateGame extends Component {
     render() {
         return (
             <div>
-                List of Games
+                Create Game
             </div>
         );
     }

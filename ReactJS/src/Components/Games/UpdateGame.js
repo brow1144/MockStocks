@@ -7,7 +7,7 @@ class UpdateGame extends Component {
     render() {
         return (
             <div>
-                List of Games
+                Update Game
             </div>
         );
     }
