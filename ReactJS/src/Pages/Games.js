@@ -5,6 +5,7 @@ import {Input, Button} from 'mdbreact';
 import { Row, Col } from 'reactstrap';
 import NavBar from '../Components/NavBar';
 import MyStocks from '../Components/Games/MyStocks';
+import Leaderboard from '../Components/Games/Leaderboard';
 import '../Static/CSS/Home.css';
 
 class Games extends Component {
@@ -40,11 +41,11 @@ class Games extends Component {
         <Row style={{paddingTop: '7em'}} className='blackBackground body_div'>
           <Col md='2'/>
           <Col md='3'>
-            <MyStocks/>
+            <Leaderboard/>
           </Col>
           <Col md='1'/>
           <Col md='3'>
-            <h5 style={{color: 'whitesmoke'}}>My Stocks</h5>
+            <MyStocks/>
           </Col>
           <Col md='2'>
             <h5 style={{color: 'whitesmoke'}}>Active Games</h5>

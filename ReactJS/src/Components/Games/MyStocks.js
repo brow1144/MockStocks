@@ -9,7 +9,7 @@ class MyStocks extends Component {
   render() {
     return (
       <div style={{position: 'fixed', width: 'inherit',maxWidth: 'inherit'}} className='z-depth-5' >
-        <h5 style={{color: 'whitesmoke'}}>Leaderboard</h5>
+        <h5 style={{color: 'whitesmoke'}}>My Stocks</h5>
         <Table dark>
           <thead>
           <tr>
