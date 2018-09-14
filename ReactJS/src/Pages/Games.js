@@ -47,6 +47,7 @@ class Games extends Component {
           </Col>
           <Col md='2'>
             <h5 style={{color: 'whitesmoke'}}>Active Games</h5>
+            
           </Col>
           <Col md='1'/>
         </Row>
