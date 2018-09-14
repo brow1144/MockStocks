@@ -39,6 +39,10 @@ class Games extends Component {
           <NavBar/>
         </div>
         <Row style={{paddingTop: '7em'}} className='blackBackground body_div'>
+          <Col>
+          </Col>
+        </Row>
+        <Row className='blackBackground body_div'>
           <Col md='1'/>
           <Col md='3'>
             <Leaderboard/>

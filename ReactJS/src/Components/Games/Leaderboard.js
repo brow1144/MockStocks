@@ -1,5 +1,4 @@
 import React, {Component} from 'react'
-import { Button, Card, CardBody, CardImage, CardTitle, CardText } from 'mdbreact'
 import { Table } from 'reactstrap'
 
 
@@ -8,35 +7,31 @@ class Leaderboard extends Component {
 
   render() {
     return (
-      <div style={{width: 'inherit', maxWidth: 'inherit'}} className='z-depth-5' >
+      <div  className='z-depth-5' >
         <h5 style={{color: 'whitesmoke'}}>Leaderboard</h5>
         <Table dark>
           <thead>
           <tr>
-            <th>#</th>
-            <th>First Name</th>
-            <th>Last Name</th>
-            <th>Username</th>
+            <th>Rank</th>
+            <th>User Name</th>
+            <th>Total Money</th>
           </tr>
           </thead>
           <tbody>
           <tr>
             <th scope="row">1</th>
-            <td>Mark</td>
-            <td>Otto</td>
-            <td>@mdo</td>
+            <td>Jeremy</td>
+            <td>$10456</td>
           </tr>
           <tr>
             <th scope="row">2</th>
-            <td>Jacob</td>
-            <td>Thornton</td>
-            <td>@fat</td>
+            <td>Walter</td>
+            <td>$145</td>
           </tr>
           <tr>
             <th scope="row">3</th>
-            <td>Larry</td>
-            <td>the Bird</td>
-            <td>@twitter</td>
+            <td>Jacob</td>
+            <td>$202</td>
           </tr>
           </tbody>
         </Table>
