@@ -1,5 +1,5 @@
 let bodyParser = require('body-parser');
-let model = require('../Models/model');
+let model = require('../Models/testMongo');
 
 let urlencodedParser = bodyParser.urlencoded({extended: false});
 
@@ -20,7 +20,7 @@ module.exports = (app) => {
     // Method #3 - async/await
     let data = await model.getItems();
     //res.render('todo', {todos: data});
-    
+
   });
 
   app.get('/Portfol.io/SignIn', async (req, res) => {
