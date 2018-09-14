@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import '../Static/CSS/CreateUser.css';
 
-import {Input, Button} from 'mdbreact';
+//import {Input, Button} from 'mdbreact';
 import { Row, Col } from 'reactstrap';
 import NavBar from '../Components/NavBar';
 import MyStocks from '../Components/Games/MyStocks';
@@ -39,7 +39,7 @@ class Games extends Component {
           <NavBar/>
         </div>
         <Row style={{paddingTop: '7em'}} className='blackBackground body_div'>
-          <Col md='2'/>
+          <Col md='1'/>
           <Col md='3'>
             <Leaderboard/>
           </Col>
@@ -47,6 +47,7 @@ class Games extends Component {
           <Col md='3'>
             <MyStocks/>
           </Col>
+          <Col md='1'/>
           <Col md='2'>
             <h5 style={{color: 'whitesmoke'}}>Active Games</h5>
           </Col>
