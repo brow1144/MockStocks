@@ -1,8 +1,8 @@
 import React, {Component} from 'react'
 
-import '../Static/CSS/MyGames.css'
+import '../../Static/CSS/UpdateGame.css'
 
-class MyGames extends Component {
+class UpdateGame extends Component {
 
     render() {
         return (
@@ -13,4 +13,4 @@ class MyGames extends Component {
     }
 }
 
-export default MyGames;
+export default UpdateGame;
