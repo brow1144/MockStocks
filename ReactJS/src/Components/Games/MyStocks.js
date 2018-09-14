@@ -1,42 +1,43 @@
 import React, {Component} from 'react'
-import { Button, Card, CardBody, CardImage, CardTitle, CardText } from 'mdbreact'
 import { Table } from 'reactstrap'
-
-
 
 class MyStocks extends Component {
 
   render() {
     return (
-      <div style={{width: 'inherit',maxWidth: 'inherit'}} className='z-depth-5' >
+      <div className='z-depth-5' >
         <h5 style={{color: 'whitesmoke'}}>My Stocks</h5>
         <Table dark>
           <thead>
           <tr>
             <th>#</th>
-            <th>First Name</th>
-            <th>Last Name</th>
-            <th>Username</th>
+            <th>Stock</th>
+            <th>Symbol</th>
+            <th>Value</th>
+            <th>Owned</th>
           </tr>
           </thead>
           <tbody>
           <tr>
             <th scope="row">1</th>
-            <td>Mark</td>
-            <td>Otto</td>
-            <td>@mdo</td>
+            <td>Apple</td>
+            <td>AAPL</td>
+            <td>$110.10</td>
+            <td>3</td>
           </tr>
           <tr>
             <th scope="row">2</th>
-            <td>Jacob</td>
-            <td>Thornton</td>
-            <td>@fat</td>
+            <td>Apple</td>
+            <td>AAPL</td>
+            <td>$110.10</td>
+            <td>3</td>
           </tr>
           <tr>
             <th scope="row">3</th>
-            <td>Larry</td>
-            <td>the Bird</td>
-            <td>@twitter</td>
+            <td>Apple</td>
+            <td>AAPL</td>
+            <td>$110.10</td>
+            <td>3</td>
           </tr>
           </tbody>
         </Table>
