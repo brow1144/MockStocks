@@ -1,16 +1,12 @@
 let bodyParser = require('body-parser');
-let model = require('../Models/testMongo');
+let model = require('../Models/testMongo'); // must import models that we need
 
 let urlencodedParser = bodyParser.urlencoded({extended: false});
 
 module.exports = (app) => {
+  // heres the endpoints obviously
   app.get('/Portfol.io/Home', async (req, res) => {
     // get data from mongodb and pass it to view
-
-    // Method #1 - callback function - ***don't use***
-    /*todoModel.getItems(function(data) {
-      res.render('todo', {todos: data});
-    });*/
 
     // Method #2 - then
     /*todoModel.getItems().then(function(data) {
@@ -18,9 +14,10 @@ module.exports = (app) => {
     });*/
 
     // Method #3 - async/await
-    let data = await model.getItems();
-    //res.render('todo', {todos: data});
-
+    // async await looks slick so ive been doing it but method 2 is just as valid
+    let data = await model.getUsers();
+    console.log("got it: " + data);
+    res.status(200).json(data);
   });
 
   app.get('/Portfol.io/SignIn', async (req, res) => {
