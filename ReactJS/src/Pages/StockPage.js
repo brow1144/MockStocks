@@ -21,20 +21,11 @@ class StockPage extends Component {
 
   componentWillMount() {
     let self = this
-    axios.get(`https://www.alphavantage.co/query?function=TIME_SERIES_MONTHLY_ADJUSTED&symbol=${this.props.stock}&apikey=WIOGAHD0RJEEZ59V`)
+    axios.get(`http://localhost:8080/Portfol.io/Stock/${this.props.stock}`)
       .then(function (response) {
         // handle success
-        let stockData = []
-        let data = response.data['Monthly Adjusted Time Series']
+        let stockData = response.data;
         // let data = response.data['Time Series (1min)']
-
-        for (let i in data) {
-          stockData.unshift({
-            x: new Date(i).getTime(),
-            y: parseFloat(data[i]['5. adjusted close']),
-            // y: parseFloat(data[i]['4. close']),
-          })
-        }  
 
         self.setState({
           stockData: stockData,
