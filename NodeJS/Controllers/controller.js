@@ -1,5 +1,6 @@
 import bodyParser from 'body-parser';
 import {getUsers} from '../Models/testMongo'; // must import models that we need
+import {getStock} from '../Models/stockDAO';
 
 let urlencodedParser = bodyParser.urlencoded({extended: false});
 
@@ -26,5 +27,11 @@ export default (app) => {
 
   app.get('/Portfol.io/CreateAccount', async (req, res) => {
 
+  });
+
+  app.get('/Portfol.io/Stock/:stock', async (req, res) => {
+    const data = await getStock(req.params.stock);
+    console.log("got it: " + data);
+    res.status(200).json(data);
   });
 };
