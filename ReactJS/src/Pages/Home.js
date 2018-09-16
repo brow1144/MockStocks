@@ -26,18 +26,20 @@ class Home extends Component {
 
   componentWillMount() {
     let self = this
-    axios.get('https://www.alphavantage.co/query?function=TIME_SERIES_MONTHLY_ADJUSTED&symbol=AAPL&apikey=WIOGAHD0RJEEZ59V')
+    axios.get('https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY&symbol=MSFT&interval=5min&apikey=WIOGAHD0RJEEZ59V')
+
+    // axios.get('https://www.alphavantage.co/query?function=TIME_SERIES_MONTHLY_ADJUSTED&symbol=AAPL&apikey=WIOGAHD0RJEEZ59V')
       .then(function (response) {
         // handle success
         let stockData = []
-        let data = response.data['Monthly Adjusted Time Series']
-        // let data = response.data['Time Series (1min)']
+        // let data = response.data['Monthly Adjusted Time Series']
+        let data = response.data['Time Series (5min)']
 
         for (let i in data) {
           stockData.unshift({
             x: new Date(i).getTime(),
-            y: parseFloat(data[i]['5. adjusted close']),
-            // y: parseFloat(data[i]['4. close']),
+            // y: parseFloat(data[i]['5. adjusted close']),
+            y: parseFloat(data[i]['4. close']),
           })
         }  
 
@@ -73,13 +75,14 @@ class Home extends Component {
       xAxis: {
         type: 'datetime',
         dateTimeLabelFormats: {
-          day: '%h:%M'
+          hour: '%I %p'
         },
       },
       tooltip: {
         valueDecimals: 2,
         valuePrefix: '$',
-        valueSuffix: ' USD'
+        valueSuffix: ' USD',
+        xDateFormat: '%I %M %p'
       },
     }
 
@@ -87,8 +90,8 @@ class Home extends Component {
       <Row style={{marginBottom: '1000em'}} className='blackBackground body_div'>
         <Col md='1'/>
         <Col style={{paddingTop: '7em'}} md='6'> 
-          <h1 className='stockTitle'>Apple</h1>
           <h2 className='stockPrice'>${this.state.currentPrice}</h2>
+          <br />
           <HighchartsReact
             className='highcharts-container'
             highcharts={Highcharts}
