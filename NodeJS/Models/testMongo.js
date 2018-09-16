@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+import mongoose from 'mongoose';
 
 // must match/describe data in the collection
 const UserSchema = new mongoose.Schema({
@@ -30,15 +30,13 @@ const UserSchema = new mongoose.Schema({
 const User = mongoose.model('User', UserSchema);
 
 // these functions will be called in the appropriate controller
-module.exports = {
-  getUsers: function() {
-    // made the db calls into promises because its good practice
-    return new Promise((resolve, reject) => {
-      // find() is one of the mongoose functions, just look at the docs for the other ones
-      User.find({}, (err, users) => { // you would enter conditions in the brackets to find specific items
-        if (err) reject(err);
-        resolve(users);
-      });
+export function getUsers() {
+  // made the db calls into promises because its good practice
+  return new Promise((resolve, reject) => {
+    // find() is one of the mongoose functions, just look at the docs for the other ones
+    User.find({}, (err, users) => { // you would enter conditions in the brackets to find specific items
+      if (err) reject(err);
+      resolve(users);
     });
-  }
+  });
 };

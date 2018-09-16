@@ -1,4 +1,4 @@
-let mongoose = require('mongoose');
+import mongoose import 'mongoose';
 
 // create a schema - this is like a blueprint
 let userSchema = new mongoose.Schema({
@@ -15,7 +15,7 @@ let userSchema = new mongoose.Schema({
 
 let user = mongoose.model('User', userSchema);
 
-module.exports = {
+export const model = {
   getStocks: function() {
     // return new Promise((resolve, reject) => {
     //   user.find({}, (err, user) => {

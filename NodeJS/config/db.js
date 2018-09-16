@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+import mongoose from 'mongoose';
 
 // URL of our cluster
 const dbURL = 'mongodb://Portfolio:CS408Portfolio@' +

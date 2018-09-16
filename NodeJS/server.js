@@ -1,16 +1,14 @@
-let express = require('express');
-
-let controller = require('./controllers/controller');
-
-let app = express();
-
+import express from 'express';
+import controller from './controllers/controller';
 // connect to the database
-require('./config/db');
+import db from './config/db';
+
+const app = express();
 
 // run controllers
 controller(app);
 
 // listen to port
-app.listen(3000, () => {
-  console.log("Now listening on port 3000.");
+app.listen(8080, () => {
+  console.log("Now listening on port 8080.");
 });
