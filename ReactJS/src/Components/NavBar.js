@@ -3,6 +3,7 @@ import React, {Component} from 'react';
 import {FormInline, Fa} from 'mdbreact'
 import {Row, Col} from 'reactstrap';
 
+import { NavLink } from 'react-router-dom';
 
 import '../Static/CSS/NavBar.css';
 
@@ -12,7 +13,9 @@ class NavBar extends Component {
     return (
       <Row style={{backgroundColor: '#1B1B1D'}}>
         <Col className='title' sm='2'>
-          <b>Portfol.io</b>
+          <NavLink to={'/Portfol.io/Home'} style={{textDecoration: 'none'}}>
+            <b className='navText' style={{fontSize: '1em'}}>Portfol.io</b>
+          </NavLink>        
         </Col>
         <Col className='blackBack' sm='5'>
           <div className='z-depth-5 blackBack'>
@@ -24,10 +27,14 @@ class NavBar extends Component {
         </Col>
         <Col sm='2' />
         <Col className='navText' sm='1'>
-          <b>Home</b>
+        <NavLink to={'/Portfol.io/Home'} style={{textDecoration: 'none'}}>
+            <b className='navText' style={{fontSize: '1em'}}>Home</b>
+          </NavLink>        
         </Col>
         <Col className='navText' sm='1'>
-          <b>Games</b>
+          <NavLink to={'/Portfol.io/Games'} style={{textDecoration: 'none'}}>
+            <b className='navText' style={{fontSize: '1em'}}>Games</b>
+          </NavLink>
         </Col>
         <Col className='blackBack' sm='1' />
       </Row>
