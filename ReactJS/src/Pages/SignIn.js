@@ -66,7 +66,7 @@ class SignIn extends Component {
             </Alert>
             <Form onSubmit={this.handleSignIn}>
               <Input id='email' name='email' style={{fontSize: '0.85em'}} label="Email"/>
-              <Input name='password' label="Password" type="password"/>
+              <Input id='pass' name='password' label="Password" type="password"/>
               <br/>
               <Button className='signInButton' type='submit' color="blue" >Sign In!</Button>
               <NavLink style={{textDecoration: 'none'}} to="/Portfol.io/CreateAccount">Sign Up!</NavLink>
