@@ -1,7 +1,6 @@
 import React, {Component} from 'react'
 
 import NavBar from './Components/NavBar'
-import Home from './Pages/Home'
 
 class Main extends Component {
   
@@ -12,7 +11,7 @@ class Main extends Component {
           <NavBar />     
         </div>  
 
-        <Home/>
+        <this.props.component />
       </div>
     );
   }
