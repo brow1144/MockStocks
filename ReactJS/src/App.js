@@ -4,6 +4,8 @@ import SignIn from './Pages/SignIn'
 import CreateUser from './Pages/CreateUser'
 import Main from './Main'
 import Games from './Pages/Games'
+import Home from './Pages/Home'
+import StockPage from './Pages/StockPage'
 
 import firebase from './base'
 
@@ -68,13 +70,19 @@ class App extends Component {
 
         <Route path='/Portfol.io/Home' render={() => (
           this.signedIn()
-            ? <Main />
+            ? <Main component={Home}/>
+            : <Redirect to={`/Portfol.io/SignIn`}/>
+        )}/>
+
+        <Route path='/Portfol.io/stocks/:stock' render={(match) => (
+          this.signedIn()
+            ? <Main component={StockPage} stock={match.match.params.stock} />
             : <Redirect to={`/Portfol.io/SignIn`}/>
         )}/>
 
         <Route path='/Portfol.io/Games' render={() => (
           this.signedIn()
-            ? <Games />
+            ? <Main component={Games}/>
             : <Redirect to={`/Portfol.io/SignIn`}/>
         )}/>
 

@@ -1,20 +1,15 @@
 import React, {Component} from 'react'
 
-// import NavBar from '../Components/NavBar'
-import StockList from '../Components/StockList'
-
 import Highcharts from 'highcharts/highstock'
 import HighchartsReact from 'highcharts-react-official'
+
+import BuySellCard from '../Components/BuySellCard'
 
 import {Row, Col} from 'reactstrap'
 
 import axios from 'axios'
-// import moment from 'moment'
 
-import '../Static/CSS/Home.css'
-
-class Home extends Component {
-  
+class StockPage extends Component {
   constructor() {
     super()
 
@@ -26,7 +21,7 @@ class Home extends Component {
 
   componentWillMount() {
     let self = this
-    axios.get('https://www.alphavantage.co/query?function=TIME_SERIES_MONTHLY_ADJUSTED&symbol=AAPL&apikey=WIOGAHD0RJEEZ59V')
+    axios.get(`https://www.alphavantage.co/query?function=TIME_SERIES_MONTHLY_ADJUSTED&symbol=${this.props.stock}&apikey=WIOGAHD0RJEEZ59V`)
       .then(function (response) {
         // handle success
         let stockData = []
@@ -67,7 +62,7 @@ class Home extends Component {
         }
       },
       series: [{
-          name: 'AAPL',
+          name: this.props.stock,
           data: this.state.stockData,
       }],
       xAxis: {
@@ -87,7 +82,7 @@ class Home extends Component {
       <Row style={{marginBottom: '1000em'}} className='blackBackground body_div'>
         <Col md='1'/>
         <Col style={{paddingTop: '7em'}} md='6'> 
-          <h1 className='stockTitle'>Apple</h1>
+          <h1 className='stockTitle'>{this.props.stock}</h1>
           <h2 className='stockPrice'>${this.state.currentPrice}</h2>
           <HighchartsReact
             className='highcharts-container'
@@ -98,7 +93,7 @@ class Home extends Component {
         </Col>
         <Col md='1'/>
         <Col style={{paddingTop: '6em'}} md='2'>
-          <StockList />
+          <BuySellCard stock={this.props.stock} currentPrice={this.state.currentPrice}/>
         </Col>
 
         <Col md='1'/>
@@ -107,4 +102,4 @@ class Home extends Component {
   }
 }
 
-export default Home;
+export default StockPage;
