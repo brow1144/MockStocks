@@ -17,7 +17,7 @@ class NavBar extends Component {
             <b className='navText' style={{fontSize: '1em'}}>Portfol.io</b>
           </NavLink>        
         </Col>
-        <Col className='blackBack' sm='5'>
+        <Col style={{marginTop: '0.6em'}} className='blackBack' sm='5'>
           <div className='z-depth-5 blackBack'>
             <FormInline className="md-form">
               <Fa style={{color: 'whitesmoke'}} icon="search" />
