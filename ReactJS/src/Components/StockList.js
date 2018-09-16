@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import { Button, Card, CardBody, CardImage, CardTitle, CardText } from 'mdbreact'
+import { Card, CardBody, CardTitle } from 'mdbreact'
 
 import StockCard from '../Components/StockCard'
 
@@ -12,7 +12,7 @@ class StockList extends Component {
       <div style={{position: 'fixed', width: 'inherit',maxWidth: 'inherit'}} className='z-depth-5' >
         <Card style={{backgroundColor: '#1B1B1D', color: 'whitesmoke'}}>
           <CardBody>
-              <div class="article-container-inner">
+              <div className="article-container-inner">
                 <CardTitle stlyle={{borderBottom: '2px solid whitesmoke'}} >Watchlist</CardTitle>
                 <hr className='hr'/>
               </div>

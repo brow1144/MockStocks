@@ -24,16 +24,17 @@ class App extends Component {
   }
 
   componentWillMount() {
-    this.getUserFromsessionStorage();
+    // this.getUserFromsessionStorage();
     let self = this;
     firebase.auth().onAuthStateChanged(
       (user) => {
         if (user) {
           // finished signing in
-          self.authHandler(user)
+          self.setState({user: user, uid: user['m']})
+          // self.authHandler(user)
         } else {
           // finished signing out
-          self.setState({uid: null}, () => {
+          self.setState({uid: null, user: null}, () => {
             // window.location.reload();
           });
         }
@@ -41,16 +42,16 @@ class App extends Component {
     )
   }
 
-  getUserFromsessionStorage() {
-    const uid = sessionStorage.getItem('uid');
-    if (!uid) return;
-    this.setState({uid})
-  }
+  // getUserFromsessionStorage() {
+  //   const uid = sessionStorage.getItem('uid');
+  //   if (!uid) return;
+  //   this.setState({uid})
+  // }
 
-  authHandler = (user) => {
-    sessionStorage.setItem('uid', user.uid);
-    this.setState({uid: user.uid, user: user})
-  };
+  // authHandler = (user) => {
+  //   sessionStorage.setItem('uid', user.uid);
+  //   this.setState({uid: user.uid, user: user})
+  // };
 
   signedIn = () => {
     return this.state.uid

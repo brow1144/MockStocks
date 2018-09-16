@@ -5,7 +5,7 @@ let controller = require('./controllers/controller');
 let app = express();
 
 // connect to the database
-
+require('./config/db');
 
 // run controllers
 controller(app);

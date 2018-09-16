@@ -9,7 +9,7 @@ import HighchartsReact from 'highcharts-react-official'
 import {Row, Col} from 'reactstrap'
 
 import axios from 'axios'
-import moment from 'moment'
+// import moment from 'moment'
 
 import '../Static/CSS/Home.css'
 
