@@ -17,8 +17,7 @@ export default (app) => {
     // Method #3 - async/await
     // async await looks slick so ive been doing it but method 2 is just as valid
     let data = await getUsers();
-    console.log("got it: " + data);
-    res.status(200).json(data);
+    buildResponse(res, data);
   });
 
   app.get('/Portfol.io/SignIn', async (req, res) => {
@@ -31,7 +30,12 @@ export default (app) => {
 
   app.get('/Portfol.io/Stock/:stock', async (req, res) => {
     const data = await getStock(req.params.stock);
-    console.log("got it: " + data);
-    res.status(200).json(data);
+    buildResponse(res, data);
   });
 };
+
+const buildResponse = (res, data) => {
+  res.header("Access-Control-Allow-Origin", "http://localhost:3000");
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  data && res.status(200).json(data);
+}
