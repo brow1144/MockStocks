@@ -74,9 +74,9 @@ class App extends Component {
             : <Redirect to={`/Portfol.io/SignIn`}/>
         )}/>
 
-        <Route path='/Portfol.io/StockPage/:stock' render={(match) => (
+        <Route path='/Portfol.io/stocks/:stock' render={(match) => (
           this.signedIn()
-            ? <Main component={StockPage} path={match.match.params.stock} />
+            ? <Main component={StockPage} stock={match.match.params.stock} />
             : <Redirect to={`/Portfol.io/SignIn`}/>
         )}/>
 

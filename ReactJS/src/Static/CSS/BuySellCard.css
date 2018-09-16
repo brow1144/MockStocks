@@ -1,0 +1,12 @@
+.buyStock {
+  font-size: 1em;
+}
+
+.buySmallText { 
+  font-size: 0.8em;
+}
+
+.leftText {
+  margin-top: '8px' !important;
+  font-size: 0.8em;
+}

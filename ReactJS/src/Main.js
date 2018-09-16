@@ -11,7 +11,7 @@ class Main extends Component {
           <NavBar />     
         </div>  
 
-        <this.props.component />
+        <this.props.component stock={this.props.stock}/>
       </div>
     );
   }
