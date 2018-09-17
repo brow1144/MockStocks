@@ -1,18 +1,26 @@
 .symbol {
-  clear: both;
-  display: inline-block;
-  overflow: hidden;
-  white-space: nowrap;
-  font-size: 0.7em;
-  width: 40px;
-  padding-left: 20px;
+  clear: both !important;
+  display: inline-block !important;
+  overflow: hidden !important;
+  white-space: nowrap !important;
+  font-size: 0.7em !important;
+  width: 40px !important;
+  padding-left: 20px !important;
+  color: whitesmoke !important;
+  padding-top: 10px;
 }
 
 .company {
-  clear: both;
-  display: inline-block;
-  overflow: hidden;
-  white-space: nowrap;
-  font-size: 0.7em;
-  padding-left: 50px;
+  clear: both !important;
+  display: inline-block !important;
+  overflow: hidden !important;
+  white-space: nowrap !important;
+  font-size: 0.7em !important;
+  padding-left: 50px !important;
+  color: whitesmoke !important;
+  padding-top: 10px;
+}
+
+.searchHover:hover {
+  background-color: #191818;
 }

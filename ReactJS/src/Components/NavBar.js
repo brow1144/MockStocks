@@ -19,7 +19,6 @@ class NavBar extends Component {
     this.state = {
       tickers: [],
       tickersShowing: [],
-      marginBottom: '-20em',
     }
   }
 
@@ -51,20 +50,19 @@ class NavBar extends Component {
       if (counter > 5) break;
     }
 
-    // marginBottom = parseInt(marginBottom.substring(0, str.length - 2));
-    // (marginBottom * ans.length;
-
     this.setState({
       tickersShowing: ans, 
-      // marginBottom: 
     })
-    // console.log(ans)
+  }
+
+  clearSearch = () => {
+    this.setState({tickersShowing: []})
   }
 
   render() {
 
     const stocks = this.state.tickersShowing.map((stock) =>
-      <SearchResult key={stock.ticker} symbol={stock.ticker} company={stock.company}/>
+      <SearchResult clearSearch={this.clearSearch} key={stock.ticker} symbol={stock.ticker} company={stock.company}/>
     );
 
     return (
@@ -75,7 +73,7 @@ class NavBar extends Component {
           </NavLink>        
         </Col>
         <Col style={{marginTop: '0.6em'}} className='blackBack' sm='4'>
-          <div style={{marginBottom: this.state.marginBottom}} className='z-depth-5 blackBack'>
+          <div style={{marginBottom: '-20em'}} className='z-depth-5 blackBack'>
             <FormInline className="md-form">
               <Fa style={{color: 'whitesmoke'}} icon="search" />
               <input onChange={this.findTickers} style={{zoom: '80%', color: 'whitesmoke'}} className="form-control form-control-sm ml-3 w-75" type="text" placeholder="Search" aria-label="Search"/>
@@ -87,7 +85,7 @@ class NavBar extends Component {
         </Col>
         <Col sm='3' />
         <Col className='navText' sm='1'>
-        <NavLink to={'/Portfol.io/Home'} style={{textDecoration: 'none'}}>
+          <NavLink to={'/Portfol.io/Home'} style={{textDecoration: 'none'}}>
             <b className='navText' style={{fontSize: '1em'}}>Home</b>
           </NavLink>        
         </Col>
