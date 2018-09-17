@@ -24,15 +24,15 @@ export function getStock(stockTicker) {
     })
 }
 
+const tickerSchema = new mongoose.Schema({
+  tickers: Array
+});
+const tickerList = mongoose.model('Ticker', tickerSchema);
+
 // in theory this will only be called the one time. If something every happens to the db recall it
 // https://iextrading.com/api-exhibit-a
 // https://iextrading.com/developer/docs/#attribution
 export function loadTickers() {
-  // must match/describe data in the collection
-  const tickerSchema = new mongoose.Schema({
-    tickers: Array
-  });
-  const tickerModel = mongoose.model('Ticker', tickerSchema);
   // credit to IEXTrading for the data for all available stock tickers from their Free API
   return axios.get(`https://api.iextrading.com/1.0/ref-data/symbols`)
     .then(function (response) {
@@ -57,9 +57,6 @@ export function loadTickers() {
 }
 
 export function getTickers() {
-  const tickerSchema = new mongoose.Schema({
-    tickers: Array
-  });
   const tickerList = mongoose.model('Ticker', tickerSchema);
   return tickerList.findOne({}, {tickers: 1, _id: 0}).catch((err) => {return Promise.reject(err)})
 }
