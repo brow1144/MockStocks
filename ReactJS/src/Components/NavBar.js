@@ -5,9 +5,33 @@ import {Row, Col} from 'reactstrap';
 
 import { NavLink } from 'react-router-dom';
 
+import axios from 'axios'
+
 import '../Static/CSS/NavBar.css';
 
 class NavBar extends Component {
+
+  componentWillMount() {
+    let self = this
+    axios.get(`http://localhost:8080/Portfol.io/GetTickers`)
+      .then(function (response) {
+        // handle success
+
+        let tickerData = response.data;
+        console.log('asdf');
+        console.log(response['data']);
+        console.log('done');
+
+      })
+      .catch(function (error) {
+        // handle error
+        console.log(`Oh no! Our Ticker API didn't respond. Please refresh and try again`)
+        console.log(`Btw here is the error message\n\n`)
+        console.log(error);
+      })
+
+  }
+
   render() {
 
     return (
