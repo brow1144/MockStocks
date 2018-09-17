@@ -19,6 +19,7 @@ class NavBar extends Component {
     this.state = {
       tickers: [],
       tickersShowing: [],
+      marginBottom: '-20em',
     }
   }
 
@@ -50,7 +51,13 @@ class NavBar extends Component {
       if (counter > 5) break;
     }
 
-    this.setState({tickersShowing: ans})
+    // marginBottom = parseInt(marginBottom.substring(0, str.length - 2));
+    // (marginBottom * ans.length;
+
+    this.setState({
+      tickersShowing: ans, 
+      // marginBottom: 
+    })
     // console.log(ans)
   }
 
@@ -68,7 +75,7 @@ class NavBar extends Component {
           </NavLink>        
         </Col>
         <Col style={{marginTop: '0.6em'}} className='blackBack' sm='4'>
-          <div className='z-depth-5 blackBack'>
+          <div style={{marginBottom: this.state.marginBottom}} className='z-depth-5 blackBack'>
             <FormInline className="md-form">
               <Fa style={{color: 'whitesmoke'}} icon="search" />
               <input onChange={this.findTickers} style={{zoom: '80%', color: 'whitesmoke'}} className="form-control form-control-sm ml-3 w-75" type="text" placeholder="Search" aria-label="Search"/>
