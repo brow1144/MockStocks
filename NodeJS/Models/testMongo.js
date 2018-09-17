@@ -39,4 +39,4 @@ export function getUsers() {
       resolve(users);
     });
   });
-};
+}

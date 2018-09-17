@@ -1,6 +1,6 @@
 import bodyParser from 'body-parser';
 import {getUsers} from '../Models/testMongo'; // must import models that we need
-import {getStock} from '../Models/stockDAO';
+import {getStock, getTickers, loadTickers} from '../Models/stockDAO';
 
 let urlencodedParser = bodyParser.urlencoded({extended: false});
 
@@ -32,10 +32,21 @@ export default (app) => {
     const data = await getStock(req.params.stock);
     buildResponse(res, data);
   });
+
+  // WARNING : only call this if the database of tickers is down. It is a very large file to save into mongo and is better that it is untouched for now
+  app.get('/Portfol.io/LoadTickers', async (req, res) => {
+    const data = await loadTickers();
+    buildResponse(res, data);
+  });
+
+  app.get('/Portfol.io/GetTickers', async (req, res) => {
+    const data = await getTickers();
+    buildResponse(res, data);
+  });
 };
 
 const buildResponse = (res, data) => {
   res.header("Access-Control-Allow-Origin", "http://localhost:3000");
   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
   data && res.status(200).json(data);
-}
+};

@@ -15,8 +15,8 @@ import '../Static/CSS/Home.css'
 
 class Home extends Component {
   
-  constructor() {
-    super()
+  constructor(props) {
+    super(props);
 
     this.state = {
       stockData: [],
@@ -25,15 +25,15 @@ class Home extends Component {
   }
 
   componentWillMount() {
-    let self = this
+    let self = this;
     axios.get('https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY&symbol=MSFT&interval=5min&apikey=WIOGAHD0RJEEZ59V')
 
     // axios.get('https://www.alphavantage.co/query?function=TIME_SERIES_MONTHLY_ADJUSTED&symbol=AAPL&apikey=WIOGAHD0RJEEZ59V')
       .then(function (response) {
         // handle success
-        let stockData = []
+        let stockData = [];
         // let data = response.data['Monthly Adjusted Time Series']
-        let data = response.data['Time Series (5min)']
+        let data = response.data['Time Series (5min)'];
 
         for (let i in data) {
           stockData.unshift({
@@ -51,8 +51,8 @@ class Home extends Component {
       })
       .catch(function (error) {
         // handle error
-        console.log(`Oh no! Our API didn't respond. Please refresh and try again`)
-        console.log(`Btw here is the error message\n\n`)
+        console.log(`Oh no! Our API didn't respond. Please refresh and try again`);
+        console.log(`Btw here is the error message\n\n`);
         console.log(error);
       })
 
@@ -84,7 +84,7 @@ class Home extends Component {
         valueSuffix: ' USD',
         xDateFormat: '%I %M %p'
       },
-    }
+    };
 
     return (
       <Row style={{marginBottom: '1000em'}} className='blackBackground body_div'>
