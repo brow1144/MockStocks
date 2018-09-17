@@ -1,0 +1,17 @@
+.symbol {
+  clear: both;
+  display: inline-block;
+  overflow: hidden;
+  white-space: nowrap;
+  font-size: 0.7em;
+  width: 40px;
+}
+
+.company {
+  clear: both;
+  display: inline-block;
+  overflow: hidden;
+  white-space: nowrap;
+  font-size: 0.7em;
+  padding-left: 50px;
+}
