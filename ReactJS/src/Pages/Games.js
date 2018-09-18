@@ -7,7 +7,7 @@ import NavBar from '../Components/NavBar';
 import MyStocks from '../Components/Games/MyStocks';
 import Leaderboard from '../Components/Games/Leaderboard';
 import CreateGame from '../Components/Games/CreateGame'
-import '../Static/CSS/Home.css';
+import '../Static/CSS/Games.css';
 
 class Games extends Component {
 
@@ -15,22 +15,26 @@ class Games extends Component {
     super(props);
 
     this.state = {
-      //Hides message when opening create user | object | ex. error message
-      visible: false,
-      message: '',
+      // Array of user objects for the leaderboard
+      users: [{}],
+      // Array of stocks for the stock list
+      myStocks: [{}],
+      // Array of current games
+      myFloors: [{}],
+      money: 0,
+      floorCode: "",
+      floorName: "xxN0Sc0p35xx",
     };
   }
 
   /**
    *
-   * dismisses alert
-   *
-   * @param ev: |event| Ex: {click}
+   * Retrieve users for leaderboard and info about the current user
    *
    */
 
-  onDismiss = () => {
-    this.setState({ visible: false });
+  componentWillMount () {
+
   };
 
 
@@ -43,25 +47,43 @@ class Games extends Component {
         <div className='navbar-fixed'>
           <NavBar/>
         </div>
-        <Row style={{paddingTop: '7em'}} className='blackBackground body_div'>
-          <Col>
+        <Row style={{paddingTop: '9em'}} className='blackBackground body_div'>
+          <Col md="8">
+            <Row>
+              <Col md="1"/>
+              <Col md="2">
+                <h5 className={"gamesText"}>Floor Code : {this.state.floorCode}</h5>
+              </Col>
+              <Col md="1"/>
+              <Col md="5">
+                <h5 className={"gamesText "}>Floor Name : {this.state.floorName}</h5>
+              </Col>
+
+              <Col md="3">
+                <h5 className={"gamesText"}>My Money : ${this.state.money}</h5>
+              </Col>
+            </Row>
+            <Row  style={{paddingTop: '4em'}} className='blackBackground body_div'>
+              <Col md='1'/>
+              <Col md='5'>
+                <Leaderboard/>
+              </Col>
+              <Col md='1'/>
+              <Col md='5'>
+                <MyStocks/>
+              </Col>
+            </Row>
           </Col>
-        </Row>
-        <Row className='blackBackground body_div'>
-          <Col md='1'/>
-          <Col md='3'>
-            <Leaderboard/>
+          <Col md="4">
+            <Row>
+              <Col md='1'/>
+              <Col md='4'>
+                <h5 className={"gamesText"}>Active Games</h5>
+                <CreateGame/>
+              </Col>
+              <Col md='1'/>
+            </Row>
           </Col>
-          <Col md='1'/>
-          <Col md='3'>
-            <MyStocks/>
-          </Col>
-          <Col md='1'/>
-          <Col md='2'>
-            <h5 style={{color: 'whitesmoke'}}>Active Games</h5>
-            <CreateGame/>
-          </Col>
-          <Col md='1'/>
         </Row>
       </div>
     );
