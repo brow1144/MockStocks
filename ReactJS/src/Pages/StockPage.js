@@ -21,7 +21,7 @@ class StockPage extends Component {
 
   componentWillMount() {
     let self = this
-    axios.get(`http://localhost:8080/Portfol.io/Stock/${this.props.stock}`)
+    axios.get(`http://localhost:8080/Portfol.io/Stock/${this.props.stock}/Monthly`)
       .then(function (response) {
         // handle success
         let stockData = response.data;

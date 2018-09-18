@@ -19,6 +19,7 @@ class NavBar extends Component {
     this.state = {
       tickers: [],
       tickersShowing: [],
+      search: '',
     }
   }
 
@@ -39,7 +40,7 @@ class NavBar extends Component {
 
   findTickers = (ev) => {
     let search = ev.target.value;
-    if (search === '') { this.setState({tickersShowing: []}); return;}
+    if (search === '') { this.setState({tickersShowing: [], search: ''}); return;}
     let ans = [];
     let counter = 0;
 
@@ -52,6 +53,7 @@ class NavBar extends Component {
 
     this.setState({
       tickersShowing: ans, 
+      search: ev.target.value,
     })
   }
 
@@ -60,9 +62,15 @@ class NavBar extends Component {
   }
 
   render() {
-
-    const stocks = this.state.tickersShowing.map((stock) =>
-      <SearchResult clearSearch={this.clearSearch} key={stock.ticker} symbol={stock.ticker} company={stock.company}/>
+  
+    const stocks = this.state.tickersShowing.map((stock) =>   
+      <SearchResult 
+        search={this.state.search}
+        clearSearch={this.clearSearch} 
+        key={stock.ticker} 
+        symbol={stock.ticker} 
+        company={stock.company}
+      />
     );
 
     return (
@@ -76,7 +84,7 @@ class NavBar extends Component {
           <div style={{marginBottom: '-20em'}} className='z-depth-5 blackBack'>
             <FormInline className="md-form">
               <Fa style={{color: 'whitesmoke'}} icon="search" />
-              <input onChange={this.findTickers} style={{zoom: '80%', color: 'whitesmoke'}} className="form-control form-control-sm ml-3 w-75" type="text" placeholder="Search" aria-label="Search"/>
+              <input value={this.state.search} onChange={this.findTickers} style={{zoom: '80%', color: 'whitesmoke'}} className="form-control form-control-sm ml-3 w-75" type="text" placeholder="Search" aria-label="Search"/>
             </FormInline>
 
           {stocks}          
