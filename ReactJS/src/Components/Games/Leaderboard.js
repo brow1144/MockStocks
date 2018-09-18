@@ -12,8 +12,9 @@ class Leaderboard extends Component {
           <thead>
           <tr>
             <th>Rank</th>
-            <th>User Name</th>
-            <th>Total Money</th>
+            <th>Username</th>
+            <th>Total Assets</th>
+            <th>Transactions Left</th>
           </tr>
           </thead>
           <tbody>
@@ -21,16 +22,19 @@ class Leaderboard extends Component {
             <th scope="row">1</th>
             <td>Jeremy</td>
             <td>$10456</td>
+            <td>Unlimited</td>
           </tr>
           <tr>
             <th scope="row">2</th>
             <td>Walter</td>
             <td>$145</td>
+            <td>Unlimited</td>
           </tr>
           <tr>
             <th scope="row">3</th>
             <td>Jacob</td>
             <td>$202</td>
+            <td>2</td>
           </tr>
           </tbody>
         </Table>
