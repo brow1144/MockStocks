@@ -18,10 +18,10 @@ class StockPage extends Component {
     this.state = {
       stockData: [],
       currentPrice: 0,
-      oneD: '',
+      oneDay: 'selected',
       oneWeek: '',
       oneMonth: '',
-      threeMonths: 'selected',
+      threeMonths: '',
       oneYear: '',
       all: '',
     }
