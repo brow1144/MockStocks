@@ -2,13 +2,12 @@ import React, {Component} from 'react'
 import { Table } from 'reactstrap'
 
 
-
 class Leaderboard extends Component {
 
   render() {
     return (
       <div  className='z-depth-5' >
-        <h5 style={{color: 'whitesmoke'}}>Leaderboard</h5>
+        <h5 className={"gamesText"}>Leaderboard</h5>
         <Table dark>
           <thead>
           <tr>

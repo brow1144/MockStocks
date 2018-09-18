@@ -40,6 +40,15 @@ class MyStocks extends Component {
             <td>3</td>
           </tr>
           </tbody>
+          <tbody>
+          <tr>
+            <th>Total </th>
+            <th> </th>
+            <th> </th>
+            <th>$330.30</th>
+            <th>9</th>
+          </tr>
+          </tbody>
         </Table>
       </div>
     );
