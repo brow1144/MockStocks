@@ -48,7 +48,7 @@ class Games extends Component {
           <NavBar/>
         </div>
         <Row style={{paddingTop: '9em'}} className='blackBackground body_div'>
-          <Col md="8">
+          <Col md="9">
             <Row>
               <Col md="1"/>
               <Col md="2">
@@ -74,14 +74,14 @@ class Games extends Component {
               </Col>
             </Row>
           </Col>
-          <Col md="4">
+          <Col md="3">
             <Row>
               <Col md='1'/>
-              <Col md='4'>
+              <Col md='11'>
                 <h5 className={"gamesText"}>Active Games</h5>
                 <CreateGame/>
               </Col>
-              <Col md='1'/>
+
             </Row>
           </Col>
         </Row>
