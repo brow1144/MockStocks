@@ -7,6 +7,8 @@ import BuySellCard from '../Components/BuySellCard'
 
 import {Row, Col} from 'reactstrap'
 
+import '../Static/CSS/StockPage.css';
+
 import axios from 'axios'
 
 class StockPage extends Component {
@@ -16,12 +18,18 @@ class StockPage extends Component {
     this.state = {
       stockData: [],
       currentPrice: 0,
+      oneD: '',
+      oneWeek: '',
+      oneMonth: '',
+      threeMonths: 'selected',
+      oneYear: '',
+      all: '',
     }
   }
 
   componentWillMount() {
     let self = this
-    axios.get(`http://localhost:8080/Portfol.io/Stock/${this.props.stock}/Monthly`)
+    axios.get(`http://localhost:8080/Portfol.io/Stock/${this.props.stock}/Daily`)
       .then(function (response) {
         // handle success
         let stockData = response.data;
@@ -38,8 +46,26 @@ class StockPage extends Component {
         console.log(`Oh no! Our API didn't respond. Please refresh and try again`)
         console.log(`Btw here is the error message\n\n`)
         console.log(error);
-      })
+    })
+  }
 
+  handleTimeChange = (timeFrame) => {
+  
+    this.setState({
+      oneDay: '',
+      oneWeek: '',
+      oneMonth: '',
+      threeMonths: '',
+      oneYear: '',
+      all: '',
+    }, () => {
+      this.setState({
+        [`${timeFrame}`]: 'selected',
+      })
+    })
+
+
+    // Make call for new stock Data
   }
 
   render() { 
@@ -66,6 +92,9 @@ class StockPage extends Component {
         valueDecimals: 2,
         valuePrefix: '$',
         valueSuffix: ' USD'
+      }, 
+      rangeSelector:{
+        enabled:false
       },
     }
 
@@ -75,6 +104,14 @@ class StockPage extends Component {
         <Col style={{paddingTop: '7em'}} md='6'> 
           <h1 className='stockTitle'>{this.props.stock}</h1>
           <h2 className='stockPrice'>${this.state.currentPrice}</h2>
+
+          <b onClick={() => this.handleTimeChange('oneDay')} className={`timeFrame ${this.state.oneDay}`}>1D</b>
+          <b onClick={() => this.handleTimeChange('oneWeek')} className={`timeFrame ${this.state.oneWeek}`}>1W</b>
+          <b onClick={() => this.handleTimeChange('oneMonth')} className={`timeFrame ${this.state.oneMonth}`}>1M</b>
+          <b onClick={() => this.handleTimeChange('threeMonths')} className={`timeFrame ${this.state.threeMonths}`}>3M</b>
+          <b onClick={() => this.handleTimeChange('oneYear')} className={`timeFrame ${this.state.oneYear}`}>1Y</b>   
+          <b onClick={() => this.handleTimeChange('all')} className={`timeFrame ${this.state.all}`}>All</b>
+
           <HighchartsReact
             className='highcharts-container'
             highcharts={Highcharts}
