@@ -14,7 +14,7 @@ class Leaderboard extends Component {
             <th>Rank</th>
             <th>Username</th>
             <th>Total Assets</th>
-            <th>Transactions Left</th>
+            <th>Trades Left</th>
           </tr>
           </thead>
           <tbody>
