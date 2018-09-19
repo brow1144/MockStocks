@@ -29,11 +29,12 @@ class Games extends Component {
 
   /**
    *
-   * Retrieve users for leaderboard and info about the current user
+   * Retrieve array of game objects for a user
    *
    */
 
   componentWillMount () {
+    // Make server call for data
 
   };
 
