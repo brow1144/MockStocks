@@ -48,19 +48,21 @@ class Games extends Component {
           <NavBar/>
         </div>
         <Row style={{paddingTop: '9em'}} className='blackBackground body_div'>
+          <Col md="4"/>
+          <Col md="5">
+            <h5 className={"gamesText "}>Floor Name : {this.state.floorName}</h5>
+          </Col>
+        </Row>
+        <Row style={{paddingTop: '2em'}} className='blackBackground body_div'>
           <Col md="9">
             <Row>
               <Col md="1"/>
               <Col md="2">
                 <h5 className={"gamesText"}>Floor Code : {this.state.floorCode}</h5>
               </Col>
-              <Col md="1"/>
-              <Col md="5">
-                <h5 className={"gamesText "}>Floor Name : {this.state.floorName}</h5>
-              </Col>
-
+              <Col md="6"/>
               <Col md="3">
-                <h5 className={"gamesText"}>My Money : ${this.state.money}</h5>
+                <h5 className={"gamesText"}>Spending Money : ${this.state.money}</h5>
               </Col>
             </Row>
             <Row  style={{paddingTop: '4em'}} className='blackBackground body_div'>
