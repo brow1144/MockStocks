@@ -1,6 +1,7 @@
 import bodyParser from 'body-parser';
 import {getUsers} from '../Models/testMongo'; // must import models that we need
 import {getStock, getTickers, loadTickers} from '../Models/stockDAO';
+import {getGamesByUser} from "../Models/gameDAO";
 
 let urlencodedParser = bodyParser.urlencoded({extended: false});
 
@@ -33,6 +34,16 @@ export default (app) => {
     const data = await getStock(req.params.stock, req.params.period);
     buildResponse(res, data);
   });
+
+  app.get('/Portfol.io/Games/By/User/:email', async (req, res) => {
+    const data = await getGamesByUser(req.params.email);
+    buildResponse(res, data);
+  });
+
+  // app.get('/Portfol.io/Games/Stocks/:game_guid', async (req, res) => {
+  //   const data = await getStock(req.params.game_guid);
+  //   buildResponse(res, data);
+  // });
 
   // WARNING : only call this if the database of tickers is down. It is a very large file to save into mongo and is better that it is untouched for now
   app.get('/Portfol.io/LoadTickers', async (req, res) => {
