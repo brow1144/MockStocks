@@ -80,7 +80,7 @@ class Games extends Component {
             <Row>
               <Col md='1'/>
               <Col md='11'>
-                <h5 className={"gamesText"}>Active Games</h5>
+                <h5 className={"gamesText"}>Trading Floors</h5>
                 <CreateGame/>
               </Col>
 
