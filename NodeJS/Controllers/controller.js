@@ -28,8 +28,9 @@ export default (app) => {
 
   });
 
-  app.get('/Portfol.io/Stock/:stock', async (req, res) => {
-    const data = await getStock(req.params.stock);
+  // Period is in the format : 'Monthly', 'Weekly', 'Daily', etc. Casing is important here.
+  app.get('/Portfol.io/Stock/:stock/:period', async (req, res) => {
+    const data = await getStock(req.params.stock, req.params.period);
     buildResponse(res, data);
   });
 

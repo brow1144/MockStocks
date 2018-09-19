@@ -1,0 +1,26 @@
+.symbol {
+  clear: both !important;
+  display: inline-block !important;
+  overflow: hidden !important;
+  white-space: nowrap !important;
+  font-size: 0.7em !important;
+  width: 40px !important;
+  padding-left: 20px !important;
+  color: whitesmoke !important;
+  padding-top: 10px;
+}
+
+.company {
+  clear: both !important;
+  display: inline-block !important;
+  overflow: hidden !important;
+  white-space: nowrap !important;
+  font-size: 0.7em !important;
+  padding-left: 50px !important;
+  color: whitesmoke !important;
+  padding-top: 10px;
+}
+
+.searchHover:hover {
+  background-color: #191818;
+}
