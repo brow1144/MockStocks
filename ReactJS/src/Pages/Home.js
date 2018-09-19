@@ -12,6 +12,7 @@ import axios from 'axios'
 // import moment from 'moment'
 
 import '../Static/CSS/Home.css'
+import '../Static/CSS/StockPage.css';
 
 class Home extends Component {
   
@@ -21,6 +22,12 @@ class Home extends Component {
     this.state = {
       stockData: [],
       currentPrice: 0,
+      oneDay: 'selected',
+      oneWeek: '',
+      oneMonth: '',
+      threeMonths: '',
+      oneYear: '',
+      all: '',
     }
   }
 
@@ -55,7 +62,25 @@ class Home extends Component {
         console.log(`Btw here is the error message\n\n`);
         console.log(error);
       })
+  }
 
+  handleTimeChange = (timeFrame) => {
+  
+    this.setState({
+      oneDay: '',
+      oneWeek: '',
+      oneMonth: '',
+      threeMonths: '',
+      oneYear: '',
+      all: '',
+    }, () => {
+      this.setState({
+        [`${timeFrame}`]: 'selected',
+      })
+    })
+
+
+    // Make call for new stock Data
   }
 
   render() { 
@@ -84,6 +109,9 @@ class Home extends Component {
         valueSuffix: ' USD',
         xDateFormat: '%I %M %p'
       },
+      rangeSelector:{
+        enabled:false
+      },
     };
 
     return (
@@ -91,13 +119,22 @@ class Home extends Component {
         <Col md='1'/>
         <Col style={{paddingTop: '7em'}} md='6'> 
           <h2 className='stockPrice'>${this.state.currentPrice}</h2>
-          <br />
+          <br />          
+          
+          <b onClick={() => this.handleTimeChange('oneDay')} className={`timeFrame ${this.state.oneDay}`}>1D</b>
+          <b onClick={() => this.handleTimeChange('oneWeek')} className={`timeFrame ${this.state.oneWeek}`}>1W</b>
+          <b onClick={() => this.handleTimeChange('oneMonth')} className={`timeFrame ${this.state.oneMonth}`}>1M</b>
+          <b onClick={() => this.handleTimeChange('threeMonths')} className={`timeFrame ${this.state.threeMonths}`}>3M</b>
+          <b onClick={() => this.handleTimeChange('oneYear')} className={`timeFrame ${this.state.oneYear}`}>1Y</b>   
+          <b onClick={() => this.handleTimeChange('all')} className={`timeFrame ${this.state.all}`}>All</b>
+
           <HighchartsReact
             className='highcharts-container'
             highcharts={Highcharts}
             constructorType={'stockChart'}
             options={stockOptions}
           />
+
         </Col>
         <Col md='1'/>
         <Col style={{paddingTop: '6em'}} md='2'>
