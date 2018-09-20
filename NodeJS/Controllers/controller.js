@@ -1,6 +1,6 @@
 import bodyParser from 'body-parser';
 import {getUsers} from '../Models/testMongo'; // must import models that we need
-import {getStock, getTickers, loadTickers} from '../Models/stockDAO';
+import {getStock, getStockBatch, getTickers, loadTickers} from '../Models/stockDAO';
 import {getGamesByUser} from "../Models/gameDAO";
 
 let urlencodedParser = bodyParser.urlencoded({extended: false});
@@ -35,8 +35,21 @@ export default (app) => {
     buildResponse(res, data);
   });
 
-  app.get('/Portfol.io/Games/By/User/:email', async (req, res) => {
-    const data = await getGamesByUser(req.params.email);
+  // stockList is in the format of comma separated tickers
+  app.get('/Portfol.io/Batch/Stock/:stockList', async (req, res) => {
+    console.error('Hello');
+    console.error(req.params.stockList);
+    const data = await getStockBatch(req.params.stockList);
+    buildResponse(res, data);
+  });
+
+  // app.get('/Portfol.io/Stock/:stock/:period', async (req, res) => {
+  //   const data = await getStock(req.params.stock, req.params.period);
+  //   buildResponse(res, data);
+  // });
+
+  app.get('/Portfol.io/Games/By/User/:uid', async (req, res) => {
+    const data = await getGamesByUser(req.params.uid);
     buildResponse(res, data);
   });
 
