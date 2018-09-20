@@ -4,6 +4,14 @@ import { Table } from 'reactstrap'
 
 class Leaderboard extends Component {
 
+  constructor(props) {
+    super(props);
+  }
+
+  calculateStock = () => {
+
+  }
+
   render() {
     return (
       <div  className='z-depth-5' >

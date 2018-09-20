@@ -8,6 +8,7 @@ import MyStocks from '../Components/Games/MyStocks';
 import Leaderboard from '../Components/Games/Leaderboard';
 import CreateGame from '../Components/Games/CreateGame'
 import '../Static/CSS/Games.css';
+import axios from 'axios';
 
 class Games extends Component {
 
@@ -17,13 +18,16 @@ class Games extends Component {
     this.state = {
       // Array of user objects for the leaderboard
       users: [{}],
-      // Array of stocks for the stock list
+      // Array of player's stock objects
       myStocks: [{}],
-      // Array of current games
+      // Array of game objects
       myFloors: [{}],
       money: 0,
       floorCode: "",
       floorName: "xxN0Sc0p35xx",
+
+      //Current game object
+      currentGame: [{}],
     };
   }
 
@@ -35,14 +39,30 @@ class Games extends Component {
 
   componentWillMount () {
     // Make server call for data
+    let self = this;
+    axios.get(`http://localhost:8080/Portfol.io/Games`)///${this.props.currentGame.name}
+      .then(function (response) {
+        /* handle success
+        let gameData = response.data;
 
+
+        self.setState({
+          myFloors: gameData,
+          currentGame: gameData[0],
+        })*/
+
+      })
+      .catch(function (error) {
+        // handle error
+        console.log(`Oh no! Our API didn't respond. Please refresh and try again`)
+        console.log(`Btw here is the error message\n\n`)
+        console.log(error);
+      })
   };
 
 
 
   render() {
-
-
     return (
       <div>
         <div className='navbar-fixed'>
@@ -69,7 +89,7 @@ class Games extends Component {
             <Row  style={{paddingTop: '4em'}} className='blackBackground body_div'>
               <Col md='1'/>
               <Col md='5'>
-                <Leaderboard/>
+                <Leaderboard players={this.state.currentGame.active_players}/>
               </Col>
               <Col md='1'/>
               <Col md='5'>
