@@ -3,6 +3,7 @@ import bodyParser from 'body-parser';
 
 import controller from './controllers/controller';
 import userController from './controllers/userController';
+import gameController from './controllers/gameController';
 
 // connect to the database
 import db from './config/db';
@@ -15,6 +16,7 @@ app.use(bodyParser.json());
 // run controllers
 controller(app);
 userController(app);
+gameController(app);
 
 // listen to port
 app.listen(8080, () => {

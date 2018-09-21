@@ -1,5 +1,5 @@
 import bodyParser from 'body-parser';
-import {getUser, addUser, getActiveGames} from '../Models/userDAO';
+import {getUser, addUser} from '../Models/userDAO';
 
 export default (app) => {
   app.post('/Portfol.io/CreateAccount', async (req, res) => {

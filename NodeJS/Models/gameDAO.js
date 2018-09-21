@@ -2,17 +2,38 @@ import mongoose from 'mongoose';
 
 // create a schema - this is like a blueprint
 export const gameSchema = new mongoose.Schema({
-  active_players: Array,
+  code: String,
+  name: String,
+  leader_email: String,
   starting_amount: Number,
   trade_limit: Number,
-  start_time: Number,
-  end_time: Number
+  start_time: Date,
+  end_time: Date,
+  active_players: Array
 });
 
+let gameModel = mongoose.model('Game', gameSchema);
+
+export function createGame(game) {
+  return new Promise((resolve, reject) => {
+    for (let i in game) {
+      if (game.hasOwnProperty(i)) {
+        console.log(game[i]);
+        if (game[i] == '') {
+          reject('Each field must have information');
+        }
+      }
+    }
+
+    gameModel.create(game, (err, response) => {
+      if (err) reject(err);
+      resolve(response);
+    });
+  });
+};
 
 export function getGamesByUser(uid) {
   const findClause = {active_players: {$elemMatch: {uid: uid}}};
-  let gameModel = mongoose.model('Game', gameSchema);
   return gameModel.find(findClause)
     .then((data) => {
       return Promise.resolve({games: data});

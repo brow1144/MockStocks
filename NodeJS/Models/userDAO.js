@@ -25,9 +25,6 @@ export function getUser(userEmail) {
 
 export function addUser(user) {
   return new Promise((resolve, reject) => {
-    // const {first_name, last_name, email, username, active_games, pending_games,
-    //   completed_games, owned_stocks, trade_history, watchlist} = user;
-
     for (let i in user) {
       if (user.hasOwnProperty(i)) {
         console.log(user[i]);
