@@ -24,6 +24,20 @@ export function getStock(stockTicker, period) {
     })
 }
 
+export function getStockBatch(stockList) {
+  console.error(stockList);
+  return axios.get(`https://www.alphavantage.co/query?function=BATCH_STOCK_QUOTES&symbols=${stockList}&apikey=WIOGAHD0RJEEZ59V`)
+    .then((response) => {
+      // handle success
+      let data = response.data['Stock Quotes'];
+      console.error(data);
+      return Promise.resolve({stockQuotes: data});
+    })
+    .catch((error) => {
+      console.log(error);
+    })
+}
+
 const tickerSchema = new mongoose.Schema({
   tickers: Array
 });
