@@ -13,6 +13,7 @@ class GameList extends Component {
     this.props.updateGame(newIndex);
   };
 
+
   render() {
 
     return (

@@ -4,6 +4,8 @@ import SignIn from './Pages/SignIn'
 import CreateUser from './Pages/CreateUser'
 import Main from './Main'
 import Games from './Pages/Games'
+import Trending from './Pages/Trending'
+import Learn from './Pages/Learn'
 import Home from './Pages/Home'
 import StockPage from './Pages/StockPage'
 
@@ -77,6 +79,18 @@ class App extends Component {
         <Route path='/Portfol.io/Stocks/:stock' render={(match) => (
           this.signedIn()
             ? <Main component={StockPage} stock={match.match.params.stock} />
+            : <Redirect to={`/Portfol.io/SignIn`}/>
+        )}/>
+
+        <Route path='/Portfol.io/Trending' render={() => (
+          this.signedIn()
+            ? <Main component={Trending}/>
+            : <Redirect to={`/Portfol.io/SignIn`}/>
+        )}/>
+
+        <Route path='/Portfol.io/Learn' render={() => (
+          this.signedIn()
+            ? <Main component={Learn}/>
             : <Redirect to={`/Portfol.io/SignIn`}/>
         )}/>
 

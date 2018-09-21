@@ -3,11 +3,9 @@ import {gameSchema} from './gameDAO';
 
 export const userSchema = new mongoose.Schema({
   _id: String,
-  first_name: String,
-  last_name: String,
+  username: String
   email: String,
   active_games: Array,
-  owned_stocks: Array,
   watchlist: Array
 });
 
@@ -23,8 +21,10 @@ export function getUser(uid) {
   });
 };
 
-export function addUser(user) {
+export function createUser(user) {
   return new Promise((resolve, reject) => {
+
+    // TODO error checking
     for (let i in user) {
       if (user.hasOwnProperty(i)) {
         console.log(user[i]);
@@ -43,8 +43,14 @@ export function addUser(user) {
 };
 
 export function joinGame(uid, gameCode) {
+  const game = {
+    code: gameCode,
+    stocks: []
+  };
+
+  // TODO check if the user is already in game
   return new Promise((resolve, reject) => {
-    userModel.findOneAndUpdate({_id: uid}, {$push: {active_games: gameCode}}, {new: true}, (err, result) => {
+    userModel.findOneAndUpdate({_id: uid}, {$push: {active_games: game}}, {new: true}, (err, result) => {
       if (err) reject(err);
       resolve(result);
     });
