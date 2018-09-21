@@ -91,15 +91,24 @@ class NavBar extends Component {
 
           </div>
         </Col>
-        <Col sm='3' />
-        <Col className='navText' sm='1'>
+        <Col className='navText' sm='1' md='1'>
           <NavLink to={'/Portfol.io/Home'} style={{textDecoration: 'none'}}>
             <b className='navText' style={{fontSize: '1em'}}>Home</b>
           </NavLink>        
         </Col>
-        <Col className='navText' sm='1'>
+        <Col className='navText' sm='1' md='1'>
+          <NavLink to={'/Portfol.io/Trending'} style={{textDecoration: 'none'}}>
+            <b className='navText' style={{fontSize: '1em'}}>Trending</b>
+          </NavLink>
+        </Col>
+        <Col className='navText' sm='1' md='1'>
           <NavLink to={'/Portfol.io/Games'} style={{textDecoration: 'none'}}>
             <b className='navText' style={{fontSize: '1em'}}>Games</b>
+          </NavLink>
+        </Col>
+        <Col className='navText' sm='1' md='1'>
+          <NavLink to={'/Portfol.io/Learn'} style={{textDecoration: 'none'}}>
+            <b className='navText' style={{fontSize: '1em'}}>Learn</b>
           </NavLink>
         </Col>
         <Col className='blackBack' sm='1' />
