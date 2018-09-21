@@ -13,8 +13,8 @@ export default (app) => {
     buildResponse(res, data);
   });
 
-  app.get('/Portfol.io/getuser/:email', async (req, res) => {
-    const data = await getUser(req.params.email);
+  app.get('/Portfol.io/:uid', async (req, res) => {
+    const data = await getUser(req.params.uid);
     buildResponse(res, data);
   });
 
