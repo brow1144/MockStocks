@@ -18,6 +18,7 @@ class StockPage extends Component {
     this.state = {
       stockData: [],
       currentPrice: 0,
+      currentPriceFor: '',
       selected: 'Day',
     }
   }
@@ -33,10 +34,13 @@ class StockPage extends Component {
         // handle success
         let stockData = response.data;
         // let data = response.data['Time Series (1min)']
-        console.error(response.data);
+
+        let withCommas = Number(parseFloat(stockData[stockData.length-1]['y']).toFixed(2)).toLocaleString('en');
+
         self.setState({
           stockData: stockData,
-          currentPrice: stockData[stockData.length - 1]['y']
+          currentPrice: stockData[stockData.length-1]['y'],
+          currentPriceFor: withCommas
         })
 
       })
@@ -93,7 +97,7 @@ class StockPage extends Component {
           <h2 className='stockPrice'>${this.state.currentPrice}</h2>
 
           <b onClick={() => this.handleTimeChange('Day')} className={`timeFrame ${this.state.selected === 'Day' ? 'selected' : ''}`}>1D</b>
-          <b onClick={() => this.handleTimeChange('Week')} className={`timeFrame ${this.state.selected === 'Week' ? 'selected' : ''}`}>1W</b>
+          {/* <b onClick={() => this.handleTimeChange('Week')} className={`timeFrame ${this.state.selected === 'Week' ? 'selected' : ''}`}>1W</b> */}
           <b onClick={() => this.handleTimeChange('Month')} className={`timeFrame ${this.state.selected === 'Month' ? 'selected' : ''}`}>1M</b>
           <b onClick={() => this.handleTimeChange('TriMonth')} className={`timeFrame ${this.state.selected === 'TriMonth' ? 'selected' : ''}`}>3M</b>
           <b onClick={() => this.handleTimeChange('Year')} className={`timeFrame ${this.state.selected === 'Year' ? 'selected' : ''}`}>1Y</b>
@@ -108,7 +112,7 @@ class StockPage extends Component {
         </Col>
         <Col md='1'/>
         <Col style={{paddingTop: '6em'}} md='2'>
-          <BuySellCard stock={this.props.stock} currentPrice={this.state.currentPrice}/>
+          <BuySellCard stock={this.props.stock} currentPriceFor={this.state.currentPriceFor} currentPrice={this.state.currentPrice}/>
         </Col>
 
         <Col md='1'/>

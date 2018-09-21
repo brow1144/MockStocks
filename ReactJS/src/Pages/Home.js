@@ -33,7 +33,7 @@ class Home extends Component {
 
   componentWillMount() {
     let self = this;
-    axios.get('https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY&symbol=MSFT&interval=5min&apikey=WIOGAHD0RJEEZ59V')
+    axios.get('https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY&symbol=GOOGL&interval=5min&apikey=WIOGAHD0RJEEZ59V')
 
     // axios.get('https://www.alphavantage.co/query?function=TIME_SERIES_MONTHLY_ADJUSTED&symbol=AAPL&apikey=WIOGAHD0RJEEZ59V')
       .then(function (response) {
@@ -50,9 +50,11 @@ class Home extends Component {
           })
         }  
 
+        let withCommas = Number(parseFloat(stockData[stockData.length-1]['y']).toFixed(2)).toLocaleString('en');
+
         self.setState({
           stockData: stockData,
-          currentPrice: stockData[stockData.length-1]['y']
+          currentPrice: withCommas,
         })
 
       })

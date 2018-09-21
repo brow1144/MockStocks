@@ -25,9 +25,6 @@ export function getUser(userEmail) {
 
 export function addUser(user) {
   return new Promise((resolve, reject) => {
-    // const {first_name, last_name, email, username, active_games, pending_games,
-    //   completed_games, owned_stocks, trade_history, watchlist} = user;
-
     for (let i in user) {
       if (user.hasOwnProperty(i)) {
         console.log(user[i]);
@@ -45,12 +42,21 @@ export function addUser(user) {
   });
 };
 
+export function joinGame(uid, gameCode) {
+  return new Promise((resolve, reject) => {
+    userModel.findOneAndUpdate({_id: uid}, {$push: {active_games: gameCode}}, {new: true}, (err, result) => {
+      if (err) reject(err);
+      resolve(result);
+    });
+  });
+};
+
 function getGame(code) {
-  return new Promise(function(resolve, reject) {
+  return new Promise((resolve, reject) => {
     gameModel.findOne({code: code}, (err, game) => {
       if (err) reject(err);
       resolve(game);
-    })
+    });
   });
 }
 
