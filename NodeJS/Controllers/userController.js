@@ -5,8 +5,7 @@ export default (app) => {
   app.post('/Portfol.io/CreateAccount', async (req, res) => {
     let user = {
       _id: req.body._id,
-      first_name: req.body.first_name,
-      last_name: req.body.last_name,
+      username: req.body.username,
       email: req.body.email
     };
 

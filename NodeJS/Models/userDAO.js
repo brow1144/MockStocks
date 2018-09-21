@@ -3,12 +3,9 @@ import {gameSchema} from './gameDAO';
 
 export const userSchema = new mongoose.Schema({
   _id: String,
-  first_name: String,
-  last_name: String,
+  username: String
   email: String,
   active_games: Array,
-  owned_stocks: Array,
-  watchlist: Array
 });
 
 let userModel = mongoose.model('User', userSchema);
@@ -25,6 +22,8 @@ export function getUser(userEmail) {
 
 export function addUser(user) {
   return new Promise((resolve, reject) => {
+
+    // TODO error checking
     for (let i in user) {
       if (user.hasOwnProperty(i)) {
         console.log(user[i]);
