@@ -7,6 +7,7 @@ import NavBar from '../Components/NavBar';
 import MyStocks from '../Components/Games/MyStocks';
 import Leaderboard from '../Components/Games/Leaderboard';
 import CreateGame from '../Components/Games/CreateGame'
+import GameList from '../Components/Games/GamesList';
 import '../Static/CSS/Games.css';
 import axios from 'axios';
 
@@ -77,7 +78,9 @@ class Games extends Component {
           </Col>
         </Row>
         <Row style={{paddingTop: '2em'}} className='blackBackground body_div'>
-          <Col md="9">
+
+          <Col>
+
             <Row>
               <Col md="1"/>
               <Col md="2">
@@ -88,28 +91,33 @@ class Games extends Component {
                 <h5 className={"gamesText"}>Spending Money : ${this.state.money}</h5>
               </Col>
             </Row>
+
             <Row  style={{paddingTop: '4em'}} className='blackBackground body_div'>
-              <Col md='1'/>
-              <Col md='5'>
-                <Leaderboard players={this.state.currentGame.active_players}/>
+              <Col md='9'>
+                <Row>
+                <Col md='1'/>
+                <Col md='5'>
+                  <Leaderboard players={this.state.currentGame.active_players}/>
+                </Col>
+                <Col md='1'/>
+                <Col md='5'>
+                  <MyStocks/>
+                </Col>
+                </Row>
               </Col>
+
               <Col md='1'/>
-              <Col md='5'>
-                <MyStocks/>
-              </Col>
-            </Row>
-          </Col>
-          <Col md="3">
-            <Row>
-              <Col md='1'/>
-              <Col md='11'>
-                <h5 className={"gamesText"}>Trading Floors</h5>
+
+              <Col md='2'>
+                <GameList/>
                 <CreateGame/>
               </Col>
 
             </Row>
+
           </Col>
         </Row>
+
       </div>
     );
   }
