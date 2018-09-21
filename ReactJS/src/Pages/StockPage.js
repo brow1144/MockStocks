@@ -76,13 +76,14 @@ class StockPage extends Component {
       xAxis: {
         type: 'datetime',
         dateTimeLabelFormats: {
-          day: '%h:%M'
+          hour: '%I %p'
         },
       },
       tooltip: {
         valueDecimals: 2,
         valuePrefix: '$',
-        valueSuffix: ' USD'
+        valueSuffix: ' USD',
+        xDateFormat: '%I %M %p'
       },
       rangeSelector: {
         enabled: false
@@ -97,7 +98,6 @@ class StockPage extends Component {
           <h2 className='stockPrice'>${this.state.currentPrice}</h2>
 
           <b onClick={() => this.handleTimeChange('Day')} className={`timeFrame ${this.state.selected === 'Day' ? 'selected' : ''}`}>1D</b>
-          {/* <b onClick={() => this.handleTimeChange('Week')} className={`timeFrame ${this.state.selected === 'Week' ? 'selected' : ''}`}>1W</b> */}
           <b onClick={() => this.handleTimeChange('Month')} className={`timeFrame ${this.state.selected === 'Month' ? 'selected' : ''}`}>1M</b>
           <b onClick={() => this.handleTimeChange('TriMonth')} className={`timeFrame ${this.state.selected === 'TriMonth' ? 'selected' : ''}`}>3M</b>
           <b onClick={() => this.handleTimeChange('Year')} className={`timeFrame ${this.state.selected === 'Year' ? 'selected' : ''}`}>1Y</b>
