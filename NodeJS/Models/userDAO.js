@@ -3,7 +3,7 @@ import {gameSchema} from './gameDAO';
 
 export const userSchema = new mongoose.Schema({
   _id: String,
-  username: String
+  username: String,
   email: String,
   active_games: Array,
   watchlist: Array
