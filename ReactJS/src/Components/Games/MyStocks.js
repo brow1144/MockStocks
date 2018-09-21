@@ -3,10 +3,6 @@ import { Table } from 'reactstrap'
 
 class MyStocks extends Component {
 
-  constructor(props) {
-    super(props);
-  }
-
   render() {
     return (
       <div className='z-depth-5' >
