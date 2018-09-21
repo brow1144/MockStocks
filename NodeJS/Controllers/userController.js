@@ -3,8 +3,8 @@ import {getUser, addUser} from '../Models/userDAO';
 
 export default (app) => {
   app.post('/Portfol.io/CreateAccount', async (req, res) => {
-    console.error(req.body);
     let user = {
+      _id: req.body._id,
       first_name: req.body.first_name,
       last_name: req.body.last_name,
       email: req.body.email

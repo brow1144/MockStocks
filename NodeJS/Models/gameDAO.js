@@ -32,6 +32,15 @@ export function createGame(game) {
   });
 };
 
+export function addUserToGame(uid, gameCode) {
+  return new Promise((resolve, reject) => {
+    gameModel.findOneAndUpdate({code: gameCode}, {$push: {active_players: uid}}, {new: true}, (err, result) => {
+      if (err) reject(err);
+      resolve(result);
+    });
+  });
+};
+
 export function getGamesByUser(uid) {
   const findClause = {active_players: {$elemMatch: {uid: uid}}};
   return gameModel.find(findClause)

@@ -1,9 +1,9 @@
 import bodyParser from 'body-parser';
-import {createGame} from "../Models/gameDAO";
+import {createGame, addUserToGame} from "../Models/gameDAO";
+import {joinGame} from '../Models/userDAO';
 
 export default (app) => {
   app.post('/Portfol.io/Games', async (req, res) => {
-    console.log(req.body);
     let game = {
       code: req.body.code,
       name: req.body.name,
@@ -18,6 +18,17 @@ export default (app) => {
     buildResponse(res, data);
   });
 
+  app.put('/Portfol.io/Games/:uid/:gameCode', async (req, res) => {
+    let user = await joinGame(req.params.uid, req.params.gameCode);
+    let game = await addUserToGame(req.params.uid, req.params.gameCode);
+    let data = {
+      user: user,
+      game: game
+    }
+
+    buildResponse(res, data);
+  });
+
   // app.get('/Portfol.io/getActiveGames/:email', async (req, res) => {
   //   const data = await getActiveGames(req.params.email);
   //   buildResponse(res, data);
@@ -25,7 +36,8 @@ export default (app) => {
 };
 
 const buildResponse = (res, data) => {
-  res.header("Access-Control-Allow-Origin", "http://localhost:3000");
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Methods", "GET, POST, PUT, OPTIONS");
   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
   data && res.status(200).json(data);
 };
