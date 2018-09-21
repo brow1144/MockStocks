@@ -20,6 +20,8 @@ class StockPage extends Component {
       currentPrice: 0,
       currentPriceFor: '',
       selected: 'Day',
+      visibleData: false,
+      visible: false,
       // stockCache: {
       //   month: {},
       //   threeMonths: {},
@@ -76,11 +78,7 @@ class StockPage extends Component {
     }, () => this._getData());
 
   };
-
-  onDismiss = () => {
-    this.setState({ visible: false })
-  }
-
+  
   render() {
 
     const stockOptions = {
@@ -116,6 +114,13 @@ class StockPage extends Component {
     let errorMessage;
     if (this.state.visible) {
       errorMessage = <p style={{color: 'whitesmoke'}}>Oh no! Our API did not respond, please refresh to get the updated data!</p>
+    } else {
+      errorMessage = null;
+    }
+
+    let errorMessage2;
+    if (this.state.visibleData) {
+      errorMessage = <p style={{color: 'whitesmoke'}}>Oh no! We don't have enough datapoints for this!</p>
     } else {
       errorMessage = null;
     }
