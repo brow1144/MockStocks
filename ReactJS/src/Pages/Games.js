@@ -46,28 +46,31 @@ class Games extends Component {
         // handle success
         let gameData = response.data;
 
-        self.setState({
-          myFloors: gameData.games,
-          currentGame: gameData.games[0],
-        }, () => {
-          // Second call to the server to get all the user objects
-          for (let x = 0; x < self.state.currentGame.active_players.length; x++) {
-            axios.get(`http://localhost:8080/Portfol.io/${self.state.currentGame.active_players[x]}`)
-              .then(function (response) {
-                // handle success
-                let user = response.data;
-                let newArray = self.state.users;
-                newArray[x] = user;
+        if (gameData.games == null) {
+          self.setState({
+            myFloors: gameData.games,
+            currentGame: gameData.games[0],
+          }, () => {
+            // Second call to the server to get all the user objects
+            for (let x = 0; x < self.state.currentGame.active_players.length; x++) {
+              axios.get(`http://localhost:8080/Portfol.io/${self.state.currentGame.active_players[x]}`)
+                .then(function (response) {
+                  // handle success
+                  let user = response.data;
+                  let newArray = self.state.users;
+                  newArray[x] = user;
 
-                self.setState({
-                  users: newArray,
-                })
+                  self.setState({
+                    users: newArray,
+                  })
 
-              }).catch(function (err){
+                }).catch(function (err) {
                 console.log("Cannot get users for the current game");
                 console.log(err);
               })
-          }})
+            }
+          })
+        }
 
       })
       .catch(function (error) {
