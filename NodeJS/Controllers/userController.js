@@ -1,10 +1,15 @@
 import bodyParser from 'body-parser';
 import {getUser, addUser, getActiveGames} from '../Models/userDAO';
 
-let urlencodedParser = bodyParser.urlencoded({extended: false});
-
 export default (app) => {
-  app.post('/Portfol.io/CreateAccount/:user', async (req, res) => {
+  app.post('/Portfol.io/CreateAccount', async (req, res) => {
+    console.log(req.body);
+    let user = {
+      first_name: req.body.first_name,
+      last_name: req.body.last_name,
+      email: req.body.email
+    };
+
     const data = await addUser(user);
     buildResponse(res, data);
   });
@@ -14,10 +19,10 @@ export default (app) => {
     buildResponse(res, data);
   });
 
-  app.get('/Portfol.io/getActiveGames/:email', async (req, res) => {
-    const data = await getActiveGames(req.params.email);
-    buildResponse(res, data);
-  });
+  // app.get('/Portfol.io/getActiveGames/:email', async (req, res) => {
+  //   const data = await getActiveGames(req.params.email);
+  //   buildResponse(res, data);
+  // });
 };
 
 const buildResponse = (res, data) => {

@@ -2,6 +2,7 @@ import mongoose from 'mongoose';
 import {gameSchema} from './gameDAO';
 
 export const userSchema = new mongoose.Schema({
+  _id: String,
   first_name: String,
   last_name: String,
   email: String,
@@ -17,7 +18,6 @@ export function getUser(userEmail) {
   return new Promise((resolve, reject) => {
     userModel.findOne({email: userEmail}, (err, user) => {
       if (err) reject(err);
-
       resolve(user);
     });
   });
@@ -28,9 +28,10 @@ export function addUser(user) {
     // const {first_name, last_name, email, username, active_games, pending_games,
     //   completed_games, owned_stocks, trade_history, watchlist} = user;
 
-    for (let field in user) {
-      if (user.hasOwnProperty(field)) {
-        if (user[field] == '') {
+    for (let i in user) {
+      if (user.hasOwnProperty(i)) {
+        console.log(user[i]);
+        if (user[i] == '') {
           reject('Each field must have information');
         }
 
@@ -53,25 +54,25 @@ function getGame(code) {
   });
 }
 
-export function getActiveGames(userEmail) {
-  return new Promise((resolve, reject) => {
-    userModel.findOne({email: userEmail}, 'active_games', async (err, response) => {
-      if (err) reject(err);
-
-      response = response.toObject();
-      let gamesList = response.active_games;
-      let games = [];
-
-      for (let i in gamesList) {
-        if (gamesList.hasOwnProperty(i)) {
-          let game = await getGame(gamesList[i]);
-
-          if (game != null)
-            games.push(game);
-        }
-      }
-
-      resolve(games);
-    });
-  });
-};
+// export function getActiveGames(userEmail) {
+//   return new Promise((resolve, reject) => {
+//     userModel.findOne({email: userEmail}, 'active_games', async (err, response) => {
+//       if (err) reject(err);
+//
+//       response = response.toObject();
+//       let gamesList = response.active_games;
+//       let games = [];
+//
+//       for (let i in gamesList) {
+//         if (gamesList.hasOwnProperty(i)) {
+//           let game = await getGame(gamesList[i]);
+//
+//           if (game != null)
+//             games.push(game);
+//         }
+//       }
+//
+//       resolve(games);
+//     });
+//   });
+// };

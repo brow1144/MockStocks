@@ -3,7 +3,7 @@ import {getStock, getStockBatch, getTickers, loadTickers} from '../Models/stockD
 import {getGamesByUser} from "../Models/gameDAO";
 import {getUsers, addUser} from '../Models/userDAO';
 
-let urlencodedParser = bodyParser.urlencoded({extended: false});
+//let urlencodedParser = bodyParser.urlencoded({extended: false});
 
 export default (app) => {
   // heres the endpoints obviously
