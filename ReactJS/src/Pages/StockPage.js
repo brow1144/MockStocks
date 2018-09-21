@@ -20,6 +20,12 @@ class StockPage extends Component {
       currentPrice: 0,
       currentPriceFor: '',
       selected: 'Day',
+      // stockCache: {
+      //   month: {},
+      //   threeMonths: {},
+      //   oneYear: {},
+      //   all: {},
+      // },
     }
   }
 
@@ -29,6 +35,9 @@ class StockPage extends Component {
 
   _getData() {
     let self = this;
+
+    // Cache Stuff Go here eventually
+
     axios.get(`http://localhost:8080/Portfol.io/Stock/${this.props.stock}/${this.state.selected}`)
       .then((response) => {
         // handle success
@@ -37,15 +46,24 @@ class StockPage extends Component {
 
         let withCommas = Number(parseFloat(stockData[stockData.length-1]['y']).toFixed(2)).toLocaleString('en');
 
-        self.setState({
-          stockData: stockData,
-          currentPrice: stockData[stockData.length-1]['y'],
-          currentPriceFor: withCommas
-        })
+        self.setState({visible: false})
+
+        if (Object.keys(stockData).length < 5) {
+          self.setState({visibleData: true})
+        } else {
+          self.setState({
+            stockData: stockData,
+            currentPrice: stockData[stockData.length-1]['y'],
+            currentPriceFor: withCommas
+          })
+        }
 
       })
       .catch((error) => {
-        // handle error
+        // handle error      
+        
+        self.setState({visible: true})
+
         console.log(`Oh no! Our API didn't respond. Please refresh and try again`);
         console.log(`Btw here is the error message\n\n`);
         console.log(error);
@@ -58,6 +76,10 @@ class StockPage extends Component {
     }, () => this._getData());
 
   };
+
+  onDismiss = () => {
+    this.setState({ visible: false })
+  }
 
   render() {
 
@@ -89,12 +111,23 @@ class StockPage extends Component {
       },
     };
 
+
+    let errorMessage;
+    if (this.state.visible) {
+      errorMessage = <p style={{color: 'whitesmoke'}}>Oh no! Our API did not respond, please refresh to get the updated data!</p>
+    } else {
+      errorMessage = null;
+    }
+
     return (
       <Row style={{marginBottom: '1000em'}} className='blackBackground body_div'>
         <Col md='1'/>
         <Col style={{paddingTop: '7em'}} md='6'>
+
           <h1 className='stockTitle'>{this.props.stock}</h1>
-          <h2 className='stockPrice'>${this.state.currentPrice}</h2>
+          <h2 className='stockPrice'>${this.state.currentPriceFor}</h2>
+
+          {errorMessage}
 
           <b onClick={() => this.handleTimeChange('Day')} className={`timeFrame ${this.state.selected === 'Day' ? 'selected' : ''}`}>1D</b>
           {/* <b onClick={() => this.handleTimeChange('Week')} className={`timeFrame ${this.state.selected === 'Week' ? 'selected' : ''}`}>1W</b> */}

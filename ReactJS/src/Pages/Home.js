@@ -28,6 +28,8 @@ class Home extends Component {
       threeMonths: '',
       oneYear: '',
       all: '',
+      visible: false,
+      visibleData: false,
     }
   }
 
@@ -52,19 +54,33 @@ class Home extends Component {
 
         let withCommas = Number(parseFloat(stockData[stockData.length-1]['y']).toFixed(2)).toLocaleString('en');
 
-        self.setState({
-          stockData: stockData,
-          currentPrice: withCommas,
-        })
+        self.setState({visible: false})
+
+        if (Object.keys(stockData).length < 5) {
+          self.setState({visibleData: true})
+        } else {
+          self.setState({
+            stockData: stockData,
+            currentPrice: withCommas,
+          })
+        }
 
       })
       .catch(function (error) {
         // handle error
+
+        self.setState({visible: true})
+
         console.log(`Oh no! Our API didn't respond. Please refresh and try again`);
         console.log(`Btw here is the error message\n\n`);
         console.log(error);
       })
   }
+
+  onDismiss = () => {
+    this.setState({ visible: false })
+  }
+
 
   handleTimeChange = (timeFrame) => {
   
@@ -116,15 +132,31 @@ class Home extends Component {
       },
     };
 
+    let errorMessage;
+    if (this.state.visible) {
+      errorMessage = <p style={{color: 'whitesmoke'}}>Oh no! Our API did not respond, please refresh to get the updated data!</p>
+    } else {
+      errorMessage = null;
+    }
+
+    let notEnoughData;
+    if (this.state.visibleData) {
+      notEnoughData = <p style={{color: 'whitesmoke'}}>Oh no! You don't have enough data to show!</p>
+    } else {
+      notEnoughData = null;
+    }
+
     return (
       <Row style={{marginBottom: '1000em'}} className='blackBackground body_div'>
         <Col md='1'/>
-        <Col style={{paddingTop: '7em'}} md='6'> 
+        <Col style={{paddingTop: '7em'}} md='6'>  
           <h2 className='stockPrice'>${this.state.currentPrice}</h2>
           <br />          
+          {errorMessage}
+          {notEnoughData}
           
           <b onClick={() => this.handleTimeChange('oneDay')} className={`timeFrame ${this.state.oneDay}`}>1D</b>
-          <b onClick={() => this.handleTimeChange('oneWeek')} className={`timeFrame ${this.state.oneWeek}`}>1W</b>
+          {/* <b onClick={() => this.handleTimeChange('oneWeek')} className={`timeFrame ${this.state.oneWeek}`}>1W</b> */}
           <b onClick={() => this.handleTimeChange('oneMonth')} className={`timeFrame ${this.state.oneMonth}`}>1M</b>
           <b onClick={() => this.handleTimeChange('threeMonths')} className={`timeFrame ${this.state.threeMonths}`}>3M</b>
           <b onClick={() => this.handleTimeChange('oneYear')} className={`timeFrame ${this.state.oneYear}`}>1Y</b>   
