@@ -8,6 +8,7 @@ import moment from 'moment';
 import 'react-datepicker/dist/react-datepicker.css';
 
 import '../../Static/CSS/CreateGame.css'
+import axios from "axios/index";
 
 class CreateGame extends Component {
 
@@ -16,11 +17,17 @@ class CreateGame extends Component {
     this.state = {
       modal: false,
       startDate: moment(),
+      endDate: moment(),
       waiting: true,
       joinGame: false,
-      createGame: false
+      createGame: false,
+      code: 0,
+      name: "",
+      leader_email: "",
+      starting_amount: 0,
+      trade_limit: 0,
     };
-    this.handleChange = this.handleChange.bind(this);
+
   }
 
   toggle = () => {
@@ -48,19 +55,107 @@ class CreateGame extends Component {
     });
   }
 
-  handleChange(date) {
+  handleChangeStart =(date)=> {
     this.setState({
       startDate: date
     });
   }
 
-  joinIt = () => {
+  handleChangeEnd =(date)=> {
+    this.setState({
+      endDate: date
+    });
+  }
 
+  generateId = () => {
+     return Math.floor(Math.random()*90000) + 10000;
+  }
+
+  joinIt = () => {
+    let self = this;
+    var gameId = this.state.code;
+
+    axios.put(`http://localhost:8080/Portfol.io/Games/${this.state._id}/${gameId}`,
+      {
+        code: gameId,
+        name: this.state.name,
+        leader_email: this.state.email,
+        starting_amount: this.state.starting_amount,
+        trade_limit: this.state.trade_limit,
+        start_time: this.state.startDate,
+        end_time: this.state.endDate
+      })
+
+    this.setState({
+      startDate: moment(),
+      endDate: moment(),
+      waiting: true,
+      joinGame: false,
+      createGame: false,
+      code: 0,
+      name: "",
+      leader_email: "",
+      starting_amount: 0,
+      trade_limit: 0,
+    });
+    this.toggle();
   }
 
   createIt = () => {
+    let self = this;
+    var gameId = this.generateId();
+    axios.post(`http://localhost:8080/Portfol.io/Games`,
+      {
+        code: gameId,
+        name: this.state.name,
+        leader_email: this.state.email,
+        starting_amount: this.state.starting_amount,
+        trade_limit: this.state.trade_limit,
+        start_time: this.state.startDate,
+        end_time: this.state.endDate
+      })
 
+    this.joinIt();
+
+    this.setState({
+      startDate: moment(),
+      endDate: moment(),
+      waiting: true,
+      joinGame: false,
+      createGame: false,
+      code: 0,
+      name: "",
+      leader_email: "",
+      starting_amount: 0,
+      trade_limit: 0,
+    });
+    this.toggle();
   }
+
+  curName = (event) => {
+    this.setState({name: event.target.value});
+  }
+
+  curStart = (event) => {
+    this.setState({startDate: event.target.value});
+  }
+
+  curEnd = (event) => {
+    this.setState({endDate: event.target.value});
+  }
+
+  curMoney = (event) => {
+    this.setState({starting_amount: event.target.value});
+  }
+
+  curLimit = (event) => {
+    this.setState({trade_limit: event.target.value});
+  }
+
+  curCode = (event) => {
+    this.setState({code: event.target.value});
+  }
+
   render() {
 
     return (
@@ -71,26 +166,28 @@ class CreateGame extends Component {
           {this.state.joinGame === true
             ?
             <ModalBody>
-              <Input label="Floor Code"/>
-              <Button color="grey" onClick={this.joining}>Join</Button>
+              <Input  value={this.state.code}  onChange={this.curCode} id="floorCode" label="Floor Code"/>
+              <Button color="grey" onClick={this.joinIt}>Join</Button>
             </ModalBody>
             :
             this.state.createGame === true
               ?
               <ModalBody>
-                <Input label="Floor name"/>
+                <Input value={this.state.name}  onChange={this.curName} id="floorName" label="Floor name"/>
                 Start Time
-                <DatePicker selected={this.state.startDate}
-                            onChange={this.handleChange} showTimeSelect
+                <DatePicker value={this.state.startDate}  onChange={this.curStart}
+                            id="startDate" selected={this.state.startDate}
+                            onChange={this.handleChangeStart} showTimeSelect
                             dateFormat="LLL"/>
                 <br/>
                 End Time
-                <DatePicker selected={this.state.startDate}
-                            onChange={this.handleChange} showTimeSelect
+                <DatePicker value={this.state.endDate}  onChange={this.curEnd}
+                            id="endDate" selected={this.state.endDate}
+                            onChange={this.handleChangeEnd} showTimeSelect
                             dateFormat="LLL"/>
-                <Input label="Starting Money (USD)"/>
-                <Input label="Transaction Limit"/>
-                <Button color="grey" onClick={this.creating}>Submit</Button>
+                <Input value={this.state.starting_amount}  onChange={this.curMoney} id="startingMoney" label="Starting Money (USD)"/>
+                <Input value={this.state.trade_limit}  onChange={this.curLimit} id="transLimit" label="Transaction Limit (0 for Unlimited)"/>
+                <Button color="grey" onClick={this.createIt}>Submit</Button>
               </ModalBody>
               : null
           }
