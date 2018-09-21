@@ -22,35 +22,29 @@ class Home extends Component {
     this.state = {
       stockData: [],
       currentPrice: 0,
-      oneDay: 'selected',
-      oneWeek: '',
-      oneMonth: '',
-      threeMonths: '',
-      oneYear: '',
-      all: '',
+      // oneDay: 'selected',
+      // oneWeek: '',
+      // oneMonth: '',
+      // threeMonths: '',
+      // oneYear: '',
+      // all: '',
       visible: false,
       visibleData: false,
+      selected: 'Day'
     }
   }
 
   componentWillMount() {
+    this._getData();
+  }
+
+  _getData() {
     let self = this;
-    axios.get('https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY&symbol=GOOGL&interval=5min&apikey=WIOGAHD0RJEEZ59V')
-
-    // axios.get('https://www.alphavantage.co/query?function=TIME_SERIES_MONTHLY_ADJUSTED&symbol=AAPL&apikey=WIOGAHD0RJEEZ59V')
-      .then(function (response) {
+    axios.get(`http://localhost:8080/Portfol.io/Stock/MSFT/${this.state.selected}`)
+      .then((response) => {
         // handle success
-        let stockData = [];
-        // let data = response.data['Monthly Adjusted Time Series']
-        let data = response.data['Time Series (5min)'];
-
-        for (let i in data) {
-          stockData.unshift({
-            x: new Date(i).getTime(),
-            // y: parseFloat(data[i]['5. adjusted close']),
-            y: parseFloat(data[i]['4. close']),
-          })
-        }  
+        let stockData = response.data;
+        // let data = response.data['Time Series (1min)']
 
         let withCommas = Number(parseFloat(stockData[stockData.length-1]['y']).toFixed(2)).toLocaleString('en');
 
@@ -60,13 +54,13 @@ class Home extends Component {
           self.setState({visibleData: true})
         } else {
           self.setState({
-            stockData: stockData,
-            currentPrice: withCommas,
+            tockData: stockData,
+            currentPrice: stockData[stockData.length-1]['y'],
+            currentPriceFor: withCommas
           })
         }
-
       })
-      .catch(function (error) {
+      .catch((error) => {
         // handle error
 
         self.setState({visible: true})
@@ -83,23 +77,11 @@ class Home extends Component {
 
 
   handleTimeChange = (timeFrame) => {
-  
     this.setState({
-      oneDay: '',
-      oneWeek: '',
-      oneMonth: '',
-      threeMonths: '',
-      oneYear: '',
-      all: '',
-    }, () => {
-      this.setState({
-        [`${timeFrame}`]: 'selected',
-      })
-    })
+      selected: timeFrame,
+    }, () => this._getData());
 
-
-    // Make call for new stock Data
-  }
+  };
 
   render() { 
 
@@ -112,7 +94,7 @@ class Home extends Component {
         }
       },
       series: [{
-          name: 'AAPL',
+          name: 'MSFT',
           data: this.state.stockData,
       }],
       xAxis: {
@@ -151,16 +133,16 @@ class Home extends Component {
         <Col md='1'/>
         <Col style={{paddingTop: '7em'}} md='6'>  
           <h2 className='stockPrice'>${this.state.currentPrice}</h2>
-          <br />          
+
+          <br />
           {errorMessage}
           {notEnoughData}
           
-          <b onClick={() => this.handleTimeChange('oneDay')} className={`timeFrame ${this.state.oneDay}`}>1D</b>
-          {/* <b onClick={() => this.handleTimeChange('oneWeek')} className={`timeFrame ${this.state.oneWeek}`}>1W</b> */}
-          <b onClick={() => this.handleTimeChange('oneMonth')} className={`timeFrame ${this.state.oneMonth}`}>1M</b>
-          <b onClick={() => this.handleTimeChange('threeMonths')} className={`timeFrame ${this.state.threeMonths}`}>3M</b>
-          <b onClick={() => this.handleTimeChange('oneYear')} className={`timeFrame ${this.state.oneYear}`}>1Y</b>   
-          <b onClick={() => this.handleTimeChange('all')} className={`timeFrame ${this.state.all}`}>All</b>
+          <b onClick={() => this.handleTimeChange('Day')} className={`timeFrame ${this.state.selected === 'Day' ? 'selected' : ''}`}>1D</b>
+          <b onClick={() => this.handleTimeChange('Month')} className={`timeFrame ${this.state.selected === 'Month' ? 'selected' : ''}`}>1M</b>
+          <b onClick={() => this.handleTimeChange('TriMonth')} className={`timeFrame ${this.state.selected === 'TriMonth' ? 'selected' : ''}`}>3M</b>
+          <b onClick={() => this.handleTimeChange('Year')} className={`timeFrame ${this.state.selected === 'Year' ? 'selected' : ''}`}>1Y</b>
+          <b onClick={() => this.handleTimeChange('All')} className={`timeFrame ${this.state.selected === 'All' ? 'selected' : ''}`}>All</b>
 
           <HighchartsReact
             className='highcharts-container'

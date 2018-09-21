@@ -7,6 +7,7 @@ import NavBar from '../Components/NavBar';
 import MyStocks from '../Components/Games/MyStocks';
 import Leaderboard from '../Components/Games/Leaderboard';
 import CreateGame from '../Components/Games/CreateGame'
+import GameList from '../Components/Games/GamesList';
 import '../Static/CSS/Games.css';
 import axios from 'axios';
 
@@ -25,7 +26,7 @@ class Games extends Component {
       money: 0,
       floorCode: "",
       floorName: "xxN0Sc0p35xx",
-      uid: localStorage.getItem('uid'),
+      uid: sessionStorage.getItem('uid'),
       //Current game object
       currentGame: [],
     };
@@ -44,14 +45,15 @@ class Games extends Component {
       .then(function (response) {
         // handle success
         let gameData = response.data;
-
+        console.log(response);
+        console.log(gameData);
         self.setState({
           myFloors: gameData,
-          //currentGame: gameData[0],
+          currentGame: gameData[0],
         })
 
       }, () => {
-        // Second call to the server to get all the user objects 
+        // Second call to the server to get all the user objects
       })
       .catch(function (error) {
         // handle error
@@ -76,7 +78,9 @@ class Games extends Component {
           </Col>
         </Row>
         <Row style={{paddingTop: '2em'}} className='blackBackground body_div'>
-          <Col md="9">
+
+          <Col>
+
             <Row>
               <Col md="1"/>
               <Col md="2">
@@ -87,28 +91,34 @@ class Games extends Component {
                 <h5 className={"gamesText"}>Spending Money : ${this.state.money}</h5>
               </Col>
             </Row>
+
             <Row  style={{paddingTop: '4em'}} className='blackBackground body_div'>
-              <Col md='1'/>
-              <Col md='5'>
-                <Leaderboard players={this.state.currentGame.active_players}/>
-              </Col>
-              <Col md='1'/>
-              <Col md='5'>
-                <MyStocks/>
-              </Col>
-            </Row>
-          </Col>
-          <Col md="3">
-            <Row>
-              <Col md='1'/>
-              <Col md='11'>
-                <h5 className={"gamesText"}>Trading Floors</h5>
-                <CreateGame/>
+              <Col md='9'>
+                <Row>
+                <Col md='1'/>
+                <Col md='5'>
+                  <Leaderboard/>
+                </Col>
+
+                <Col md='5'>
+                  <MyStocks/>
+                </Col>
+                  <Col md='1'/>
+                </Row>
               </Col>
 
+
+
+              <Col md='2'>
+                <GameList/>
+                <CreateGame/>
+              </Col>
+              <Col md='1'/>
             </Row>
+
           </Col>
         </Row>
+
       </div>
     );
   }
