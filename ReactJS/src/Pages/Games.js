@@ -25,7 +25,7 @@ class Games extends Component {
       money: 0,
       floorCode: "",
       floorName: "xxN0Sc0p35xx",
-      uid: localStorage.getItem('uid'),
+      uid: sessionStorage.getItem('uid'),
       //Current game object
       currentGame: [],
     };
@@ -44,14 +44,15 @@ class Games extends Component {
       .then(function (response) {
         // handle success
         let gameData = response.data;
-
+        console.log(response);
+        console.log(gameData);
         self.setState({
           myFloors: gameData,
-          //currentGame: gameData[0],
+          currentGame: gameData[0],
         })
 
       }, () => {
-        // Second call to the server to get all the user objects 
+        // Second call to the server to get all the user objects
       })
       .catch(function (error) {
         // handle error
