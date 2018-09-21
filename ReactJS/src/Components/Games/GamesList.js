@@ -13,11 +13,6 @@ class GameList extends Component {
             <div  className='z-depth-5' >
                 <h5 className={"gamesText"}>Floor List</h5>
                 <Table dark>
-                    <thead>
-                    <tr>
-                        <th>Floor Name</th>
-                    </tr>
-                    </thead>
                     <tbody>
                     <tr>
                         <th scope="row">xxN0Sc0p35xx</th>
