@@ -1,4 +1,6 @@
 import express from 'express';
+import bodyParser from 'body-parser';
+
 import controller from './controllers/controller';
 import userController from './controllers/userController';
 
@@ -6,6 +8,9 @@ import userController from './controllers/userController';
 import db from './config/db';
 
 const app = express();
+
+app.use(bodyParser.urlencoded({extended: false}));
+app.use(bodyParser.json());
 
 // run controllers
 controller(app);

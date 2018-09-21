@@ -6,6 +6,8 @@ import {Form, Row, Col, Alert} from 'reactstrap';
 
 import {fireauth} from '../base';
 
+import axios from 'axios';
+
 class CreateUser extends Component {
 
   constructor(props) {
@@ -19,11 +21,11 @@ class CreateUser extends Component {
   }
 
   /**
-     * 
+     *
      * Submits user information in create user form
-     * 
+     *
      * @param ev: |event| Ex: {click}
-     * 
+     *
      */
 
   onSubmit = (ev) => {
@@ -43,7 +45,18 @@ class CreateUser extends Component {
       else {
         let self = this;
         //creates user with email and password
-        fireauth.createUserWithEmailAndPassword(target.email.value, target.password.value).catch((error) => {
+        fireauth.createUserWithEmailAndPassword(target.email.value, target.password.value).then((userData) => {
+          axios.post('http://localhost:8080/Portfol.io/CreateAccount', {
+            _id: userData.uid,
+            first_name: target.firstName.value,
+            last_name: target.lastName.value,
+            email: target.email.value
+          }).then(() => {
+            window.location.reload();
+          }).catch((error) => {
+            console.log(error);
+          });
+        }).catch((error) => {
             // Handle error
               self.setState({visible: true, message: error.message});
           });
@@ -53,11 +66,11 @@ class CreateUser extends Component {
   };
 
   /**
-     * 
+     *
      * dismisses alert
-     * 
+     *
      * @param ev: |event| Ex: {click}
-     * 
+     *
      */
 
   onDismiss = () => {
