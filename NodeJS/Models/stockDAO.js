@@ -2,35 +2,57 @@ import axios from 'axios';
 import mongoose from 'mongoose';
 
 
-export function getStock(stockTicker, period) {
+export function getStock(stockTicker, period, dateLimit) {
   period = period ? period : 'Monthly';
   return axios.get(`https://www.alphavantage.co/query?function=TIME_SERIES_${period.toUpperCase()}_ADJUSTED&symbol=${stockTicker}&apikey=WIOGAHD0RJEEZ59V`)
-    .then(function (response) {
+    .then((response) => {
       // handle success
       let stockData = [];
       // This api is inconsistent so apparently we need two different types of response
       let data = period === 'Daily' ? response.data[`Time Series (${period})`] : response.data[`${period} Adjusted Time Series`];
 
       for (let i in data) {
+        const stockDate = new Date(i).getTime();
+        if (stockDate >= dateLimit) {
+          stockData.unshift({
+            x: stockDate,
+            y: parseFloat(data[i]['5. adjusted close']),
+          })
+        }
+      }
+      return Promise.resolve(stockData);
+    })
+    .catch((error) => {
+      console.log(error);
+    })
+}
+
+export function getStockIntraday(stockTicker, period) {
+  return axios.get(`https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY&symbol=${stockTicker}&interval=1min&apikey=WIOGAHD0RJEEZ59V`)
+    .then((response) => {
+      // handle success
+      let stockData = [];
+      // This api is inconsistent so apparently we need two different types of response
+      let data = response.data['Time Series (1min)'];
+
+      for (let i in data) {
         stockData.unshift({
           x: new Date(i).getTime(),
-          y: parseFloat(data[i]['5. adjusted close']),
+          y: parseFloat(data[i]['4. close']),
         })
       }
       return Promise.resolve(stockData);
     })
-    .catch(function (error) {
+    .catch((error) => {
       console.log(error);
     })
 }
 
 export function getStockBatch(stockList) {
-  console.error(stockList);
   return axios.get(`https://www.alphavantage.co/query?function=BATCH_STOCK_QUOTES&symbols=${stockList}&apikey=WIOGAHD0RJEEZ59V`)
     .then((response) => {
       // handle success
       let data = response.data['Stock Quotes'];
-      console.error(data);
       return Promise.resolve({stockQuotes: data});
     })
     .catch((error) => {
@@ -72,5 +94,7 @@ export function loadTickers() {
 
 export function getTickers() {
   const tickerList = mongoose.model('Ticker', tickerSchema);
-  return tickerList.findOne({}, {tickers: 1, _id: 0}).catch((err) => {return Promise.reject(err)})
+  return tickerList.findOne({}, {tickers: 1, _id: 0}).catch((err) => {
+    return Promise.reject(err)
+  })
 }

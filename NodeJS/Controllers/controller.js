@@ -1,6 +1,6 @@
 import bodyParser from 'body-parser';
 import {getUsers} from '../Models/testMongo'; // must import models that we need
-import {getStock, getStockBatch, getTickers, loadTickers} from '../Models/stockDAO';
+import {getStock, getStockBatch, getStockIntraday, getTickers, loadTickers} from '../Models/stockDAO';
 import {getGamesByUser} from "../Models/gameDAO";
 
 let urlencodedParser = bodyParser.urlencoded({extended: false});
@@ -31,14 +31,41 @@ export default (app) => {
 
   // Period is in the format : 'Monthly', 'Weekly', 'Daily', etc. Casing is important here.
   app.get('/Portfol.io/Stock/:stock/:period', async (req, res) => {
-    const data = await getStock(req.params.stock, req.params.period);
+    let data, dateLimit;
+    dateLimit = new Date();
+    switch (req.params.period) {
+      case 'Day':
+        data = await getStockIntraday(req.params.stock);
+        break;
+      case 'Week':
+        dateLimit.setDate(dateLimit.getDate() - 7);
+        data = await getStock(req.params.stock, "Daily", dateLimit);
+        break;
+      case 'Month':
+        dateLimit.setMonth(dateLimit.getMonth() - 1);
+        console.error(dateLimit);
+        data = await getStock(req.params.stock, "Daily", dateLimit);
+        break;
+      case 'TriMonth':
+        dateLimit.setMonth(dateLimit.getMonth() - 3);
+        console.error(dateLimit);
+        data = await getStock(req.params.stock, "Daily", dateLimit);
+        break;
+      case 'Year':
+        dateLimit.setFullYear(dateLimit.getFullYear() - 1);
+        console.error(dateLimit);
+        data = await getStock(req.params.stock, "Monthly", dateLimit);
+        break;
+      default: // 'All'
+        data = await getStock(req.params.stock, "Monthly", 0);
+
+    }
+    //const data = await getStock(req.params.stock, req.params.period);
     buildResponse(res, data);
   });
 
   // stockList is in the format of comma separated tickers
   app.get('/Portfol.io/Batch/Stock/:stockList', async (req, res) => {
-    console.error('Hello');
-    console.error(req.params.stockList);
     const data = await getStockBatch(req.params.stockList);
     buildResponse(res, data);
   });
