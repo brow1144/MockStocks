@@ -3,7 +3,7 @@ import {getUser, addUser} from '../Models/userDAO';
 
 export default (app) => {
   app.post('/Portfol.io/CreateAccount', async (req, res) => {
-    console.log(req.body);
+    console.error(req.body);
     let user = {
       first_name: req.body.first_name,
       last_name: req.body.last_name,
@@ -26,7 +26,8 @@ export default (app) => {
 };
 
 const buildResponse = (res, data) => {
-  res.header("Access-Control-Allow-Origin", "http://localhost:3000");
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Methods", "GET, POST, PUT, OPTIONS");
   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
   data && res.status(200).json(data);
 };

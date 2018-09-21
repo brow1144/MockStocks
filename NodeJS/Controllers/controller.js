@@ -6,6 +6,14 @@ import {getUsers, addUser} from '../Models/userDAO';
 //let urlencodedParser = bodyParser.urlencoded({extended: false});
 
 export default (app) => {
+
+  app.options('/*', (req, res) => {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Methods", "GET, POST, PUT, OPTIONS");
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+    res.send(200);
+  });
+
   // heres the endpoints obviously
   app.get('/Portfol.io/Home', async (req, res) => {
     // get data from mongodb and pass it to view
@@ -90,7 +98,8 @@ export default (app) => {
 };
 
 const buildResponse = (res, data) => {
-  res.header("Access-Control-Allow-Origin", "http://localhost:3000");
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Methods", "GET, POST, PUT, OPTIONS");
   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
   data && res.status(200).json(data);
 };

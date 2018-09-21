@@ -4,6 +4,14 @@ import { Table } from 'reactstrap'
 
 class Leaderboard extends Component {
 
+  constructor(props) {
+    super(props);
+  }
+
+  calculateStock = () => {
+
+  }
+
   render() {
     return (
       <div  className='z-depth-5' >
@@ -12,7 +20,8 @@ class Leaderboard extends Component {
           <thead>
           <tr>
             <th>Rank</th>
-            <th>Username</th>
+            <th>First Name</th>
+            <th>Last Name</th>
             <th>Total Assets</th>
             <th>Trades Left</th>
           </tr>
@@ -21,18 +30,21 @@ class Leaderboard extends Component {
           <tr>
             <th scope="row">1</th>
             <td>Jeremy</td>
+            <td>Putnam</td>
             <td>$10456</td>
             <td>Unlimited</td>
           </tr>
           <tr>
             <th scope="row">2</th>
             <td>Walter</td>
+            <td>Jr</td>
             <td>$145</td>
             <td>Unlimited</td>
           </tr>
           <tr>
             <th scope="row">3</th>
             <td>Jacob</td>
+            <td>Koootz</td>
             <td>$202</td>
             <td>2</td>
           </tr>
