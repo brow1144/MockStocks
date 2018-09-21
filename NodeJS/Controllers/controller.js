@@ -1,7 +1,8 @@
 import bodyParser from 'body-parser';
-import {getUsers} from '../Models/testMongo'; // must import models that we need
 import {getStock, getStockBatch, getStockIntraday, getTickers, loadTickers} from '../Models/stockDAO';
+import {getStock, getStockBatch, getTickers, loadTickers} from '../Models/stockDAO';
 import {getGamesByUser} from "../Models/gameDAO";
+import {getUsers, addUser} from '../Models/userDAO';
 
 let urlencodedParser = bodyParser.urlencoded({extended: false});
 
@@ -17,16 +18,8 @@ export default (app) => {
 
     // Method #3 - async/await
     // async await looks slick so ive been doing it but method 2 is just as valid
-    let data = await getUsers();
-    buildResponse(res, data);
-  });
-
-  app.get('/Portfol.io/SignIn', async (req, res) => {
-
-  });
-
-  app.get('/Portfol.io/CreateAccount', async (req, res) => {
-
+    //let data = await getUsers();
+    //buildResponse(res, data);
   });
 
   // Period is in the format : 'Monthly', 'Weekly', 'Daily', etc. Casing is important here.
