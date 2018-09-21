@@ -42,7 +42,7 @@ export function addUserToGame(uid, gameCode) {
 };
 
 export function getGamesByUser(uid) {
-  const findClause = {active_players: {$elemMatch: {uid: uid}}};
+  const findClause = {active_players: uid};
   return gameModel.find(findClause)
     .then((data) => {
       return Promise.resolve({games: data});
