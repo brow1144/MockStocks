@@ -8,6 +8,10 @@ class GameList extends Component {
     super(props);
   }
 
+  // Updates the current game prop
+  updateFloor = (newIndex) => {
+    this.props.updateGame(newIndex);
+  };
 
 
   render() {
@@ -19,7 +23,7 @@ class GameList extends Component {
           <tbody>
           {this.props.myFloors.map((floor, key) => {
             return (<tr key={key}>
-              <th scope="row">{floor.game_name}</th>
+              <th onClick={() => {this.updateFloor(key)}} scope="row">{floor.game_name}</th>
             </tr>)
           })}
           </tbody>
