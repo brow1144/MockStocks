@@ -12,8 +12,8 @@ import '../Static/CSS/StockPage.css';
 import axios from 'axios'
 
 class StockPage extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
 
     this.state = {
       stockData: [],
@@ -32,14 +32,20 @@ class StockPage extends Component {
   }
 
   componentWillMount() {
-    this._getData();
+    this.getData();
   }
 
-  _getData() {
+  componentDidUpdate(prevProps) {
+    if(JSON.stringify(this.props.stock) !== JSON.stringify(prevProps.stock)) {
+      this.getData();
+    }
+  }
+
+
+  getData = () => {
     let self = this;
 
     // Cache Stuff Go here eventually
-
     axios.get(`http://localhost:8080/Portfol.io/Stock/${this.props.stock}/${this.state.selected}`)
       .then((response) => {
         // handle success
@@ -78,7 +84,7 @@ class StockPage extends Component {
     }, () => this._getData());
 
   };
-  
+
   render() {
 
     const stockOptions = {
@@ -134,6 +140,7 @@ class StockPage extends Component {
           <h2 className='stockPrice'>${this.state.currentPriceFor}</h2>
 
           {errorMessage}
+          {errorMessage2}
 
           <b onClick={() => this.handleTimeChange('Day')} className={`timeFrame ${this.state.selected === 'Day' ? 'selected' : ''}`}>1D</b>
           <b onClick={() => this.handleTimeChange('Month')} className={`timeFrame ${this.state.selected === 'Month' ? 'selected' : ''}`}>1M</b>

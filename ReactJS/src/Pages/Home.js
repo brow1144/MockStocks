@@ -54,7 +54,7 @@ class Home extends Component {
           self.setState({visibleData: true})
         } else {
           self.setState({
-            tockData: stockData,
+            stockData: stockData,
             currentPrice: stockData[stockData.length-1]['y'],
             currentPriceFor: withCommas
           })
