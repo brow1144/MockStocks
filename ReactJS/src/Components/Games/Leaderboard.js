@@ -9,7 +9,7 @@ class Leaderboard extends Component {
   }
 
   calculateStock = () => {
-
+    
   }
 
   render() {

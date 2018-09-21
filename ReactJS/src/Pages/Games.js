@@ -76,8 +76,6 @@ class Games extends Component {
         console.log(`Btw here is the error message\n\n`)
         console.log(error);
       })
-
-    console.log("Finished");
   };
 
 
@@ -95,9 +93,7 @@ class Games extends Component {
           </Col>
         </Row>
         <Row style={{paddingTop: '2em'}} className='blackBackground body_div'>
-
           <Col>
-
             <Row>
               <Col md="1"/>
               <Col md="2">
