@@ -14,9 +14,9 @@ export const userSchema = new mongoose.Schema({
 let userModel = mongoose.model('User', userSchema);
 let gameModel = mongoose.model('Game', gameSchema);
 
-export function getUser(userEmail) {
+export function getUser(uid) {
   return new Promise((resolve, reject) => {
-    userModel.findOne({email: userEmail}, (err, user) => {
+    userModel.findOne({_id: uid}, (err, user) => {
       if (err) reject(err);
       resolve(user);
     });
