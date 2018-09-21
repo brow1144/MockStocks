@@ -6,6 +6,7 @@ export const userSchema = new mongoose.Schema({
   username: String
   email: String,
   active_games: Array,
+  watchlist: Array
 });
 
 let userModel = mongoose.model('User', userSchema);
@@ -20,7 +21,7 @@ export function getUser(uid) {
   });
 };
 
-export function addUser(user) {
+export function createUser(user) {
   return new Promise((resolve, reject) => {
 
     // TODO error checking
@@ -42,8 +43,14 @@ export function addUser(user) {
 };
 
 export function joinGame(uid, gameCode) {
+  const game = {
+    code: gameCode,
+    stocks: []
+  };
+
+  // TODO check if the user is already in game
   return new Promise((resolve, reject) => {
-    userModel.findOneAndUpdate({_id: uid}, {$push: {active_games: gameCode}}, {new: true}, (err, result) => {
+    userModel.findOneAndUpdate({_id: uid}, {$push: {active_games: game}}, {new: true}, (err, result) => {
       if (err) reject(err);
       resolve(result);
     });

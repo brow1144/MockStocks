@@ -1,5 +1,5 @@
 import bodyParser from 'body-parser';
-import {getUser, addUser} from '../Models/userDAO';
+import {getUser, createUser} from '../Models/userDAO';
 
 export default (app) => {
   app.post('/Portfol.io/CreateAccount', async (req, res) => {
@@ -9,7 +9,7 @@ export default (app) => {
       email: req.body.email
     };
 
-    const data = await addUser(user);
+    const data = await createUser(user);
     buildResponse(res, data);
   });
 
