@@ -39,6 +39,8 @@ class CreateUser extends Component {
       || target.confirmPassword.value === '') {
 
         this.setState({visible: true, message: 'Please fill out the entire form!'});
+    } else if (target.password.value.length < 8) {
+      this.setState({visible: true, message: 'Password must be 8 characters or longer'});
     } else {
       if (target.password.value !== target.confirmPassword.value)
         this.setState({visible: true, message: 'Passwords Don\'t Match!'});

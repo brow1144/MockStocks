@@ -26,9 +26,9 @@ class Games extends Component {
       money: 0,
       floorCode: "",
       floorName: "xxN0Sc0p35xx",
-      uid: localStorage.getItem('uid'),
+      uid: sessionStorage.getItem('uid'),
       //Current game object
-      currentGame: [],
+      currentGame: {},
     };
   }
 
@@ -47,12 +47,28 @@ class Games extends Component {
         let gameData = response.data;
 
         self.setState({
-          myFloors: gameData,
-          //currentGame: gameData[0],
-        })
+          myFloors: gameData.games,
+          currentGame: gameData.games[0],
+        }, () => {
+          // Second call to the server to get all the user objects
+          for (let x = 0; x < self.state.currentGame.active_players.length; x++) {
+            axios.get(`http://localhost:8080/Portfol.io/${self.state.currentGame.active_players[x]}`)
+              .then(function (response) {
+                // handle success
+                let user = response.data;
+                let newArray = self.state.users;
+                newArray[x] = user;
 
-      }, () => {
-        // Second call to the server to get all the user objects 
+                self.setState({
+                  users: newArray,
+                })
+
+              }).catch(function (err){
+                console.log("Cannot get users for the current game");
+                console.log(err);
+              })
+          }})
+
       })
       .catch(function (error) {
         // handle error
@@ -60,6 +76,8 @@ class Games extends Component {
         console.log(`Btw here is the error message\n\n`)
         console.log(error);
       })
+
+    console.log("Finished");
   };
 
 
@@ -96,22 +114,23 @@ class Games extends Component {
                 <Row>
                 <Col md='1'/>
                 <Col md='5'>
-                  <Leaderboard players={this.state.currentGame.active_players}/>
+                  <Leaderboard/>
                 </Col>
-                <Col md='1'/>
+
                 <Col md='5'>
                   <MyStocks/>
                 </Col>
+                  <Col md='1'/>
                 </Row>
               </Col>
 
-              <Col md='1'/>
+
 
               <Col md='2'>
-                <GameList/>
+                <GameList myFloors={this.state.myFloors}/>
                 <CreateGame/>
               </Col>
-
+              <Col md='1'/>
             </Row>
 
           </Col>
