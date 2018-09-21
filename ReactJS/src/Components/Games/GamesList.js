@@ -8,28 +8,7 @@ class GameList extends Component {
     super(props);
   }
 
-<<<<<<< HEAD
-    render() {
-        return (
-            <div  className='z-depth-5' >
-                <h5 className={"gamesText"}>Floor List</h5>
-                <Table dark>
-                    <tbody>
-                    <tr>
-                        <th scope="row">xxN0Sc0p35xx</th>
-                    </tr>
-                    <tr>
-                        <th scope="row">Sperg Floor</th>
-                    </tr>
-                    <tr>
-                        <th scope="row">Shrek's Swamp</th>
-                    </tr>
-                    </tbody>
-                </Table>
-            </div>
-        );
-    }
-=======
+
 
   render() {
 
@@ -48,7 +27,6 @@ class GameList extends Component {
       </div>
     );
   }
->>>>>>> master
 }
 
 export default GameList;
