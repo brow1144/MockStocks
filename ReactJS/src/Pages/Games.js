@@ -17,17 +17,17 @@ class Games extends Component {
 
     this.state = {
       // Array of user objects for the leaderboard
-      users: [{}],
+      users: [],
       // Array of player's stock objects
-      myStocks: [{}],
+      myStocks: [],
       // Array of game objects
-      myFloors: [{}],
+      myFloors: [],
       money: 0,
       floorCode: "",
       floorName: "xxN0Sc0p35xx",
-
+      uid: localStorage.getItem('uid'),
       //Current game object
-      currentGame: [{}],
+      currentGame: [],
     };
   }
 
@@ -40,17 +40,18 @@ class Games extends Component {
   componentWillMount () {
     // Make server call for data
     let self = this;
-    axios.get(`http://localhost:8080/Portfol.io/Games`)///${this.props.currentGame.name}
+    axios.get(`http://localhost:8080/Portfol.io/Games/By/User/${this.state.uid}`)
       .then(function (response) {
-        /* handle success
+        // handle success
         let gameData = response.data;
-
 
         self.setState({
           myFloors: gameData,
-          currentGame: gameData[0],
-        })*/
+          //currentGame: gameData[0],
+        })
 
+      }, () => {
+        // Second call to the server to get all the user objects 
       })
       .catch(function (error) {
         // handle error
