@@ -1,6 +1,5 @@
 import bodyParser from 'body-parser';
 import {getStock, getStockBatch, getStockIntraday, getTickers, loadTickers} from '../Models/stockDAO';
-import {getStock, getStockBatch, getTickers, loadTickers} from '../Models/stockDAO';
 import {getGamesByUser} from "../Models/gameDAO";
 import {getUsers, addUser} from '../Models/userDAO';
 
