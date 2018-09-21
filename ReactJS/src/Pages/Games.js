@@ -97,22 +97,23 @@ class Games extends Component {
                 <Row>
                 <Col md='1'/>
                 <Col md='5'>
-                  <Leaderboard players={this.state.currentGame.active_players}/>
+                  <Leaderboard/>
                 </Col>
-                <Col md='1'/>
+
                 <Col md='5'>
                   <MyStocks/>
                 </Col>
+                  <Col md='1'/>
                 </Row>
               </Col>
 
-              <Col md='1'/>
+
 
               <Col md='2'>
                 <GameList/>
                 <CreateGame/>
               </Col>
-
+              <Col md='1'/>
             </Row>
 
           </Col>
