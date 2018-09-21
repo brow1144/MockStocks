@@ -24,11 +24,11 @@ class Games extends Component {
       // Array of game objects
       myFloors: [],
       money: 0,
-      floorCode: "",
-      floorName: "xxN0Sc0p35xx",
       uid: sessionStorage.getItem('uid'),
       //Current game object
       currentGame: {},
+      //Current user
+      currentUser: {},
     };
   }
 
@@ -77,10 +77,37 @@ class Games extends Component {
         console.log(error);
       })
 
-    console.log("Finished");
   };
 
+  // Update the current game state and then add the users
+  // para index is the index of the new floor from 0 to n
+  updateGame = (index) => {
 
+    let self = this;
+    let newFloor = self.state.myFloors[index];
+    self.setState({
+      currentGame: newFloor,
+      users: []
+    }, () => {
+      for (let x = 0; x < self.state.currentGame.active_players.length; x++) {
+        axios.get(`http://localhost:8080/Portfol.io/${self.state.currentGame.active_players[x]}`)
+          .then(function (response) {
+            // handle success
+            let user = response.data;
+            let newArray = self.state.users;
+            newArray[x] = user;
+
+            self.setState({
+              users: newArray,
+            })
+
+          }).catch(function (err){
+          console.log("Cannot get users for the current game");
+          console.log(err);
+        })
+      }
+    })
+  };
 
   render() {
     return (
@@ -91,7 +118,7 @@ class Games extends Component {
         <Row style={{paddingTop: '9em'}} className='blackBackground body_div'>
           <Col md="4"/>
           <Col md="5">
-            <h5 className={"gamesText "}>Floor Name : {this.state.floorName}</h5>
+            <h5 className={"gamesText "}>Floor Name : {this.state.currentGame.game_name}</h5>
           </Col>
         </Row>
         <Row style={{paddingTop: '2em'}} className='blackBackground body_div'>
@@ -100,8 +127,9 @@ class Games extends Component {
 
             <Row>
               <Col md="1"/>
+              {this.state.currentGame.leader_email === ""}
               <Col md="2">
-                <h5 className={"gamesText"}>Floor Code : {this.state.floorCode}</h5>
+                <h5 className={"gamesText"}>Floor Code : {this.state.currentGame.code}</h5>
               </Col>
               <Col md="6"/>
               <Col md="3">
@@ -114,7 +142,7 @@ class Games extends Component {
                 <Row>
                 <Col md='1'/>
                 <Col md='5'>
-                  <Leaderboard/>
+                  <Leaderboard users={this.state.users}/>
                 </Col>
 
                 <Col md='5'>
@@ -124,10 +152,8 @@ class Games extends Component {
                 </Row>
               </Col>
 
-
-
               <Col md='2'>
-                <GameList myFloors={this.state.myFloors}/>
+                <GameList updateGame={this.updateGame} myFloors={this.state.myFloors}/>
                 <CreateGame/>
               </Col>
               <Col md='1'/>
