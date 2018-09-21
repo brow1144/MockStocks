@@ -46,7 +46,7 @@ class BuySellCard extends Component {
                 <h6 className='buySmallText' style={{color: '#009ddb', marginTop: '9px'}}>Market Price</h6>
               </Col>
               <Col sm='4'>
-                <p style={{marginTop: '7px', float: 'right', fontSize: '0.8em', color: 'whitesmoke'}}>${this.props.currentPrice}</p>
+                <p style={{marginTop: '7px', float: 'right', fontSize: '0.8em', color: 'whitesmoke'}}>${this.props.currentPriceFor}</p>
               </Col>
             </Row>
             
@@ -57,7 +57,7 @@ class BuySellCard extends Component {
                 <h6 className='leftText' style={{marginTop: '8px'}}>Cost</h6>
               </Col>
               <Col sm='6'>
-                <p style={{marginTop: '7px', float: 'right', fontSize: '0.8em', color: 'whitesmoke'}}>${parseFloat(Math.round(this.state.cost * this.props.currentPrice * 100) / 100).toFixed(2)}</p>
+                <p style={{marginTop: '7px', float: 'right', fontSize: '0.8em', color: 'whitesmoke'}}>${Number(parseFloat((this.state.cost * this.props.currentPrice * 100) / 100).toFixed(2)).toLocaleString('en')}</p>
               </Col>
             </Row>
 
