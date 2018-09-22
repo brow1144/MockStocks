@@ -23,8 +23,8 @@ class Trending extends Component {
         </div>
 
         <Row  style={{paddingTop: '10em'}} className='blackBackground body_div'>
-          <Col sm='3' md='3'/>
-          <Col sm='6' md='6'>
+          <Col sm='2' md='2'/>
+          <Col sm='8' md='8'>
             <h5 style={{color: 'whitesmoke'}}>Trending Stocks</h5>
             <Table dark>
               <thead>
