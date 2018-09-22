@@ -5,7 +5,7 @@ import CreateUser from './Pages/CreateUser'
 import Main from './Main'
 import Games from './Pages/Games'
 import Trending from './Pages/Trending'
-import Learn from './Pages/Learn'
+import Tips from './Pages/Tips'
 import Home from './Pages/Home'
 import StockPage from './Pages/StockPage'
 
@@ -88,9 +88,9 @@ class App extends Component {
             : <Redirect to={`/Portfol.io/SignIn`}/>
         )}/>
 
-        <Route path='/Portfol.io/Learn' render={() => (
+        <Route path='/Portfol.io/Tips' render={() => (
           this.signedIn()
-            ? <Main component={Learn}/>
+            ? <Main component={Tips}/>
             : <Redirect to={`/Portfol.io/SignIn`}/>
         )}/>
 
