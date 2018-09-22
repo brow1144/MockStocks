@@ -17,7 +17,7 @@ class GameList extends Component {
   render() {
 
     return (
-      <div className='z-depth-5'>
+      <div >
         <h5 className={"gamesText"}>Floor List</h5>
         <Table dark>
           <tbody>
