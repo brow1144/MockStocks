@@ -46,7 +46,7 @@ class Games extends Component {
         // handle success
         let gameData = response.data;
 
-        if (gameData.games == null) {
+        if (gameData.games !== null) {
           self.setState({
             myFloors: gameData.games,
             currentGame: gameData.games[0],
@@ -93,7 +93,7 @@ class Games extends Component {
       users: []
     }, () => {
       for (let x = 0; x < self.state.currentGame.active_players.length; x++) {
-        axios.get(`http://localhost:8080/Portfol.io/${self.state.currentGame.active_players[x]}`)
+        axios.get(`http://localhost:8080/Portfol.io/${self.state.currentGame.active_players[x].code}`)
           .then(function (response) {
             // handle success
             let user = response.data;
@@ -118,7 +118,7 @@ class Games extends Component {
         <div className='navbar-fixed'>
           <NavBar/>
         </div>
-        <Row style={{paddingTop: '9em'}} className='blackBackground body_div'>
+        <Row style={{paddingTop: '10em'}} className='blackBackground body_div'>
           <Col md="4"/>
           <Col md="5">
             <h5 className={"gamesText "}>Floor Name : {this.state.currentGame.game_name}</h5>
@@ -127,7 +127,6 @@ class Games extends Component {
         <Row style={{paddingTop: '2em'}} className='blackBackground body_div'>
 
           <Col>
-
             <Row>
               <Col md="1"/>
               {this.state.currentGame.leader_email === ""}

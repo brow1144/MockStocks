@@ -33,7 +33,7 @@ class Leaderboard extends Component {
           <tbody>
           {this.props.users.map((user, key) => {
             return (<tr key={key}>
-              <th scope="row">{key+1}</th>
+              <th scope="row">{key}</th>
               <th >{user.first_name}</th>
               <th >{user.totalAssets}</th>
               <th ></th>
