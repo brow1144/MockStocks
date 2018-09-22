@@ -157,7 +157,7 @@ class Games extends Component {
 
               <Col md='2'>
                 <GameList updateGame={this.updateGame} myFloors={this.state.myFloors}/>
-                <CreateGame/>
+                <CreateGame uid={this.state.uid}/>
               </Col>
               <Col md='1'/>
             </Row>

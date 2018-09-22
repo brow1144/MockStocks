@@ -16,16 +16,16 @@ class CreateGame extends Component {
     super(props);
     this.state = {
       modal: false,
-      startDate: moment(),
-      endDate: moment(),
+      startDate: null,
+      endDate: null,
       waiting: true,
       joinGame: false,
       createGame: false,
       code: 0,
       name: "",
       leader_email: "",
-      starting_amount: 0,
-      trade_limit: 0,
+      starting_amount: "",
+      trade_limit: "",
     };
 
   }
@@ -72,23 +72,16 @@ class CreateGame extends Component {
   }
 
   joinIt = () => {
-    let self = this;
+    console.log(this.state.code);
     var gameId = this.state.code;
+    console.log(this.props.uid);
+    console.log(gameId);
 
-    axios.put(`http://localhost:8080/Portfol.io/Games/${this.state._id}/${gameId}`,
-      {
-        code: gameId,
-        name: this.state.name,
-        leader_email: this.state.email,
-        starting_amount: this.state.starting_amount,
-        trade_limit: this.state.trade_limit,
-        start_time: this.state.startDate,
-        end_time: this.state.endDate
-      })
+    axios.put(`http://localhost:8080/Portfol.io/Games/${this.props.uid}/${gameId}`);
 
     this.setState({
-      startDate: moment(),
-      endDate: moment(),
+      startDate: null,
+      endDate: null,
       waiting: true,
       joinGame: false,
       createGame: false,
@@ -102,7 +95,6 @@ class CreateGame extends Component {
   }
 
   createIt = () => {
-    let self = this;
     var gameId = this.generateId();
     axios.post(`http://localhost:8080/Portfol.io/Games`,
       {
@@ -113,22 +105,12 @@ class CreateGame extends Component {
         trade_limit: this.state.trade_limit,
         start_time: this.state.startDate,
         end_time: this.state.endDate
+      }, () => {
+        this.setState({
+          code: gameId
+        });
+        this.joinIt();
       })
-
-    this.joinIt();
-
-    this.setState({
-      startDate: moment(),
-      endDate: moment(),
-      waiting: true,
-      joinGame: false,
-      createGame: false,
-      code: 0,
-      name: "",
-      leader_email: "",
-      starting_amount: 0,
-      trade_limit: 0,
-    });
     this.toggle();
   }
 
