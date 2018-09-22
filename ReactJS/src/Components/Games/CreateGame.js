@@ -72,10 +72,13 @@ class CreateGame extends Component {
   }
 
   joinIt = () => {
+    console.log("--1")
     console.log(this.state.code);
     var gameId = this.state.code;
     console.log(this.props.uid);
     console.log(gameId);
+
+    console.log("--2");
 
     axios.put(`http://localhost:8080/Portfol.io/Games/${this.props.uid}/${gameId}`);
 
@@ -95,7 +98,10 @@ class CreateGame extends Component {
   }
 
   createIt = () => {
+    let self = this;
+    console.log("--3");
     var gameId = this.generateId();
+    console.log("--4");
     axios.post(`http://localhost:8080/Portfol.io/Games`,
       {
         code: gameId,
@@ -105,12 +111,15 @@ class CreateGame extends Component {
         trade_limit: this.state.trade_limit,
         start_time: this.state.startDate,
         end_time: this.state.endDate
-      }, () => {
-        this.setState({
+      }).then(() => {
+        console.log("--5");
+
+        self.setState({
           code: gameId
         });
         this.joinIt();
-      })
+        console.log("--6");
+      });
     this.toggle();
   }
 
