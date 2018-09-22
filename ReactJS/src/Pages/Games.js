@@ -93,7 +93,7 @@ class Games extends Component {
       users: []
     }, () => {
       for (let x = 0; x < self.state.currentGame.active_players.length; x++) {
-        axios.get(`http://localhost:8080/Portfol.io/${self.state.currentGame.active_players[x].code}`)
+        axios.get(`http://localhost:8080/Portfol.io/${self.state.currentGame.active_players[x]}`)
           .then(function (response) {
             // handle success
             let user = response.data;
