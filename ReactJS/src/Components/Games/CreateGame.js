@@ -22,7 +22,7 @@ class CreateGame extends Component {
       joinGame: false,
       createGame: false,
       code: 0,
-      name: "",
+      game_name: "",
       leader_email: "",
       starting_amount: "",
       trade_limit: "",
@@ -74,7 +74,7 @@ class CreateGame extends Component {
   joinIt = () => {
     console.log("--1")
     console.log(this.state.code);
-    var gameId = this.state.code;
+    let gameId = this.state.code;
     console.log(this.props.uid);
     console.log(gameId);
 
@@ -89,7 +89,7 @@ class CreateGame extends Component {
       joinGame: false,
       createGame: false,
       code: 0,
-      name: "",
+      game_name: "",
       leader_email: "",
       starting_amount: 0,
       trade_limit: 0,
@@ -105,8 +105,8 @@ class CreateGame extends Component {
     axios.post(`http://localhost:8080/Portfol.io/Games`,
       {
         code: gameId,
-        name: this.state.name,
-        leader_email: this.state.email,
+        game_name: this.state.game_name,
+        leader_email: this.props.email,
         starting_amount: this.state.starting_amount,
         trade_limit: this.state.trade_limit,
         start_time: this.state.startDate,
@@ -124,7 +124,7 @@ class CreateGame extends Component {
   }
 
   curName = (event) => {
-    this.setState({name: event.target.value});
+    this.setState({game_name: event.target.value});
   }
 
   curStart = (event) => {
@@ -164,7 +164,7 @@ class CreateGame extends Component {
             this.state.createGame === true
               ?
               <ModalBody>
-                <Input value={this.state.name}  onChange={this.curName} id="floorName" label="Floor name"/>
+                <Input value={this.state.game_name}  onChange={this.curName} id="floorName" label="Floor name"/>
                 Start Time
                 <DatePicker value={this.state.startDate}  onChange={this.curStart}
                             id="startDate" selected={this.state.startDate}

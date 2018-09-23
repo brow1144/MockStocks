@@ -3,7 +3,7 @@ import mongoose from 'mongoose';
 // create a schema - this is like a blueprint
 export const gameSchema = new mongoose.Schema({
   code: String,
-  name: String,
+  game_name: String,
   leader_email: String,
   starting_amount: Number,
   trade_limit: Number,
