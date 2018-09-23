@@ -29,6 +29,8 @@ class Games extends Component {
       currentGame: {},
       //Current user
       currentUser: {},
+      // Current users email
+      email: ""
     };
   }
 
@@ -59,6 +61,12 @@ class Games extends Component {
                   let user = response.data;
                   let newArray = self.state.users;
                   newArray[x] = user;
+
+                  if (self.state.uid === user._id) {
+                    self.setState({
+                      email: user.email,
+                    })
+                  }
 
                   self.setState({
                     users: newArray,
@@ -99,6 +107,12 @@ class Games extends Component {
             let user = response.data;
             let newArray = self.state.users;
             newArray[x] = user;
+
+            if (self.state.uid === user._id) {
+              self.setState({
+                email: user.email,
+              })
+            }
 
             self.setState({
               users: newArray,
@@ -156,7 +170,7 @@ class Games extends Component {
 
               <Col md='2'>
                 <GameList updateGame={this.updateGame} myFloors={this.state.myFloors}/>
-                <CreateGame uid={this.state.uid}/>
+                <CreateGame email={this.state.email} uid={this.state.uid}/>
               </Col>
               <Col md='1'/>
             </Row>
