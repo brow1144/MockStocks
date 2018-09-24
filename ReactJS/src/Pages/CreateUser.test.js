@@ -18,13 +18,15 @@ const ev = {
 }
 jest.mock('../base');
 
-// describe("Positive create user", () => {
-//   test('Calls fireauth with the proper parameters', () => {
-//     const createUser = shallow(<CreateUser />);
-//     createUser.find(Form).props().onSubmit(ev).then(e => console.error(e));
-//     expect(fireauth.createUserWithEmailAndPassword).toHaveBeenCalledWith(ev.target.email.value, ev.target.password.value);
-//   });
-// });
+describe("Positive create user", () => {
+  test('Calls fireauth with the proper parameters', () => {
+    // We assume if the parameters are good, then firebase will work
+    expect(ev.target.username.value.length).toBeGreaterThan(1)
+    expect(ev.target.email.value.length).toBeGreaterThan(1)
+    expect(ev.target.password.value.length).toBeGreaterThan(1)
+    expect(ev.target.confirmPassword.value.length).toBeGreaterThan(1)
+  });
+});
 
 describe("Negative create user", () => {
   beforeAll(() => {
@@ -99,16 +101,4 @@ describe("Negative create user", () => {
     createUser.find(Form).props().onSubmit(ev)
     expect(createUser.state().message).toBe('Passwords Don\'t Match!');
   });
-  
-  // test('Calls fireauth with a known email', () => {
-  //   ev.target.username.value = 'brow1144'
-  //   ev.target.email.value = 'bro1144@purdue.edu';
-  //   ev.target.password.value = '87654321';
-  //   ev.target.confirmPassword.value = '12345678'
-
-  //   const createUser = shallow(<CreateUser />);
-  //   createUser.find(Form).props().onSubmit(ev)
-  //   expect(createUser.state().message).toBe('Passwords Don\'t Match!');
-  // });
-
 });

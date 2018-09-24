@@ -66,7 +66,7 @@ class CreateUser extends Component {
         }).catch((error) => {
             // Handle error
               self.setState({visible: true, message: error.message});
-          });
+        });
       }
     }
 

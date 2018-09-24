@@ -40,13 +40,13 @@ describe("Negative sign in", () => {
     ev.target.email.value = '';
     ev.target.password.value = 'good';
   });
-  test('Calls fireauth with the wrong email', () => {
+  test('Calls fireauth with the empty email', () => {
     // const signIn = shallow(<SignIn />);
     // signIn.find(Form).props().onSubmit(ev).catch(e => console.error(e));
     expect(() => fireauth.signInWithEmailAndPassword(ev.target.email.value, ev.target.password.value)).toThrow(Error);
   });
   
-  test('Calls fireauth with the wrong password', () => {
+  test('Calls fireauth with the empty password', () => {
     ev.target.email.value = 'good';
     ev.target.password.value = '';
     expect(() => fireauth.signInWithEmailAndPassword(ev.target.email.value, ev.target.password.value)).toThrow(Error);
