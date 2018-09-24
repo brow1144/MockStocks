@@ -54,28 +54,31 @@ class Games extends Component {
             currentGame: gameData.games[0],
           }, () => {
             // Second call to the server to get all the user objects
-            for (let x = 0; x < self.state.currentGame.active_players.length; x++) {
-              axios.get(`http://localhost:8080/Portfol.io/${self.state.currentGame.active_players[x]}`)
-                .then(function (response) {
-                  // handle success
-                  let user = response.data;
-                  let newArray = self.state.users;
-                  newArray[x] = user;
 
-                  if (self.state.uid === user._id) {
+            if (self.state.currentGame.active_players !== null) {
+              for (let x = 0; x < self.state.currentGame.active_players.length; x++) {
+                axios.get(`http://localhost:8080/Portfol.io/${self.state.currentGame.active_players[x]}`)
+                  .then(function (response) {
+                    // handle success
+                    let user = response.data;
+                    let newArray = self.state.users;
+                    newArray[x] = user;
+
+                    if (self.state.uid === user._id) {
+                      self.setState({
+                        email: user.email,
+                      })
+                    }
+
                     self.setState({
-                      email: user.email,
+                      users: newArray,
                     })
-                  }
 
-                  self.setState({
-                    users: newArray,
-                  })
-
-                }).catch(function (err) {
-                console.log("Cannot get users for the current game");
-                console.log(err);
-              })
+                  }).catch(function (err) {
+                  console.log("Cannot get users for the current game");
+                  console.log(err);
+                })
+              }
             }
           })
         }
@@ -100,28 +103,31 @@ class Games extends Component {
       currentGame: newFloor,
       users: []
     }, () => {
-      for (let x = 0; x < self.state.currentGame.active_players.length; x++) {
-        axios.get(`http://localhost:8080/Portfol.io/${self.state.currentGame.active_players[x]}`)
-          .then(function (response) {
-            // handle success
-            let user = response.data;
-            let newArray = self.state.users;
-            newArray[x] = user;
+      if (self.state.currentGame.active_players !== null) {
 
-            if (self.state.uid === user._id) {
+        for (let x = 0; x < self.state.currentGame.active_players.length; x++) {
+          axios.get(`http://localhost:8080/Portfol.io/${self.state.currentGame.active_players[x]}`)
+            .then(function (response) {
+              // handle success
+              let user = response.data;
+              let newArray = self.state.users;
+              newArray[x] = user;
+
+              if (self.state.uid === user._id) {
+                self.setState({
+                  email: user.email,
+                })
+              }
+
               self.setState({
-                email: user.email,
+                users: newArray,
               })
-            }
 
-            self.setState({
-              users: newArray,
-            })
-
-          }).catch(function (err){
-          console.log("Cannot get users for the current game");
-          console.log(err);
-        })
+            }).catch(function (err) {
+            console.log("Cannot get users for the current game");
+            console.log(err);
+          })
+        }
       }
     })
   };
@@ -134,8 +140,9 @@ class Games extends Component {
         </div>
         <Row style={{paddingTop: '10em'}} className='blackBackground body_div'>
           <Col md="4"/>
+
           <Col md="5">
-            <h5 className={"gamesText "}>Floor Name : {this.state.currentGame.game_name}</h5>
+            <h5 className={"gamesText "}>Floor Name : </h5>
           </Col>
         </Row>
         <Row style={{paddingTop: '2em'}} className='blackBackground body_div'>
@@ -143,9 +150,9 @@ class Games extends Component {
           <Col>
             <Row>
               <Col md="1"/>
-              {this.state.currentGame.leader_email === ""}
+
               <Col md="2">
-                <h5 className={"gamesText"}>Floor Code : {this.state.currentGame.code}</h5>
+                <h5 className={"gamesText"}>Floor Code : </h5>
               </Col>
               <Col md="6"/>
               <Col md="3">
