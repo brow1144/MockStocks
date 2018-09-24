@@ -16,16 +16,16 @@ class CreateGame extends Component {
     super(props);
     this.state = {
       modal: false,
-      startDate: moment(),
-      endDate: moment(),
+      startDate: null,
+      endDate: null,
       waiting: true,
       joinGame: false,
       createGame: false,
       code: 0,
-      name: "",
+      game_name: "",
       leader_email: "",
-      starting_amount: 0,
-      trade_limit: 0,
+      starting_amount: "",
+      trade_limit: "",
     };
 
   }
@@ -72,28 +72,24 @@ class CreateGame extends Component {
   }
 
   joinIt = () => {
-    let self = this;
-    var gameId = this.state.code;
+    console.log("--1")
+    console.log(this.state.code);
+    let gameId = this.state.code;
+    console.log(this.props.uid);
+    console.log(gameId);
 
-    axios.put(`http://localhost:8080/Portfol.io/Games/${this.state._id}/${gameId}`,
-      {
-        code: gameId,
-        name: this.state.name,
-        leader_email: this.state.email,
-        starting_amount: this.state.starting_amount,
-        trade_limit: this.state.trade_limit,
-        start_time: this.state.startDate,
-        end_time: this.state.endDate
-      })
+    console.log("--2");
+
+    axios.put(`http://localhost:8080/Portfol.io/Games/${this.props.uid}/${gameId}`);
 
     this.setState({
-      startDate: moment(),
-      endDate: moment(),
+      startDate: null,
+      endDate: null,
       waiting: true,
       joinGame: false,
       createGame: false,
       code: 0,
-      name: "",
+      game_name: "",
       leader_email: "",
       starting_amount: 0,
       trade_limit: 0,
@@ -103,37 +99,32 @@ class CreateGame extends Component {
 
   createIt = () => {
     let self = this;
+    console.log("--3");
     var gameId = this.generateId();
+    console.log("--4");
     axios.post(`http://localhost:8080/Portfol.io/Games`,
       {
         code: gameId,
-        name: this.state.name,
-        leader_email: this.state.email,
+        game_name: this.state.game_name,
+        leader_email: this.props.email,
         starting_amount: this.state.starting_amount,
         trade_limit: this.state.trade_limit,
         start_time: this.state.startDate,
         end_time: this.state.endDate
-      })
+      }).then(() => {
+        console.log("--5");
 
-    this.joinIt();
-
-    this.setState({
-      startDate: moment(),
-      endDate: moment(),
-      waiting: true,
-      joinGame: false,
-      createGame: false,
-      code: 0,
-      name: "",
-      leader_email: "",
-      starting_amount: 0,
-      trade_limit: 0,
-    });
+        self.setState({
+          code: gameId
+        });
+        this.joinIt();
+        console.log("--6");
+      });
     this.toggle();
   }
 
   curName = (event) => {
-    this.setState({name: event.target.value});
+    this.setState({game_name: event.target.value});
   }
 
   curStart = (event) => {
@@ -173,7 +164,7 @@ class CreateGame extends Component {
             this.state.createGame === true
               ?
               <ModalBody>
-                <Input value={this.state.name}  onChange={this.curName} id="floorName" label="Floor name"/>
+                <Input value={this.state.game_name}  onChange={this.curName} id="floorName" label="Floor name"/>
                 Start Time
                 <DatePicker value={this.state.startDate}  onChange={this.curStart}
                             id="startDate" selected={this.state.startDate}
