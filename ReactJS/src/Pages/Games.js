@@ -101,7 +101,7 @@ class Games extends Component {
       users: []
     }, () => {
       for (let x = 0; x < self.state.currentGame.active_players.length; x++) {
-        axios.get(`http://localhost:8080/Portfol.io/${self.state.currentGame.active_players[x].code}`)
+        axios.get(`http://localhost:8080/Portfol.io/${self.state.currentGame.active_players[x]}`)
           .then(function (response) {
             // handle success
             let user = response.data;
@@ -135,7 +135,7 @@ class Games extends Component {
         <Row style={{paddingTop: '10em'}} className='blackBackground body_div'>
           <Col md="4"/>
           <Col md="5">
-            <h5 className={"gamesText "}>Floor Name : {this.state.currentGame.name}</h5>
+            <h5 className={"gamesText "}>Floor Name : {this.state.currentGame.game_name}</h5>
           </Col>
         </Row>
         <Row style={{paddingTop: '2em'}} className='blackBackground body_div'>
