@@ -20,6 +20,11 @@ class CreateUser extends Component {
     };
   }
 
+  validateEmail = (email) => {
+    var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    return re.test(String(email).toLowerCase());
+  }
+
   /**
      *
      * Submits user information in create user form
@@ -29,6 +34,7 @@ class CreateUser extends Component {
      */
 
   onSubmit = (ev) => {
+    
     ev.preventDefault();
     let target = ev.target;
 
@@ -36,11 +42,12 @@ class CreateUser extends Component {
       || target.email.value === ''
       || target.password.value === ''
       || target.confirmPassword.value === '') {
-
         this.setState({visible: true, message: 'Please fill out the entire form!'});
     } else if (target.password.value.length < 8) {
       this.setState({visible: true, message: 'Password must be 8 characters or longer'});
-    } else {
+    } else if (!this.validateEmail(ev.target.email.value)) {
+      this.setState({visible: true, message: 'Please enter a real email address'});
+    } else  {
       if (target.password.value !== target.confirmPassword.value)
         this.setState({visible: true, message: 'Passwords Don\'t Match!'});
       else {
