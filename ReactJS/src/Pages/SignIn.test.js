@@ -18,8 +18,9 @@ jest.mock('../base');
 
 fireauth.signInWithEmailAndPassword = jest.fn((email, pass) => {
   if (email === 'bad') {
-    throw new Error('wrong email'); 
+    throw new Error('My Error has been thrown'); 
   }
+
   return {catch: jest.fn()};
 });
 
@@ -37,9 +38,9 @@ describe("Negative sign in", () => {
     ev.target.email.value = 'bad';
     ev.target.password.value = 'good';
   });
-  test('Calls fireauth with the wrong email', () => {
+  test('Calls fireauth with the wEvalErrorrong email', () => {
     const signIn = shallow(<SignIn />);
-    signIn.find(Form).props().onSubmit(ev).catch(e => console.error(e));
-    expect(fireauth.signInWithEmailAndPassword).toThrowError();
+    // signIn.find(Form).props().onSubmit(ev).catch(e => console.error(e));
+    expect(() => fireauth.signInWithEmailAndPassword(ev.target.email.value, ev.target.password.value)).toThrow(Error);
   });
 });
