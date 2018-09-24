@@ -132,7 +132,7 @@ class Home extends Component {
       <Row style={{marginBottom: '1000em'}} className='blackBackground body_div'>
         <Col md='1'/>
         <Col style={{paddingTop: '7em'}} md='6'>  
-          <h2 className='stockPrice'>${this.state.currentPrice}</h2>
+          <h2 className='stockPrice'>${this.state.currentPriceFor}</h2>
 
           <br />
           {errorMessage}
