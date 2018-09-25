@@ -38,27 +38,29 @@ class Home extends Component {
     this._getData();
   }
 
+  showDataFromAPI = (stockData) => {
+    let withCommas = Number(parseFloat(stockData[stockData.length-1]['y']).toFixed(2)).toLocaleString('en');
+
+    this.setState({visible: false})
+
+    if (Object.keys(stockData).length < 5) {
+      this.setState({visibleData: true})
+    } else {
+      this.setState({
+        stockData: stockData,
+        currentPrice: stockData[stockData.length-1]['y'],
+        currentPriceFor: withCommas
+      })
+    }
+  }
+
   _getData() {
     let self = this;
     axios.get(`http://localhost:8080/Portfol.io/Stock/MSFT/${this.state.selected}`)
       .then((response) => {
         // handle success
         let stockData = response.data;
-        // let data = response.data['Time Series (1min)']
-
-        let withCommas = Number(parseFloat(stockData[stockData.length-1]['y']).toFixed(2)).toLocaleString('en');
-
-        self.setState({visible: false})
-
-        if (Object.keys(stockData).length < 5) {
-          self.setState({visibleData: true})
-        } else {
-          self.setState({
-            stockData: stockData,
-            currentPrice: stockData[stockData.length-1]['y'],
-            currentPriceFor: withCommas
-          })
-        }
+        this.showDataFromAPI(stockData);
       })
       .catch((error) => {
         // handle error
@@ -66,8 +68,8 @@ class Home extends Component {
         self.setState({visible: true})
 
         console.log(`Oh no! Our API didn't respond. Please refresh and try again`);
-        console.log(`Btw here is the error message\n\n`);
-        console.log(error);
+        // console.log(`Btw here is the error message\n\n`);
+        // console.log(error);
       })
   }
 
