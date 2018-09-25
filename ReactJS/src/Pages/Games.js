@@ -42,46 +42,66 @@ class Games extends Component {
 
   componentWillMount () {
     // Make server call for data
+    this.refreshGames();
+  };
+
+  // Check for more games after you create a game
+  refreshGames = () => {
     let self = this;
     axios.get(`http://localhost:8080/Portfol.io/Games/By/User/${this.state.uid}`)
       .then(function (response) {
         // handle success
         let gameData = response.data;
 
-        if (gameData.games !== null) {
+        if (gameData.games.length !== 0) {
           self.setState({
             myFloors: gameData.games,
             currentGame: gameData.games[0],
           }, () => {
             // Second call to the server to get all the user objects
 
-            if (self.state.currentGame.active_players !== null) {
-              for (let x = 0; x < self.state.currentGame.active_players.length; x++) {
-                axios.get(`http://localhost:8080/Portfol.io/${self.state.currentGame.active_players[x]}`)
-                  .then(function (response) {
-                    // handle success
-                    let user = response.data;
-                    let newArray = self.state.users;
-                    newArray[x] = user;
+            for (let x = 0; x < self.state.currentGame.active_players.length; x++) {
+              axios.get(`http://localhost:8080/Portfol.io/${self.state.currentGame.active_players[x]}`)
+                .then(function (response) {
+                  // handle success
+                  let user = response.data;
+                  let newArray = self.state.users;
+                  newArray[x] = user;
 
-                    if (self.state.uid === user._id) {
-                      self.setState({
-                        email: user.email,
-                      })
-                    }
-
+                  console.log(user);
+                  if (self.state.uid === user._id) {
                     self.setState({
-                      users: newArray,
+                      email: user.email,
                     })
+                  }
 
-                  }).catch(function (err) {
-                  console.log("Cannot get users for the current game");
-                  console.log(err);
-                })
-              }
+                  self.setState({
+                    users: newArray,
+                  })
+
+                }).catch(function (err) {
+                console.log("Cannot get users for the current game");
+                console.log(err);
+              })
             }
           })
+          // Still get the email of the current user
+        } else {
+          axios.get(`http://localhost:8080/Portfol.io/${self.state.uid}`)
+            .then(function (response) {
+              // handle success
+              let user = response.data;
+
+              self.setState({
+                email: user.email,
+              })
+
+            }).catch(function (err) {
+            console.log("Cannot get users for the current game");
+            console.log(err);
+          })
         }
+
 
       })
       .catch(function (error) {
@@ -90,47 +110,54 @@ class Games extends Component {
         console.log(`Btw here is the error message\n\n`)
         console.log(error);
       })
+  }
 
-  };
+  reloadPage = () => {
+    window.location.reload();
+  }
 
   // Update the current game state and then add the users
   // para index is the index of the new floor from 0 to n
   updateGame = (index) => {
 
     let self = this;
-    let newFloor = self.state.myFloors[index];
-    self.setState({
-      currentGame: newFloor,
-      users: []
-    }, () => {
-      if (this.state.currentGame !== null) {
+    if (self.state.myFloors.length !== 0) {
+      let newFloor = self.state.myFloors[index];
+      self.setState({
+          currentGame: newFloor,
+          users: []
+        }, () => {
 
-        for (let x = 0; x < self.state.currentGame.active_players.length; x++) {
-          axios.get(`http://localhost:8080/Portfol.io/${self.state.currentGame.active_players[x]}`)
-            .then(function (response) {
-              // handle success
-              let user = response.data;
-              let newArray = self.state.users;
-              newArray[x] = user;
+          for (let x = 0; x < self.state.currentGame.active_players.length; x++) {
+            axios.get(`http://localhost:8080/Portfol.io/${self.state.currentGame.active_players[x]}`)
+              .then(function (response) {
+                // handle success
+                let user = response.data;
+                let newArray = self.state.users;
+                newArray[x] = user;
 
-              if (self.state.uid === user._id) {
+                if (self.state.uid === user._id) {
+                  self.setState({
+                    email: user.email,
+                  })
+                }
+
                 self.setState({
-                  email: user.email,
+                  users: newArray,
                 })
-              }
 
-              self.setState({
-                users: newArray,
-              })
+              }).catch(function (err) {
+              console.log("Cannot get users for the current game");
+              console.log(err);
+            })
+          }
 
-            }).catch(function (err) {
-            console.log("Cannot get users for the current game");
-            console.log(err);
-          })
         }
-      }
-    })
-  };
+      )
+    }
+};
+
+
 
   render() {
     return (
@@ -141,7 +168,7 @@ class Games extends Component {
         <Row style={{paddingTop: '10em'}} className='blackBackground body_div'>
           <Col md="4"/>
 
-          {this.state.currentGame !== null && this.state.currentGame.game_name
+          {this.state.currentGame != null && this.state.currentGame.game_name
             ?
             <Col md="5">
               <h5 className={"gamesText "}>Floor Name : {this.state.currentGame.game_name}</h5>
@@ -157,7 +184,7 @@ class Games extends Component {
             <Row>
               <Col md="1"/>
 
-              {this.state.currentGame !== null && this.state.currentGame.leader_email === this.state.email
+              {this.state.currentGame != null && this.state.currentGame.leader_email === this.state.email
                 ?
                 <Col md="2">
                   <h5 className={"gamesText "}>Floor Code : {this.state.currentGame.code}</h5>
@@ -188,7 +215,7 @@ class Games extends Component {
 
               <Col md='2'>
                 <GameList updateGame={this.updateGame} myFloors={this.state.myFloors}/>
-                <CreateGame email={this.state.email} uid={this.state.uid}/>
+                <CreateGame reloadPage={this.reloadPage} email={this.state.email} uid={this.state.uid}/>
               </Col>
               <Col md='1'/>
             </Row>
