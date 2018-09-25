@@ -103,7 +103,7 @@ class Games extends Component {
       currentGame: newFloor,
       users: []
     }, () => {
-      if (self.state.currentGame.active_players !== null) {
+      if (this.state.currentGame !== null) {
 
         for (let x = 0; x < self.state.currentGame.active_players.length; x++) {
           axios.get(`http://localhost:8080/Portfol.io/${self.state.currentGame.active_players[x]}`)
@@ -141,9 +141,15 @@ class Games extends Component {
         <Row style={{paddingTop: '10em'}} className='blackBackground body_div'>
           <Col md="4"/>
 
-          <Col md="5">
-            <h5 className={"gamesText "}>Floor Name : </h5>
-          </Col>
+          {this.state.currentGame !== null && this.state.currentGame.game_name
+            ?
+            <Col md="5">
+              <h5 className={"gamesText "}>Floor Name : {this.state.currentGame.game_name}</h5>
+            </Col>
+            :
+            <Col md="5"/>
+          }
+
         </Row>
         <Row style={{paddingTop: '2em'}} className='blackBackground body_div'>
 
@@ -151,9 +157,14 @@ class Games extends Component {
             <Row>
               <Col md="1"/>
 
-              <Col md="2">
-                <h5 className={"gamesText"}>Floor Code : </h5>
-              </Col>
+              {this.state.currentGame !== null && this.state.currentGame.leader_email === this.state.email
+                ?
+                <Col md="2">
+                  <h5 className={"gamesText "}>Floor Code : {this.state.currentGame.code}</h5>
+                </Col>
+                :
+                <Col md="2"/>
+              }
               <Col md="6"/>
               <Col md="3">
                 <h5 className={"gamesText"}>Spending Money : ${this.state.money}</h5>
