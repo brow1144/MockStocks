@@ -35,7 +35,7 @@ class Home extends Component {
   }
 
   componentWillMount() {
-    this._getData();
+    this.getData();
   }
 
   showDataFromAPI = (stockData) => {
@@ -54,7 +54,7 @@ class Home extends Component {
     }
   }
 
-  _getData() {
+  getData() {
     let self = this;
     axios.get(`http://localhost:8080/Portfol.io/Stock/MSFT/${this.state.selected}`)
       .then((response) => {
@@ -81,7 +81,7 @@ class Home extends Component {
   handleTimeChange = (timeFrame) => {
     this.setState({
       selected: timeFrame,
-    }, () => this._getData());
+    }, () => this.getData());
 
   };
 
