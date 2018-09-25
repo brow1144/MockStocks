@@ -1,6 +1,6 @@
 import React from 'react';
 import {shallow} from 'enzyme';
-import Home from './Home';
+import StockPage from './StockPage';
 import axios from 'axios';
 
 // Full day of MSFT
@@ -20,50 +20,50 @@ axios.get = jest.fn((url) => {
 
 describe('Positive Data Retreval', () => {
   test('Day stock data sends with no errors', () => {
-    const home = shallow(<Home />);
-    home.instance().showDataFromAPI(goodDayData);
-    expect(home.state().visible).toBe(false);
+    const stockPage = shallow(<StockPage />);
+    stockPage.instance().showDataFromAPI(goodDayData);
+    expect(stockPage.state().visible).toBe(false);
   })
 })
 
 describe('Negative Data Retreval', () => {
   test('Stock Data is 0', () => {
-    const home = shallow(<Home />);
-    home.instance().showDataFromAPI(zeroData);
-    expect(home.state().stockData.length).not.toBeGreaterThan(5);
+    const stockPage = shallow(<StockPage />);
+    stockPage.instance().showDataFromAPI(zeroData);
+    expect(stockPage.state().stockData.length).not.toBeGreaterThan(5);
   })
 
   test('Stock Data is < 5', () => {
-    const home = shallow(<Home />);
-    home.instance().showDataFromAPI(smallData);
-    expect(home.state().stockData.length).not.toBeGreaterThan(5);
+    const stockPage = shallow(<StockPage />);
+    stockPage.instance().showDataFromAPI(smallData);
+    expect(stockPage.state().stockData.length).not.toBeGreaterThan(5);
   })
 })
 
 describe('Testing Time Frames', () => {
   test('One Day works', () => {
-    const home = shallow(<Home />);
-    home.find('#day').simulate('click');
-    expect(home.state().selected).toBe('Day');
+    const stockPage = shallow(<StockPage />);
+    stockPage.find('#day').simulate('click');
+    expect(stockPage.state().selected).toBe('Day');
   })
   test('One Month works', () => {
-    const home = shallow(<Home />);
-    home.find('#month').simulate('click');
-    expect(home.state().selected).toBe('Month');
+    const stockPage = shallow(<StockPage />);
+    stockPage.find('#month').simulate('click');
+    expect(stockPage.state().selected).toBe('Month');
   })
   test('Three Months works', () => {
-    const home = shallow(<Home />);
-    home.find('#triMonth').simulate('click');
-    expect(home.state().selected).toBe('TriMonth');
+    const stockPage = shallow(<StockPage />);
+    stockPage.find('#triMonth').simulate('click');
+    expect(stockPage.state().selected).toBe('TriMonth');
   })
   test('One year works', () => {
-    const home = shallow(<Home />);
-    home.find('#year').simulate('click');
-    expect(home.state().selected).toBe('Year');
+    const stockPage = shallow(<StockPage />);
+    stockPage.find('#year').simulate('click');
+    expect(stockPage.state().selected).toBe('Year');
   })
   test('All time works', () => {
-    const home = shallow(<Home />);
-    home.find('#all').simulate('click');
-    expect(home.state().selected).toBe('All');
+    const stockPage = shallow(<StockPage />);
+    stockPage.find('#all').simulate('click');
+    expect(stockPage.state().selected).toBe('All');
   })
 })
