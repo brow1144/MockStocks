@@ -84,7 +84,7 @@ class NavBar extends Component {
           <div style={{marginBottom: '-20em'}} className='z-depth-5 blackBack'>
             <FormInline className="md-form">
               <Fa style={{color: 'whitesmoke'}} icon="search" />
-              <input value={this.state.search} onChange={this.findTickers} style={{zoom: '80%', color: 'whitesmoke'}} className="form-control form-control-sm ml-3 w-75" type="text" placeholder="Search" aria-label="Search"/>
+              <input id='search' value={this.state.search} onChange={this.findTickers} style={{zoom: '80%', color: 'whitesmoke'}} className="form-control form-control-sm ml-3 w-75" type="text" placeholder="Search" aria-label="Search"/>
             </FormInline>
 
           {stocks}          
