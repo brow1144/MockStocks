@@ -39,4 +39,20 @@ describe('Positive Search Results', () => {
     expect(navBar.state().tickersShowing.length).toBe(0);
   })
 
+  test('Search with lowercase ticker', () => {
+    const navBar = shallow(<NavBar />);
+    navBar.setState({tickers: tickers})
+    navBar.find('#search').simulate('change', {target: {value: 'cei'}});
+    expect(navBar.state().tickersShowing.length).toBe(3);
+  })
+
+  test('Search something then delete it', () => {
+    const navBar = shallow(<NavBar />);
+    navBar.setState({tickers: tickers})
+    navBar.find('#search').simulate('change', {target: {value: 'cei'}});
+    expect(navBar.state().tickersShowing.length).toBe(3);
+    navBar.find('#search').simulate('change', {target: {value: ''}});
+    expect(navBar.state().tickersShowing.length).toBe(0);
+  })
+
 })
