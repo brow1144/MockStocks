@@ -202,7 +202,7 @@ class Games extends Component {
               ? <Row>
                 <Col md="1"/>
                 <Col md="1">
-                  <UpdateGame/>
+                  <UpdateGame currentGame={this.state.currentGame}/>
                 </Col>
                 <Col md="10"/>
               </Row>

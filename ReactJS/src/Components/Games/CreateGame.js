@@ -16,8 +16,8 @@ class CreateGame extends Component {
     super(props);
     this.state = {
       modal: false,
-      startDate: null,
-      endDate: null,
+      startDate: moment(),
+      endDate: moment(),
       waiting: true,
       joinGame: false,
       createGame: false,
@@ -168,13 +168,13 @@ class CreateGame extends Component {
               <ModalBody>
                 <Input value={this.state.game_name}  onChange={this.curName} id="floorName" label="Floor name"/>
                 Start Time
-                <DatePicker value={this.state.startDate}  onChange={this.curStart}
+                <DatePicker value={this.state.startDate.toString()}
                             id="startDate" selected={this.state.startDate}
                             onChange={this.handleChangeStart} showTimeSelect
                             dateFormat="LLL"/>
                 <br/>
                 End Time
-                <DatePicker value={this.state.endDate}  onChange={this.curEnd}
+                <DatePicker value={this.state.endDate.toString()}
                             id="endDate" selected={this.state.endDate}
                             onChange={this.handleChangeEnd} showTimeSelect
                             dateFormat="LLL"/>
