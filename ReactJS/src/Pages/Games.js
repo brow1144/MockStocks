@@ -10,6 +10,7 @@ import CreateGame from '../Components/Games/CreateGame'
 import GameList from '../Components/Games/GamesList';
 import '../Static/CSS/Games.css';
 import axios from 'axios';
+import UpdateGame from "../Components/Games/UpdateGame";
 
 class Games extends Component {
 
@@ -216,6 +217,7 @@ class Games extends Component {
               <Col md='2'>
                 <GameList updateGame={this.updateGame} myFloors={this.state.myFloors}/>
                 <CreateGame reloadPage={this.reloadPage} email={this.state.email} uid={this.state.uid}/>
+                <UpdateGame/>
               </Col>
               <Col md='1'/>
             </Row>
