@@ -22,12 +22,6 @@ class Home extends Component {
     this.state = {
       stockData: [],
       currentPrice: 0,
-      // oneDay: 'selected',
-      // oneWeek: '',
-      // oneMonth: '',
-      // threeMonths: '',
-      // oneYear: '',
-      // all: '',
       visible: false,
       visibleData: false,
       selected: 'Day'
