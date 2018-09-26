@@ -41,6 +41,21 @@ class StockPage extends Component {
     }
   }
 
+  showDataFromAPI = (stockData) => {
+    let withCommas = Number(parseFloat(stockData[stockData.length-1]['y']).toFixed(2)).toLocaleString('en');
+
+    this.setState({visible: false})
+
+    if (Object.keys(stockData).length < 5) {
+      this.setState({visibleData: true})
+    } else {
+      this.setState({
+        stockData: stockData,
+        currentPrice: stockData[stockData.length-1]['y'],
+        currentPriceFor: withCommas
+      })
+    }
+  }
 
   getData = () => {
     let self = this;
@@ -50,22 +65,7 @@ class StockPage extends Component {
       .then((response) => {
         // handle success
         let stockData = response.data;
-        // let data = response.data['Time Series (1min)']
-
-        let withCommas = Number(parseFloat(stockData[stockData.length-1]['y']).toFixed(2)).toLocaleString('en');
-
-        self.setState({visible: false})
-
-        if (Object.keys(stockData).length < 5) {
-          self.setState({visibleData: true})
-        } else {
-          self.setState({
-            stockData: stockData,
-            currentPrice: stockData[stockData.length-1]['y'],
-            currentPriceFor: withCommas
-          })
-        }
-
+        this.showDataFromAPI(stockData);
       })
       .catch((error) => {
         // handle error      
@@ -81,7 +81,7 @@ class StockPage extends Component {
   handleTimeChange = (timeFrame) => {
     this.setState({
       selected: timeFrame,
-    }, () => this._getData());
+    }, () => this.getData());
 
   };
 
@@ -142,11 +142,11 @@ class StockPage extends Component {
           {errorMessage}
           {errorMessage2}
 
-          <b onClick={() => this.handleTimeChange('Day')} className={`timeFrame ${this.state.selected === 'Day' ? 'selected' : ''}`}>1D</b>
-          <b onClick={() => this.handleTimeChange('Month')} className={`timeFrame ${this.state.selected === 'Month' ? 'selected' : ''}`}>1M</b>
-          <b onClick={() => this.handleTimeChange('TriMonth')} className={`timeFrame ${this.state.selected === 'TriMonth' ? 'selected' : ''}`}>3M</b>
-          <b onClick={() => this.handleTimeChange('Year')} className={`timeFrame ${this.state.selected === 'Year' ? 'selected' : ''}`}>1Y</b>
-          <b onClick={() => this.handleTimeChange('All')} className={`timeFrame ${this.state.selected === 'All' ? 'selected' : ''}`}>All</b>
+          <b id='day' onClick={() => this.handleTimeChange('Day')} className={`timeFrame ${this.state.selected === 'Day' ? 'selected' : ''}`}>1D</b>
+          <b id='month' onClick={() => this.handleTimeChange('Month')} className={`timeFrame ${this.state.selected === 'Month' ? 'selected' : ''}`}>1M</b>
+          <b id='triMonth' onClick={() => this.handleTimeChange('TriMonth')} className={`timeFrame ${this.state.selected === 'TriMonth' ? 'selected' : ''}`}>3M</b>
+          <b id='year' onClick={() => this.handleTimeChange('Year')} className={`timeFrame ${this.state.selected === 'Year' ? 'selected' : ''}`}>1Y</b>
+          <b id='all' onClick={() => this.handleTimeChange('All')} className={`timeFrame ${this.state.selected === 'All' ? 'selected' : ''}`}>All</b>
 
           <HighchartsReact
             className='highcharts-container'
