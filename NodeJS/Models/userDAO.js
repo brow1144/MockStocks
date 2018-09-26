@@ -3,10 +3,16 @@ import {gameSchema} from './gameDAO';
 
 export const userSchema = new mongoose.Schema({
   _id: String,
-  username: String,
-  email: String,
   active_games: Array,
-  watchlist: Array
+  watchlist: Array,
+  username: { // TODO unique keys not working, maybe restart cluster
+    type: String,
+    unique: true
+  },
+  email: {
+    type: String,
+    unique: true
+  }
 });
 
 let userModel = mongoose.model('User', userSchema);
@@ -16,22 +22,23 @@ export function getUser(uid) {
   return new Promise((resolve, reject) => {
     userModel.findOne({_id: uid}, (err, user) => {
       if (err) reject(err);
-      resolve(user);
+
+      if (user)
+        resolve(user);
+      else
+        reject('UserError: User not found');
     });
   });
 };
 
 export function createUser(user) {
   return new Promise((resolve, reject) => {
-
-    // TODO error checking
     for (let i in user) {
       if (user.hasOwnProperty(i)) {
-        console.log(user[i]);
-        if (user[i] == '') {
-          reject('Each field must have information');
-        }
-
+        if (user[i] === undefined)
+          reject('UserError: One or more fields are missing');
+        else if (user[i] === '')
+          reject('UserError: Each field must have information');
       }
     }
 
@@ -56,15 +63,6 @@ export function joinGame(uid, gameCode) {
     });
   });
 };
-
-function getGame(code) {
-  return new Promise((resolve, reject) => {
-    gameModel.findOne({code: code}, (err, game) => {
-      if (err) reject(err);
-      resolve(game);
-    });
-  });
-}
 
 // export function getActiveGames(userEmail) {
 //   return new Promise((resolve, reject) => {

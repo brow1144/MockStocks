@@ -3,6 +3,7 @@ import {createGame, addUserToGame} from "../Models/gameDAO";
 import {joinGame} from '../Models/userDAO';
 
 export default (app) => {
+  // create a game
   app.post('/Portfol.io/Games', async (req, res) => {
     let game = {
       code: req.body.code,
@@ -18,6 +19,7 @@ export default (app) => {
     buildResponse(res, data);
   });
 
+  // join a game
   app.put('/Portfol.io/Games/:uid/:gameCode', async (req, res) => {
     let user = await joinGame(req.params.uid, req.params.gameCode);
     let game = await addUserToGame(req.params.uid, req.params.gameCode);
@@ -28,11 +30,6 @@ export default (app) => {
 
     buildResponse(res, data);
   });
-
-  // app.get('/Portfol.io/getActiveGames/:email', async (req, res) => {
-  //   const data = await getActiveGames(req.params.email);
-  //   buildResponse(res, data);
-  // });
 };
 
 const buildResponse = (res, data) => {
