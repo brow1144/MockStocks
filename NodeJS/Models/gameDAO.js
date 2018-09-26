@@ -49,7 +49,17 @@ export function getGamesByUser(uid) {
     })
     .catch((err) => {return Promise.reject(err)})
 }
+
 export function getGamesById(gameId) {
   const tickerList = mongoose.model('Ticker', tickerSchema);
   return tickerList.find({}, {tickers: 1, _id: 0}).catch((err) => {return Promise.reject(err)})
 }
+
+// function getGame(code) {
+//   return new Promise((resolve, reject) => {
+//     gameModel.findOne({code: code}, (err, game) => {
+//       if (err) reject(err);
+//       resolve(game);
+//     });
+//   });
+// }
