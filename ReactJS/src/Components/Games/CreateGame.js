@@ -95,29 +95,31 @@ class CreateGame extends Component {
       trade_limit: 0,
     });
     this.toggle();
+    this.props.reloadPage();
   }
 
   createIt = () => {
     let self = this;
     console.log("--3");
-    var gameId = this.generateId();
+    var gameId = self.generateId();
     console.log("--4");
+    console.log();
     axios.post(`http://localhost:8080/Portfol.io/Games`,
       {
         code: gameId,
-        game_name: this.state.game_name,
-        leader_email: this.props.email,
-        starting_amount: this.state.starting_amount,
-        trade_limit: this.state.trade_limit,
-        start_time: this.state.startDate,
-        end_time: this.state.endDate
+        game_name: self.state.game_name,
+        leader_email: self.props.email,
+        starting_amount: self.state.starting_amount,
+        trade_limit: self.state.trade_limit,
+        start_time: self.state.startDate,
+        end_time: self.state.endDate
       }).then(() => {
         console.log("--5");
 
         self.setState({
           code: gameId
         });
-        this.joinIt();
+        self.joinIt();
         console.log("--6");
       });
     this.toggle();

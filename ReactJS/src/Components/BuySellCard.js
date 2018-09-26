@@ -11,13 +11,19 @@ class BuySellCard extends Component {
 
     this.state = {
       cost: 0,
+      finalPrice: 0,
     }
   }
 
   updateCost = (ev) => {
-    this.setState({
-      cost: ev.target.value
-    });
+    if (ev.target.value < 0) {
+      this.setState({cost: 0, finalPrice: 0})
+    } else {
+      this.setState({
+        finalPrice: Number(parseFloat((ev.target.value * this.props.currentPrice * 100) / 100).toFixed(2)).toLocaleString('en'),
+        cost: ev.target.value
+      });
+    }
   }
 
   render() { 
@@ -57,7 +63,7 @@ class BuySellCard extends Component {
                 <h6 className='leftText' style={{marginTop: '8px'}}>Cost</h6>
               </Col>
               <Col sm='6'>
-                <p style={{marginTop: '7px', float: 'right', fontSize: '0.8em', color: 'whitesmoke'}}>${Number(parseFloat((this.state.cost * this.props.currentPrice * 100) / 100).toFixed(2)).toLocaleString('en')}</p>
+                <p id='finalCost' style={{marginTop: '7px', float: 'right', fontSize: '0.8em', color: 'whitesmoke'}}>${this.state.finalPrice}</p>
               </Col>
             </Row>
 
