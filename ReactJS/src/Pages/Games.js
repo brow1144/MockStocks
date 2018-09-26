@@ -198,7 +198,16 @@ class Games extends Component {
                 <h5 className={"gamesText"}>Spending Money : ${this.state.money}</h5>
               </Col>
             </Row>
-
+            {this.state.currentGame != null && this.state.currentGame.leader_email === this.state.email
+              ? <Row>
+                <Col md="1"/>
+                <Col md="1">
+                  <UpdateGame/>
+                </Col>
+                <Col md="10"/>
+              </Row>
+              : <Row/>
+            }
             <Row  style={{paddingTop: '4em'}} className='blackBackground body_div'>
               <Col md='9'>
                 <Row>
@@ -217,12 +226,12 @@ class Games extends Component {
               <Col md='2'>
                 <GameList updateGame={this.updateGame} myFloors={this.state.myFloors}/>
                 <CreateGame reloadPage={this.reloadPage} email={this.state.email} uid={this.state.uid}/>
-                <UpdateGame/>
               </Col>
               <Col md='1'/>
             </Row>
 
           </Col>
+
         </Row>
 
       </div>

@@ -198,8 +198,5 @@ class CreateGame extends Component {
         }
         }
 
-        /*
-        *
-                            */
 
         export default CreateGame;
