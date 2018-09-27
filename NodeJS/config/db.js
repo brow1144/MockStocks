@@ -13,6 +13,8 @@ const options = {
   poolSize: 10
 };
 
+mongoose.set('useCreateIndex', true); // prevent deprecation warning
+
 // connection
 mongoose.connect(dbURL, options).then(() => {
   console.log("Database connection established!");

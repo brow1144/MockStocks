@@ -6,11 +6,16 @@ class Leaderboard extends Component {
 
   constructor(props) {
     super(props);
+
+    this.state = {
+      totalAssets: [],
+      rank: []
+    }
   }
 
   calculateStock = () => {
 
-  }
+  };
 
   render() {
     return (
@@ -20,34 +25,20 @@ class Leaderboard extends Component {
           <thead>
           <tr>
             <th>Rank</th>
-            <th>First Name</th>
-            <th>Last Name</th>
+            <th>Username</th>
             <th>Total Assets</th>
             <th>Trades Left</th>
           </tr>
           </thead>
           <tbody>
-          <tr>
-            <th scope="row">1</th>
-            <td>Jeremy</td>
-            <td>Putnam</td>
-            <td>$10456</td>
-            <td>Unlimited</td>
-          </tr>
-          <tr>
-            <th scope="row">2</th>
-            <td>Walter</td>
-            <td>Jr</td>
-            <td>$145</td>
-            <td>Unlimited</td>
-          </tr>
-          <tr>
-            <th scope="row">3</th>
-            <td>Jacob</td>
-            <td>Koootz</td>
-            <td>$202</td>
-            <td>2</td>
-          </tr>
+          {this.props.users.map((user, key) => {
+            return (<tr key={key}>
+              <th scope="row">{key}</th>
+              <th >{user.username}</th>
+              <th >{user.totalAssets}</th>
+              <th >Unlimited</th>
+            </tr>)
+          })}
           </tbody>
         </Table>
       </div>

@@ -22,43 +22,60 @@ class Home extends Component {
     this.state = {
       stockData: [],
       currentPrice: 0,
+      visible: false,
+      visibleData: false,
       selected: 'Day'
     }
   }
 
   componentWillMount() {
-    this._getData();
+    this.getData();
   }
 
-  _getData() {
+  showDataFromAPI = (stockData) => {
+    let withCommas = Number(parseFloat(stockData[stockData.length-1]['y']).toFixed(2)).toLocaleString('en');
+
+    this.setState({visible: false})
+
+    if (Object.keys(stockData).length < 5) {
+      this.setState({visibleData: true})
+    } else {
+      this.setState({
+        stockData: stockData,
+        currentPrice: stockData[stockData.length-1]['y'],
+        currentPriceFor: withCommas
+      })
+    }
+  }
+
+  getData() {
     let self = this;
     axios.get(`http://localhost:8080/Portfol.io/Stock/MSFT/${this.state.selected}`)
       .then((response) => {
         // handle success
         let stockData = response.data;
-        // let data = response.data['Time Series (1min)']
-
-        let withCommas = Number(parseFloat(stockData[stockData.length-1]['y']).toFixed(2)).toLocaleString('en');
-
-        self.setState({
-          stockData: stockData,
-          currentPrice: stockData[stockData.length-1]['y'],
-          currentPriceFor: withCommas
-        })
-
+        this.showDataFromAPI(stockData);
       })
       .catch((error) => {
         // handle error
+
+        self.setState({visible: true})
+
         console.log(`Oh no! Our API didn't respond. Please refresh and try again`);
-        console.log(`Btw here is the error message\n\n`);
-        console.log(error);
+        // console.log(`Btw here is the error message\n\n`);
+        // console.log(error);
       })
   }
+
+  onDismiss = () => {
+    this.setState({ visible: false })
+  }
+
 
   handleTimeChange = (timeFrame) => {
     this.setState({
       selected: timeFrame,
-    }, () => this._getData());
+    }, () => this.getData());
 
   };
 
@@ -93,18 +110,35 @@ class Home extends Component {
       },
     };
 
+    let errorMessage;
+    if (this.state.visible) {
+      errorMessage = <p style={{color: 'whitesmoke'}}>Oh no! Our API did not respond, please refresh to get the updated data!</p>
+    } else {
+      errorMessage = null;
+    }
+
+    let notEnoughData;
+    if (this.state.visibleData) {
+      notEnoughData = <p style={{color: 'whitesmoke'}}>Oh no! You don't have enough data to show!</p>
+    } else {
+      notEnoughData = null;
+    }
+
     return (
       <Row style={{marginBottom: '1000em'}} className='blackBackground body_div'>
         <Col md='1'/>
-        <Col style={{paddingTop: '7em'}} md='6'> 
-          <h2 className='stockPrice'>${this.state.currentPrice}</h2>
-          <br />
+        <Col style={{paddingTop: '7em'}} md='6'>  
+          <h2 className='stockPrice'>${this.state.currentPriceFor}</h2>
 
-          <b onClick={() => this.handleTimeChange('Day')} className={`timeFrame ${this.state.selected === 'Day' ? 'selected' : ''}`}>1D</b>
-          <b onClick={() => this.handleTimeChange('Month')} className={`timeFrame ${this.state.selected === 'Month' ? 'selected' : ''}`}>1M</b>
-          <b onClick={() => this.handleTimeChange('TriMonth')} className={`timeFrame ${this.state.selected === 'TriMonth' ? 'selected' : ''}`}>3M</b>
-          <b onClick={() => this.handleTimeChange('Year')} className={`timeFrame ${this.state.selected === 'Year' ? 'selected' : ''}`}>1Y</b>
-          <b onClick={() => this.handleTimeChange('All')} className={`timeFrame ${this.state.selected === 'All' ? 'selected' : ''}`}>All</b>
+          <br />
+          {errorMessage}
+          {notEnoughData}
+          
+          <b id='day' onClick={() => this.handleTimeChange('Day')} className={`timeFrame ${this.state.selected === 'Day' ? 'selected' : ''}`}>1D</b>
+          <b id='month' onClick={() => this.handleTimeChange('Month')} className={`timeFrame ${this.state.selected === 'Month' ? 'selected' : ''}`}>1M</b>
+          <b id='triMonth' onClick={() => this.handleTimeChange('TriMonth')} className={`timeFrame ${this.state.selected === 'TriMonth' ? 'selected' : ''}`}>3M</b>
+          <b id='year' onClick={() => this.handleTimeChange('Year')} className={`timeFrame ${this.state.selected === 'Year' ? 'selected' : ''}`}>1Y</b>
+          <b id='all' onClick={() => this.handleTimeChange('All')} className={`timeFrame ${this.state.selected === 'All' ? 'selected' : ''}`}>All</b>
 
           <HighchartsReact
             className='highcharts-container'

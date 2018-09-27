@@ -19,10 +19,10 @@ describe('Game Tests Positive Case', function () {
   // I think eventually we will do some tests that run against mockData but for now just checking calls works.
   it('should call find with the proper find clause', async function () {
     await getGamesByUser('Rawley123');
-    expect(gameModel.find).toHaveBeenCalledWith({active_players: {$elemMatch: {uid: 'Rawley123'}}});
+    expect(gameModel.find).toHaveBeenCalledWith({active_players: 'Rawley123'});
     // This seems pointless but it will check against if we screw something up in code by mistake, in general
     // having more specific clauses and building more data will cause this to be a bigger and more significant test.
     // Also integration testing will be full API tests from controller though so that will be more instense.
-  });
+  });// but this will mock out the database call, theres more I'd like to test with this but I gotta work on other stuff rn
 
 });

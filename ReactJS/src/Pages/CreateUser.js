@@ -20,6 +20,11 @@ class CreateUser extends Component {
     };
   }
 
+  validateEmail = (email) => {
+    var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    return re.test(String(email).toLowerCase());
+  }
+
   /**
      *
      * Submits user information in create user form
@@ -29,17 +34,20 @@ class CreateUser extends Component {
      */
 
   onSubmit = (ev) => {
+    
     ev.preventDefault();
     let target = ev.target;
 
-    if ( target.firstName.value === ''
-      || target.lastName.value === ''
+    if ( target.username.value === ''
       || target.email.value === ''
       || target.password.value === ''
       || target.confirmPassword.value === '') {
-
         this.setState({visible: true, message: 'Please fill out the entire form!'});
-    } else {
+    } else if (target.password.value.length < 8) {
+      this.setState({visible: true, message: 'Password must be 8 characters or longer'});
+    } else if (!this.validateEmail(ev.target.email.value)) {
+      this.setState({visible: true, message: 'Please enter a real email address'});
+    } else  {
       if (target.password.value !== target.confirmPassword.value)
         this.setState({visible: true, message: 'Passwords Don\'t Match!'});
       else {
@@ -48,8 +56,7 @@ class CreateUser extends Component {
         fireauth.createUserWithEmailAndPassword(target.email.value, target.password.value).then((userData) => {
           axios.post('http://localhost:8080/Portfol.io/CreateAccount', {
             _id: userData.user.uid,
-            first_name: target.firstName.value,
-            last_name: target.lastName.value,
+            username: target.username.value,
             email: target.email.value
           }).then(() => {
             window.location.reload();
@@ -59,7 +66,7 @@ class CreateUser extends Component {
         }).catch((error) => {
             // Handle error
               self.setState({visible: true, message: error.message});
-          });
+        });
       }
     }
 
@@ -98,13 +105,12 @@ class CreateUser extends Component {
             <Form onSubmit={this.onSubmit}>
               <Row>
                 <Col xs='12' md='6'>
-                  <Input name='firstName' className='firstName' style={{fontSize: '0.85em'}} label="First Name"/>
+                  <Input name='username' className='username' style={{fontSize: '0.85em'}} label="Username"/>
                 </Col>
                 <Col xs='12' md='6'>
-                  <Input name='lastName' className='lastName' style={{fontSize: '0.85em'}} label="Last Name"/>
+                  <Input name='email' style={{fontSize: '0.85em'}} label="Email"/>
                 </Col>
               </Row>
-              <Input name='email' style={{fontSize: '0.85em'}} label="Email"/>
               <Input name='password' label="Password" type="password"/>
               <Input name='confirmPassword' label="Confirm Password" type="password"/>
               <br/>

@@ -31,7 +31,7 @@ export function addUserToGame(uid, gameCode) {
 }
 
 export function getGamesByUser(uid) {
-  const findClause = {active_players: {$elemMatch: {uid: uid}}};
+  const findClause = {active_players: uid};
   return gameModel.find(findClause)
     .then((data) => {
       return Promise.resolve({games: data});
@@ -42,3 +42,12 @@ export function getGamesById(gameId) {
   const tickerList = mongoose.model('Ticker', tickerSchema);
   return tickerList.find({}, {tickers: 1, _id: 0}).catch((err) => {return Promise.reject(err)})
 }
+
+// function getGame(code) {
+//   return new Promise((resolve, reject) => {
+//     gameModel.findOne({code: code}, (err, game) => {
+//       if (err) reject(err);
+//       resolve(game);
+//     });
+//   });
+// }

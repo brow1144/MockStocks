@@ -33,7 +33,7 @@ class SignIn extends Component {
     fireauth.signInWithEmailAndPassword(ev.target.email.value, ev.target.password.value)
       .catch(function(err) {
         self.setState({visible: true, errorMessage: err.message})
-      });
+    });
   };
 
   /**
