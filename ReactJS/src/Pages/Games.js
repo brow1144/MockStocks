@@ -25,7 +25,7 @@ class Games extends Component {
       // Array of game objects
       myFloors: [],
       money: 0,
-      uid: sessionStorage.getItem('uid'),
+      uid: "kObyyRI68of2Prc0RkjnJfN6Joc2", //sessionStorage.getItem('uid'),
       //Current game object
       currentGame: {},
       //Current user
@@ -46,7 +46,9 @@ class Games extends Component {
     this.fetchGames();
   };
 
-  // Makes database call for all the games
+  /*
+   * Initial call to data base for all the games
+   */
   fetchGames = () => {
     let self = this;
     axios.get(`http://localhost:8080/Portfol.io/Games/By/User/${this.state.uid}`)
@@ -56,7 +58,12 @@ class Games extends Component {
 
         if (gameData.games.length !== 0) {
           // Get all the user's games
-          self.fetchUsers(gameData.games);
+          self.setState({
+            myFloors: gameData.games,
+            currentGame: gameData.games[0],
+          }, () => {
+
+          })
         } else { // No games return
           // Get the current user's email
           axios.get(`http://localhost:8080/Portfol.io/${self.state.uid}`)
@@ -85,44 +92,37 @@ class Games extends Component {
   }
 
   /*
-   * Sets the state of the floors
-   * Sets the state of the current floor and gets all users for it
-   * Takes an array of games
+   * Gets all users for the current game
    */
-  fetchUsers = (data) => {
-    // Set the state with all the floors a user is in
-    // Set the current game to the first game
-    self.setState({
-      myFloors: data,
-      currentGame: data[0],
-    }, () => {
-      // Second call to the server to get all the user objects
+  fetchUsers = () => {
+    let self = this;
+    // Call to the server to get all the user objects
 
-      for (let x = 0; x < self.state.currentGame.active_players.length; x++) {
-        axios.get(`http://localhost:8080/Portfol.io/${self.state.currentGame.active_players[x]}`)
-          .then(function (response) {
-            // handle success
-            let user = response.data;
-            let newArray = self.state.users;
-            newArray[x] = user;
+    for (let x = 0; x < self.state.currentGame.active_players.length; x++) {
+      axios.get(`http://localhost:8080/Portfol.io/${self.state.currentGame.active_players[x]}`)
+        .then(function (response) {
+          // handle success
+          let user = response.data;
+          let newArray = self.state.users;
+          newArray[x] = user;
 
-            console.log(user);
-            if (self.state.uid === user._id) {
-              self.setState({
-                email: user.email,
-              })
-            }
-
+          console.log(user);
+          if (self.state.uid === user._id) {
             self.setState({
-              users: newArray,
+              email: user.email,
             })
+          }
 
-          }).catch(function (err) {
-          console.log("Cannot get users for the current game");
-          console.log(err);
-        })
-      }
-    })
+          self.setState({
+            users: newArray,
+          })
+
+        }).catch(function (err) {
+        console.log("Cannot get users for the current game");
+        console.log(err);
+      })
+    }
+
   }
 
   reloadPage = () => {
