@@ -9,24 +9,59 @@ export default (app) => {
       email: req.body.email
     };
 
-    const data = await createUser(user);
+    let data;
+
+    try {
+      data = await createUser(user);
+    } catch (err) {
+      data = {
+        error: parseError(err)
+      };
+    }
+
     buildResponse(res, data);
   });
 
+  // get a user
   app.get('/Portfol.io/:uid', async (req, res) => {
-    const data = await getUser(req.params.uid);
+    let data;
+
+    try {
+      data = await getUser(req.params.uid);
+    } catch (err) {
+      data = {
+        error: parseError(err)
+      };
+    }
+
     buildResponse(res, data);
   });
-
-  // app.get('/Portfol.io/getActiveGames/:email', async (req, res) => {
-  //   const data = await getActiveGames(req.params.email);
-  //   buildResponse(res, data);
-  // });
 };
+
+const parseError = (err) => {
+  let error = {
+    status: 0,
+    message: ''
+  };
+
+  if (typeof err === String && err.includes('UserError:')) {
+    error.status = 400;
+    error.message = err.substring('UserError:'.length + 1);
+  } else {
+    error.status = 500;
+    error.message = err;
+  }
+
+  return error;
+}
 
 const buildResponse = (res, data) => {
   res.header("Access-Control-Allow-Origin", "*");
   res.header("Access-Control-Allow-Methods", "GET, POST, PUT, OPTIONS");
   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-  data && res.status(200).json(data);
+
+  if (data.error)
+    res.status(data.error.status).json(data);
+  else
+    res.status(200).json(data);
 };

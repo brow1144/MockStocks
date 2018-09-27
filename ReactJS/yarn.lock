@@ -6281,6 +6281,13 @@ react-autowhatever@^10.1.2:
     react-themeable "^1.1.0"
     section-iterator "^2.0.0"
 
+react-awesome-button@^5.0.0:
+  version "5.0.0"
+  resolved "https://registry.yarnpkg.com/react-awesome-button/-/react-awesome-button-5.0.0.tgz#7a84805fec98c438e02713ce22f37ec12c599ff7"
+  dependencies:
+    prop-types "^15.6.0"
+    react "^16.2.0"
+
 react-bootstrap-table-next@^0.1.14:
   version "0.1.15"
   resolved "https://registry.yarnpkg.com/react-bootstrap-table-next/-/react-bootstrap-table-next-0.1.15.tgz#ced6b33717d01640d183bfedcb3d123b6a9a851c"
@@ -6519,6 +6526,15 @@ react-transition-group@^2.2.1, react-transition-group@^2.3.1, react-transition-g
     loose-envify "^1.3.1"
     prop-types "^15.6.2"
     react-lifecycles-compat "^3.0.4"
+
+react@^16.2.0:
+  version "16.5.2"
+  resolved "https://registry.yarnpkg.com/react/-/react-16.5.2.tgz#19f6b444ed139baa45609eee6dc3d318b3895d42"
+  dependencies:
+    loose-envify "^1.1.0"
+    object-assign "^4.1.1"
+    prop-types "^15.6.2"
+    schedule "^0.5.0"
 
 react@^16.4.1, react@^16.5.0:
   version "16.5.1"
@@ -6926,6 +6942,12 @@ sax@^1.2.1, sax@^1.2.4, sax@~1.2.1:
 schedule@^0.4.0:
   version "0.4.0"
   resolved "https://registry.yarnpkg.com/schedule/-/schedule-0.4.0.tgz#fa20cfd0bfbf91c47d02272fd7096780d3170bbb"
+  dependencies:
+    object-assign "^4.1.1"
+
+schedule@^0.5.0:
+  version "0.5.0"
+  resolved "https://registry.yarnpkg.com/schedule/-/schedule-0.5.0.tgz#c128fffa0b402488b08b55ae74bb9df55cc29cc8"
   dependencies:
     object-assign "^4.1.1"
 
