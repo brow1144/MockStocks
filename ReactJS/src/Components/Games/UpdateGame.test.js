@@ -79,4 +79,9 @@ describe('Positive Data Retreval', () => {
     updateGame.instance().toggle();
     expect(updateGame.state().modal).toBe(true);
   })
+
+  test('Window Closes', () => {
+    updateGame.instance().update();
+    expect(updateGame.state().modal).toBe(false);
+  })
 })
