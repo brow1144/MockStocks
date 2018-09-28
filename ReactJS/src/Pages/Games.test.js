@@ -3,11 +3,6 @@ import {shallow} from 'enzyme';
 import Games from './Games';
 import axios from 'axios';
 
-// Test the size of the Floor list
-// Test size of the players in each leaderboard
-// Check the floor name displays
-// Check the code displays for leaders only
-
 const games = [{code: "345346", leader_email: "jeremyputput@gmail.com", game_name: "Best Game", starting_amount: 500,
               active_players: ["kObyyRI68of2Prc0RkjnJfN6Joc2", "vxDrsW9oirWK5Diss5hBJHV1WrC3", "vxDrsW9oirWK5Diss5hBJHV1WrC3"]},
               {code: "234234", leader_email: "r@yahoo.com", game_name: "Lame Game", starting_amount: 1000,
