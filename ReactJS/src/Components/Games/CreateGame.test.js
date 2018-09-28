@@ -72,10 +72,21 @@ axios.get = jest.fn((url) => {
   return {then: then, catch: jest.fn()};
 });
 
-describe('Positive Data Retreval', () => {
+const createGame = shallow(<CreateGame />);
+
+describe('Positive Results', () => {
   test('Game creates with no errors', () => {
-    const createGame = shallow(<CreateGame />);
-    createGame.instance().showDataFromAPI(goodGame);
+    //call sum here
     expect(createGame.state().visible).toBe(false);
+  })
+
+  test('Modal opens on click', () => {
+    createGame.instance().toggle(goodGame);
+    expect(createGame.state().modal).toBe(true);
+  })
+
+  test('Create game window opens on click', () => {
+    createGame.instance().creating();
+    expect(createGame.state().createGame).toBe(true);
   })
 })

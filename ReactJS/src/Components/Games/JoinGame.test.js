@@ -14,10 +14,16 @@ axios.get = jest.fn((url) => {
   return {then: then, catch: jest.fn()};
 });
 
-describe('Positive Data Retreval', () => {
-  test('Joins game with no errors', () => {
-    const joinGame = shallow(<CreateGame />);
-    joinGame.instance().showDataFromAPI(goodGame);
-    expect(joinGame.state().visible).toBe(false);
+const createGame = shallow(<CreateGame />);
+
+describe('Positive Results', () => {
+  test('Joins with no errors', () => {
+    //call sum here
+    expect(createGame.state().visible).toBe(false);
+  })
+
+  test('Create game window opens on click', () => {
+    createGame.instance().joining();
+    expect(createGame.state().joinGame).toBe(true);
   })
 })
