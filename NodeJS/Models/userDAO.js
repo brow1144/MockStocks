@@ -37,9 +37,9 @@ export function createUser(user) {
   for (let i in user) {
     if (user.hasOwnProperty(i)) {
       if (user[i] === undefined)
-        Promise.reject('UserError: One or more fields are missing');
+        return Promise.reject('UserError: One or more fields are missing');
       else if (user[i] === '')
-        Promise.reject('UserError: Each field must have information');
+        return Promise.reject('UserError: Each field must have information');
     }
   }
 
