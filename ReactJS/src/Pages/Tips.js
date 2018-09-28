@@ -37,7 +37,7 @@ class Tips extends Component {
               <Card style={{backgroundColor: '#1B1B1D', color: 'whitesmoke'}}>
                 <CardBody>
                   <CardTitle stlyle={{borderBottom: '2px solid whitesmoke'}} >
-                    <h3 style={{color: 'whitesmoke', textAlign: 'center'}}>Investing Basics</h3>
+                    <p style={{color: 'whitesmoke', textAlign: 'center'}}>Investing Basics</p>
                   </CardTitle>
                   <hr className='hr'/>
                   <h5 style={{color: 'whitesmoke', textAlign: 'left'}}><b>Rule 1: Diversification!</b> Don't put all your eggs in one basket. Invest in numerous companies to reduce the risk of losing your money if one stock tanks!</h5>
@@ -57,7 +57,7 @@ class Tips extends Component {
             <Card style={{backgroundColor: '#1B1B1D', color: 'whitesmoke'}}>
               <CardBody>
                 <CardTitle stlyle={{borderBottom: '2px solid whitesmoke'}} >
-                  <h3 style={{color: 'whitesmoke', textAlign: 'center'}}>Using Portfol.io</h3>
+                  <p style={{color: 'whitesmoke', textAlign: 'center'}}>Using Portfol.io</p>
                 </CardTitle>
                 <hr className='hr'/>
                 <h5 style={{color: 'whitesmoke', textAlign: 'center'}}><b>Purchasing Stock:</b> Use the search bar at the top of the screen to search for stocks by ticker or company name. Click one to be taken to a page where you can buy, sell, and look at price trends per share for that company!</h5>
