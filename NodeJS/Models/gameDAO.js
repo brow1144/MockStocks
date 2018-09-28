@@ -4,21 +4,38 @@ import {gameModel} from '../utilities/MongooseModels';
 
 
 export function createGame(game) {
-  return new Promise((resolve, reject) => {
-    for (let i in game) {
-      if (game.hasOwnProperty(i)) {
-        console.log(game[i]);
-        if (game[i] === '') {
-          reject('Each field must have information');
-        }
+  for (let i in game) {
+    if (game.hasOwnProperty(i)) {
+      if (game[i] === '') {
+        return Promise.reject('UserError: One or more fields are missing');
       }
     }
+  }
 
-    gameModel.create(game, (err, response) => {
-      if (err) reject(err);
-      resolve(response);
+  gameModel.create(game)
+    .then((res) => {
+      resolve(res)
+    })
+    .catch((err) => {
+      reject(err);
     });
-  });
+}
+
+export function updateGameSettings(gameCode, game) {
+  gameModel.findOneAndUpdate(
+    {code: gameCode},
+    {game_name: game.game_name,
+    starting_amount: game.starting_amount,
+    trade_limit: game.trade_limit,
+    start_time: game.start_time,
+    end_time: game.end_time},
+    {new: true})
+    .then((updatedGame) => {
+      resolve(updatedGame);
+    })
+    .catch((err) => {
+      reject(err);
+    });
 }
 
 export function addUserToGame(uid, gameCode) {

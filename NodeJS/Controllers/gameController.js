@@ -19,6 +19,19 @@ export default (app) => {
     buildResponse(res, data);
   });
 
+  app.put('/Portfol.io/Games/:gameCode', async (req, res) => {
+    let gameSettings = {
+      game_name: req.body.game_name,
+      starting_amount: req.body.starting_amount,
+      trade_limit: req.body.trade_limit,
+      start_time: req.body.start_time,
+      end_time: req.body.end_time
+    }
+
+    const data = await updateGameSettings(gameSettings);
+    buildResponse(res, data);
+  });
+
   // join a game
   app.put('/Portfol.io/Games/:uid/:gameCode', async (req, res) => {
     let user = await joinGame(req.params.uid, req.params.gameCode);

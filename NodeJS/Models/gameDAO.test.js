@@ -9,8 +9,37 @@ gameModel.find = jest.fn(() => {
   }
 });
 
-describe('Game Tests Positive Case', function () {
+gameModel.create = jest.fn(() => {
+  return {
+    then: jest.fn(() => {
+      return {catch: jest.fn()}
+    })
+  }
+});
 
+gameModel.findOneAndUpdate = jest.fn(() => {
+  return {
+    then: jest.fn(() => {
+      return {catch: jest.fn()}
+    })
+  }
+});
+
+describe('Game Tests Positive Case', function () {
+  it('should call create with the proper game object', async function () {
+    const game = {
+      code: '325FST53',
+      game_name: 'Test Game',
+      leader_email: 'testemail@gmail.com',
+      starting_amount: 54133,
+      trade_limit: 25,
+      start_time: new Date('2018-05-18T16:00:00Z'),
+      end_time: new Date('2018-07-18T16:00:00Z')
+    };
+
+    await createGame(game);
+    expect(gameModel.create).toHaveBeenCalledWith(game);
+  });
   // To Jake - Assume that mongoose functions work, there is no need for us to check that as it is assumed that
   // a third party library should do its job so long as we give it what is correct.
 
