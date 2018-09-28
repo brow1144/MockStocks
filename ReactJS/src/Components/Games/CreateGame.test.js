@@ -24,8 +24,8 @@ axios.get = jest.fn((url) => {
 
 describe('Positive Data Retreval', () => {
   test('Game creates with no errors', () => {
-    const home = shallow(<CreateGame />);
-    home.instance().showDataFromAPI(goodDayData);
-    expect(home.state().visible).toBe(false);
+    const createGame = shallow(<CreateGame />);
+    createGame.instance().showDataFromAPI(goodGame);
+    expect(createGame.state().visible).toBe(false);
   })
 })
