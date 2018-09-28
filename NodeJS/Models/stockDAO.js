@@ -1,8 +1,10 @@
 import axios from 'axios';
-import mongoose from 'mongoose';
+import {tickerModel} from "../utilities/MongooseModels";
 
+// TODO: IMPLEMENT REJECTIONS AND THEN WRITE TESTS FOR THEM
 
-export function formatStocks(data, stockData, dataAccessString, dateLimit) {
+export function formatStocks(data, dataAccessString, dateLimit) {
+  let stockData = [];
   for (let i in data) {
     const stockDate = new Date(i).getTime();
     if (!dateLimit || stockDate >= dateLimit) {
@@ -12,6 +14,7 @@ export function formatStocks(data, stockData, dataAccessString, dateLimit) {
       })
     }
   }
+  return stockData;
 }
 
 export function getStock(stockTicker, period, dateLimit) {
@@ -19,10 +22,9 @@ export function getStock(stockTicker, period, dateLimit) {
   return axios.get(`https://www.alphavantage.co/query?function=TIME_SERIES_${period.toUpperCase()}_ADJUSTED&symbol=${stockTicker}&apikey=WIOGAHD0RJEEZ59V`)
     .then((response) => {
       // handle success
-      let stockData = [];
       // This api is inconsistent so apparently we need two different types of response
       let data = period === 'Daily' ? response.data[`Time Series (${period})`] : response.data[`${period} Adjusted Time Series`];
-      formatStocks(data, stockData, '5. adjusted close', dateLimit);
+      const stockData = formatStocks(data, '5. adjusted close', dateLimit);
       return Promise.resolve(stockData);
     })
     .catch((error) => {
@@ -34,17 +36,10 @@ export function getStockIntraday(stockTicker) {
   return axios.get(`https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY&symbol=${stockTicker}&interval=1min&apikey=WIOGAHD0RJEEZ59V`)
     .then((response) => {
       // handle success
-      let stockData = [];
       // This api is inconsistent so apparently we need two different types of response
       let data = response.data['Time Series (1min)'];
 
-      // for (let i in data) {
-      //   stockData.unshift({
-      //     x: new Date(i).getTime(),
-      //     y: parseFloat(data[i]['4. close']),
-      //   })
-      // }
-      formatStocks(data, stockData, '4. close');
+      const stockData = formatStocks(data, '4. close');
       return Promise.resolve(stockData);
     })
     .catch((error) => {
@@ -52,22 +47,18 @@ export function getStockIntraday(stockTicker) {
     })
 }
 
-export function getStockBatch(stockList) {
-  return axios.get(`https://www.alphavantage.co/query?function=BATCH_STOCK_QUOTES&symbols=${stockList}&apikey=WIOGAHD0RJEEZ59V`)
-    .then((response) => {
-      // handle success
-      let data = response.data['Stock Quotes'];
-      return Promise.resolve({stockQuotes: data});
-    })
-    .catch((error) => {
-      console.log(error);
-    })
-}
+// export function getStockBatch(stockList) {
+//   return axios.get(`https://www.alphavantage.co/query?function=BATCH_STOCK_QUOTES&symbols=${stockList}&apikey=WIOGAHD0RJEEZ59V`)
+//     .then((response) => {
+//       // handle success
+//       let data = response.data['Stock Quotes'];
+//       return Promise.resolve({stockQuotes: data});
+//     })
+//     .catch((error) => {
+//       console.log(error);
+//     })
+// }
 
-const tickerSchema = new mongoose.Schema({
-  tickers: Array
-});
-const tickerList = mongoose.model('Ticker', tickerSchema);
 
 // in theory this will only be called the one time. If something every happens to the db recall it
 // https://iextrading.com/api-exhibit-a
@@ -97,8 +88,7 @@ export function loadTickers() {
 }
 
 export function getTickers() {
-  const tickerList = mongoose.model('Ticker', tickerSchema);
-  return tickerList.findOne({}, {tickers: 1, _id: 0}).catch((err) => {
+  return tickerModel.findOne({}, {tickers: 1, _id: 0}).catch((err) => {
     return Promise.reject(err)
   })
 }

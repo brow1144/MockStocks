@@ -24,3 +24,7 @@ export const userSchema = new mongoose.Schema({
     unique: true
   }
 });
+
+export const tickerSchema = new mongoose.Schema({
+  tickers: Array
+});
