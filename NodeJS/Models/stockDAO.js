@@ -2,6 +2,18 @@ import axios from 'axios';
 import mongoose from 'mongoose';
 
 
+export function formatStocks(data, stockData, dataAccessString, dateLimit) {
+  for (let i in data) {
+    const stockDate = new Date(i).getTime();
+    if (!dateLimit || stockDate >= dateLimit) {
+      stockData.unshift({
+        x: stockDate,
+        y: parseFloat(data[i][dataAccessString]),
+      })
+    }
+  }
+}
+
 export function getStock(stockTicker, period, dateLimit) {
   period = period ? period : 'Monthly';
   return axios.get(`https://www.alphavantage.co/query?function=TIME_SERIES_${period.toUpperCase()}_ADJUSTED&symbol=${stockTicker}&apikey=WIOGAHD0RJEEZ59V`)
@@ -10,16 +22,7 @@ export function getStock(stockTicker, period, dateLimit) {
       let stockData = [];
       // This api is inconsistent so apparently we need two different types of response
       let data = period === 'Daily' ? response.data[`Time Series (${period})`] : response.data[`${period} Adjusted Time Series`];
-
-      for (let i in data) {
-        const stockDate = new Date(i).getTime();
-        if (stockDate >= dateLimit) {
-          stockData.unshift({
-            x: stockDate,
-            y: parseFloat(data[i]['5. adjusted close']),
-          })
-        }
-      }
+      formatStocks(data, stockData, '5. adjusted close', dateLimit);
       return Promise.resolve(stockData);
     })
     .catch((error) => {
@@ -35,12 +38,13 @@ export function getStockIntraday(stockTicker) {
       // This api is inconsistent so apparently we need two different types of response
       let data = response.data['Time Series (1min)'];
 
-      for (let i in data) {
-        stockData.unshift({
-          x: new Date(i).getTime(),
-          y: parseFloat(data[i]['4. close']),
-        })
-      }
+      // for (let i in data) {
+      //   stockData.unshift({
+      //     x: new Date(i).getTime(),
+      //     y: parseFloat(data[i]['4. close']),
+      //   })
+      // }
+      formatStocks(data, stockData, '4. close');
       return Promise.resolve(stockData);
     })
     .catch((error) => {
