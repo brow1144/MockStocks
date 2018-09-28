@@ -75,8 +75,8 @@ axios.get = jest.fn((url) => {
 const updateGame = shallow(<UpdateGame />);
 
 describe('Positive Data Retreval', () => {
-  test('Updates with no errors', () => {
-    updateGame.instance().showDataFromAPI(goodGame);
-    expect(createGame.state().visible).toBe(false);
+  test('Window Opens', () => {
+    updateGame.instance().toggle();
+    expect(updateGame.state().modal).toBe(true);
   })
 })
