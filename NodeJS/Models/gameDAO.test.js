@@ -1,5 +1,5 @@
 import {gameModel} from "../utilities/MongooseModels";
-import {getGamesByUser} from "./gameDAO";
+import {getGamesByUser, createGame, addUserToGame} from "./gameDAO";
 
 gameModel.find = jest.fn(() => {
   return {

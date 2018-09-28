@@ -1,52 +1,71 @@
 import mongoose from 'mongoose';
-import {gameSchema} from './gameDAO';
+import {userModel} from '../utilities/MongooseModels';
 
-export const userSchema = new mongoose.Schema({
-  _id: String,
-  active_games: Array,
-  watchlist: Array,
-  username: { // TODO unique keys not working, maybe restart cluster
-    type: String,
-    unique: true
-  },
-  email: {
-    type: String,
-    unique: true
-  }
-});
+//import {gameSchema} from './gameDAO';
 
-let userModel = mongoose.model('User', userSchema);
-let gameModel = mongoose.model('Game', gameSchema);
+// export const userSchema = new mongoose.Schema({
+//   _id: String,
+//   active_games: Array,
+//   watchlist: Array,
+//   username: { // TODO unique keys not working, maybe restart cluster
+//     type: String,
+//     unique: true
+//   },
+//   email: {
+//     type: String,
+//     unique: true
+//   }
+// });
+
+//let userModel = mongoose.model('User', userSchema);
+//let gameModel = mongoose.model('Game', gameSchema);
 
 export function getUser(uid) {
-  return new Promise((resolve, reject) => {
-    userModel.findOne({_id: uid}, (err, user) => {
-      if (err) reject(err);
-
+  userModel.findOne({_id: uid})
+    .then((user) => {
       if (user)
         resolve(user);
       else
         reject('UserError: User not found');
+    })
+    .catch((err) => {
+      reject(err);
     });
-  });
 };
 
 export function createUser(user) {
-  return new Promise((resolve, reject) => {
-    for (let i in user) {
-      if (user.hasOwnProperty(i)) {
-        if (user[i] === undefined)
-          reject('UserError: One or more fields are missing');
-        else if (user[i] === '')
-          reject('UserError: Each field must have information');
-      }
+  for (let i in user) {
+    if (user.hasOwnProperty(i)) {
+      if (user[i] === undefined)
+        return Promise.reject('UserError: One or more fields are missing');
+      else if (user[i] === '')
+        return Promise.reject('UserError: Each field must have information');
     }
+  }
 
-    userModel.create(user, (err, response) => {
-      if (err) reject(err);
-      resolve(response);
+  userModel.create(user)
+    .then((res) => {
+      resolve(res);
+    })
+    .catch((err) => {
+      reject(err);
     });
-  });
+
+  // return new Promise((resolve, reject) => {
+  //   for (let i in user) {
+  //     if (user.hasOwnProperty(i)) {
+  //       if (user[i] === undefined)
+  //         reject('UserError: One or more fields are missing');
+  //       else if (user[i] === '')
+  //         reject('UserError: Each field must have information');
+  //     }
+  //   }
+  //
+  //   userModel.create(user, (err, response) => {
+  //     if (err) reject(err);
+  //     resolve(response);
+  //   });
+  // });
 };
 
 export function joinGame(uid, gameCode) {
@@ -55,13 +74,25 @@ export function joinGame(uid, gameCode) {
     stocks: []
   };
 
-  // TODO check if the user is already in game
-  return new Promise((resolve, reject) => {
-    userModel.findOneAndUpdate({_id: uid}, {$push: {active_games: game}}, {new: true}, (err, result) => {
-      if (err) reject(err);
-      resolve(result);
+  userModel.findOneAndUpdate(
+    {_id: uid},
+    {$push: {active_games: game}},
+    {new: true})
+    .then((res) => {
+      resolve(res);
+    })
+    .catch((err) => {
+      reject(err);
     });
-  });
+
+
+  // // TODO check if the user is already in game
+  // return new Promise((resolve, reject) => {
+  //   userModel.findOneAndUpdate({_id: uid}, {$push: {active_games: game}}, {new: true}, (err, result) => {
+  //     if (err) reject(err);
+  //     resolve(result);
+  //   });
+  // });
 };
 
 // export function getActiveGames(userEmail) {

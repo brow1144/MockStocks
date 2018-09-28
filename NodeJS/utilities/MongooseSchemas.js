@@ -10,3 +10,17 @@ export const gameSchema = new mongoose.Schema({
   end_time: Date,
   active_players: Array
 });
+
+export const userSchema = new mongoose.Schema({
+  _id: String,
+  active_games: Array,
+  watchlist: Array,
+  username: {
+    type: String,
+    unique: true
+  },
+  email: {
+    type: String,
+    unique: true
+  }
+});
