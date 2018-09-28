@@ -13,6 +13,7 @@ const options = {
   poolSize: 10
 };
 
+//mongoose.Promise = Promise;
 mongoose.set('useCreateIndex', true); // prevent deprecation warning
 
 // connection
