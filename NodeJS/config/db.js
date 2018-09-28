@@ -14,7 +14,9 @@ const options = {
 };
 
 //mongoose.Promise = Promise;
-mongoose.set('useCreateIndex', true); // prevent deprecation warning
+// prevent deprecation warnings
+mongoose.set('useFindAndModify', false);
+mongoose.set('useCreateIndex', true);
 
 // connection
 mongoose.connect(dbURL, options).then(() => {
