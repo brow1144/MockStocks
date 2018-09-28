@@ -5,6 +5,9 @@ import axios from 'axios';
 
 //STICK TEST DATA HERE
 const validCode = 12345;
+const invalidCodeShort = 1234;
+const invalidCodeLong = 123456;
+
 
 const then = jest.fn(() => {
   return {catch: jest.fn()};
@@ -22,8 +25,13 @@ describe('Positive Results', () => {
     expect(createGame.state().visible).toBe(false);
   })
 
-  test('Create game window opens on click', () => {
+  test('Join game window opens on click', () => {
     createGame.instance().joining();
     expect(createGame.state().joinGame).toBe(true);
+  })
+
+  test('Join game window closes after submission', () => {
+    createGame.instance().joinIt();
+    expect(createGame.state().joinGame).toBe(false);
   })
 })

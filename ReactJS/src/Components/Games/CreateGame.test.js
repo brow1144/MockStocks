@@ -89,4 +89,9 @@ describe('Positive Results', () => {
     createGame.instance().creating();
     expect(createGame.state().createGame).toBe(true);
   })
+
+  test('Create game window opens on click', () => {
+    createGame.instance().creating();
+    expect(createGame.state().createGame).toBe(true);
+  })
 })
