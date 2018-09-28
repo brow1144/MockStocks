@@ -16,14 +16,18 @@ class CreateGame extends Component {
     super(props);
     this.state = {
       modal: false,
-      startDate: moment(),
-      endDate: moment(),
+
       waiting: true,
       joinGame: false,
       createGame: false,
+
+
+
       code: 0,
       game_name: "",
       leader_email: "",
+      startDate: moment(),
+      endDate: moment(),
       starting_amount: "",
       trade_limit: "",
     };
