@@ -53,6 +53,9 @@ class UpdateGame extends Component {
       end_time: this.state.endDate
     }
     //UPDATE SETTINGS BACKEND CALL HERE
+    this.setState({
+      modal:false
+    })
   }
 
 
