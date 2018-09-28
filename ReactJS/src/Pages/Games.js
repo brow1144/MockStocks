@@ -25,13 +25,14 @@ class Games extends Component {
       // Array of game objects
       myFloors: [],
       money: 0,
-      uid: "kObyyRI68of2Prc0RkjnJfN6Joc2", //sessionStorage.getItem('uid'),
+      uid: sessionStorage.getItem('uid'),
       //Current game object
       currentGame: {},
       //Current user
       currentUser: {},
       // Current users email
-      email: ""
+      email: "",
+      leader: false,
     };
   }
 
@@ -46,7 +47,7 @@ class Games extends Component {
     this.fetchGames();
   };
 
-  /*
+  /**
    * Initial call to data base for all the games
    */
   fetchGames = () => {
@@ -57,13 +58,10 @@ class Games extends Component {
         let gameData = response.data;
 
         if (gameData.games.length !== 0) {
-          // Get all the user's games
-          self.setState({
-            myFloors: gameData.games,
-            currentGame: gameData.games[0],
-          }, () => {
+          // Set up the game data
+          console.log("-1");
+          self.setGameData(gameData);
 
-          })
         } else { // No games return
           // Get the current user's email
           axios.get(`http://localhost:8080/Portfol.io/${self.state.uid}`)
@@ -80,8 +78,6 @@ class Games extends Component {
             console.log(err);
           })
         }
-
-
       })
       .catch(function (error) {
         // handle error
@@ -91,7 +87,20 @@ class Games extends Component {
       })
   }
 
-  /*
+  /**
+   * Sets game info
+   */
+  setGameData = (gameData) => {
+    let self = this;
+      self.setState({
+        myFloors: gameData.games,
+        currentGame: gameData.games[0],
+      }, () => {
+        self.fetchUsers();
+      })
+  }
+
+  /**
    * Gets all users for the current game
    */
   fetchUsers = () => {
@@ -102,20 +111,7 @@ class Games extends Component {
       axios.get(`http://localhost:8080/Portfol.io/${self.state.currentGame.active_players[x]}`)
         .then(function (response) {
           // handle success
-          let user = response.data;
-          let newArray = self.state.users;
-          newArray[x] = user;
-
-          console.log(user);
-          if (self.state.uid === user._id) {
-            self.setState({
-              email: user.email,
-            })
-          }
-
-          self.setState({
-            users: newArray,
-          })
+          self.processUser(response.data, x);
 
         }).catch(function (err) {
         console.log("Cannot get users for the current game");
@@ -123,16 +119,51 @@ class Games extends Component {
       })
     }
 
+    self.leaderCheck();
   }
 
-  reloadPage = () => {
-    window.location.reload();
+  /**
+   * Processes each user
+   * @param user
+   * @param index in array
+   */
+  processUser = (user, index) => {
+    let self = this;
+    let newArray = self.state.users;
+    newArray[index] = user;
+
+    if (self.state.uid === user._id) {
+      self.setState({
+        email: user.email,
+      })
+    }
+
+    self.setState({
+      users: newArray,
+    })
   }
 
-  // Update the current game state and then add the users
-  // para index is the index of the new floor from 0 to n
+  /**
+   * Checks if the current user is the leader of a game
+   */
+  leaderCheck = () => {
+    let self = this;
+    if (self.state.currentGame != null && self.state.currentGame.leader_email === self.state.email) {
+      self.setState({
+        leader: true,
+      })
+    } else {
+      self.setState({
+        leader: false,
+      })
+    }
+  }
+
+  /**
+   * Update the current game state and then add the users
+   * para index is the index of the new floor from 0 to n
+   */
   updateGame = (index) => {
-
     let self = this;
     if (self.state.myFloors.length !== 0) {
       let newFloor = self.state.myFloors[index];
@@ -140,24 +171,14 @@ class Games extends Component {
           currentGame: newFloor,
           users: []
         }, () => {
+          self.leaderCheck();
 
           for (let x = 0; x < self.state.currentGame.active_players.length; x++) {
             axios.get(`http://localhost:8080/Portfol.io/${self.state.currentGame.active_players[x]}`)
               .then(function (response) {
                 // handle success
                 let user = response.data;
-                let newArray = self.state.users;
-                newArray[x] = user;
-
-                if (self.state.uid === user._id) {
-                  self.setState({
-                    email: user.email,
-                  })
-                }
-
-                self.setState({
-                  users: newArray,
-                })
+                self.processUser(user, x)
 
               }).catch(function (err) {
               console.log("Cannot get users for the current game");
@@ -168,9 +189,14 @@ class Games extends Component {
         }
       )
     }
-};
+  }
 
-
+  /**
+   * Reload the page
+   */
+  reloadPage = () => {
+    window.location.reload();
+  }
 
   render() {
     return (
@@ -184,20 +210,18 @@ class Games extends Component {
           {this.state.currentGame != null && this.state.currentGame.game_name
             ?
             <Col md="5">
-              <h5 className={"gamesText "}>Floor Name : {this.state.currentGame.game_name}</h5>
+              <h5 id="floorName" className={"gamesText "}>Floor Name : {this.state.currentGame.game_name}</h5>
             </Col>
             :
             <Col md="5"/>
           }
-
         </Row>
         <Row style={{paddingTop: '2em'}} className='blackBackground body_div'>
-
           <Col>
             <Row>
               <Col md="1"/>
 
-              {this.state.currentGame != null && this.state.currentGame.leader_email === this.state.email
+              {this.state.leader
                 ?
                 <Col md="2">
                   <h5 className={"gamesText "}>Floor Code : {this.state.currentGame.code}</h5>
@@ -210,7 +234,7 @@ class Games extends Component {
                 <h5 className={"gamesText"}>Spending Money : ${this.state.money}</h5>
               </Col>
             </Row>
-            {this.state.currentGame != null && this.state.currentGame.leader_email === this.state.email
+            {this.state.leader
               ? <Row>
                 <Col md="1"/>
                 <Col md="1">
