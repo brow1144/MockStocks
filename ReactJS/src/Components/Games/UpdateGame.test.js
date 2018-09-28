@@ -1,6 +1,6 @@
 import React from 'react';
 import {shallow} from 'enzyme';
-import CreateGame from './CreateGame';
+import UpdateGame from './UpdateGame';
 import axios from 'axios';
 
 //STICK TEST DATA HERE
@@ -72,21 +72,10 @@ axios.get = jest.fn((url) => {
   return {then: then, catch: jest.fn()};
 });
 
-const createGame = shallow(<CreateGame />);
-
-describe('Positive Results', () => {
+describe('Positive Data Retreval', () => {
   test('Game creates with no errors', () => {
-    //call sum here
+    const updateGame = shallow(<UpdateGame />);
+    updateGame.instance().showDataFromAPI(goodGame);
     expect(createGame.state().visible).toBe(false);
-  })
-
-  test('Modal opens on click', () => {
-    createGame.instance().toggle(goodGame);
-    expect(createGame.state().modal).toBe(true);
-  })
-
-  test('Create game window opens on click', () => {
-    createGame.instance().creating();
-    expect(createGame.state().createGame).toBe(true);
   })
 })
