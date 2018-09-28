@@ -27,7 +27,7 @@ export function getStock(stockTicker, period, dateLimit) {
     })
 }
 
-export function getStockIntraday(stockTicker, period) {
+export function getStockIntraday(stockTicker) {
   return axios.get(`https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY&symbol=${stockTicker}&interval=1min&apikey=WIOGAHD0RJEEZ59V`)
     .then((response) => {
       // handle success

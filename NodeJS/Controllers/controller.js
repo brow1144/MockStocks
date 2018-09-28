@@ -28,10 +28,6 @@ export default (app) => {
       case 'Day':
         data = await getStockIntraday(req.params.stock);
         break;
-      case 'Week':
-        dateLimit.setDate(dateLimit.getDate() - 7);
-        data = await getStock(req.params.stock, "Daily", dateLimit);
-        break;
       case 'Month':
         dateLimit.setMonth(dateLimit.getMonth() - 1);
         console.error(dateLimit);
