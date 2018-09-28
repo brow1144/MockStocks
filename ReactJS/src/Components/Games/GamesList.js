@@ -15,7 +15,6 @@ class GameList extends Component {
 
 
   render() {
-    console.error(this.props.myFloors);
     return (
       <div >
         <h5 className={"gamesText"}>Floor List</h5>

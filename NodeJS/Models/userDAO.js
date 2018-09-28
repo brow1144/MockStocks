@@ -21,15 +21,15 @@ import {userModel} from '../utilities/MongooseModels';
 //let gameModel = mongoose.model('Game', gameSchema);
 
 export function getUser(uid) {
-  userModel.findOne({_id: uid})
+  return userModel.findOne({_id: uid})
     .then((user) => {
       if (user)
-        resolve(user);
+        return Promise.resolve(user);
       else
-        reject('UserError: User not found');
+        return Promise.reject('UserError: User not found');
     })
     .catch((err) => {
-      reject(err);
+      return Promise.reject(err);
     });
 };
 
