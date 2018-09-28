@@ -60,7 +60,7 @@ class Games extends Component {
         if (gameData.games.length !== 0) {
           // Set up the game data
           console.log("-1");
-          self.setGameData(gameData);
+          self.setGameData(gameData.games);
 
         } else { // No games return
           // Get the current user's email
@@ -90,11 +90,11 @@ class Games extends Component {
   /**
    * Sets game info
    */
-  setGameData = (gameData) => {
+  setGameData = (games) => {
     let self = this;
       self.setState({
-        myFloors: gameData.games,
-        currentGame: gameData.games[0],
+        myFloors: games,
+        currentGame: games[0],
       }, () => {
         self.fetchUsers();
       })
@@ -114,9 +114,9 @@ class Games extends Component {
           self.processUser(response.data, x);
 
         }).catch(function (err) {
-        console.log("Cannot get users for the current game");
-        console.log(err);
-      })
+          console.log("Cannot get users for the current game");
+          console.log(err);
+        })
     }
 
     self.leaderCheck();

@@ -25,13 +25,13 @@ userModel.findOneAndUpdate = jest.fn(() => {
   }
 });
 
-describe('User tests positive case', function () {
+describe('User Tests Positive Case', function () {
   it('should call find with the proper find clause', async function () {
     await getUser('XFKSHFD3578132958IUDF');
     expect(userModel.findOne).toHaveBeenCalledWith({_id: 'XFKSHFD3578132958IUDF'});
   });
 
-  it('should call create with the proper object', async function () {
+  it('should call create with the proper user object', async function () {
     const user = {
       _id: 'XFKSHFD3578132958IUDF',
       username: 'john1234',
@@ -42,7 +42,7 @@ describe('User tests positive case', function () {
     expect(userModel.create).toHaveBeenCalledWith(user);
   });
 
-  it('should', async function () {
+  it('should call findOneAndUpdate with the proper game object', async function () {
     const game = {
       code: '2352364',
       stocks: []
@@ -57,35 +57,24 @@ describe('User tests positive case', function () {
   });
 });
 
-describe('User tests negative cases', function () {
-  // it('should call find with the proper find clause', async function () {
-  //   await getUser('XFKSHFD3578132958IUDF');
-  //   expect(userModel.findOne).toHaveBeenCalledWith({_id: 'XFKSHFD3578132958IUDF'});
-  // });
+describe('User Tests Negative Cases', function () {
+  it('should call create with an empty parameter', async function () {
+    const user = {
+      _id: 'XFKSHFD3578132958IUDF',
+      username: '',
+      email: 'testemail@gmail.com'
+    };
 
-  it('should call create with the proper object', async function () {
+    await expect(createUser(user)).rejects.toEqual('UserError: Each field must have information');
+  });
+
+  it('should call create with an undefined parameter', async function () {
     const user = {
       _id: 'XFKSHFD3578132958IUDF',
       username: undefined,
       email: 'testemail@gmail.com'
     };
 
-    //let data = await createUser(user);
-    expect(createUser(user)).toBe('UserError: One or more fields are missing');
-    //expect(userModel.create).toHaveBeenCalledWith(user);
+    await expect(createUser(user)).rejects.toEqual('UserError: One or more fields are missing');
   });
-
-  // it('should', async function () {
-  //   const game = {
-  //     code: '2352364',
-  //     stocks: []
-  //   };
-  //
-  //   await joinGame('XFKSHFD3578132958IUDF', '2352364');
-  //   expect(userModel.findOneAndUpdate).toHaveBeenCalledWith(
-  //     {_id: 'XFKSHFD3578132958IUDF'},
-  //     {$push: {active_games: game}},
-  //     {new: true}
-  //   );
-  // });
 });

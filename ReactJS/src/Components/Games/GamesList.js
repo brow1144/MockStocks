@@ -15,7 +15,7 @@ class GameList extends Component {
 
 
   render() {
-
+    console.error(this.props.myFloors);
     return (
       <div >
         <h5 className={"gamesText"}>Floor List</h5>
@@ -23,7 +23,7 @@ class GameList extends Component {
           <tbody>
           {this.props.myFloors.map((floor, key) => {
             return (<tr key={key}>
-              <th onClick={() => {this.updateFloor(key)}} scope="row">{floor.game_name}</th>
+              <th id={key} onClick={() => {this.updateFloor(key)}} scope="row">{floor.game_name}</th>
             </tr>)
           })}
           </tbody>
