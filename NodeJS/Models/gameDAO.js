@@ -1,14 +1,13 @@
 import mongoose from 'mongoose';
 import {gameModel} from '../utilities/MongooseModels';
 
-
-
 export function createGame(game) {
   for (let i in game) {
     if (game.hasOwnProperty(i)) {
-      if (game[i] === '') {
+      if (game[i] === undefined)
         return Promise.reject('UserError: One or more fields are missing');
-      }
+      else if (game[i] === '')
+        return Promise.reject('UserError: Each field must have information');
     }
   }
 
@@ -22,6 +21,15 @@ export function createGame(game) {
 }
 
 export function updateGameSettings(gameCode, game) {
+  for (let i in game) {
+    if (game.hasOwnProperty(i)) {
+      if (game[i] === undefined)
+        return Promise.reject('UserError: One or more fields are missing');
+      else if (game[i] === '')
+        return Promise.reject('UserError: Each field must have information');
+    }
+  }
+
   gameModel.findOneAndUpdate(
     {code: gameCode},
     {game_name: game.game_name,
@@ -39,12 +47,16 @@ export function updateGameSettings(gameCode, game) {
 }
 
 export function addUserToGame(uid, gameCode) {
-  return new Promise((resolve, reject) => {
-    gameModel.findOneAndUpdate({code: gameCode}, {$push: {active_players: uid}}, {new: true}, (err, result) => {
-      if (err) reject(err);
-      resolve(result);
+  gameModel.findOneAndUpdate(
+    {code: gameCode},
+    {$push: {active_players: uid}},
+    {new: true})
+    .then((updatedGame) => {
+      resolve(updatedGame);
+    })
+    .catch((err) => {
+      reject(err);
     });
-  });
 }
 
 export function getGamesByUser(uid) {
@@ -55,16 +67,8 @@ export function getGamesByUser(uid) {
     })
     .catch((err) => {return Promise.reject(err)})
 }
+
 export function getGamesById(gameId) {
   const tickerList = mongoose.model('Ticker', tickerSchema);
   return tickerList.find({}, {tickers: 1, _id: 0}).catch((err) => {return Promise.reject(err)})
 }
-
-// function getGame(code) {
-//   return new Promise((resolve, reject) => {
-//     gameModel.findOne({code: code}, (err, game) => {
-//       if (err) reject(err);
-//       resolve(game);
-//     });
-//   });
-// }
