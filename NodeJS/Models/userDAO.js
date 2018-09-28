@@ -2,15 +2,15 @@ import mongoose from 'mongoose';
 import {userModel} from '../utilities/MongooseModels';
 
 export function getUser(uid) {
-  userModel.findOne({_id: uid})
+  return userModel.findOne({_id: uid})
     .then((user) => {
       if (user)
-        resolve(user);
+        return Promise.resolve(user);
       else
-        reject('UserError: User not found');
+        return Promise.reject('UserError: User not found');
     })
     .catch((err) => {
-      reject(err);
+      return Promise.reject(err);
     });
 };
 
@@ -24,12 +24,12 @@ export function createUser(user) {
     }
   }
 
-  userModel.create(user)
+  return userModel.create(user)
     .then((res) => {
-      resolve(res);
+      return Promise.resolve(res);
     })
     .catch((err) => {
-      reject(err);
+      return Promise.reject(err);
     });
 };
 
@@ -40,14 +40,14 @@ export function joinGame(uid, gameCode) {
   };
 
   // TODO check if the user is already in game
-  userModel.findOneAndUpdate(
+  return userModel.findOneAndUpdate(
     {_id: uid},
     {$push: {active_games: game}},
     {new: true})
     .then((res) => {
-      resolve(res);
+      return Promise.resolve(res);
     })
     .catch((err) => {
-      reject(err);
+      return Promise.reject(err);
     });
 };

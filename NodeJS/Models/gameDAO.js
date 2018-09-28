@@ -11,12 +11,12 @@ export function createGame(game) {
     }
   }
 
-  gameModel.create(game)
+  return gameModel.create(game)
     .then((res) => {
-      resolve(res)
+      return Promise.resolve(res)
     })
     .catch((err) => {
-      reject(err);
+      return Promise.reject(err);
     });
 }
 
@@ -30,7 +30,7 @@ export function updateGameSettings(gameCode, game) {
     }
   }
 
-  gameModel.findOneAndUpdate(
+  return gameModel.findOneAndUpdate(
     {code: gameCode},
     {game_name: game.game_name,
     starting_amount: game.starting_amount,
@@ -39,23 +39,23 @@ export function updateGameSettings(gameCode, game) {
     end_time: game.end_time},
     {new: true})
     .then((updatedGame) => {
-      resolve(updatedGame);
+      return Promise.resolve(updatedGame);
     })
     .catch((err) => {
-      reject(err);
+      return Promise.reject(err);
     });
 }
 
 export function addUserToGame(uid, gameCode) {
-  gameModel.findOneAndUpdate(
+  return gameModel.findOneAndUpdate(
     {code: gameCode},
     {$push: {active_players: uid}},
     {new: true})
     .then((updatedGame) => {
-      resolve(updatedGame);
+      return Promise.resolve(updatedGame);
     })
     .catch((err) => {
-      reject(err);
+      return Promise.reject(err);
     });
 }
 
