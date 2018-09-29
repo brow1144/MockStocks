@@ -55,28 +55,30 @@ class Games extends Component {
     axios.get(`http://localhost:8080/Portfol.io/Games/By/User/${this.state.uid}`)
       .then(function (response) {
         // handle success
-        let gameData = response.data;
+        if (response != null) {
+          let gameData = response.data;
 
-        if (gameData.games.length !== 0) {
-          // Set up the game data
-          console.log("-1");
-          self.setGameData(gameData.games);
+          if (gameData.games.length !== 0) {
+            // Set up the game data
+            console.log("-1");
+            self.setGameData(gameData.games);
 
-        } else { // No games return
-          // Get the current user's email
-          axios.get(`http://localhost:8080/Portfol.io/${self.state.uid}`)
-            .then(function (response) {
-              // handle success
-              let user = response.data;
+          } else { // No games return
+            // Get the current user's email
+            axios.get(`http://localhost:8080/Portfol.io/${self.state.uid}`)
+              .then(function (response) {
+                // handle success
+                let user = response.data;
 
-              self.setState({
-                email: user.email,
-              })
+                self.setState({
+                  email: user.email,
+                })
 
-            }).catch(function (err) {
-            console.log("Cannot get users for the current game");
-            console.log(err);
-          })
+              }).catch(function (err) {
+              console.log("Cannot get users for the current game");
+              console.log(err);
+            })
+          }
         }
       })
       .catch(function (error) {
@@ -111,7 +113,9 @@ class Games extends Component {
       axios.get(`http://localhost:8080/Portfol.io/${self.state.currentGame.active_players[x]}`)
         .then(function (response) {
           // handle success
-          self.processUser(response.data, x);
+          if (response != null) {
+            self.processUser(response.data, x);
+          }
 
         }).catch(function (err) {
           console.log("Cannot get users for the current game");
