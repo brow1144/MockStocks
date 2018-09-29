@@ -1,4 +1,4 @@
-import mongoose from "mongoose";
+import mongoose from 'mongoose';
 
 export const gameSchema = new mongoose.Schema({
   code: String,
@@ -15,7 +15,7 @@ export const userSchema = new mongoose.Schema({
   _id: String,
   active_games: Array,
   watchlist: Array,
-  username: {
+  username: { // TODO unique keys not working, maybe restart cluster
     type: String,
     unique: true
   },

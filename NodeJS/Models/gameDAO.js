@@ -1,33 +1,62 @@
 import mongoose from 'mongoose';
 import {gameModel} from '../utilities/MongooseModels';
 
-
-
 export function createGame(game) {
-  return new Promise((resolve, reject) => {
-    for (let i in game) {
-      if (game.hasOwnProperty(i)) {
-        console.log(game[i]);
-        if (game[i] === '') {
-          reject('Each field must have information');
-        }
-      }
+  for (let i in game) {
+    if (game.hasOwnProperty(i)) {
+      if (game[i] === undefined)
+        return Promise.reject('UserError: One or more fields are missing');
+      else if (game[i] === '')
+        return Promise.reject('UserError: Each field must have information');
     }
+  }
 
-    gameModel.create(game, (err, response) => {
-      if (err) reject(err);
-      resolve(response);
+  return gameModel.create(game)
+    .then((res) => {
+      return Promise.resolve(res)
+    })
+    .catch((err) => {
+      return Promise.reject(err);
     });
-  });
+}
+
+export function updateGameSettings(gameCode, game) {
+  for (let i in game) {
+    if (game.hasOwnProperty(i)) {
+      if (game[i] === undefined)
+        return Promise.reject('UserError: One or more fields are missing');
+      else if (game[i] === '')
+        return Promise.reject('UserError: Each field must have information');
+    }
+  }
+
+  return gameModel.findOneAndUpdate(
+    {code: gameCode},
+    {game_name: game.game_name,
+    starting_amount: game.starting_amount,
+    trade_limit: game.trade_limit,
+    start_time: game.start_time,
+    end_time: game.end_time},
+    {new: true})
+    .then((updatedGame) => {
+      return Promise.resolve(updatedGame);
+    })
+    .catch((err) => {
+      return Promise.reject(err);
+    });
 }
 
 export function addUserToGame(uid, gameCode) {
-  return new Promise((resolve, reject) => {
-    gameModel.findOneAndUpdate({code: gameCode}, {$push: {active_players: uid}}, {new: true}, (err, result) => {
-      if (err) reject(err);
-      resolve(result);
+  return gameModel.findOneAndUpdate(
+    {code: gameCode},
+    {$push: {active_players: uid}},
+    {new: true})
+    .then((updatedGame) => {
+      return Promise.resolve(updatedGame);
+    })
+    .catch((err) => {
+      return Promise.reject(err);
     });
-  });
 }
 
 export function getGamesByUser(uid) {
@@ -38,16 +67,8 @@ export function getGamesByUser(uid) {
     })
     .catch((err) => {return Promise.reject(err)})
 }
+
 export function getGamesById(gameId) {
   const tickerList = mongoose.model('Ticker', tickerSchema);
   return tickerList.find({}, {tickers: 1, _id: 0}).catch((err) => {return Promise.reject(err)})
 }
-
-// function getGame(code) {
-//   return new Promise((resolve, reject) => {
-//     gameModel.findOne({code: code}, (err, game) => {
-//       if (err) reject(err);
-//       resolve(game);
-//     });
-//   });
-// }
