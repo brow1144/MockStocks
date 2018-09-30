@@ -76,7 +76,7 @@ class StockPage extends Component {
         console.log(`Btw here is the error message\n\n`);
 
         if (error.response && error.response.data)
-          console.log(error.response.data.error.message);
+          console.log(error.response.data.error);
         else
           console.log(error);
       })

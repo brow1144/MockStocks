@@ -45,7 +45,7 @@ export function updateGameSettings(gameCode, game) {
     options)
     .then((updatedGame) => {
       if (updatedGame === null)
-        return Promise.reject('Game does not exist');
+        return Promise.reject('UserError: Game does not exist');
 
       return Promise.resolve(updatedGame);
     })
@@ -61,10 +61,10 @@ export function addUserToGame(uid, gameCode) {
     {passRawResult: true})
     .then((originalGame) => {
       if (originalGame === null)
-        return Promise.reject('Game does not exist');
+        return Promise.reject('UserError: Game does not exist');
 
       if (originalGame.active_players.includes(uid))
-        return Promise.reject('User already in game');
+        return Promise.reject('UserError: User already in game');
 
       return Promise.resolve(originalGame);
     })

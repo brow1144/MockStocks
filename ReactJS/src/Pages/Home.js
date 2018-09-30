@@ -64,7 +64,7 @@ class Home extends Component {
         console.log(`Oh no! Our API didn't respond. Please refresh and try again`);
 
         if (error.response && error.response.data)
-          console.log(error.response.data.error.message);
+          console.log(error.response.data.error);
         else
           console.log(error);
         // console.log(`Btw here is the error message\n\n`);

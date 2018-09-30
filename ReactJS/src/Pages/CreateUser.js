@@ -62,7 +62,7 @@ class CreateUser extends Component {
             window.location.reload();
           }).catch((error) => {
             if (error.response && error.response.data) {
-              console.log(error.response.data.error.message);
+              console.log(error.response.data.error);
               fireauth.currentUser.delete();  // delete invalid user from Firebase
               sessionStorage.clear(); // remove saved UID
             } else {

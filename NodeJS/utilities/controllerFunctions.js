@@ -4,13 +4,12 @@ export function parseError(err) {
     message: ''
   };
 
-  if (typeof err === String && err.includes('UserError:')) {
+  if (typeof err === String && err.includes('UserError:'))
     error.status = 400;
-    error.message = err.substring('UserError:'.length + 1);
-  } else {
+  else
     error.status = 500;
-    error.message = err;
-  }
+
+  error.message = err;
 
   return error;
 };

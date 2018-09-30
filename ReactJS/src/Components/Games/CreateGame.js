@@ -85,27 +85,29 @@ class CreateGame extends Component {
     console.log("--2");
 
     axios.put(`http://localhost:8080/Portfol.io/Games/${this.props.uid}/${gameId}`)
+      .then((response) => {
+        // should probably update state with values from response
+        this.setState({
+          startDate: null,
+          endDate: null,
+          waiting: true,
+          joinGame: false,
+          createGame: false,
+          code: 0,
+          game_name: "",
+          leader_email: "",
+          starting_amount: 0,
+          trade_limit: 0,
+        });
+        this.toggle();
+        this.props.reloadPage();
+      })
       .catch((error) => {
         if (error.response && error.response.data)
-          console.log(error.response.data.error.message);
+          console.log(error.response.data.error);
         else
           console.log(error);
       });
-
-    this.setState({
-      startDate: null,
-      endDate: null,
-      waiting: true,
-      joinGame: false,
-      createGame: false,
-      code: 0,
-      game_name: "",
-      leader_email: "",
-      starting_amount: 0,
-      trade_limit: 0,
-    });
-    this.toggle();
-    this.props.reloadPage();
   }
 
   createIt = () => {
@@ -133,7 +135,7 @@ class CreateGame extends Component {
         console.log("--6");
       }).catch((error) => {
         if (error.response && error.response.data)
-          console.log(error.response.data.error.message);
+          console.log(error.response.data.error);
         else
           console.log(error);
       });

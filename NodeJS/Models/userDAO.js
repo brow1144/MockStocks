@@ -56,7 +56,7 @@ export function joinGame(uid, gameCode) {
     options)
     .then((updatedUser) => {
       if (updatedUser === null)
-        return Promise.reject('User does not exist');
+        return Promise.reject('UserError: User does not exist');
 
       return Promise.resolve(updatedUser);
     })
