@@ -1,7 +1,7 @@
 import bodyParser from 'body-parser';
 import {parseError, buildResponse} from '../utilities/controllerFunctions';
-import {createGame, updateGameSettings, addUserToGame, getGamesByUser} from "../Models/gameDAO";
-import {joinGame} from '../Models/userDAO';
+import {createGame, updateGameSettings, addUserToGame, removeUserFromGame, getGamesByUser} from "../Models/gameDAO";
+import {joinGame, leaveGame} from '../Models/userDAO';
 
 export default (app) => {
   // create a game
@@ -50,13 +50,31 @@ export default (app) => {
 
   // join a game
   app.put('/Portfol.io/Games/:uid/:gameCode', async (req, res) => {
-    let game, user, data;
+    let originalGame, user, data;
 
     try {
-      game = await addUserToGame(req.params.uid, req.params.gameCode);
-      user = await joinGame(req.params.uid, req.params.gameCode);
+      originalGame = await addUserToGame(req.params.uid, req.params.gameCode);
+      user = await joinGame(req.params.uid, req.params.gameCode, originalGame.starting_amount);
       data = {
-        game: game,
+        originalGame: originalGame,
+        user: user
+      };
+    } catch (err) {
+      data = {error: parseError(err)};
+    }
+
+    buildResponse(res, data);
+  });
+
+  // leave a game
+  app.put('/Portfol.io/Games/Leave/Game/:uid/:gameCode', async (req, res) => {
+    let originalGame, user, data;
+
+    try {
+      originalGame = await removeUserFromGame(req.params.uid, req.params.gameCode);
+      user = await leaveGame(req.params.uid, req.params.gameCode);
+      data = {
+        originalGame: originalGame,
         user: user
       };
     } catch (err) {
