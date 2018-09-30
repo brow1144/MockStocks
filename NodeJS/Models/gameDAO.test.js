@@ -1,5 +1,5 @@
 import {gameModel} from '../utilities/MongooseModels';
-import {getGamesByUser, createGame, addUserToGame, updateGameSettings} from './gameDAO';
+import {getGamesByUser, createGame, addUserToGame, removeUserFromGame, updateGameSettings} from './gameDAO';
 
 gameModel.find = jest.fn(() => {
   return {
@@ -68,6 +68,15 @@ describe('Game Tests Positive Case', function () {
     expect(gameModel.findOneAndUpdate).toHaveBeenCalledWith(
       {code: '2352364'},
       {'$addToSet': {'active_players': 'XFKSHFD3578132958IUDF'}},
+      {passRawResult: true}
+    );
+  });
+
+  it('should call findOneAndUpdate with the proper input', async function () {
+    await removeUserFromGame('XFKSHFD3578132958IUDF', '2352364');
+    expect(gameModel.findOneAndUpdate).toHaveBeenCalledWith(
+      {code: '2352364'},
+      {'$pull': {'active_players': 'XFKSHFD3578132958IUDF'}},
       {passRawResult: true}
     );
   });
