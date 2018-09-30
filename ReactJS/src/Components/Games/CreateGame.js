@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 
 import {Container, Button, Modal, ModalBody, ModalHeader, ModalFooter, Input} from 'mdbreact';
-import {Row, Col} from 'reactstrap'
+import {Row, Col, Alert} from 'reactstrap'
 import DatePicker from 'react-datepicker';
 import moment from 'moment';
 
@@ -30,6 +30,9 @@ class CreateGame extends Component {
       endDate: moment(),
       starting_amount: "",
       trade_limit: "",
+
+      errMessage: "",
+      err: false
     };
 
   }
@@ -103,8 +106,13 @@ class CreateGame extends Component {
         this.props.reloadPage();
       })
       .catch((error) => {
-        if (error.response && error.response.data)
+        if (error.response && error.response.data) {
+          this.setState({
+            err: true,
+            errorMessage: error.response.data.error.message,
+          });
           console.log(error.response.data.error);
+        }
         else
           console.log(error);
       });
@@ -165,6 +173,10 @@ class CreateGame extends Component {
   curCode = (event) => {
     this.setState({code: event.target.value});
   }
+  
+  dismiss = () => {
+    this.setState({err: false});
+  }
 
   render() {
 
@@ -176,6 +188,7 @@ class CreateGame extends Component {
           {this.state.joinGame === true
             ?
             <ModalBody>
+              <Alert color="danger" toggle={this.dismiss} isOpen={this.state.err}>{this.state.errorMessage}</Alert>
               <Input  value={this.state.code}  onChange={this.curCode} id="floorCode" label="Floor Code"/>
               <Button color="grey" onClick={this.joinIt}>Join</Button>
             </ModalBody>
