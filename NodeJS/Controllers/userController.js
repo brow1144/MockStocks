@@ -14,9 +14,7 @@ export default (app) => {
     try {
       data = await createUser(user);
     } catch (err) {
-      data = {
-        error: parseError(err)
-      };
+      data = {error: parseError(err)};
     }
 
     buildResponse(res, data);
@@ -29,9 +27,7 @@ export default (app) => {
     try {
       data = await getUser(req.params.uid);
     } catch (err) {
-      data = {
-        error: parseError(err)
-      };
+      data = {error: parseError(err)};
     }
 
     buildResponse(res, data);

@@ -13,7 +13,6 @@ const options = {
   poolSize: 10
 };
 
-//mongoose.Promise = Promise;
 // prevent deprecation warnings
 mongoose.set('useFindAndModify', false);
 mongoose.set('useCreateIndex', true);

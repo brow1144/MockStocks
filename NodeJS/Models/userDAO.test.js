@@ -48,11 +48,21 @@ describe('User Tests Positive Case', function () {
       stocks: []
     };
 
+    const updateClause = {
+      'game.code': {'$ne': game.code},
+      '$addToSet': {'active_games': game}
+    };
+
+    const options = {
+      new: true,
+      passRawResult: true
+    };
+
     await joinGame('XFKSHFD3578132958IUDF', '2352364');
     expect(userModel.findOneAndUpdate).toHaveBeenCalledWith(
       {_id: 'XFKSHFD3578132958IUDF'},
-      {$push: {active_games: game}},
-      {new: true}
+      updateClause,
+      options
     );
   });
 });
