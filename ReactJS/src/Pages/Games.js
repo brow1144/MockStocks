@@ -75,7 +75,11 @@ class Games extends Component {
 
             }).catch(function (err) {
             console.log("Cannot get users for the current game");
-            console.log(err);
+
+            if (err.response && err.response.data)
+              console.log(err.response.data.error.message);
+            else
+              console.log(err);
           })
         }
       })
@@ -83,7 +87,11 @@ class Games extends Component {
         // handle error
         console.log(`Oh no! Our API didn't respond. Please refresh and try again`)
         console.log(`Btw here is the error message\n\n`)
-        console.log(error);
+
+        if (error.response && error.response.data)
+          console.log(error.response.data.error.message);
+        else
+          console.log(error);
       })
   }
 
@@ -115,7 +123,11 @@ class Games extends Component {
 
         }).catch(function (err) {
           console.log("Cannot get users for the current game");
-          console.log(err);
+
+          if (err.response && err.response.data)
+            console.log(err.response.data.error.message);
+          else
+            console.log(err);
         })
     }
 
@@ -182,7 +194,11 @@ class Games extends Component {
 
               }).catch(function (err) {
               console.log("Cannot get users for the current game");
-              console.log(err);
+
+              if (err.response && err.response.data)
+                console.log(err.response.data.error.message);  
+              else
+                console.log(error);
             })
           }
 

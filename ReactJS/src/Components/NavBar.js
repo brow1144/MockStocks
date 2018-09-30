@@ -34,7 +34,11 @@ class NavBar extends Component {
         // handle error
         console.log(`Oh no! Our Ticker API didn't respond. Please refresh and try again`)
         console.log(`Btw here is the error message\n\n`)
-        console.log(error);
+
+        if (error.response && error.response.data)
+          console.log(error.response.data.error.message);
+        else
+          console.log(error);
     })
   }
 
@@ -52,7 +56,7 @@ class NavBar extends Component {
     }
 
     this.setState({
-      tickersShowing: ans, 
+      tickersShowing: ans,
       search: ev.target.value,
     })
   }
@@ -62,13 +66,13 @@ class NavBar extends Component {
   }
 
   render() {
-  
-    const stocks = this.state.tickersShowing.map((stock) =>   
-      <SearchResult 
+
+    const stocks = this.state.tickersShowing.map((stock) =>
+      <SearchResult
         search={this.state.search}
-        clearSearch={this.clearSearch} 
-        key={stock.ticker} 
-        symbol={stock.ticker} 
+        clearSearch={this.clearSearch}
+        key={stock.ticker}
+        symbol={stock.ticker}
         company={stock.company}
       />
     );
@@ -78,7 +82,7 @@ class NavBar extends Component {
         <Col className='title' sm='2'>
           <NavLink to={'/Portfol.io/Home'} style={{textDecoration: 'none'}}>
             <b className='navText' style={{fontSize: '1em'}}>Portfol.io</b>
-          </NavLink>        
+          </NavLink>
         </Col>
         <Col style={{marginTop: '0.6em'}} className='blackBack' sm='4'>
           <div style={{marginBottom: '-20em'}} className='z-depth-5 blackBack'>
@@ -87,14 +91,14 @@ class NavBar extends Component {
               <input id='search' value={this.state.search} onChange={this.findTickers} style={{zoom: '80%', color: 'whitesmoke'}} className="form-control form-control-sm ml-3 w-75" type="text" placeholder="Search" aria-label="Search"/>
             </FormInline>
 
-          {stocks}          
+          {stocks}
 
           </div>
         </Col>
         <Col className='navText' sm='1' md='1'>
           <NavLink to={'/Portfol.io/Home'} style={{textDecoration: 'none'}}>
             <b className='navText' style={{fontSize: '1em'}}>Home</b>
-          </NavLink>        
+          </NavLink>
         </Col>
         <Col className='navText' sm='1' md='1'>
           <NavLink to={'/Portfol.io/Trending'} style={{textDecoration: 'none'}}>

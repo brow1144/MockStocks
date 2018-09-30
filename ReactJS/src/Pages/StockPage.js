@@ -68,13 +68,17 @@ class StockPage extends Component {
         this.showDataFromAPI(stockData);
       })
       .catch((error) => {
-        // handle error      
-        
+        // handle error
+
         self.setState({visible: true})
 
         console.log(`Oh no! Our API didn't respond. Please refresh and try again`);
         console.log(`Btw here is the error message\n\n`);
-        console.log(error);
+
+        if (error.response && error.response.data)
+          console.log(error.response.data.error.message);
+        else
+          console.log(error);
       })
   }
 

@@ -84,7 +84,13 @@ class CreateGame extends Component {
 
     console.log("--2");
 
-    axios.put(`http://localhost:8080/Portfol.io/Games/${this.props.uid}/${gameId}`);
+    axios.put(`http://localhost:8080/Portfol.io/Games/${this.props.uid}/${gameId}`)
+      .catch((error) => {
+        if (error.response && error.response.data)
+          console.log(error.response.data.error.message);
+        else
+          console.log(error);
+      });
 
     this.setState({
       startDate: null,
@@ -125,6 +131,11 @@ class CreateGame extends Component {
         });
         self.joinIt();
         console.log("--6");
+      }).catch((error) => {
+        if (error.response && error.response.data)
+          console.log(error.response.data.error.message);
+        else
+          console.log(error);
       });
     this.toggle();
   }
