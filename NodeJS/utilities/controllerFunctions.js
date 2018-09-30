@@ -4,7 +4,7 @@ export function parseError(err) {
     message: ''
   };
 
-  if (typeof err === String && err.includes('UserError:')) {
+  if (typeof err === 'string' && err.includes('UserError:')) {
     error.status = 400;
     error.message = err.substring('UserError:'.length + 1);
   } else {
