@@ -9,6 +9,7 @@ import 'react-datepicker/dist/react-datepicker.css';
 
 import '../../Static/CSS/CreateGame.css'
 import axios from "axios/index";
+import {fireauth} from "../../base";
 
 class CreateGame extends Component {
 
@@ -20,8 +21,6 @@ class CreateGame extends Component {
       waiting: true,
       joinGame: false,
       createGame: false,
-
-
 
       code: 0,
       game_name: "",
@@ -122,7 +121,7 @@ class CreateGame extends Component {
   createIt = () => {
     let self = this;
     console.log("--3");
-    var gameId = self.generateId();
+    let gameId = self.generateId();
     console.log("--4");
     console.log();
     axios.post(`http://localhost:8080/Portfol.io/Games`,
@@ -143,10 +142,16 @@ class CreateGame extends Component {
         self.joinIt();
         console.log("--6");
       }).catch((error) => {
-        if (error.response && error.response.data)
-          console.log(error.response.data.error);
-        else
-          console.log(error);
+      if (error.response && error.response.data) {
+        console.log(error.response.data.error);
+        if (error.response.data.error.message.errmsg.includes("duplicate")) {
+            self.createIt();
+        }
+      } else {
+        console.log(error);
+      }
+
+
       });
     this.toggle();
   }
