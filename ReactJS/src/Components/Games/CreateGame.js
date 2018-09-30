@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 
 import {Container, Button, Modal, ModalBody, ModalHeader, ModalFooter, Input} from 'mdbreact';
-import {Row, Col} from 'reactstrap'
+import {Row, Col, Alert} from 'reactstrap'
 import DatePicker from 'react-datepicker';
 import moment from 'moment';
 
@@ -9,6 +9,7 @@ import 'react-datepicker/dist/react-datepicker.css';
 
 import '../../Static/CSS/CreateGame.css'
 import axios from "axios/index";
+import {fireauth} from "../../base";
 
 class CreateGame extends Component {
 
@@ -21,8 +22,6 @@ class CreateGame extends Component {
       joinGame: false,
       createGame: false,
 
-
-
       code: 0,
       game_name: "",
       leader_email: "",
@@ -30,6 +29,9 @@ class CreateGame extends Component {
       endDate: moment(),
       starting_amount: "",
       trade_limit: "",
+
+      errMessage: "",
+      err: false
     };
 
   }
@@ -55,7 +57,8 @@ class CreateGame extends Component {
     this.setState({
       waiting: false,
       joinGame: false,
-      createGame: true
+      createGame: true,
+      err: false,
     });
   }
 
@@ -103,8 +106,13 @@ class CreateGame extends Component {
         this.props.reloadPage();
       })
       .catch((error) => {
-        if (error.response && error.response.data)
+        if (error.response && error.response.data) {
+          this.setState({
+            err: true,
+            errorMessage: error.response.data.error.message,
+          });
           console.log(error.response.data.error);
+        }
         else
           console.log(error);
       });
@@ -113,7 +121,7 @@ class CreateGame extends Component {
   createIt = () => {
     let self = this;
     console.log("--3");
-    var gameId = self.generateId();
+    let gameId = self.generateId();
     console.log("--4");
     console.log();
     axios.post(`http://localhost:8080/Portfol.io/Games`,
@@ -134,10 +142,16 @@ class CreateGame extends Component {
         self.joinIt();
         console.log("--6");
       }).catch((error) => {
-        if (error.response && error.response.data)
-          console.log(error.response.data.error);
-        else
-          console.log(error);
+      if (error.response && error.response.data) {
+        console.log(error.response.data.error);
+        if (error.response.data.error.message.errmsg.includes("duplicate")) {
+            self.createIt();
+        }
+      } else {
+        console.log(error);
+      }
+
+
       });
     this.toggle();
   }
@@ -166,6 +180,10 @@ class CreateGame extends Component {
     this.setState({code: event.target.value});
   }
 
+  dismiss = () => {
+    this.setState({err: false});
+  }
+
   render() {
 
     return (
@@ -176,6 +194,7 @@ class CreateGame extends Component {
           {this.state.joinGame === true
             ?
             <ModalBody>
+              <Alert color="danger" toggle={this.dismiss} isOpen={this.state.err}>{this.state.errorMessage}</Alert>
               <Input  value={this.state.code}  onChange={this.curCode} id="floorCode" label="Floor Code"/>
               <Button color="grey" onClick={this.joinIt}>Join</Button>
             </ModalBody>
