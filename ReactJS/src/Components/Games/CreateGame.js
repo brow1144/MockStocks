@@ -58,7 +58,8 @@ class CreateGame extends Component {
     this.setState({
       waiting: false,
       joinGame: false,
-      createGame: true
+      createGame: true,
+      err: false,
     });
   }
 
@@ -173,7 +174,7 @@ class CreateGame extends Component {
   curCode = (event) => {
     this.setState({code: event.target.value});
   }
-  
+
   dismiss = () => {
     this.setState({err: false});
   }

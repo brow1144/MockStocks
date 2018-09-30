@@ -24,7 +24,7 @@ class Games extends Component {
       myStocks: [],
       // Array of game objects
       myFloors: [],
-      money: 0,
+      buying_power: 0,
       uid: sessionStorage.getItem('uid'),
       //Current game object
       currentGame: {},
@@ -121,6 +121,7 @@ class Games extends Component {
           // handle success
           if (response != null) {
             self.processUser(response.data, x);
+            self.leaderCheck();
           }
 
         }).catch(function (err) {
@@ -133,7 +134,6 @@ class Games extends Component {
         })
     }
 
-    self.leaderCheck();
   }
 
   /**
@@ -149,6 +149,17 @@ class Games extends Component {
     if (self.state.uid === user._id) {
       self.setState({
         email: user.email,
+        currentUser: user,
+      }, () => {
+        // Loop over all the current user's games and set their buying power based on the game
+          for (let i = 0; i < user.active_games.length; i++) {
+            // Check if game code is equal to the code
+            if (self.state.currentGame.code === user.active_games[i].code) {
+              self.setState({
+                buying_power: user.active_games[i].buying_power,
+              })
+            }
+          }
       })
     }
 
@@ -249,7 +260,7 @@ class Games extends Component {
               }
               <Col md="6"/>
               <Col md="3">
-                <h5 className={"gamesText"}>Spending Money : ${this.state.money}</h5>
+                <h5 className={"gamesText"}>Buying Power : ${this.state.buying_power}</h5>
               </Col>
             </Row>
             {this.state.leader
