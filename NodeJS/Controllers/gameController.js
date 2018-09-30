@@ -1,5 +1,6 @@
 import bodyParser from 'body-parser';
-import {createGame, updateGameSettings, addUserToGame} from "../Models/gameDAO";
+import {parseError, buildResponse} from '../utilities/controllerFunctions';
+import {createGame, updateGameSettings, addUserToGame, getGamesByUser} from "../Models/gameDAO";
 import {joinGame} from '../Models/userDAO';
 
 export default (app) => {
@@ -63,32 +64,16 @@ export default (app) => {
 
     buildResponse(res, data);
   });
-};
 
-const parseError = (err) => {
-  let error = {
-    status: 0,
-    message: ''
-  };
+  app.get('/Portfol.io/Games/By/User/:uid', async (req, res) => {
+    let data;
 
-  if (typeof err === 'string' && err.includes('UserError:')) {
-    error.status = 400;
-    error.message = err.substring('UserError:'.length + 1);
-  } else {
-    error.status = 500;
-    error.message = err;
-  }
+    try {
+      data = await getGamesByUser(req.params.uid);
+    } catch (err) {
+      data = {error: parseError(err)};
+    }
 
-  return error;
-}
-
-const buildResponse = (res, data) => {
-  res.header("Access-Control-Allow-Origin", "*");
-  res.header("Access-Control-Allow-Methods", "GET, POST, PUT, OPTIONS");
-  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-
-  if (data.error)
-    res.status(data.error.status).json(data);
-  else
-    res.status(200).json(data);
+    buildResponse(res, data);
+  });
 };
