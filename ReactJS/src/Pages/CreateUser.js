@@ -34,7 +34,7 @@ class CreateUser extends Component {
      */
 
   onSubmit = (ev) => {
-    
+
     ev.preventDefault();
     let target = ev.target;
 
@@ -62,6 +62,7 @@ class CreateUser extends Component {
             window.location.reload();
           }).catch((error) => {
             console.log(error);
+            //firebase.auth().currentUser.delete();
           });
         }).catch((error) => {
             // Handle error

@@ -7,6 +7,7 @@ export default (app) => {
   // create a game
   app.post('/Portfol.io/Games', async (req, res) => {
     let game = {
+      _id: req.body.code,
       code: req.body.code,
       game_name: req.body.game_name,
       leader_email: req.body.leader_email,
