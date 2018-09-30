@@ -1,7 +1,7 @@
 import express from 'express';
 import bodyParser from 'body-parser';
 
-import controller from './controllers/controller';
+import stockController from './controllers/stockController';
 import userController from './controllers/userController';
 import gameController from './controllers/gameController';
 
@@ -21,7 +21,7 @@ app.options('/*', (req, res) => {
 });
 
 // run controllers
-controller(app);
+stockController(app);
 userController(app);
 gameController(app);
 

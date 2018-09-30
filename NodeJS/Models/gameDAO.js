@@ -30,6 +30,11 @@ export function updateGameSettings(gameCode, game) {
     }
   }
 
+  const options = {
+    new: true,
+    passRawResult: true
+  };
+
   return gameModel.findOneAndUpdate(
     {code: gameCode},
     {game_name: game.game_name,
@@ -37,8 +42,11 @@ export function updateGameSettings(gameCode, game) {
     trade_limit: game.trade_limit,
     start_time: game.start_time,
     end_time: game.end_time},
-    {new: true})
+    options)
     .then((updatedGame) => {
+      if (updatedGame === null)
+        return Promise.reject('UserError: Game does not exist');
+
       return Promise.resolve(updatedGame);
     })
     .catch((err) => {
@@ -49,10 +57,16 @@ export function updateGameSettings(gameCode, game) {
 export function addUserToGame(uid, gameCode) {
   return gameModel.findOneAndUpdate(
     {code: gameCode},
-    {$push: {active_players: uid}},
-    {new: true})
-    .then((updatedGame) => {
-      return Promise.resolve(updatedGame);
+    {'$addToSet': {'active_players': uid}},
+    {passRawResult: true})
+    .then((originalGame) => {
+      if (originalGame === null)
+        return Promise.reject('UserError: Game does not exist');
+
+      if (originalGame.active_players.includes(uid))
+        return Promise.reject('UserError: User already in game');
+
+      return Promise.resolve(originalGame);
     })
     .catch((err) => {
       return Promise.reject(err);

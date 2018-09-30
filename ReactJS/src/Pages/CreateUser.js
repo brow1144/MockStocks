@@ -34,7 +34,7 @@ class CreateUser extends Component {
      */
 
   onSubmit = (ev) => {
-    
+
     ev.preventDefault();
     let target = ev.target;
 
@@ -61,7 +61,13 @@ class CreateUser extends Component {
           }).then(() => {
             window.location.reload();
           }).catch((error) => {
-            console.log(error);
+            if (error.response && error.response.data) {
+              console.log(error.response.data.error);
+              fireauth.currentUser.delete();  // delete invalid user from Firebase
+              sessionStorage.clear(); // remove saved UID
+            } else {
+              console.log(error);
+            }
           });
         }).catch((error) => {
             // Handle error

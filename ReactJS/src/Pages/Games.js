@@ -55,37 +55,43 @@ class Games extends Component {
     axios.get(`http://localhost:8080/Portfol.io/Games/By/User/${this.state.uid}`)
       .then(function (response) {
         // handle success
-        if (response != null) {
-          let gameData = response.data;
+        let gameData = response.data;
 
-          if (gameData.games.length !== 0) {
-            // Set up the game data
-            console.log("-1");
-            self.setGameData(gameData.games);
+        if (gameData.games.length !== 0) {
+          // Set up the game data
+          console.log("-1");
+          self.setGameData(gameData.games);
 
-          } else { // No games return
-            // Get the current user's email
-            axios.get(`http://localhost:8080/Portfol.io/${self.state.uid}`)
-              .then(function (response) {
-                // handle success
-                let user = response.data;
+        } else { // No games return
+          // Get the current user's email
+          axios.get(`http://localhost:8080/Portfol.io/${self.state.uid}`)
+            .then(function (response) {
+              // handle success
+              let user = response.data;
 
-                self.setState({
-                  email: user.email,
-                })
+              self.setState({
+                email: user.email,
+              })
 
-              }).catch(function (err) {
-              console.log("Cannot get users for the current game");
+            }).catch(function (err) {
+            console.log("Cannot get users for the current game");
+
+            if (err.response && err.response.data)
+              console.log(err.response.data.error.message);
+            else
               console.log(err);
-            })
-          }
+          })
         }
       })
       .catch(function (error) {
         // handle error
         console.log(`Oh no! Our API didn't respond. Please refresh and try again`)
         console.log(`Btw here is the error message\n\n`)
-        console.log(error);
+
+        if (error.response && error.response.data)
+          console.log(error.response.data.error);
+        else
+          console.log(error);
       })
   }
 
@@ -119,7 +125,11 @@ class Games extends Component {
 
         }).catch(function (err) {
           console.log("Cannot get users for the current game");
-          console.log(err);
+
+          if (err.response && err.response.data)
+            console.log(err.response.data.error.message);
+          else
+            console.log(err);
         })
     }
 
@@ -186,7 +196,11 @@ class Games extends Component {
 
               }).catch(function (err) {
               console.log("Cannot get users for the current game");
-              console.log(err);
+
+              if (err.response && err.response.data)
+                console.log(err.response.data.error.message);
+              else
+                console.log(err);
             })
           }
 

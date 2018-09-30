@@ -1,11 +1,13 @@
 import bodyParser from 'body-parser';
-import {createGame, addUserToGame} from "../Models/gameDAO";
+import {parseError, buildResponse} from '../utilities/controllerFunctions';
+import {createGame, updateGameSettings, addUserToGame, getGamesByUser} from "../Models/gameDAO";
 import {joinGame} from '../Models/userDAO';
 
 export default (app) => {
   // create a game
   app.post('/Portfol.io/Games', async (req, res) => {
     let game = {
+      _id: req.body.code,
       code: req.body.code,
       game_name: req.body.game_name,
       leader_email: req.body.leader_email,
@@ -15,12 +17,19 @@ export default (app) => {
       end_time: req.body.end_time
     };
 
-    const data = await createGame(game);
+    let data;
+
+    try {
+      data = await createGame(game);
+    } catch (err) {
+      data = {error: parseError(err)};
+    }
+
     buildResponse(res, data);
   });
 
   app.put('/Portfol.io/Games/:gameCode', async (req, res) => {
-    let gameSettings = {
+    const gameSettings = {
       game_name: req.body.game_name,
       starting_amount: req.body.starting_amount,
       trade_limit: req.body.trade_limit,
@@ -28,26 +37,44 @@ export default (app) => {
       end_time: req.body.end_time
     }
 
-    const data = await updateGameSettings(gameSettings);
+    let data;
+
+    try {
+      data = await updateGameSettings(req.params.gameCode, gameSettings);
+    } catch (err) {
+      data = {error: parseError(err)};
+    }
+
     buildResponse(res, data);
   });
 
   // join a game
   app.put('/Portfol.io/Games/:uid/:gameCode', async (req, res) => {
-    let user = await joinGame(req.params.uid, req.params.gameCode);
-    let game = await addUserToGame(req.params.uid, req.params.gameCode);
-    let data = {
-      user: user,
-      game: game
+    let game, user, data;
+
+    try {
+      game = await addUserToGame(req.params.uid, req.params.gameCode);
+      user = await joinGame(req.params.uid, req.params.gameCode);
+      data = {
+        game: game,
+        user: user
+      };
+    } catch (err) {
+      data = {error: parseError(err)};
     }
 
     buildResponse(res, data);
   });
-};
 
-const buildResponse = (res, data) => {
-  res.header("Access-Control-Allow-Origin", "*");
-  res.header("Access-Control-Allow-Methods", "GET, POST, PUT, OPTIONS");
-  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-  data && res.status(200).json(data);
+  app.get('/Portfol.io/Games/By/User/:uid', async (req, res) => {
+    let data;
+
+    try {
+      data = await getGamesByUser(req.params.uid);
+    } catch (err) {
+      data = {error: parseError(err)};
+    }
+
+    buildResponse(res, data);
+  });
 };

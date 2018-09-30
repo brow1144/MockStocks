@@ -1,4 +1,5 @@
 import mongoose from 'mongoose';
+import {userSchema} from '../utilities/MongooseSchemas';
 import {userModel} from '../utilities/MongooseModels';
 
 export function getUser(uid) {
@@ -39,13 +40,25 @@ export function joinGame(uid, gameCode) {
     stocks: []
   };
 
-  // TODO check if the user is already in game
+  const updateClause = {
+    'game.code': {'$ne': gameCode},
+    '$addToSet': {'active_games': game}
+  };
+
+  const options = {
+    new: true,
+    passRawResult: true
+  };
+
   return userModel.findOneAndUpdate(
     {_id: uid},
-    {$push: {active_games: game}},
-    {new: true})
-    .then((res) => {
-      return Promise.resolve(res);
+    updateClause,
+    options)
+    .then((updatedUser) => {
+      if (updatedUser === null)
+        return Promise.reject('UserError: User does not exist');
+
+      return Promise.resolve(updatedUser);
     })
     .catch((err) => {
       return Promise.reject(err);
