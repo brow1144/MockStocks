@@ -77,7 +77,7 @@ class Games extends Component {
             console.log("Cannot get users for the current game");
 
             if (err.response && err.response.data)
-              console.log(err.response.data.error.message);
+              console.log(err.response.data.error);
             else
               console.log(err);
           })
@@ -127,7 +127,7 @@ class Games extends Component {
           console.log("Cannot get users for the current game");
 
           if (err.response && err.response.data)
-            console.log(err.response.data.error.message);
+            console.log(err.response.data.error);
           else
             console.log(err);
         })
@@ -198,7 +198,7 @@ class Games extends Component {
               console.log("Cannot get users for the current game");
 
               if (err.response && err.response.data)
-                console.log(err.response.data.error.message);
+                console.log(err.response.data.error);
               else
                 console.log(err);
             })
