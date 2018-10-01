@@ -24,6 +24,15 @@ class UpdateGame extends Component {
 
   }
 
+  componentWillMount () {
+    // Put props into the state
+    this.setState({
+      game_name: this.props.currentGame.game_name,
+      starting_amount: this.props.currentGame.starting_amount,
+      trade_limit: this.props.currentGame.trade_limit,
+    })
+  };
+
   toggle = () => {
     this.setState({
       modal: !this.state.modal
@@ -43,19 +52,37 @@ class UpdateGame extends Component {
   }
 
   update = () => {
-    let newSettings = {
-      code: this.props.currentGame.code,
+
+    // Server call to update the game
+    axios.put(`http://localhost:8080/Portfol.io/Games/${this.props.currentGame.code}`, {
       game_name: this.state.game_name,
-      leader_email: this.props.currentGame.leader_email,
       starting_amount: this.state.starting_amount,
       trade_limit: this.state.trade_limit,
       start_time: this.state.startDate,
       end_time: this.state.endDate
-    }
-    //UPDATE SETTINGS BACKEND CALL HERE
+    }).then(() => {
+      window.location.reload();
+
+    }).catch((err) => {
+      console.log("Cannot update the game");
+
+      if (err.response && err.response.data)
+        console.log(err.response.data.error);
+      else
+        console.log(err);
+    });
+
     this.setState({
       modal:false
     })
+  }
+
+  curMoney = (event) => {
+    this.setState({starting_amount: event.target.value});
+  }
+
+  curLimit = (event) => {
+    this.setState({trade_limit: event.target.value});
   }
 
 
@@ -79,8 +106,8 @@ class UpdateGame extends Component {
                               id="endDate" selected={this.state.endDate}
                               onChange={this.handleChangeEnd} showTimeSelect
                               dateFormat="LLL"/>
-                  <Input value={this.props.currentGame.starting_amount.toString()}  onChange={this.curMoney} id="startingMoney" label="Starting Money (USD)"/>
-                  <Input value={this.props.currentGame.trade_limit.toString()}  onChange={this.curLimit} id="transLimit" label="Transaction Limit (0 for Unlimited)"/>
+                  <Input onChange={this.curMoney} id="startingMoney" label={'Current Starting Money (USD) : ' + this.props.currentGame.starting_amount} />
+                  <Input onChange={this.curLimit} id="transLimit" label={"Current Transaction Limit (0 for Unlimited) : " + this.props.currentGame.trade_limit}/>
                 </ModalBody>
 
                 <ModalFooter>
