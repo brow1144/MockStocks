@@ -87,3 +87,29 @@ export function leaveGame(uid, gameCode) {
       return Promise.reject(err);
     });
 };
+
+export function updateUserBuyingPower(uid, gameCode, starting_amount) {
+  const findClause = {
+    '_id': uid,
+    'active_games.code': gameCode
+  };
+
+  const options = {
+    new: true,
+    passRawResult: true
+  };
+
+  return userModel.findOneAndUpdate(
+    findClause,
+    {'$set': {'active_games.$.buying_power': starting_amount}},
+    options)
+    .then((updatedUser) => {
+      if (updatedUser === null)
+        return Promise.reject('UserError: User does not exist');
+
+      return Promise.resolve(updatedUser);
+    })
+    .catch((err) => {
+      return Promise.reject(err);
+    });
+};
