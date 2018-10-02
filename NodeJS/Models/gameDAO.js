@@ -119,4 +119,4 @@ export function getGamesByUser(uid) {
 export function getGamesById(gameId) {
   const tickerList = mongoose.model('Ticker', tickerSchema);
   return tickerList.find({}, {tickers: 1, _id: 0}).catch((err) => {return Promise.reject(err)})
-}
+};
