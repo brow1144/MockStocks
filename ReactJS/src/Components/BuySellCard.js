@@ -30,12 +30,38 @@ class BuySellCard extends Component {
     }
   }
 
+  buyStock = () => {
+
+    // TODO Send Call to Backed to Buy Specified Number of Stock
+
+    console.log('Number of Shares: ' + this.state.cost);
+    console.log('Current Price of Stock (Formatted like a dolllar $XY.ZA)' + this.props.currentPriceFor);
+    console.log('Total Cost to the Buyer' + this.state.finalPrice);
+  }
+
+  sellStock = () => {
+
+    // TODO Send Call to Backed to Sell Specified Number of Stock
+
+    console.log('Number of Shares: ' + this.state.cost);
+    console.log('Current Price of Stock (Formatted like a dolllar $XY.ZA)' + this.props.currentPriceFor);
+    console.log('Total Selling Price to the Seller' + this.state.finalPrice);
+  }
+  
   handleBuy = () => {
-    this.setState({selected: 'buy'})    
+    this.setState({
+      cost: 0,
+      finalPrice: 0,
+      selected: 'buy'
+    })    
   }
 
   handleSell = () => {
-    this.setState({selected: 'sell'})
+    this.setState({
+      cost: 0,
+      finalPrice: 0,
+      selected: 'sell'
+    })
   }
 
   render() { 
@@ -57,9 +83,9 @@ class BuySellCard extends Component {
 
             {this.state.selected === 'buy' 
               ?
-                <Buy currentPriceFor={this.props.currentPriceFor} updateCost={this.updateCost} cost={this.state.cost} finalPrice={this.state.finalPrice}/>
+                <Buy buyStock={this.buyStock} currentPriceFor={this.props.currentPriceFor} updateCost={this.updateCost} cost={this.state.cost} finalPrice={this.state.finalPrice}/>
               :
-                <Sell currentPriceFor={this.props.currentPriceFor} updateCost={this.updateCost} cost={this.state.cost} finalPrice={this.state.finalPrice}/>
+                <Sell sellStock={this.sellStock} currentPriceFor={this.props.currentPriceFor} updateCost={this.updateCost} cost={this.state.cost} finalPrice={this.state.finalPrice}/>
             } 
 
           </Card>

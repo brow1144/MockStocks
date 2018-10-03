@@ -6,7 +6,7 @@ class Sell extends Component {
   render() {
     return (
       <CardBody>
-        
+      
         <Row> 
           <Col sm='6'>
             <h6 className='leftText'>Shares</h6>
@@ -27,7 +27,7 @@ class Sell extends Component {
           </Col>
         </Row>
         
-        <br />
+        <hr className='hr'/>
 
         <Row> 
           <Col sm='6'>
@@ -40,7 +40,7 @@ class Sell extends Component {
 
         <br />
 
-        <Button color='blue' style={{margin: '0 auto', display: 'block', background: '#009ddb'}}>Submit Order</Button>
+        <Button onClick={this.props.sellStock} color='blue' style={{margin: '0 auto', display: 'block', background: '#009ddb'}}>Submit Order</Button>
 
         <hr className='hr' />
 

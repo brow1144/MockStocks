@@ -5,12 +5,7 @@ class Buy extends Component {
   
   render() {
     return (
-      <CardBody>
-        {/* <div className="article-container-inner">
-          <CardTitle className='buyStock'>Buy {this.props.stock}</CardTitle>
-          <hr className='hr'/>
-        </div> */}
-        
+      <CardBody>        
         <Row> 
           <Col sm='6'>
             <h6 className='leftText'>Shares</h6>
@@ -31,11 +26,11 @@ class Buy extends Component {
           </Col>
         </Row>
         
-        <br />
+        <hr className='hr'/>
 
         <Row> 
           <Col sm='6'>
-            <h6 className='leftText' style={{marginTop: '8px'}}>Cost</h6>
+            <h6 className='leftText' style={{marginTop: '8px'}}>Buy Cost</h6>
           </Col>
           <Col sm='6'>
             <p id='finalCost' style={{marginTop: '7px', float: 'right', fontSize: '0.8em', color: 'whitesmoke'}}>${this.props.finalPrice}</p>
@@ -44,7 +39,7 @@ class Buy extends Component {
 
         <br />
 
-        <Button color='blue' style={{margin: '0 auto', display: 'block', background: '#009ddb'}}>Submit Order</Button>
+        <Button onClick={this.props.buyStock} color='blue' style={{margin: '0 auto', display: 'block', background: '#009ddb'}}>Submit Order</Button>
 
         <hr className='hr' />
 
