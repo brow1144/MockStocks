@@ -120,3 +120,16 @@ export function getGamesById(gameId) {
   const tickerList = mongoose.model('Ticker', tickerSchema);
   return tickerList.find({}, {tickers: 1, _id: 0}).catch((err) => {return Promise.reject(err)})
 };
+
+export function getGame(gameCode) {
+  return gameModel.find({'code': gameCode})
+    .then((game) => {
+      if (game)
+        return Promise.resolve(game);
+      else
+        return Promise.reject('UserError: Game not found');
+    })
+    .catch((err) => {
+      return Promise.reject(err)
+    });
+};

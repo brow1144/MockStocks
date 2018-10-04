@@ -96,11 +96,11 @@ export default (app) => {
     buildResponse(res, data);
   });
 
-  app.put('/Portfol.io/Games/Buy/:uid/:gameCode/:stockName/:quantity/:totalQuantity', async (req, res) => {
+  app.put('/Portfol.io/Games/Buy/:uid/:gameCode/:stockName/:quantity/:pricePerShare', async (req, res) => {
     let data;
 
     try {
-      data = await buyStock(req.params.uid, req.params.gameCode, req.params.stockName, req.params.quantity, req.params.totalQuantity);
+      data = await buyStock(req.params.uid, req.params.gameCode, req.params.stockName, req.params.quantity, req.params.pricePerShare);
     } catch (err) {
       data = {error: parseError(err)};
     }
