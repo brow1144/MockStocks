@@ -8,7 +8,8 @@ class Leaderboard extends Component {
     super(props);
 
     this.state = {
-      curUsers: [{}],
+      userList: this.props.users,
+      curUsers: [],
       totalAssets: 0,
       rank: 0,
       tradesRemaining: 0,
@@ -27,7 +28,7 @@ class Leaderboard extends Component {
    */
   genData = () => {
     let self = this;
-    console.log(self.props.users[0])
+    console.log(self.props.users)
     console.log(self.props.users.length)
     for (let x = 0; x < self.props.users.length; x++) {
       console.log("User check")
