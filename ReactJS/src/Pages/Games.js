@@ -59,7 +59,6 @@ class Games extends Component {
 
         if (gameData.games.length !== 0) {
           // Set up the game data
-          console.log("-1");
           self.setGameData(gameData.games);
 
         } else { // No games return
@@ -278,7 +277,7 @@ class Games extends Component {
                 <Row>
                 <Col md='1'/>
                 <Col md='5'>
-                  <Leaderboard users={this.state.users}/>
+                  <Leaderboard code={this.state.currentGame.code} currentGame={this.state.currentGame} users={this.state.users}/>
                 </Col>
 
                 <Col md='5'>
