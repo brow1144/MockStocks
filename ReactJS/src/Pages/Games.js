@@ -262,7 +262,7 @@ class Games extends Component {
               </Row>
               : <Row/>
             }
-            <Row  style={{paddingTop: '4em'}} className='blackBackground body_div'>
+            <Row  style={{paddingTop: '4em'}} >
               <Col md='9'>
                 <Row>
                 <Col md='1'/>
@@ -277,7 +277,7 @@ class Games extends Component {
                 </Row>
               </Col>
 
-              <Col md='2'>
+              <Col md='2' className='blackBackground body_div'>
                 <GameList updateGame={this.updateGame} myFloors={this.state.myFloors}/>
                 <CreateGame reloadPage={this.reloadPage} email={this.state.email} uid={this.state.uid}/>
               </Col>
