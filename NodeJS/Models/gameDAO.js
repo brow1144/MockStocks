@@ -1,5 +1,6 @@
 import mongoose from 'mongoose';
 import {gameModel} from '../utilities/MongooseModels';
+import {updateUserBuyingPower} from './userDAO';
 
 export function createGame(game) {
   for (let i in game) {
@@ -18,7 +19,7 @@ export function createGame(game) {
     .catch((err) => {
       return Promise.reject(err);
     });
-}
+};
 
 export function updateGameSettings(gameCode, game) {
   for (let i in game) {
@@ -43,16 +44,27 @@ export function updateGameSettings(gameCode, game) {
     start_time: game.start_time,
     end_time: game.end_time},
     options)
-    .then((updatedGame) => {
+    .then(async (updatedGame) => {
       if (updatedGame === null)
         return Promise.reject('UserError: Game does not exist');
+
+      // update buying power for each active player
+      for (let i in updatedGame.active_players.toObject()) {
+        if (updatedGame.active_players.hasOwnProperty(i)) {
+          try {
+            await updateUserBuyingPower(updatedGame.active_players[i], gameCode, game.starting_amount);
+          } catch (error) {
+            return Promise.reject(error);
+          }
+        }
+      }
 
       return Promise.resolve(updatedGame);
     })
     .catch((err) => {
       return Promise.reject(err);
     });
-}
+};
 
 export function addUserToGame(uid, gameCode) {
   return gameModel.findOneAndUpdate(
@@ -71,7 +83,7 @@ export function addUserToGame(uid, gameCode) {
     .catch((err) => {
       return Promise.reject(err);
     });
-}
+};
 
 export function removeUserFromGame(uid, gameCode) {
   return gameModel.findOneAndUpdate(
@@ -90,7 +102,7 @@ export function removeUserFromGame(uid, gameCode) {
     .catch((err) => {
       return Promise.reject(err);
     });
-}
+};
 
 export function getGamesByUser(uid) {
   const findClause = {active_players: uid};
@@ -98,10 +110,26 @@ export function getGamesByUser(uid) {
     .then((data) => {
       return Promise.resolve({games: data});
     })
-    .catch((err) => {return Promise.reject(err)})
-}
+    .catch((err) => {
+      return Promise.reject(err)
+    });
+};
 
+// do we need this?
 export function getGamesById(gameId) {
   const tickerList = mongoose.model('Ticker', tickerSchema);
   return tickerList.find({}, {tickers: 1, _id: 0}).catch((err) => {return Promise.reject(err)})
-}
+};
+
+export function getGame(gameCode) {
+  return gameModel.find({'code': gameCode})
+    .then((game) => {
+      if (game)
+        return Promise.resolve(game);
+      else
+        return Promise.reject('UserError: Game not found');
+    })
+    .catch((err) => {
+      return Promise.reject(err)
+    });
+};

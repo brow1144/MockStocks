@@ -1,5 +1,5 @@
 import {userModel} from '../utilities/MongooseModels';
-import {getUser, createUser, joinGame, leaveGame} from './userDAO';
+import {getUser, createUser, joinGame, leaveGame, updateUserBuyingPower} from './userDAO';
 
 userModel.findOne = jest.fn(() => {
   return {
@@ -78,6 +78,25 @@ describe('User Tests Positive Case', function () {
     expect(userModel.findOneAndUpdate).toHaveBeenCalledWith(
       {_id: 'XFKSHFD3578132958IUDF'},
       {'$pull': {'active_games': {'code': '2352364'}}},
+      options
+    );
+  });
+
+  it('should call findOneAndUpdate with the proper game settings', async function () {
+    const findClause = {
+      '_id': '325FXYDF351235JLDSKG',
+      'active_games.code': '523535'
+    };
+
+    const options = {
+      new: true,
+      passRawResult: true
+    };
+
+    await updateUserBuyingPower('325FXYDF351235JLDSKG', '523535', 3000);
+    expect(userModel.findOneAndUpdate).toHaveBeenCalledWith(
+      findClause,
+      {'$set': {'active_games.$.buying_power': 3000}},
       options
     );
   });
