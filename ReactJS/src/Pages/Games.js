@@ -103,36 +103,26 @@ class Games extends Component {
         myFloors: games,
         currentGame: games[0],
       }, () => {
-        self.fetchUsers();
+        // Call to the server to get all user objects
+        for (let x = 0; x < self.state.currentGame.active_players.length; x++) {
+          axios.get(`http://localhost:8080/Portfol.io/${self.state.currentGame.active_players[x]}`)
+            .then(function (response) {
+              // handle success
+              if (response != null) {
+                self.processUser(response.data, x);
+                self.leaderCheck();
+              }
+
+            }).catch(function (err) {
+            console.log("Cannot get users for the current game");
+
+            if (err.response && err.response.data)
+              console.log(err.response.data.error);
+            else
+              console.log(err);
+          })
+        }
       })
-  }
-
-  /**
-   * Gets all users for the current game
-   */
-  fetchUsers = () => {
-    let self = this;
-    // Call to the server to get all the user objects
-
-    for (let x = 0; x < self.state.currentGame.active_players.length; x++) {
-      axios.get(`http://localhost:8080/Portfol.io/${self.state.currentGame.active_players[x]}`)
-        .then(function (response) {
-          // handle success
-          if (response != null) {
-            self.processUser(response.data, x);
-            self.leaderCheck();
-          }
-
-        }).catch(function (err) {
-          console.log("Cannot get users for the current game");
-
-          if (err.response && err.response.data)
-            console.log(err.response.data.error);
-          else
-            console.log(err);
-        })
-    }
-
   }
 
   /**

@@ -28,24 +28,25 @@ class Leaderboard extends Component {
    */
   genData = () => {
     let self = this;
-    console.log(self.props.users)
-    console.log(self.props.users.length)
-    for (let x = 0; x < self.props.users.length; x++) {
-      console.log("User check")
-      // Look for current game in user's active games array
-      for (let y = 0; y < self.props.users[x].active_games.length; y++) {
-        console.log("Games check")
-        // Check if the code matches the current game
-        if (self.props.code === self.props.users[x].active_games[y].code) {
-          // Add a matching game to the list of users' data
-          let added = self.state.curUsers.concat(self.props.users[x].active_games[y]);
-          console.log("FOUND ONE");
-          self.setState({
-            curUsers: added
-          })
+    self.setState({
+      userList: self.props.users
+    }, () => {
+      console.log(JSON.stringify(self.state.userList))
+      for (let x = 0; x < self.state.userList.length; x++) {
+        // Look for current game in user's active games array
+        for (let y = 0; y < self.state.userList[x].active_games.length; y++) {
+          // Check if the code matches the current game
+          if (self.props.code === self.state.userList[x].active_games[y].code) {
+            // Add a matching game to the list of users' data
+            let added = self.state.curUsers.concat(self.state.userList[x].active_games[y]);
+            console.log("FOUND ONE");
+            self.setState({
+              curUsers: added
+            })
+          }
         }
       }
-    }
+    })
   }
 
 
@@ -64,7 +65,8 @@ class Leaderboard extends Component {
           </tr>
           </thead>
           <tbody>
-          {this.props.users.map((user, key) => {
+
+          {this.state.userList.map((user, key) => {
             return (<tr key={key}>
               <th scope="row">{key}</th>
               <th >{user.username}</th>
