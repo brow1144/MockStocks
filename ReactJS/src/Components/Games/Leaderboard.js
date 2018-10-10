@@ -55,7 +55,7 @@ class Leaderboard extends Component {
     return (
       <div  className='z-depth-5' >
         <h5 className={"gamesText"}>Leaderboard</h5>
-        <Table dark hover>
+        <Table className={"cenText"} dark hover>
           <thead>
           <tr>
             <th>Rank</th>
@@ -71,7 +71,12 @@ class Leaderboard extends Component {
               <th scope="row">{key}</th>
               <th >{user.username}</th>
               <th >{user.totalAssets}</th>
-              <th>Unlimited</th>
+              {this.props.currentGame.trade_limit === 0
+                ?
+                <th>Unlimited</th>
+                :
+                <th>{user.trade_count} / {this.props.currentGame.trade_limit}</th>
+              }
             </tr>)
           })}
           </tbody>
