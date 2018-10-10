@@ -31,12 +31,12 @@ class Games extends Component {
       currentGame: {},
       // Current user
       currentUser: {},
+      // Array of all the users' information in the current game
+      userGame: [],
       // Current users email
       email: "",
       // Check if this is the leader of the game
       leader: false,
-      // Total amount of trades for a certain game
-      totalTrades: 0,
     };
   }
 
@@ -146,19 +146,44 @@ class Games extends Component {
         currentUser: user,
       }, () => {
         // Loop over all the current user's games and set their buying power based on the game
-          for (let i = 0; i < user.active_games.length; i++) {
-            // Check if game code is equal to the code
-            if (self.state.currentGame.code === user.active_games[i].code) {
-              self.setState({
-                buying_power: user.active_games[i].buying_power,
-              })
-            }
+        for (let i = 0; i < user.active_games.length; i++) {
+          // Check if game code is equal to the code
+          if (self.state.currentGame.code === user.active_games[i].code) {
+            self.setState({
+              buying_power: user.active_games[i].buying_power,
+            })
           }
+        }
       })
     }
 
+    // Go through a user's active games and add the current game data to the userGame array
+    let ug = self.state.userGame;
+
+    let tmp = null;
+    for (let i = 0; i < user.active_games.length; i++) {
+      // Check if game code is equal to the code of the game data
+      if (self.state.currentGame.code === user.active_games[i].code) {
+        console.log("Made it");
+        // TODO Calculate the the total Assets here and add to the object
+        tmp = {
+          code: user.active_games[i].code,
+          buying_power: user.active_games[i].buying_power,
+          trade_count: user.active_games[i].trade_count,
+          stocks: user.active_games[i].stocks,
+          username: user.username
+        }
+        break;
+      }
+    }
+    // Make sure tmp is set
+    if (tmp != null)
+      ug.push(tmp);
+
+
     self.setState({
       users: newArray,
+      userGame: ug,
     })
   }
 
@@ -188,7 +213,8 @@ class Games extends Component {
       let newFloor = self.state.myFloors[index];
       self.setState({
           currentGame: newFloor,
-          users: []
+          users: [],
+          userGame: [],
         }, () => {
           self.leaderCheck();
 
@@ -289,7 +315,7 @@ class Games extends Component {
                 <Row>
                 <Col md='1'/>
                 <Col md='5'>
-                  <Leaderboard code={this.state.currentGame.code} currentGame={this.state.currentGame} users={this.state.users}/>
+                  <Leaderboard currentGame={this.state.currentGame} userGame={this.state.userGame}/>
                 </Col>
 
                 <Col md='5'>
