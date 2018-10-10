@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-import '../Static/CSS/CreateUser.css';
 
 //import {Input, Button} from 'mdbreact';
 import { Row, Col } from 'reactstrap';
@@ -24,14 +23,19 @@ class Games extends Component {
       myStocks: [],
       // Array of game objects
       myFloors: [],
+      // Money the user has
       buying_power: 0,
+      // User's uid
       uid: sessionStorage.getItem('uid'),
-      //Current game object
+      // Current game object
       currentGame: {},
-      //Current user
+      // Current user
       currentUser: {},
+      // Array of all the users' information in the current game
+      userGame: [],
       // Current users email
       email: "",
+      // Check if this is the leader of the game
       leader: false,
     };
   }
@@ -59,7 +63,6 @@ class Games extends Component {
 
         if (gameData.games.length !== 0) {
           // Set up the game data
-          console.log("-1");
           self.setGameData(gameData.games);
 
         } else { // No games return
@@ -96,7 +99,7 @@ class Games extends Component {
   }
 
   /**
-   * Sets game info
+   * Sets game info for the first time
    */
   setGameData = (games) => {
     let self = this;
@@ -104,36 +107,26 @@ class Games extends Component {
         myFloors: games,
         currentGame: games[0],
       }, () => {
-        self.fetchUsers();
+        // Call to the server to get all user objects for the current game
+        for (let x = 0; x < self.state.currentGame.active_players.length; x++) {
+          axios.get(`http://localhost:8080/Portfol.io/${self.state.currentGame.active_players[x]}`)
+            .then(function (response) {
+              // handle success
+              if (response != null) {
+                self.processUser(response.data, x);
+                self.leaderCheck();
+              }
+
+            }).catch(function (err) {
+            console.log("Cannot get users for the current game");
+
+            if (err.response && err.response.data)
+              console.log(err.response.data.error);
+            else
+              console.log(err);
+          })
+        }
       })
-  }
-
-  /**
-   * Gets all users for the current game
-   */
-  fetchUsers = () => {
-    let self = this;
-    // Call to the server to get all the user objects
-
-    for (let x = 0; x < self.state.currentGame.active_players.length; x++) {
-      axios.get(`http://localhost:8080/Portfol.io/${self.state.currentGame.active_players[x]}`)
-        .then(function (response) {
-          // handle success
-          if (response != null) {
-            self.processUser(response.data, x);
-            self.leaderCheck();
-          }
-
-        }).catch(function (err) {
-          console.log("Cannot get users for the current game");
-
-          if (err.response && err.response.data)
-            console.log(err.response.data.error);
-          else
-            console.log(err);
-        })
-    }
-
   }
 
   /**
@@ -146,25 +139,51 @@ class Games extends Component {
     let newArray = self.state.users;
     newArray[index] = user;
 
+    // Check to see if given user is the current user
     if (self.state.uid === user._id) {
       self.setState({
         email: user.email,
         currentUser: user,
       }, () => {
         // Loop over all the current user's games and set their buying power based on the game
-          for (let i = 0; i < user.active_games.length; i++) {
-            // Check if game code is equal to the code
-            if (self.state.currentGame.code === user.active_games[i].code) {
-              self.setState({
-                buying_power: user.active_games[i].buying_power,
-              })
-            }
+        for (let i = 0; i < user.active_games.length; i++) {
+          // Check if game code is equal to the code
+          if (self.state.currentGame.code === user.active_games[i].code) {
+            self.setState({
+              buying_power: user.active_games[i].buying_power,
+            })
           }
+        }
       })
     }
 
+    // Go through a user's active games and add the current game data to the userGame array
+    let ug = self.state.userGame;
+
+    let tmp = null;
+    for (let i = 0; i < user.active_games.length; i++) {
+      // Check if game code is equal to the code of the game data
+      if (self.state.currentGame.code === user.active_games[i].code) {
+        console.log("Made it");
+        // TODO Calculate the the total Assets here and add to the object
+        tmp = {
+          code: user.active_games[i].code,
+          buying_power: user.active_games[i].buying_power,
+          trade_count: user.active_games[i].trade_count,
+          stocks: user.active_games[i].stocks,
+          username: user.username
+        }
+        break;
+      }
+    }
+    // Make sure tmp is set
+    if (tmp != null)
+      ug.push(tmp);
+
+
     self.setState({
       users: newArray,
+      userGame: ug,
     })
   }
 
@@ -185,7 +204,7 @@ class Games extends Component {
   }
 
   /**
-   * Update the current game state and then add the users
+   * Update the current game state and then add the users when a new game is clicked
    * para index is the index of the new floor from 0 to n
    */
   updateGame = (index) => {
@@ -194,7 +213,8 @@ class Games extends Component {
       let newFloor = self.state.myFloors[index];
       self.setState({
           currentGame: newFloor,
-          users: []
+          users: [],
+          userGame: [],
         }, () => {
           self.leaderCheck();
 
@@ -218,6 +238,23 @@ class Games extends Component {
         }
       )
     }
+  }
+
+  /**
+   * Prepares data for the leaderboard component
+   */
+  prepBoard = () => {
+
+  }
+
+  /**
+   * Sorts the users based on total assets
+   * array.sort(sortRank());
+   */
+  sortRank = () => {
+    return function(a, b) {
+      return a.totalAssets - b.totalAssets;
+    };
   }
 
   /**
@@ -273,12 +310,12 @@ class Games extends Component {
               </Row>
               : <Row/>
             }
-            <Row  style={{paddingTop: '4em'}} className='blackBackground body_div'>
+            <Row  style={{paddingTop: '4em'}} >
               <Col md='9'>
                 <Row>
                 <Col md='1'/>
                 <Col md='5'>
-                  <Leaderboard users={this.state.users}/>
+                  <Leaderboard currentGame={this.state.currentGame} userGame={this.state.userGame}/>
                 </Col>
 
                 <Col md='5'>
@@ -288,7 +325,7 @@ class Games extends Component {
                 </Row>
               </Col>
 
-              <Col md='2'>
+              <Col md='2' className='blackBackground body_div'>
                 <GameList updateGame={this.updateGame} myFloors={this.state.myFloors}/>
                 <CreateGame reloadPage={this.reloadPage} email={this.state.email} uid={this.state.uid}/>
               </Col>
