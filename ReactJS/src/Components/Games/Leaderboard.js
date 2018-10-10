@@ -55,7 +55,7 @@ class Leaderboard extends Component {
     return (
       <div  className='z-depth-5' >
         <h5 className={"gamesText"}>Leaderboard</h5>
-        <Table dark>
+        <Table dark hover>
           <thead>
           <tr>
             <th>Rank</th>
@@ -64,7 +64,7 @@ class Leaderboard extends Component {
             <th>Trades Left</th>
           </tr>
           </thead>
-          <tbody>
+          <tbody style={{cursor: 'pointer'}}>
 
           {this.state.userList.map((user, key) => {
             return (<tr key={key}>

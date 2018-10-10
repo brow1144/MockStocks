@@ -5,3 +5,7 @@
 .lobbyTitle {
     text-align: center;
 }
+
+.gamesText tr:hover {
+    cursor: pointer;
+}

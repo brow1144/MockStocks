@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-import '../Static/CSS/CreateUser.css';
 
 //import {Input, Button} from 'mdbreact';
 import { Row, Col } from 'reactstrap';
@@ -24,15 +23,20 @@ class Games extends Component {
       myStocks: [],
       // Array of game objects
       myFloors: [],
+      // Money the user has
       buying_power: 0,
+      // User's uid
       uid: sessionStorage.getItem('uid'),
-      //Current game object
+      // Current game object
       currentGame: {},
-      //Current user
+      // Current user
       currentUser: {},
       // Current users email
       email: "",
+      // Check if this is the leader of the game
       leader: false,
+      // Total amount of trades for a certain game
+      totalTrades: 0,
     };
   }
 
@@ -95,7 +99,7 @@ class Games extends Component {
   }
 
   /**
-   * Sets game info
+   * Sets game info for the first time
    */
   setGameData = (games) => {
     let self = this;
@@ -103,7 +107,7 @@ class Games extends Component {
         myFloors: games,
         currentGame: games[0],
       }, () => {
-        // Call to the server to get all user objects
+        // Call to the server to get all user objects for the current game
         for (let x = 0; x < self.state.currentGame.active_players.length; x++) {
           axios.get(`http://localhost:8080/Portfol.io/${self.state.currentGame.active_players[x]}`)
             .then(function (response) {
@@ -135,6 +139,7 @@ class Games extends Component {
     let newArray = self.state.users;
     newArray[index] = user;
 
+    // Check to see if given user is the current user
     if (self.state.uid === user._id) {
       self.setState({
         email: user.email,
@@ -174,7 +179,7 @@ class Games extends Component {
   }
 
   /**
-   * Update the current game state and then add the users
+   * Update the current game state and then add the users when a new game is clicked
    * para index is the index of the new floor from 0 to n
    */
   updateGame = (index) => {
@@ -207,6 +212,23 @@ class Games extends Component {
         }
       )
     }
+  }
+
+  /**
+   * Prepares data for the leaderboard component
+   */
+  prepBoard = () => {
+
+  }
+
+  /**
+   * Sorts the users based on total assets
+   * array.sort(sortRank());
+   */
+  sortRank = () => {
+    return function(a, b) {
+      return a.totalAssets - b.totalAssets;
+    };
   }
 
   /**

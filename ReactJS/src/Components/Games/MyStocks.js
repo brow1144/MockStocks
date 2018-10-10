@@ -11,7 +11,7 @@ class MyStocks extends Component {
     return (
       <div className='z-depth-5' >
         <h5 style={{color: 'whitesmoke'}}>My Stocks</h5>
-        <Table dark>
+        <Table dark hover>
           <thead>
           <tr>
             <th>#</th>
