@@ -47,17 +47,17 @@ export function getStockIntraday(stockTicker) {
     })
 }
 
-// export function getStockBatch(stockList) {
-//   return axios.get(`https://www.alphavantage.co/query?function=BATCH_STOCK_QUOTES&symbols=${stockList}&apikey=WIOGAHD0RJEEZ59V`)
-//     .then((response) => {
-//       // handle success
-//       let data = response.data['Stock Quotes'];
-//       return Promise.resolve({stockQuotes: data});
-//     })
-//     .catch((error) => {
-//       console.log(error);
-//     })
-// }
+ export function getStockBatch(stockList) {
+   return axios.get(`https://www.alphavantage.co/query?function=BATCH_STOCK_QUOTES&symbols=${stockList}&apikey=WIOGAHD0RJEEZ59V`)
+     .then((response) => {
+       // handle success
+       let data = response.data['Stock Quotes'];
+       return Promise.resolve({stockQuotes: data});
+     })
+     .catch((error) => {
+       console.log(error);
+     })
+ }
 
 
 // in theory this will only be called the one time. If something every happens to the db recall it
