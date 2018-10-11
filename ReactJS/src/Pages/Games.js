@@ -107,6 +107,7 @@ class Games extends Component {
         myFloors: games,
         currentGame: games[0],
       }, () => {
+        self.props.updateCurrentGame(games[0]);
         // Call to the server to get all user objects for the current game
         for (let x = 0; x < self.state.currentGame.active_players.length; x++) {
           axios.get(`http://localhost:8080/Portfol.io/${self.state.currentGame.active_players[x]}`)
@@ -224,6 +225,7 @@ class Games extends Component {
           userGame: [],
         }, () => {
           self.leaderCheck();
+          self.props.updateCurrentGame(newFloor);
 
           for (let x = 0; x < self.state.currentGame.active_players.length; x++) {
             axios.get(`http://localhost:8080/Portfol.io/${self.state.currentGame.active_players[x]}`)
