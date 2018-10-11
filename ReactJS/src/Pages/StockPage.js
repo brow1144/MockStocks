@@ -59,7 +59,6 @@ class StockPage extends Component {
 
   getData = () => {
     let self = this;
-
     // Cache Stuff Go here eventually
     axios.get(`http://localhost:8080/Portfol.io/Stock/${this.props.stock}/${this.state.selected}`)
       .then((response) => {
