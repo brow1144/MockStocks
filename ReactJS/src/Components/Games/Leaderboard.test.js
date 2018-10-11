@@ -1,6 +1,6 @@
 import React from 'react';
 import {mount} from 'enzyme';
-import GameList from './GamesList';
+import Leaderboard from './Leaderboard';
 import axios from 'axios';
 
 const games = [{code: "345346", leader_email: "jeremyputput@gmail.com", game_name: "Best Game", starting_amount: 500,
@@ -23,7 +23,7 @@ describe('Checks that a correct amount of games are being made', () => {
       updateGame: jest.fn(() => {console.error("updating")}),
     };
     const wrapper = mount(
-      <GameList myFloors={games} updateGame={update} />
+      <Leaderboard myFloors={games} updateGame={update} />
     );
     expect(wrapper.find('tr').length).toBe(2);
   })

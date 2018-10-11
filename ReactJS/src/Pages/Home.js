@@ -24,7 +24,7 @@ class Home extends Component {
       currentPrice: 0,
       visible: false,
       visibleData: false,
-      selected: 'Day'
+      selected: 'Day',
     }
   }
 
