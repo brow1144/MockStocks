@@ -39,7 +39,6 @@ class Main extends Component {
             .then((data) => {
 
               self.setState({gameData: data.data})
-              console.log(data);
             })
             .catch((error) => {
               console.log(error)
