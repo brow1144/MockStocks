@@ -39,7 +39,7 @@ class BuySellCard extends Component {
     .then((data) => {
 
       let ActiveGame = data.data;
-
+      self.setState({errorMessage: `You have succesfuly bought ${this.state.cost} shares of ${this.props.stock}!`, modal: true,})
 
     }).catch((err) => {
       self.setState({errorMessage: err.response.data.error.message, modal: true,})
@@ -53,7 +53,7 @@ class BuySellCard extends Component {
     .then((data) => {
 
       let ActiveGame = data.data;
-
+      self.setState({errorMessage: `You have succesfuly sold ${this.state.cost} shares of ${this.props.stock}!`, modal: true,})
     }).catch((err) => {
       self.setState({errorMessage: err.response.data.error.message, modal: true,})
     });
@@ -85,11 +85,11 @@ class BuySellCard extends Component {
       <div>
 
         <Modal isOpen={this.state.modal} toggle={this.toggle} side position="top-right">
-          <CardHeader color="deep-orange lighten-1">Warning</CardHeader>
+          <CardHeader color="info-color-dark lighten-1">Warning</CardHeader>
           <CardBody>
-              <CardTitle>Uh Oh!</CardTitle>
+              {/* <CardTitle>Info Box</CardTitle> */}
               <CardText>{this.state.errorMessage}</CardText>
-              <Button onClick={this.toggle} color="deep-orange lighten-1">Close</Button>{' '}
+              <Button onClick={this.toggle} color="primary">Close</Button>{' '}
           </CardBody>
         </Modal> 
 
