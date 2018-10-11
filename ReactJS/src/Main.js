@@ -33,6 +33,14 @@ class Main extends Component {
           self.setState({
             currentGame: gameData.games[0],
             empty: true,
+          }, () => {
+            axios.get(`http://localhost:8080/Portfol.io/${self.props.uid}/${self.state.currentGame.code}`)
+            .then((data) => {
+              console.log(data);
+            })
+            .catch((error) => {
+              console.log(error)
+            })
           });
 
         } else { // No games return
