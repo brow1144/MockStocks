@@ -150,6 +150,7 @@ class Games extends Component {
         for (let i = 0; i < user.active_games.length; i++) {
           // Check if game code is equal to the code
           if (self.state.currentGame.code === user.active_games[i].code) {
+            //TODO round this to a deciaml with 2 places
             self.setState({
               buying_power: user.active_games[i].buying_power,
             })
@@ -161,17 +162,70 @@ class Games extends Component {
     // Go through a user's active games and add the current game data to the userGame array
     let ug = self.state.userGame;
 
-    let tmp = null;
-    let totalA = 0;
-    // Data for the leaderboard is created here
+    let tmp;
+    // This block of code creates the userGame state which is used to populate the leaderboard and myStocks table
+
+    // Loop over active games til we find the current one
     for (let i = 0; i < user.active_games.length; i++) {
+      tmp = null;
+      let totalA = 0;
+      let totalOwned = 0;
+      let stockString = "";
+
       // Check if game code is equal to the code of the game data
       if (self.state.currentGame.code === user.active_games[i].code) {
         console.log("Made it");
-        // Calculate the the total assets here and add to the object
-        //for (let j = 0; j < user.active_games[i].stocks.length; j++) {
-          //totalA = user.active_games[i].stocks
-        //}
+
+        // Create a string of the stocks to send to the server to then get the stock price
+        for (let j = 0; j < user.active_games[i].stocks.length; j++) {
+          // Make a string of stocks to get
+          if (j === 0)
+            stockString += user.active_games[i].stocks[j].name;
+          else
+            stockString += "," + user.active_games[i].stocks[j].name;
+        }
+        // Var to keep my list of needed stock data in
+        let stockList = [];
+
+        // Send the string of stocks to get the prices in an array of stock objects
+        axios.get(`http://localhost:8080/Portfol.io/Batch/Stock/${stockString}`)
+          .then(function (response) {
+            // handle success
+
+            if (response != null) {
+              // Loop over the stocks array returned and put each object into a form I can use
+              for (let b = 0; b < response.data.stockQuotes.length; b++) {
+                //TODO CHANGE THIS WHEN THE API CHANEGS
+                let tmpObj = {
+                  price: parseFloat(parseFloat(response.data.stockQuotes[b][ '2. price' ]).toFixed(2)),
+                  quantity: user.active_games[i].stocks[b].quantity,
+                  symbol: response.data.stockQuotes[b][ '1. symbol' ],
+                  total: parseFloat((user.active_games[i].stocks[b].quantity * response.data.stockQuotes[b][ '2. price' ]).toFixed(2))
+                };
+                // Push each object to the stockList to use when calculating total later
+                stockList.push(tmpObj);
+                // Add number of
+                totalOwned += user.active_games[i].stocks[b].quantity;
+              }
+            }
+
+          }).catch(function (err) {
+            console.log("Cannot get stocks for the user");
+
+            if (err.response && err.response.data)
+              console.log(err.response.data.error);
+            else
+              console.log(err);
+          })
+
+
+        // TODO fix async
+        // Loop over the stock objects returned and determine the user's total assets
+        console.log(stockList.length);
+        for (let a = 0; a < stockList.length; a++) {
+          totalA += stockList[a].total;
+          console.log(stockList[a].total)
+        }
 
         tmp = {
           code: user.active_games[i].code,
@@ -179,20 +233,29 @@ class Games extends Component {
           trade_count: user.active_games[i].trade_count,
           stocks: user.active_games[i].stocks,
           username: user.username,
-          totalAssests: totalA
+          totalAssets: totalA,
+          totalOwned: totalOwned,
+          stocksArray: stockList
         }
+
         break;
       }
     }
     // Make sure tmp is set
+    // Add the tmp to the userGame obj state
     if (tmp != null)
       ug.push(tmp);
 
 
+    // Reset the state with new obj included
     self.setState({
       users: newArray,
       userGame: ug,
+    }, () => { // Sort the userGame array by the largest total assets
+
     })
+
+
   }
 
   /**
@@ -249,12 +312,6 @@ class Games extends Component {
     }
   }
 
-  /**
-   * Prepares data for the leaderboard component
-   */
-  prepBoard = () => {
-
-  }
 
   /**
    * Sorts the users based on total assets
