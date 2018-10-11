@@ -4,6 +4,7 @@ import bodyParser from 'body-parser';
 import stockController from './controllers/stockController';
 import userController from './controllers/userController';
 import gameController from './controllers/gameController';
+import {runHistoryScheduler} from './controllers/historyController';
 
 // connect to the database
 import db from './config/db';
@@ -24,6 +25,9 @@ app.options('/*', (req, res) => {
 stockController(app);
 userController(app);
 gameController(app);
+
+// run history generator
+runHistoryScheduler();
 
 // listen to port
 app.listen(8080, () => {
