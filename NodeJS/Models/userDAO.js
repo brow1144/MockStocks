@@ -157,10 +157,9 @@ export async function buyStock(uid, gameCode, stockName, quantity, pricePerShare
 
   try {
     game = await getGame(gameCode);
-    userGame = await ame(uid, gameCode);
+    userGame = await getUserGame(uid, gameCode);
 
     game = game[0];
-    userGame = userGame.active_games[0];
   } catch (error) {
     return Promise.reject(error);
   }
@@ -233,10 +232,9 @@ export async function sellStock(uid, gameCode, stockName, quantity, pricePerShar
 
   try {
     game = await getGame(gameCode);
-    userGame = await ame(uid, gameCode);
+    userGame = await getUserGame(uid, gameCode);
 
     game = game[0];
-    userGame = userGame.active_games[0];
   } catch (error) {
     return Promise.reject(error);
   }
