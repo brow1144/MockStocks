@@ -268,9 +268,9 @@ class Games extends Component {
   render() {
     return (
       <div>
-        <div className='navbar-fixed'>
+        {/* <div className='navbar-fixed'>
           <NavBar/>
-        </div>
+        </div> */}
         <Row style={{paddingTop: '10em'}} className='blackBackground body_div'>
           <Col md="4"/>
 

@@ -73,7 +73,7 @@ class Main extends Component {
     return (
       <div>
         <div className='navbar-fixed'>
-          <NavBar />     
+          <NavBar currentGame={this.state.currentGame}/>     
         </div>  
 
         <this.props.component gameData={this.state.gameData} uid={this.props.uid} empty={this.state.empty} currentGame={this.state.currentGame} updateCurrentGame={this.updateCurrentGame} stock={this.props.stock}/>

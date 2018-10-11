@@ -18,9 +18,9 @@ class Trending extends Component {
   render() {
     return (
       <div>
-        <div className='navbar-fixed'>
+        {/* <div className='navbar-fixed'>
           <NavBar/>
-        </div>
+        </div> */}
 
         <Row  style={{paddingTop: '10em'}} className='blackBackground body_div'>
           <Col sm='2' md='2'/>

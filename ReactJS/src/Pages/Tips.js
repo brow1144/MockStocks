@@ -18,9 +18,9 @@ class Tips extends Component {
   render() {
     return (
       <div>
-        <div className='navbar-fixed'>
+        {/* <div className='navbar-fixed'>
           <NavBar/>
-        </div>
+        </div> */}
 
         <div className='z-depth-5'>
           <Row style={{paddingTop: '10em'}} className='blackBackground body_div'>
