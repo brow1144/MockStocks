@@ -48,7 +48,6 @@ class BuySellCard extends Component {
     axios.put(`http://localhost:8080/Portfol.io/Games/Buy/${this.props.uid}/${this.props.currentGame.code}/${this.props.stock}/${this.state.cost}/${this.props.currentPrice}`)
     .then((data) => {
 
-      let ActiveGame = data.data;
       self.setState({errorMessage: `You have succesfuly bought ${this.state.cost} shares of ${this.props.stock}!`, modal: true,})
       self.props.getGameData(this.props.currentGame.code)
 
@@ -67,11 +66,10 @@ class BuySellCard extends Component {
       self.setState({errorMessage: `You entered an invalid number of stocks`, modal: true,})
       return;
     } 
-    
+
     axios.put(`http://localhost:8080/Portfol.io/Games/Sell/${this.props.uid}/${this.props.currentGame.code}/${this.props.stock}/${this.state.cost}/${this.props.currentPrice}`)
     .then((data) => {
 
-      let ActiveGame = data.data;
       self.setState({errorMessage: `You have succesfuly sold ${this.state.cost} shares of ${this.props.stock}!`, modal: true,})
       self.props.getGameData(this.props.currentGame.code)
     }).catch((err) => {
