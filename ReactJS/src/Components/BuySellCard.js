@@ -36,10 +36,14 @@ class BuySellCard extends Component {
   buyStock = () => {
 
     let self = this
+    
     if (this.props.currentPrice === null || this.props.currentPrice === undefined || this.props.currentPrice === 0) {
       self.setState({errorMessage: `We are having trouble getting the current price, try refreshing and submitting again!`, modal: true,})
       return;
-    }
+    } else if (Number(this.state.cost) == 0) {
+      self.setState({errorMessage: `You entered an invalid number of stocks`, modal: true,})
+      return;
+    } 
 
     axios.put(`http://localhost:8080/Portfol.io/Games/Buy/${this.props.uid}/${this.props.currentGame.code}/${this.props.stock}/${this.state.cost}/${this.props.currentPrice}`)
     .then((data) => {
@@ -59,7 +63,11 @@ class BuySellCard extends Component {
     if (this.props.currentPrice === null || this.props.currentPrice === undefined || this.props.currentPrice === 0) {
       self.setState({errorMessage: `We are having trouble getting the current price, try refreshing and submitting again!`, modal: true,})
       return;
-    }
+    } else if (Number(this.state.cost) == 0) {
+      self.setState({errorMessage: `You entered an invalid number of stocks`, modal: true,})
+      return;
+    } 
+    
     axios.put(`http://localhost:8080/Portfol.io/Games/Sell/${this.props.uid}/${this.props.currentGame.code}/${this.props.stock}/${this.state.cost}/${this.props.currentPrice}`)
     .then((data) => {
 
