@@ -133,16 +133,14 @@ export async function buyStock(uid, gameCode, stockName, quantity, pricePerShare
     return Promise.reject(error);
   }
 
-  if (userGame.trade_count >= game.trade_limit) {
+  if (userGame.trade_count >= game.trade_limit && game.trade_limit !== 0)
     return Promise.reject('UserError: Trade limit exceeded');
-  }
 
   const price = quantity * pricePerShare;
-  if (userGame.buying_power >= price) {
+  if (userGame.buying_power >= price)
     buying_power = userGame.buying_power - price;
-  } else {
+  else
     return Promise.reject('UserError: Insufficient buying power');
-  }
 
   for (let i in userGame.stocks) {
     if (userGame.stocks.hasOwnProperty(i)) {
@@ -193,25 +191,98 @@ export async function buyStock(uid, gameCode, stockName, quantity, pricePerShare
     });
 };
 
-export function getUserGame(uid, gameCode) {
-  const returnClause = {
-    '_id': 0, // exclude _id
-    'active_games': {'$elemMatch': {'code': gameCode}}
+export async function sellStock(uid, gameCode, stockName, quantity, pricePerShare) {
+  quantity = Number(quantity);
+  pricePerShare = Number(pricePerShare);
+
+  let game;
+  let userGame;
+  let buying_power;
+
+  try {
+    game = await getGame(gameCode);
+    userGame = await getUserGame(uid, gameCode);
+
+    game = game[0];
+    userGame = userGame.active_games[0];
+  } catch (error) {
+    return Promise.reject(error);
+  }
+
+  if (userGame.trade_count >= game.trade_limit && game.trade_limit !== 0)
+    return Promise.reject('UserError: Trade limit exceeded');
+
+  const price = quantity * pricePerShare;
+  buying_power = userGame.buying_power + price;
+
+  let owned;
+  for (let i in userGame.stocks) {
+    if (userGame.stocks.hasOwnProperty(i)) {
+      if (userGame.stocks[i].name === stockName) {
+        owned = true;
+
+        if (userGame.stocks[i].quantity < quantity)
+          return Promise.reject('UserError: User does not own ' + quantity + ' shares of ' + stockName);
+
+        try {
+          await removeStock(uid, gameCode, stockName, userGame.stocks[i].quantity);
+          quantity = userGame.stocks[i].quantity - quantity;
+        } catch (error) {
+          return Promise.reject(error);
+        }
+      }
+    }
+  }
+
+  if (!owned)
+    return Promise.reject('UserError: User does not own ' + stockName);
+
+  const stock = {
+    name: stockName,
+    quantity: quantity
   };
 
-  return userModel.findOne({'_id': uid}, returnClause)
-    .then((game) => {
-      if (game)
-        return Promise.resolve(game);
-      else
-        return Promise.reject('UserError: User or game not found');
+  const findClause = {
+    '_id': uid,
+    'active_games.code': gameCode
+  };
+
+  let updateClause;
+
+  if (quantity > 0) {
+    updateClause = {
+      '$inc': {'active_games.$.trade_count': 1},
+      '$set': {'active_games.$.buying_power': buying_power},
+      '$push': {'active_games.$.stocks': stock}
+    };
+  } else {
+    updateClause = {
+      '$inc': {'active_games.$.trade_count': 1},
+      '$set': {'active_games.$.buying_power': buying_power}
+    };
+  }
+
+  const options = {
+    new: true,
+    passRawResult: true
+  };
+
+  return userModel.findOneAndUpdate(
+    findClause,
+    updateClause,
+    options)
+    .then((updatedUser) => {
+      if (updatedUser === null)
+        return Promise.reject('UserError: User does not exist');
+
+      return Promise.resolve(updatedUser);
     })
     .catch((err) => {
       return Promise.reject(err);
     });
 };
 
-// removes existing stock object to update database when buying
+// removes existing stock object to update database when buying or selling
 export function removeStock(uid, gameCode, stockName, quantity) {
   const stock = {
     name: stockName,
@@ -237,6 +308,25 @@ export function removeStock(uid, gameCode, stockName, quantity) {
         return Promise.reject('UserError: User does not exist');
 
       return Promise.resolve(updatedUser);
+    })
+    .catch((err) => {
+      return Promise.reject(err);
+    });
+};
+
+// get user's information for a particular game object
+export function getUserGame(uid, gameCode) {
+  const returnClause = {
+    '_id': 0, // exclude _id
+    'active_games': {'$elemMatch': {'code': gameCode}}
+  };
+
+  return userModel.findOne({'_id': uid}, returnClause)
+    .then((game) => {
+      if (game)
+        return Promise.resolve(game);
+      else
+        return Promise.reject('UserError: User or game not found');
     })
     .catch((err) => {
       return Promise.reject(err);
