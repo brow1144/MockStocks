@@ -161,17 +161,24 @@ class Games extends Component {
     let ug = self.state.userGame;
 
     let tmp = null;
+    let totalA = 0;
+    // Data for the leaderboard is created here
     for (let i = 0; i < user.active_games.length; i++) {
       // Check if game code is equal to the code of the game data
       if (self.state.currentGame.code === user.active_games[i].code) {
         console.log("Made it");
-        // TODO Calculate the the total Assets here and add to the object
+        // Calculate the the total assets here and add to the object
+        //for (let j = 0; j < user.active_games[i].stocks.length; j++) {
+          //totalA = user.active_games[i].stocks
+        //}
+
         tmp = {
           code: user.active_games[i].code,
           buying_power: user.active_games[i].buying_power,
           trade_count: user.active_games[i].trade_count,
           stocks: user.active_games[i].stocks,
-          username: user.username
+          username: user.username,
+          totalAssests: totalA
         }
         break;
       }
