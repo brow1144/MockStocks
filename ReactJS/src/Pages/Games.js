@@ -107,6 +107,7 @@ class Games extends Component {
         myFloors: games,
         currentGame: games[0],
       }, () => {
+        self.props.updateCurrentGame(games[0]);
         // Call to the server to get all user objects for the current game
         for (let x = 0; x < self.state.currentGame.active_players.length; x++) {
           axios.get(`http://localhost:8080/Portfol.io/${self.state.currentGame.active_players[x]}`)
@@ -164,7 +165,6 @@ class Games extends Component {
     for (let i = 0; i < user.active_games.length; i++) {
       // Check if game code is equal to the code of the game data
       if (self.state.currentGame.code === user.active_games[i].code) {
-        console.log("Made it");
         // TODO Calculate the the total Assets here and add to the object
         tmp = {
           code: user.active_games[i].code,
@@ -217,6 +217,7 @@ class Games extends Component {
           userGame: [],
         }, () => {
           self.leaderCheck();
+          self.props.updateCurrentGame(newFloor);
 
           for (let x = 0; x < self.state.currentGame.active_players.length; x++) {
             axios.get(`http://localhost:8080/Portfol.io/${self.state.currentGame.active_players[x]}`)

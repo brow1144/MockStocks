@@ -161,7 +161,12 @@ class StockPage extends Component {
         </Col>
         <Col md='1'/>
         <Col style={{paddingTop: '6em'}} md='2'>
-          <BuySellCard stock={this.props.stock} currentPriceFor={this.state.currentPriceFor} currentPrice={this.state.currentPrice}/>
+          {this.props.empty
+            ?
+              <BuySellCard currentGame={this.props.currentGame} stock={this.props.stock} currentPriceFor={this.state.currentPriceFor} currentPrice={this.state.currentPrice}/>
+            :
+              null
+          }
         </Col>
 
         <Col md='1'/>
