@@ -2,9 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="33c2180c-a31c-4e2a-a645-035ef9b7627f" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/NodeJS/Controllers/userController.js" beforeDir="false" afterPath="$PROJECT_DIR$/NodeJS/Controllers/userController.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/NodeJS/Models/userDAO.js" beforeDir="false" afterPath="$PROJECT_DIR$/NodeJS/Models/userDAO.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/NodeJS/Models/stockDAO.js" beforeDir="false" afterPath="$PROJECT_DIR$/NodeJS/Models/stockDAO.js" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -48,25 +46,25 @@
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
-          <entry key="js" value="5870" />
+          <entry key="js" value="6029" />
           <entry key="json" value="26" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
           <entry key="JSON" value="26" />
-          <entry key="JavaScript" value="5870" />
+          <entry key="JavaScript" value="6029" />
         </counts>
       </usages-collector>
     </session>
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/NodeJS/Models/stockDAO.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="391">
-              <caret line="67" column="41" selection-start-line="67" selection-start-column="17" selection-end-line="67" selection-end-column="41" />
+            <state relative-caret-position="255">
+              <caret line="24" column="36" selection-start-line="24" selection-start-column="36" selection-end-line="24" selection-end-column="36" />
               <folding>
                 <element signature="e#0#26#0" expanded="true" />
               </folding>
@@ -83,11 +81,11 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/NodeJS/Models/userDAO.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="606">
-              <caret line="453" column="43" selection-start-line="453" selection-start-column="43" selection-end-line="453" selection-end-column="43" />
+            <state relative-caret-position="266">
+              <caret line="433" column="41" lean-forward="true" selection-start-line="433" selection-start-column="41" selection-end-line="433" selection-end-column="41" />
               <folding>
                 <element signature="e#0#32#0" expanded="true" />
               </folding>
@@ -161,9 +159,9 @@
         <option value="$PROJECT_DIR$/ReactJS/src/Components/Games/GameList.test.js" />
         <option value="$PROJECT_DIR$/ReactJS/src/Pages/Games.js" />
         <option value="$PROJECT_DIR$/NodeJS/Controllers/stockController.js" />
-        <option value="$PROJECT_DIR$/NodeJS/Models/stockDAO.js" />
         <option value="$PROJECT_DIR$/NodeJS/Controllers/userController.js" />
         <option value="$PROJECT_DIR$/NodeJS/Models/userDAO.js" />
+        <option value="$PROJECT_DIR$/NodeJS/Models/stockDAO.js" />
       </list>
     </option>
   </component>
@@ -189,7 +187,7 @@
       <path value="$PROJECT_DIR$/ReactJS/package.json" />
     </packageJsonPaths>
   </component>
-  <component name="ProjectFrameBounds">
+  <component name="ProjectFrameBounds" extendedState="1">
     <option name="x" value="689" />
     <option name="width" value="1231" />
     <option name="height" value="1040" />
@@ -391,12 +389,12 @@
       <workItem from="1538165420395" duration="8020000" />
       <workItem from="1539040373090" duration="5691000" />
       <workItem from="1539313239582" duration="1403000" />
-      <workItem from="1539363689078" duration="7659000" />
+      <workItem from="1539363689078" duration="8886000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="51154000" />
+    <option name="totallyTimeSpent" value="52381000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="689" y="0" width="1231" height="1040" extended-state="0" />
@@ -618,16 +616,6 @@
     <entry file="file://$PROJECT_DIR$/NodeJS/utilities/controllerFunctions.js">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/NodeJS/Models/stockDAO.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="391">
-          <caret line="67" column="41" selection-start-line="67" selection-start-column="17" selection-end-line="67" selection-end-column="41" />
-          <folding>
-            <element signature="e#0#26#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/NodeJS/Controllers/userController.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="561">
@@ -654,10 +642,20 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/NodeJS/Models/userDAO.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="606">
-          <caret line="453" column="43" selection-start-line="453" selection-start-column="43" selection-end-line="453" selection-end-column="43" />
+        <state relative-caret-position="266">
+          <caret line="433" column="41" lean-forward="true" selection-start-line="433" selection-start-column="41" selection-end-line="433" selection-end-column="41" />
           <folding>
             <element signature="e#0#32#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/NodeJS/Models/stockDAO.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="255">
+          <caret line="24" column="36" selection-start-line="24" selection-start-column="36" selection-end-line="24" selection-end-column="36" />
+          <folding>
+            <element signature="e#0#26#0" expanded="true" />
           </folding>
         </state>
       </provider>
