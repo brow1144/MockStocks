@@ -110,7 +110,7 @@ class Games extends Component {
         currentGame: games[0],
       }, () => {
         self.props.updateCurrentGame(games[0]);
-        self.props.getGameData(games[0].code)
+        self.props.getGameData(games[0].code);
         // Call to the server to get all user objects for the current game
         for (let x = 0; x < self.state.currentGame.active_players.length; x++) {
           axios.get(`http://localhost:8080/Portfol.io/${self.state.currentGame.active_players[x]}`)
@@ -156,7 +156,6 @@ class Games extends Component {
         for (let i = 0; i < user.active_games.length; i++) {
           // Check if game code is equal to the code
           if (self.state.currentGame.code === user.active_games[i].code && user.active_games[i].buying_power != null) {
-            //TODO round this to a deciaml with 2 places
             self.setState({
               buying_power: parseFloat((user.active_games[i].buying_power).toFixed(2)),
             })
@@ -177,14 +176,14 @@ class Games extends Component {
       let totalA = 0;
       let totalOwned = 0;
       let stockString = "";
+      let stockQuantity = [];
 
       // Check if game code is equal to the code of the game data
       if (self.state.currentGame.code === user.active_games[i].code) {
-        console.log("Made it");
-
         // Create a string of the stocks to send to the server to then get the stock prices
         for (let j = 0; j < user.active_games[i].stocks.length; j++) {
           // Make a string of stocks to get
+          stockQuantity.push(user.active_games[i].stocks[j].quantity);
           if (j === 0)
             stockString += user.active_games[i].stocks[j].name;
           else
@@ -197,45 +196,64 @@ class Games extends Component {
         // Null check for user Stocks
         if (stockString !== "") {
           self.getStocks(stockString, user.active_games[i]).then( function(result){
+            if (result.data != null) {
+              console.log(result.data)
+              // Loop over the stocks array returned and put each object into a form I can use
+              let index = 0;
+              for (let b in result.data) {
+                if (result.data.hasOwnProperty(b)) {
+                  let tmpObj = {
+                    price: parseFloat((result.data[b].quote.latestPrice).toFixed(2)),
+                    quantity: stockQuantity[index],
+                    symbol: result.data[b].quote.symbol,
+                    total: parseFloat((stockQuantity[index] * result.data[b].quote.latestPrice).toFixed(2))
+                  };
+                  // Push each object to the stockList to use when calculating total later
+                  console.log(tmpObj)
+                  stockList.push(tmpObj);
+                  // Add number of
+                  totalOwned += stockQuantity[index];
 
-            stockList = result[0];
-            totalOwned = result[1];
+                  // Index for list of stocks
+                  index++;
+                }
+              }
 
-            // Loop over the stock objects returned and determine the user's total assets
-            for (let a = 0; a < stockList.length; a++) {
-              totalA += stockList[a].total;
+              // Loop over the stock objects returned and determine the user's total assets
+              for (let a = 0; a < stockList.length; a++) {
+                totalA += stockList[a].total;
+              }
+              totalA = parseFloat((totalA).toFixed(2));
+              tmp = {
+                code: user.active_games[i].code,
+                buying_power: user.active_games[i].buying_power,
+                trade_count: user.active_games[i].trade_count,
+                stocks: user.active_games[i].stocks,
+                username: user.username,
+                totalAssets: totalA,
+                totalOwned: totalOwned,
+                stocksArray: stockList
+              }
+
+              // Make sure tmp is set
+              // Add the tmp to the userGame obj state
+              if (tmp != null)
+                ug.push(tmp);
+
+              // Check if this is the current user
+              if (flag === true) {
+                self.setState({
+                  users: newArray,
+                  userGame: ug,
+                  currentUserStocks: tmp,
+                })
+              } else {
+                self.setState({
+                  users: newArray,
+                  userGame: ug,
+                })
+              }
             }
-            totalA =  parseFloat((totalA).toFixed(2));
-            tmp = {
-              code: user.active_games[i].code,
-              buying_power: user.active_games[i].buying_power,
-              trade_count: user.active_games[i].trade_count,
-              stocks: user.active_games[i].stocks,
-              username: user.username,
-              totalAssets: totalA,
-              totalOwned: totalOwned,
-              stocksArray: stockList
-            }
-
-            // Make sure tmp is set
-            // Add the tmp to the userGame obj state
-            if (tmp != null)
-              ug.push(tmp);
-
-            // Check if this is the current user
-            if (flag === true) {
-              self.setState({
-                users: newArray,
-                userGame: ug,
-                currentUserStocks: tmp,
-              })
-            } else {
-              self.setState({
-                users: newArray,
-                userGame: ug,
-              })
-            }
-
 
           }).catch(function (err) {
             console.log("Cannot get stocks for the user");
@@ -269,8 +287,26 @@ class Games extends Component {
           })
         }
 
+        //ug.sort(self.sortRank);
+
+
+
         break;
       }
+
+      // Make sure tmp is set
+      // Add the tmp to the userGame obj state
+      if (tmp != null)
+        ug.push(tmp);
+
+      ug.sort(self.sortRank);
+
+      console.log(ug)
+      // Set the state
+      self.setState({
+        users: newArray,
+        userGame: ug,
+      })
     }
 
 
@@ -282,31 +318,8 @@ class Games extends Component {
    * returns an array with the stockList as the 0 index and totalOwned as index 1
    */
   async getStocks (stockString, user) {
-    let ans;
-    let stockList = [];
-    let totalOwned = 0;
 
-    let json = await axios.get(`http://localhost:8080/Portfol.io/Batch/Stock/${stockString}`);
-
-    if (json != null) {
-      // Loop over the stocks array returned and put each object into a form I can use
-      for (let b = 0; b < json.data.stockQuotes.length; b++) {
-        //TODO CHANGE THIS WHEN THE API CHANEGS
-        let tmpObj = {
-          price: parseFloat(parseFloat(json.data.stockQuotes[b][ '2. price' ]).toFixed(2)),
-          quantity: user.stocks[b].quantity,
-          symbol: json.data.stockQuotes[b][ '1. symbol' ],
-          total: parseFloat((user.stocks[b].quantity * json.data.stockQuotes[b][ '2. price' ]).toFixed(2))
-        };
-        // Push each object to the stockList to use when calculating total later
-        stockList.push(tmpObj);
-        // Add number of
-        totalOwned += user.stocks[b].quantity;
-      }
-    }
-
-    ans = [stockList, totalOwned];
-    return ans;
+    return await axios.get(`http://localhost:8080/Portfol.io/Batch/Stock/${stockString}`);
   }
 
   /**
@@ -372,7 +385,8 @@ class Games extends Component {
    */
   sortRank = () => {
     return function(a, b) {
-      return a.totalAssets - b.totalAssets;
+      console.log(a.totalAssets)
+      return b.totalAssets - a.totalAssets;
     };
   }
 
