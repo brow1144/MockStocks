@@ -117,7 +117,7 @@ export function updateUserBuyingPower(uid, gameCode, starting_amount) {
 
   return userModel.findOneAndUpdate(
     findClause,
-    {'$set': {'active_games.$.buying_power': starting_amount}},
+    {'$set': {'active_games.$.buying_power': parseFloat(parseFloat(starting_amount).toFixed(2))}},
     options)
     .then((updatedUser) => {
       if (updatedUser === null)
