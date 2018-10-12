@@ -1,7 +1,8 @@
 import mongoose from 'mongoose';
 import {userModel} from '../utilities/MongooseModels';
 import {getGame} from './gameDAO';
-import {updateTickerBuy, updateTickerSell} from './stockDAO';
+import _ from 'lodash';
+import {getStockBatch, updateTickerBuy, updateTickerSell} from "./stockDAO";
 
 export function getUser(uid) {
   return userModel.findOne({_id: uid})
@@ -14,7 +15,7 @@ export function getUser(uid) {
     .catch((err) => {
       return Promise.reject(err);
     });
-};
+}
 
 export function getAllUsers() {
   return userModel.find({})
@@ -27,7 +28,7 @@ export function getAllUsers() {
     .catch((err) => {
       return Promise.reject(err);
     });
-};
+}
 
 export function createUser(user) {
   for (let i in user) {
@@ -46,7 +47,7 @@ export function createUser(user) {
     .catch((err) => {
       return Promise.reject(err);
     });
-};
+}
 
 export function joinGame(uid, gameCode, starting_amount) {
   const game = {
@@ -101,7 +102,7 @@ export function leaveGame(uid, gameCode) {
     .catch((err) => {
       return Promise.reject(err);
     });
-};
+}
 
 export function updateUserBuyingPower(uid, gameCode, starting_amount) {
   const findClause = {
@@ -127,7 +128,7 @@ export function updateUserBuyingPower(uid, gameCode, starting_amount) {
     .catch((err) => {
       return Promise.reject(err);
     });
-};
+}
 
 export async function buyStock(uid, gameCode, stockName, quantity, pricePerShare) {
   quantity = Number(quantity);
@@ -209,7 +210,7 @@ export async function buyStock(uid, gameCode, stockName, quantity, pricePerShare
     .catch((err) => {
       return Promise.reject(err);
     });
-};
+}
 
 export async function sellStock(uid, gameCode, stockName, quantity, pricePerShare) {
   quantity = Number(quantity);
@@ -306,7 +307,7 @@ export async function sellStock(uid, gameCode, stockName, quantity, pricePerShar
     .catch((err) => {
       return Promise.reject(err);
     });
-};
+}
 
 // removes existing stock object to update database when buying or selling
 export function removeStock(uid, gameCode, stockName, quantity) {
@@ -338,7 +339,7 @@ export function removeStock(uid, gameCode, stockName, quantity) {
     .catch((err) => {
       return Promise.reject(err);
     });
-};
+}
 
 // get user's information for a particular game object
 export function getUserGame(uid, gameCode) {
@@ -357,7 +358,7 @@ export function getUserGame(uid, gameCode) {
     .catch((err) => {
       return Promise.reject(err);
     });
-};
+}
 
 export function updateValueHistory(uid, gameCode, value, time) {
   const valueEntry = {
@@ -388,7 +389,7 @@ export function updateValueHistory(uid, gameCode, value, time) {
     .catch((err) => {
       return Promise.reject(err);
     });
-};
+}
 
 // used for cleaning up the database
 export function clearValueHistory(uid, gameCode) {
@@ -415,4 +416,46 @@ export function clearValueHistory(uid, gameCode) {
     .catch((err) => {
       return Promise.reject(err);
     });
-};
+}
+
+export function getUserWatchlist(uid) {
+  console.error(uid);
+  return userModel.findOne({_id: uid})
+    .then((foundUser) => {
+      if (foundUser === null)
+        return Promise.reject('UserError: User does not exist');
+      return Promise.resolve(foundUser.watchlist);
+    }).then((watchlist) => {
+      console.error(watchlist);
+      let batchCall = _.join(watchlist, ',');
+      console.error(batchCall);
+      return getStockBatch(batchCall);
+    }).then((stocks) => {
+      stocks = _.map(stocks, (stock) => {
+        return {
+          symbol: stock.quote.symbol,
+          close: stock.quote.close,
+          changePercent: stock.quote.changePercent
+        };
+      });
+      return Promise.resolve(stocks);
+    })
+    .catch((err) => {
+      return Promise.reject(err);
+    });
+}
+
+export function insertToUserWatchlist(uid, stockToInsert) {
+  return userModel.findOneAndUpdate(
+    {_id: uid}, {$push : {watchlist: stockToInsert}})
+    .then((updatedUser) => {
+      if (updatedUser === null)
+        return Promise.reject('UserError: User does not exist');
+      updatedUser.watchlist.push(stockToInsert);
+      return Promise.resolve(updatedUser.watchlist);
+    })
+    .catch((err) => {
+      return Promise.reject(err);
+    });
+}
+
