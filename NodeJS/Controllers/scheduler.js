@@ -2,6 +2,7 @@ import schedule from 'node-schedule';
 import {tickerModel} from '../utilities/MongooseModels';
 import {getAllUsers, updateValueHistory, clearValueHistory} from '../Models/userDAO';
 import {getStockBatch, getTickers} from '../Models/stockDAO';
+import {getAllGames} from "../Models/gameDAO";
 
 export function runSchedules() {
   // update portofolio values every weekday at 9:30 am
@@ -18,15 +19,35 @@ export function runSchedules() {
     clearCounters(true);
   });
 
+  // let checkGames = schedule.scheduleJob('00 00 * * *', () => {
+  //   checkActiveGames();
+  // });
+
   let clearWeeklyCounters = schedule.scheduleJob('00 00 * * 00', () => {
     clearCounters(false);
   });
 
-  //runs every minute for testing purposes
+  // runs every minute for testing purposes
   // let test = schedule.scheduleJob('* * * * *', () => {
-  //   getPortfolioValues();
+  //   checkActiveGames();
   // });
-};
+}
+
+// const checkActiveGames = () => {
+//   getAllGames()
+//     .then((games) => {
+//       _.forEach(games, (game) => {
+//         if (game.end_time < new Date()) {
+//           _.forEach(game.active_players, (player) => {
+//
+//           });
+//         }
+//       });
+//     })
+//     .catch((err) => {
+//       console.error(err)
+//     });
+// };
 
 let getPortfolioValues = async () => {
   let stockMap = [];
@@ -100,11 +121,11 @@ let getPortfolioValues = async () => {
             // clear history for testing
             //clearValueHistory(user._id, game.code);
 
-          // end of game
+            // end of game
           }
         }
 
-      // end of user
+        // end of user
       }
     }
   } catch (error) {
