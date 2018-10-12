@@ -39,6 +39,10 @@ class Games extends Component {
       email: "",
       // Check if this is the leader of the game
       leader: false,
+      // Count down timer state
+      countdown: "",
+      // Count down message
+      countMessage: ""
     };
   }
 
@@ -51,6 +55,7 @@ class Games extends Component {
   componentWillMount () {
     // Make server call for data
     this.fetchGames();
+    //this.timer();
   };
 
   /**
@@ -109,6 +114,7 @@ class Games extends Component {
         myFloors: games,
         currentGame: games[0],
       }, () => {
+        self.timer();
         self.props.updateCurrentGame(games[0]);
         self.props.getGameData(games[0].code);
         // Call to the server to get all user objects for the current game
@@ -195,9 +201,8 @@ class Games extends Component {
         // Async call to hopefully clean up sync issues
         // Null check for user Stocks
         if (stockString !== "") {
-          self.getStocks(stockString, user.active_games[i]).then( function(result){
+          self.getStocks(stockString).then( function(result){
             if (result.data != null) {
-              console.log(result.data)
               // Loop over the stocks array returned and put each object into a form I can use
               let index = 0;
               for (let b in result.data) {
@@ -209,7 +214,6 @@ class Games extends Component {
                     total: parseFloat((stockQuantity[index] * result.data[b].quote.latestPrice).toFixed(2))
                   };
                   // Push each object to the stockList to use when calculating total later
-                  console.log(tmpObj)
                   stockList.push(tmpObj);
                   // Add number of
                   totalOwned += stockQuantity[index];
@@ -289,8 +293,6 @@ class Games extends Component {
 
         //ug.sort(self.sortRank);
 
-
-
         break;
       }
 
@@ -317,7 +319,7 @@ class Games extends Component {
    * @param stockString: string of stock symbols to get, user: the user who information is being looked at
    * returns an array with the stockList as the 0 index and totalOwned as index 1
    */
-  async getStocks (stockString, user) {
+  async getStocks (stockString) {
 
     return await axios.get(`http://localhost:8080/Portfol.io/Batch/Stock/${stockString}`);
   }
@@ -397,12 +399,60 @@ class Games extends Component {
     window.location.reload();
   }
 
+  timer = () => {
+    let self = this;
+    let x = setInterval(function() {
+
+      // Get todays date and time
+      let now = Date.now();
+
+      if (self.state.currentGame != undefined) {
+        // Find the distance between now and the count down date
+        let distance;
+        if (new Date(self.state.currentGame.start_time).getTime() < now) {
+          distance = new Date(self.state.currentGame.end_time).getTime() - now;
+          self.setState({
+            countMessage: "Game Ends in: "
+          })
+        } else {
+          distance = now - new Date(self.state.currentGame.start_time).getTime();
+          self.setState({
+            countMessage: "Game Starts in: "
+          })
+        }
+
+
+        // Time calculations for days, hours, minutes and seconds
+        let days = Math.floor(distance / (1000 * 60 * 60 * 24));
+        let hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        let minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+        let seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+        // Display the result in the element with id="demo"
+        /*document.getElementById("demo").innerHTML = days + "d " + hours + "h "
+          + minutes + "m " + seconds + "s ";*/
+        self.setState({
+          countdown: days + "d " + hours + "h " + minutes + "m " + seconds + "s "
+        })
+
+
+        // If the count down is finished, write some text
+        if (distance < 0) {
+          self.setState({
+            countdown: 0 + "d " + 0 + "h " + 0 + "m " + 0 + "s ",
+            countMessage: "Game Completed: "
+          })
+        }
+      }
+
+
+    }, 1000);
+  }
+
   render() {
     return (
       <div>
-        {/* <div className='navbar-fixed'>
-          <NavBar/>
-        </div> */}
+
         <Row style={{paddingTop: '10em'}} className='blackBackground body_div'>
           <Col md="4"/>
 
@@ -415,6 +465,15 @@ class Games extends Component {
             <Col md="5"/>
           }
         </Row>
+
+        <Row style={{paddingTop: '1em'}} className='blackBackground body_div'>
+          <Col md="4"/>
+
+          <Col md="5">
+            <label className={"gamesText "}>{this.state.countMessage + this.state.countdown}</label>
+          </Col>
+        </Row>
+
         <Row style={{paddingTop: '2em'}} className='blackBackground body_div'>
           <Col>
             <Row>
