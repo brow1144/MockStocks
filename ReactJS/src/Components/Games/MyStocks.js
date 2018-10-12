@@ -15,11 +15,10 @@ class MyStocks extends Component {
           <thead>
           <tr>
             <th>#</th>
-            <th>Stock</th>
             <th>Symbol</th>
             <th>Current Value</th>
-            <th>Total Value</th>
             <th>Owned</th>
+            <th>Total Value</th>
           </tr>
           </thead>
           <tbody>
@@ -28,11 +27,10 @@ class MyStocks extends Component {
             this.props.currentUserStocks.stocksArray.map((stock, key) => {
               return (<tr key={key}>
                 <th scope="row">{key + 1}</th>
-                <th/>
                 <th>{stock.symbol}</th>
                 <th>{stock.price.toLocaleString()}</th>
-                <th>{stock.total.toLocaleString()}</th>
                 <th>{stock.quantity}</th>
+                <th>{stock.total.toLocaleString()}</th>
               </tr>)
             })
             :
@@ -44,14 +42,13 @@ class MyStocks extends Component {
             <th>Total</th>
             <th/>
             <th/>
-            <th/>
+            <th>{this.props.currentUserStocks.totalOwned}</th>
             {this.props.currentUserStocks.totalAssets
               ?
               <th>${this.props.currentUserStocks.totalAssets.toLocaleString()}</th>
               :
               <th/>
             }
-            <th>{this.props.currentUserStocks.totalOwned}</th>
           </tr>
           </tbody>
         </Table>
