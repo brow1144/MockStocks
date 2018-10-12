@@ -132,6 +132,9 @@ class BuySellCard extends Component {
               <Sell gameData={this.props.gameData} sellStock={this.sellStock} currentPriceFor={this.props.currentPriceFor} updateCost={this.updateCost} cost={this.state.cost} finalPrice={this.state.finalPrice}/>
             }
 
+            <Button color="blue" block>
+              +Add to watchlist
+            </Button>
           </Card>
         </div>
 
