@@ -30,8 +30,8 @@ class MyStocks extends Component {
                 <th scope="row">{key + 1}</th>
                 <th/>
                 <th>{stock.symbol}</th>
-                <th>{stock.price}</th>
-                <th>{stock.total}</th>
+                <th>{stock.price.toLocaleString()}</th>
+                <th>{stock.total.toLocaleString()}</th>
                 <th>{stock.quantity}</th>
               </tr>)
             })
@@ -47,7 +47,7 @@ class MyStocks extends Component {
             <th/>
             {this.props.currentUserStocks.totalAssets
               ?
-              <th>${this.props.currentUserStocks.totalAssets}</th>
+              <th>${this.props.currentUserStocks.totalAssets.toLocaleString()}</th>
               :
               <th/>
             }
