@@ -1,6 +1,6 @@
 import bodyParser from 'body-parser';
 import {parseError, buildResponse} from '../utilities/controllerFunctions';
-import {getStock, getStockBatch, getStockIntraday, getTickers, loadTickers, getTicker} from '../Models/stockDAO';
+import {getStock, getStockBatch, getStockIntraday, getTickers, loadTickers, getTicker, getTrendingStocks} from '../Models/stockDAO';
 
 export default (app) => {
   // Period is in the format : 'Monthly', 'Weekly', 'Daily', etc. Casing is important here.
@@ -80,6 +80,18 @@ export default (app) => {
 
     try {
       data = await getTickers();
+    } catch (err) {
+      data = {error: parseError(err)};
+    }
+
+    buildResponse(res, data);
+  });
+
+  app.get('/Portfol.io/Trending/:period', async (req, res) => {
+    let data;
+
+    try {
+      data = await getTrendingStocks(req.params.period);
     } catch (err) {
       data = {error: parseError(err)};
     }
