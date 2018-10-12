@@ -53,7 +53,8 @@ export function joinGame(uid, gameCode, starting_amount) {
     code: gameCode,
     buying_power: starting_amount,
     trade_count: 0,
-    stocks: []
+    stocks: [],
+    value_history: []
   };
 
   const updateClause = {
@@ -357,6 +358,37 @@ export function getUserGame(uid, gameCode) {
         return Promise.resolve(game.active_games[0]);
       else
         return Promise.reject('UserError: User or game not found');
+    })
+    .catch((err) => {
+      return Promise.reject(err);
+    });
+};
+
+export function updateValueHistory(uid, gameCode, value, time) {
+  const valueEntry = {
+    value: value,
+    time: time
+  };
+
+  const findClause = {
+    '_id': uid,
+    'active_games.code': gameCode
+  };
+
+  const options = {
+    new: true,
+    passRawResult: true
+  };
+
+  return userModel.findOneAndUpdate(
+    findClause,
+    {'$push': {'active_games.$.value_history': valueEntry}},
+    options)
+    .then((updatedUser) => {
+      if (updatedUser === null)
+        return Promise.reject('UserError: User does not exist');
+
+      return Promise.resolve(updatedUser);
     })
     .catch((err) => {
       return Promise.reject(err);
