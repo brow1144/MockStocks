@@ -1,7 +1,7 @@
-import mongoose from 'mongoose';
-import {userSchema} from '../utilities/MongooseSchemas';
 import {userModel} from '../utilities/MongooseModels';
 import {getGame} from './gameDAO';
+import _ from 'lodash';
+import {getStockBatch} from "./stockDAO";
 
 export function getUser(uid) {
   return userModel.findOne({_id: uid})
@@ -420,4 +420,48 @@ export function clearValueHistory(uid, gameCode) {
     .catch((err) => {
       return Promise.reject(err);
     });
-};
+}
+
+export function getUserWatchlist(uid) {
+  console.error(uid);
+  return userModel.findOne({_id: uid})
+    .then((foundUser) => {
+      if (foundUser === null)
+        return Promise.reject('UserError: User does not exist');
+      return Promise.resolve(foundUser.watchlist);
+    }).then((watchlist) => {
+      console.error(watchlist);
+      let batchCall = _.join(watchlist, ',');
+      console.error(batchCall);
+      return getStockBatch(batchCall);
+    }).then((stocks) => {
+      stocks = _.map(stocks, (stock) => {
+        return {
+          symbol: stock.quote.symbol,
+          close: stock.quote.close,
+          changePercent: stock.quote.changePercent
+        };
+      });
+      return Promise.resolve(stocks);
+    })
+    .catch((err) => {
+      return Promise.reject(err);
+    });
+}
+
+// export function insertToUserWatchlist(uid, stockToInsert) {
+//   return userModel.findOneAndUpdate(
+//     {_id: uid},
+//     {'$pull': {'active_games': {'code': gameCode}}},
+//     options)
+//     .then((updatedUser) => {
+//       if (updatedUser === null)
+//         return Promise.reject('UserError: User does not exist');
+//
+//       return Promise.resolve(updatedUser);
+//     })
+//     .catch((err) => {
+//       return Promise.reject(err);
+//     });
+// }
+
