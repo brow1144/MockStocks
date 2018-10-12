@@ -1,7 +1,7 @@
 import mongoose from 'mongoose';
-import {userSchema} from '../utilities/MongooseSchemas';
 import {userModel} from '../utilities/MongooseModels';
 import {getGame} from './gameDAO';
+import {updateTickerBuy, updateTickerSell} from './stockDAO';
 
 export function getUser(uid) {
   return userModel.findOne({_id: uid})
@@ -103,25 +103,6 @@ export function leaveGame(uid, gameCode) {
     });
 };
 
-// export function getUserBuyingPower(uid, gameCode) {
-//   const findClause = {
-//     '_id': uid,
-//     'active_games.code': gameCode
-//   };
-//
-//   return userModel.findOne(findClause)
-//     .then((user) => {
-//       console.log(user);
-//       if (user === null)
-//         return Promise.reject('UserError: User does not exist');
-//
-//       return Promise.resolve(user);
-//     })
-//     .catch((err) => {
-//       return Promise.reject(err);
-//     });
-// };
-
 export function updateUserBuyingPower(uid, gameCode, starting_amount) {
   const findClause = {
     '_id': uid,
@@ -150,11 +131,12 @@ export function updateUserBuyingPower(uid, gameCode, starting_amount) {
 
 export async function buyStock(uid, gameCode, stockName, quantity, pricePerShare) {
   quantity = Number(quantity);
-  pricePerShare = Number(pricePerShare);
+  pricePerShare = parseFloat(pricePerShare).toFixed(2);
 
   let game;
   let userGame;
   let buying_power;
+  let originalQuantity = quantity;
 
   try {
     game = await getGame(gameCode);
@@ -212,9 +194,15 @@ export async function buyStock(uid, gameCode, stockName, quantity, pricePerShare
     findClause,
     updateClause,
     options)
-    .then((updatedUser) => {
+    .then(async (updatedUser) => {
       if (updatedUser === null)
         return Promise.reject('UserError: User does not exist');
+
+      try {
+        await updateTickerBuy(stockName, originalQuantity);
+      } catch (error) {
+        return Promise.reject(error);
+      }
 
       return Promise.resolve(updatedUser);
     })
@@ -230,6 +218,7 @@ export async function sellStock(uid, gameCode, stockName, quantity, pricePerShar
   let game;
   let userGame;
   let buying_power;
+  let originalQuantity = quantity;
 
   try {
     game = await getGame(gameCode);
@@ -302,9 +291,15 @@ export async function sellStock(uid, gameCode, stockName, quantity, pricePerShar
     findClause,
     updateClause,
     options)
-    .then((updatedUser) => {
+    .then(async (updatedUser) => {
       if (updatedUser === null)
         return Promise.reject('UserError: User does not exist');
+
+      try {
+        await updateTickerSell(stockName, originalQuantity);
+      } catch (error) {
+        return Promise.reject(error);
+      }
 
       return Promise.resolve(updatedUser);
     })

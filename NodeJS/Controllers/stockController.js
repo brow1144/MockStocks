@@ -1,8 +1,9 @@
 import bodyParser from 'body-parser';
 import {parseError, buildResponse} from '../utilities/controllerFunctions';
-import {getStock, getStockBatch, getStockIntraday, getTickers, loadTickers} from '../Models/stockDAO';
+import {getStock, getStockBatch, getStockIntraday, getTickers, loadTickers, getTicker} from '../Models/stockDAO';
 
 export default (app) => {
+  getTicker('AAPL');
   // Period is in the format : 'Monthly', 'Weekly', 'Daily', etc. Casing is important here.
   app.get('/Portfol.io/Stock/:stock/:period', async (req, res) => {
     let data, dateLimit;

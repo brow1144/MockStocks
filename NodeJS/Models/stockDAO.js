@@ -90,7 +90,12 @@ export function loadTickers() {
       const tickers = data.map(ticker => {
         return {
           symbol: ticker.symbol,
-          company: ticker.name
+          company: ticker.name,
+          buyCount: 0,
+          sellCount: 0,
+          currentCount: 0,
+          dailyBuyCount: 0,
+          weeklyBuyCount: 0
         };
       });
       //const tickMod = new tickerModel({tickers: tickers});
@@ -110,3 +115,87 @@ export function getTickers() {
     return Promise.reject(err)
   })
 }
+
+export function getTicker(name) {
+  return tickerModel.findOne({'tickers.symbol': name}, {'tickers.$': 1, '_id': 0})
+  .then((ticker) => {
+    return Promise.resolve(ticker.tickers[0]);
+  })
+  .catch((err) => {
+    return Promise.reject(err)
+  })
+}
+
+export async function updateTickerBuy(name, quantity) {
+  let ticker;
+
+  try {
+    ticker = await getTicker(name);
+  } catch (error) {
+    return Promise.reject(error);
+  }
+
+  const updateClause = {
+    '$set': {
+      'tickers.$.buyCount': ticker.buyCount + quantity,
+      'tickers.$.currentCount': ticker.currentCount + quantity,
+      'tickers.$.dailyBuyCount': ticker.dailyBuyCount + quantity,
+      'tickers.$.weeklyBuyCount': ticker.weeklyBuyCount + quantity
+    }
+  };
+
+  const options = {
+    new: true,
+    passRawResult: true
+  };
+
+  return tickerModel.findOneAndUpdate(
+    {'tickers.symbol': name},
+    updateClause,
+    options)
+    .then((updatedTicker) => {
+      if (updatedTicker === null)
+        return Promise.reject('UserError: Ticker not found');
+
+      return Promise.resolve(updatedTicker);
+    })
+    .catch((err) => {
+      return Promise.reject(err);
+    });
+};
+
+export async function updateTickerSell(name, quantity) {
+  let ticker;
+
+  try {
+    ticker = await getTicker(name);
+  } catch (error) {
+    return Promise.reject(error);
+  }
+
+  const updateClause = {
+    '$set': {
+      'tickers.$.sellCount': ticker.sellCount + quantity,
+      'tickers.$.currentCount': ticker.currentCount - quantity
+    }
+  };
+
+  const options = {
+    new: true,
+    passRawResult: true
+  };
+
+  return tickerModel.findOneAndUpdate(
+    {'tickers.symbol': name},
+    updateClause,
+    options)
+    .then((updatedTicker) => {
+      if (updatedTicker === null)
+        return Promise.reject('UserError: Ticker not found');
+
+      return Promise.resolve(updatedTicker);
+    })
+    .catch((err) => {
+      return Promise.reject(err);
+    });
+};
