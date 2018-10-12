@@ -59,7 +59,6 @@ class StockPage extends Component {
 
   getData = () => {
     let self = this;
-
     // Cache Stuff Go here eventually
     axios.get(`http://localhost:8080/Portfol.io/Stock/${this.props.stock}/${this.state.selected}`)
       .then((response) => {
@@ -161,7 +160,12 @@ class StockPage extends Component {
         </Col>
         <Col md='1'/>
         <Col style={{paddingTop: '6em'}} md='2'>
-          <BuySellCard stock={this.props.stock} currentPriceFor={this.state.currentPriceFor} currentPrice={this.state.currentPrice}/>
+          {this.props.empty
+            ?
+              <BuySellCard getGameData={this.props.getGameData} gameData={this.props.gameData} uid={this.props.uid} currentGame={this.props.currentGame} stock={this.props.stock} currentPriceFor={this.state.currentPriceFor} currentPrice={this.state.currentPrice}/>
+            :
+              null
+          }
         </Col>
 
         <Col md='1'/>

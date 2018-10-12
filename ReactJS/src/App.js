@@ -72,31 +72,31 @@ class App extends Component {
 
         <Route path='/Portfol.io/Home' render={() => (
           this.signedIn()
-            ? <Main component={Home}/>
+            ? <Main uid={this.state.uid} component={Home}/>
             : <Redirect to={`/Portfol.io/SignIn`}/>
         )}/>
 
         <Route path='/Portfol.io/Stocks/:stock' render={(match) => (
           this.signedIn()
-            ? <Main component={StockPage} stock={match.match.params.stock} />
+            ? <Main uid={this.state.uid} component={StockPage} stock={match.match.params.stock} />
             : <Redirect to={`/Portfol.io/SignIn`}/>
         )}/>
 
         <Route path='/Portfol.io/Trending' render={() => (
           this.signedIn()
-            ? <Main component={Trending}/>
+            ? <Main uid={this.state.uid} component={Trending}/>
             : <Redirect to={`/Portfol.io/SignIn`}/>
         )}/>
 
         <Route path='/Portfol.io/Tips' render={() => (
           this.signedIn()
-            ? <Main component={Tips}/>
+            ? <Main uid={this.state.uid} component={Tips}/>
             : <Redirect to={`/Portfol.io/SignIn`}/>
         )}/>
 
         <Route path='/Portfol.io/Games' render={() => (
           this.signedIn()
-            ? <Main component={Games}/>
+            ? <Main uid={this.state.uid} component={Games}/>
             : <Redirect to={`/Portfol.io/SignIn`}/>
         )}/>
 

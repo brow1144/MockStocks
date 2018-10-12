@@ -43,7 +43,7 @@ class Buy extends Component {
 
         <hr className='hr' />
 
-        <p style={{textAlign: 'center', margin: '0 auto', display: 'block', fontSize: '0.8em', color: 'whitesmoke'}}>$6,000.23 Buying Power Available</p>
+        <p style={{textAlign: 'center', margin: '0 auto', display: 'block', fontSize: '0.8em', color: 'whitesmoke'}}>${Number(parseFloat((this.props.gameData.buying_power * 100) / 100).toFixed(2)).toLocaleString('en')} Buying Power Available</p>
 
       </CardBody>
     )

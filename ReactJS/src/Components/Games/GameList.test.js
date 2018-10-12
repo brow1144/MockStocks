@@ -1,6 +1,5 @@
 import React from 'react';
-import {shallow} from 'enzyme';
-import Games from '../../Pages/Games';
+import {mount} from 'enzyme';
 import GameList from './GamesList';
 import axios from 'axios';
 
@@ -9,7 +8,6 @@ const games = [{code: "345346", leader_email: "jeremyputput@gmail.com", game_nam
   {code: "234234", leader_email: "r@yahoo.com", game_name: "Lame Game", starting_amount: 1000,
     active_players: ["kObyyRI68of2Prc0RkjnJfN6Joc2", "931QxmJBWbRAgx6sWaIV1J9b5Gd2"]}];
 
-const index = 0;
 
 const then = jest.fn(() => {
   return {catch: jest.fn()};
@@ -19,23 +17,27 @@ axios.get = jest.fn((url) => {
   return {then: then, catch: jest.fn()};
 });
 
-
-
-const gameList = shallow(<GameList />);
-
-describe('Checks that clicking a floor name has the correct key', () => {
-  test('Send a valid index to the update game function', () => {
-    const props = {
-      myFloors: games,
+describe('Checks that a correct amount of games are being made', () => {
+  test('Check the size of the floor list', () => {
+    const update = {
       updateGame: jest.fn(() => {console.error("updating")}),
     };
-    const gameList = shallow(<GameList {...props}/>);
-    gameList.find('#0').simulate('click');
-    expect(gameList.props().myFloors.games.length).toBe(2);
+    const wrapper = mount(
+      <GameList myFloors={games} updateGame={update} />
+    );
+    expect(wrapper.find('tr').length).toBe(2);
   })
-  test('Send an invalid index to the update game function', () => {
-    game.setState({currentGame: games[0], email: "papajohn@gmail.com"});
-    game.instance().leaderCheck();
-    expect(game.state().leader).toBe(false);
-  })
-})
+  /*
+  test('Check the floor list can be clicked', () => {
+    const update = {
+      updateGame: jest.fn(() => {console.error("updating")}),
+    };
+    const wrapper = mount(
+      <GameList myFloors={games} updateGame={update} />
+    );
+    wrapper.find('tr').simulate('change', {
+      target: { value: 'hello' }
+    })
+    expect(wrapper.updateGame).toHaveBeenCalled();
+  })*/
+});
