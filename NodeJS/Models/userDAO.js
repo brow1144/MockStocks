@@ -394,3 +394,30 @@ export function updateValueHistory(uid, gameCode, value, time) {
       return Promise.reject(err);
     });
 };
+
+// used for cleaning up the database
+export function clearValueHistory(uid, gameCode) {
+  const findClause = {
+    '_id': uid,
+    'active_games.code': gameCode
+  };
+
+  const options = {
+    new: true,
+    passRawResult: true
+  };
+
+  return userModel.findOneAndUpdate(
+    findClause,
+    {'$set': {'active_games.$.value_history': []}},
+    options)
+    .then((updatedUser) => {
+      if (updatedUser === null)
+        return Promise.reject('UserError: User does not exist');
+
+      return Promise.resolve(updatedUser);
+    })
+    .catch((err) => {
+      return Promise.reject(err);
+    });
+};
