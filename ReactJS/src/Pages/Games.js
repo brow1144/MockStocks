@@ -154,7 +154,7 @@ class Games extends Component {
         // Loop over all the current user's games and set their buying power based on the game
         for (let i = 0; i < user.active_games.length; i++) {
           // Check if game code is equal to the code
-          if (self.state.currentGame.code === user.active_games[i].code) {
+          if (self.state.currentGame.code === user.active_games[i].code && user.active_games[i].buying_power != null) {
             //TODO round this to a deciaml with 2 places
             self.setState({
               buying_power: parseFloat((user.active_games[i].buying_power).toFixed(2)),
@@ -181,7 +181,7 @@ class Games extends Component {
       if (self.state.currentGame.code === user.active_games[i].code) {
         console.log("Made it");
 
-        // Create a string of the stocks to send to the server to then get the stock price
+        // Create a string of the stocks to send to the server to then get the stock prices
         for (let j = 0; j < user.active_games[i].stocks.length; j++) {
           // Make a string of stocks to get
           if (j === 0)
@@ -193,48 +193,50 @@ class Games extends Component {
         let stockList = [];
 
         // Async call to hopefully clean up sync issues
-        self.getStocks(stockString, user.active_games[i]).then( function(result){
+        // Null check for user Stocks
+        if (stockString !== "") {
+          self.getStocks(stockString, user.active_games[i]).then( function(result){
 
-          stockList = result[0];
-          totalOwned = result[1];
+            stockList = result[0];
+            totalOwned = result[1];
 
-          // Loop over the stock objects returned and determine the user's total assets
-          for (let a = 0; a < stockList.length; a++) {
-            totalA += stockList[a].total;
-          }
-          totalA =  parseFloat((totalA).toFixed(2));
-          tmp = {
-            code: user.active_games[i].code,
-            buying_power: user.active_games[i].buying_power,
-            trade_count: user.active_games[i].trade_count,
-            stocks: user.active_games[i].stocks,
-            username: user.username,
-            totalAssets: totalA,
-            totalOwned: totalOwned,
-            stocksArray: stockList
-          }
+            // Loop over the stock objects returned and determine the user's total assets
+            for (let a = 0; a < stockList.length; a++) {
+              totalA += stockList[a].total;
+            }
+            totalA =  parseFloat((totalA).toFixed(2));
+            tmp = {
+              code: user.active_games[i].code,
+              buying_power: user.active_games[i].buying_power,
+              trade_count: user.active_games[i].trade_count,
+              stocks: user.active_games[i].stocks,
+              username: user.username,
+              totalAssets: totalA,
+              totalOwned: totalOwned,
+              stocksArray: stockList
+            }
 
-          // Make sure tmp is set
-          // Add the tmp to the userGame obj state
-          if (tmp != null)
-            ug.push(tmp);
+            // Make sure tmp is set
+            // Add the tmp to the userGame obj state
+            if (tmp != null)
+              ug.push(tmp);
 
-          // Check if this is the current user
-          if (flag === true) {
-            self.setState({
-              users: newArray,
-              userGame: ug,
-              currentUserStocks: tmp,
-            })
-          } else {
-            self.setState({
-              users: newArray,
-              userGame: ug,
-            })
-          }
+            // Check if this is the current user
+            if (flag === true) {
+              self.setState({
+                users: newArray,
+                userGame: ug,
+                currentUserStocks: tmp,
+              })
+            } else {
+              self.setState({
+                users: newArray,
+                userGame: ug,
+              })
+            }
 
 
-        }).catch(function (err) {
+          }).catch(function (err) {
             console.log("Cannot get stocks for the user");
 
             if (err.response && err.response.data)
@@ -242,6 +244,29 @@ class Games extends Component {
             else
               console.log(err);
           })
+        } else { // The user has no stocks
+          tmp = {
+            code: user.active_games[i].code,
+            buying_power: user.active_games[i].buying_power,
+            trade_count: user.active_games[i].trade_count,
+            stocks: user.active_games[i].stocks,
+            username: user.username,
+            totalAssets: 0,
+            totalOwned: 0,
+            stocksArray: []
+          }
+
+          // Make sure tmp is set
+          // Add the tmp to the userGame obj state
+          if (tmp != null)
+            ug.push(tmp);
+
+          // Set the state
+          self.setState({
+            users: newArray,
+            userGame: ug,
+          })
+        }
 
         break;
       }
