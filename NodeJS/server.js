@@ -4,7 +4,7 @@ import bodyParser from 'body-parser';
 import stockController from './controllers/stockController';
 import userController from './controllers/userController';
 import gameController from './controllers/gameController';
-import {runHistoryScheduler} from './controllers/historyController';
+import {runSchedulers} from './controllers/historyController';
 
 // connect to the database
 import db from './config/db';
@@ -27,7 +27,7 @@ userController(app);
 gameController(app);
 
 // run history generator
-runHistoryScheduler();
+runSchedulers();
 
 // listen to port
 app.listen(8080, () => {

@@ -34,12 +34,22 @@ class BuySellCard extends Component {
   }
 
   buyStock = () => {
+
     let self = this
+    
+    if (this.props.currentPrice === null || this.props.currentPrice === undefined || this.props.currentPrice === 0) {
+      self.setState({errorMessage: `We are having trouble getting the current price, try refreshing and submitting again!`, modal: true,})
+      return;
+    } else if (Number(this.state.cost) == 0) {
+      self.setState({errorMessage: `You entered an invalid number of stocks`, modal: true,})
+      return;
+    } 
+
     axios.put(`http://localhost:8080/Portfol.io/Games/Buy/${this.props.uid}/${this.props.currentGame.code}/${this.props.stock}/${this.state.cost}/${this.props.currentPrice}`)
     .then((data) => {
 
-      let ActiveGame = data.data;
-
+      self.setState({errorMessage: `You have succesfuly bought ${this.state.cost} shares of ${this.props.stock}!`, modal: true,})
+      self.props.getGameData(this.props.currentGame.code)
 
     }).catch((err) => {
       self.setState({errorMessage: err.response.data.error.message, modal: true,})
@@ -49,11 +59,19 @@ class BuySellCard extends Component {
 
   sellStock = () => {
     let self = this
+    if (this.props.currentPrice === null || this.props.currentPrice === undefined || this.props.currentPrice === 0) {
+      self.setState({errorMessage: `We are having trouble getting the current price, try refreshing and submitting again!`, modal: true,})
+      return;
+    } else if (Number(this.state.cost) == 0) {
+      self.setState({errorMessage: `You entered an invalid number of stocks`, modal: true,})
+      return;
+    } 
+
     axios.put(`http://localhost:8080/Portfol.io/Games/Sell/${this.props.uid}/${this.props.currentGame.code}/${this.props.stock}/${this.state.cost}/${this.props.currentPrice}`)
     .then((data) => {
 
-      let ActiveGame = data.data;
-
+      self.setState({errorMessage: `You have succesfuly sold ${this.state.cost} shares of ${this.props.stock}!`, modal: true,})
+      self.props.getGameData(this.props.currentGame.code)
     }).catch((err) => {
       self.setState({errorMessage: err.response.data.error.message, modal: true,})
     });
@@ -85,11 +103,11 @@ class BuySellCard extends Component {
       <div>
 
         <Modal isOpen={this.state.modal} toggle={this.toggle} side position="top-right">
-          <CardHeader color="deep-orange lighten-1">Warning</CardHeader>
+          <CardHeader color="info-color-dark lighten-1">Warning</CardHeader>
           <CardBody>
-              <CardTitle>Uh Oh!</CardTitle>
+              {/* <CardTitle>Info Box</CardTitle> */}
               <CardText>{this.state.errorMessage}</CardText>
-              <Button onClick={this.toggle} color="deep-orange lighten-1">Close</Button>{' '}
+              <Button onClick={this.toggle} color="primary">Close</Button>{' '}
           </CardBody>
         </Modal> 
 
@@ -109,9 +127,9 @@ class BuySellCard extends Component {
 
             {this.state.selected === 'buy'
             ?
-              <Buy buyStock={this.buyStock} currentPriceFor={this.props.currentPriceFor} updateCost={this.updateCost} cost={this.state.cost} finalPrice={this.state.finalPrice}/>
+              <Buy gameData={this.props.gameData} buyStock={this.buyStock} currentPriceFor={this.props.currentPriceFor} updateCost={this.updateCost} cost={this.state.cost} finalPrice={this.state.finalPrice}/>
             :
-              <Sell sellStock={this.sellStock} currentPriceFor={this.props.currentPriceFor} updateCost={this.updateCost} cost={this.state.cost} finalPrice={this.state.finalPrice}/>
+              <Sell gameData={this.props.gameData} sellStock={this.sellStock} currentPriceFor={this.props.currentPriceFor} updateCost={this.updateCost} cost={this.state.cost} finalPrice={this.state.finalPrice}/>
             }
 
           </Card>

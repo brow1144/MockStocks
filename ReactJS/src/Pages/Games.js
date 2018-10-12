@@ -110,6 +110,7 @@ class Games extends Component {
         currentGame: games[0],
       }, () => {
         self.props.updateCurrentGame(games[0]);
+        self.props.getGameData(games[0].code)
         // Call to the server to get all user objects for the current game
         for (let x = 0; x < self.state.currentGame.active_players.length; x++) {
           axios.get(`http://localhost:8080/Portfol.io/${self.state.currentGame.active_players[x]}`)
@@ -340,6 +341,7 @@ class Games extends Component {
         }, () => {
           self.leaderCheck();
           self.props.updateCurrentGame(newFloor);
+          self.props.getGameData(newFloor.code)
 
           for (let x = 0; x < self.state.currentGame.active_players.length; x++) {
             axios.get(`http://localhost:8080/Portfol.io/${self.state.currentGame.active_players[x]}`)
@@ -384,9 +386,9 @@ class Games extends Component {
   render() {
     return (
       <div>
-        <div className='navbar-fixed'>
+        {/* <div className='navbar-fixed'>
           <NavBar/>
-        </div>
+        </div> */}
         <Row style={{paddingTop: '10em'}} className='blackBackground body_div'>
           <Col md="4"/>
 

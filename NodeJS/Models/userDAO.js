@@ -16,6 +16,19 @@ export function getUser(uid) {
     });
 };
 
+export function getAllUsers() {
+  return userModel.find({})
+    .then((users) => {
+      if (users)
+        return Promise.resolve(users);
+      else
+        return Promise.reject('No users found');
+    })
+    .catch((err) => {
+      return Promise.reject(err);
+    });
+};
+
 export function createUser(user) {
   for (let i in user) {
     if (user.hasOwnProperty(i)) {
@@ -89,6 +102,25 @@ export function leaveGame(uid, gameCode) {
     });
 };
 
+// export function getUserBuyingPower(uid, gameCode) {
+//   const findClause = {
+//     '_id': uid,
+//     'active_games.code': gameCode
+//   };
+//
+//   return userModel.findOne(findClause)
+//     .then((user) => {
+//       console.log(user);
+//       if (user === null)
+//         return Promise.reject('UserError: User does not exist');
+//
+//       return Promise.resolve(user);
+//     })
+//     .catch((err) => {
+//       return Promise.reject(err);
+//     });
+// };
+
 export function updateUserBuyingPower(uid, gameCode, starting_amount) {
   const findClause = {
     '_id': uid,
@@ -128,7 +160,6 @@ export async function buyStock(uid, gameCode, stockName, quantity, pricePerShare
     userGame = await getUserGame(uid, gameCode);
 
     game = game[0];
-    userGame = userGame.active_games[0];
   } catch (error) {
     return Promise.reject(error);
   }
@@ -204,7 +235,6 @@ export async function sellStock(uid, gameCode, stockName, quantity, pricePerShar
     userGame = await getUserGame(uid, gameCode);
 
     game = game[0];
-    userGame = userGame.active_games[0];
   } catch (error) {
     return Promise.reject(error);
   }
@@ -323,8 +353,8 @@ export function getUserGame(uid, gameCode) {
 
   return userModel.findOne({'_id': uid}, returnClause)
     .then((game) => {
-      if (game)
-        return Promise.resolve(game);
+      if (game && game.active_games[0])
+        return Promise.resolve(game.active_games[0]);
       else
         return Promise.reject('UserError: User or game not found');
     })

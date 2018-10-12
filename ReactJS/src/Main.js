@@ -11,6 +11,7 @@ class Main extends Component {
     this.state = {
       currentGame: {},
       empty: false,
+      gameData: {},
     }
   }
 
@@ -33,6 +34,8 @@ class Main extends Component {
           self.setState({
             currentGame: gameData.games[0],
             empty: true,
+          }, () => {
+            self.getGameData(gameData.games[0].code)
           });
 
         } else { // No games return
@@ -52,6 +55,18 @@ class Main extends Component {
       })
   }
 
+
+  getGameData = (game) => {
+    let self = this
+    axios.get(`http://localhost:8080/Portfol.io/${self.props.uid}/${game}`)
+    .then((data) => {
+      self.setState({gameData: data.data})
+    })
+    .catch((error) => {
+      console.log(error)
+    })
+  }
+
   updateCurrentGame = (game) => {
     this.setState({
       currentGame: game,
@@ -63,10 +78,10 @@ class Main extends Component {
     return (
       <div>
         <div className='navbar-fixed'>
-          <NavBar />     
+          <NavBar currentGame={this.state.currentGame}/>     
         </div>  
 
-        <this.props.component uid={this.props.uid} empty={this.state.empty} currentGame={this.state.currentGame} updateCurrentGame={this.updateCurrentGame} stock={this.props.stock}/>
+        <this.props.component getGameData={this.getGameData} gameData={this.state.gameData} uid={this.props.uid} empty={this.state.empty} currentGame={this.state.currentGame} updateCurrentGame={this.updateCurrentGame} stock={this.props.stock}/>
       </div>
     );
   }
