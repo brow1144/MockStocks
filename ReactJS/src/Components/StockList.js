@@ -5,8 +5,14 @@ import StockCard from '../Components/StockCard'
 
 import '../Static/CSS/StockList.css'
 
+import axios from 'axios';
+
 class StockList extends Component {
 
+
+  getWatchlist = () => {
+    axios.get('/Portfol.io/Watchlist/:uid');
+  }
 
 
   render() { 
@@ -36,7 +42,7 @@ export default StockList;
 {this.props.watchlist.map((stock, key) => {
   return (
     <div>
-      <StockCard stockTicker={stock.name} stockChange={stock.change}/>
+      <StockCard stockTicker={stock.symbol} stockChange={stock.changePercent}/>
     </div>
   )
 })}

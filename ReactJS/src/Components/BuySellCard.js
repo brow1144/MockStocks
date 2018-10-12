@@ -77,6 +77,11 @@ class BuySellCard extends Component {
     });
   }
 
+  watchStock =()=>{
+    axios.post(`http://localhost:8080/Portfol.io/Watchlist/${this.props.uid}/${this.props.stock}`);
+  }
+
+
   handleBuy = () => {
     this.setState({
       cost: 0,
@@ -132,7 +137,7 @@ class BuySellCard extends Component {
               <Sell gameData={this.props.gameData} sellStock={this.sellStock} currentPriceFor={this.props.currentPriceFor} updateCost={this.updateCost} cost={this.state.cost} finalPrice={this.state.finalPrice}/>
             }
 
-            <Button color="blue" block>
+            <Button color="blue" onClick={this.watchStock} block>
               +Add to watchlist
             </Button>
           </Card>
