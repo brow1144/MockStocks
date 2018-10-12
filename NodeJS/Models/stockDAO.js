@@ -7,7 +7,8 @@ export function formatStocks(data, dateLimit) {
   let stockData = [];
 
   for (let i in data) {
-    console.log(data[i]);
+    if (!data[i]['close']) continue;
+
     const stockDate = new Date(data[i]['date']).getTime();
     if (!dateLimit || stockDate >= dateLimit) {
       stockData.unshift({
@@ -23,6 +24,7 @@ export function formatDaily(data) {
   let stockData = [];
   for (let i in data) {
     if (!data[i]['close']) continue;
+
     let timeArr = data[i]['minute'].split(':');
     let stockDate = new Date();
     stockDate.setHours(timeArr[0], timeArr[1]);
