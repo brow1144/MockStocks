@@ -1,13 +1,6 @@
 import bodyParser from 'body-parser';
 import {parseError, buildResponse} from '../utilities/controllerFunctions';
-import {
-  getUser,
-  createUser,
-  getUserGame,
-  getUserWatchlist,
-  insertToUserWatchlist,
-  removeFromUserWatchlist
-} from '../Models/userDAO';
+import {getUser, createUser, getUserGame, getUserWatchlist, insertToUserWatchlist, getValueHistory, removeFromUserWatchlist} from '../Models/userDAO';
 
 export default (app) => {
   app.post('/Portfol.io/CreateAccount', async (req, res) => {
@@ -83,6 +76,18 @@ export default (app) => {
 
     try {
       data = await getUserGame(req.params.uid, req.params.gameCode);
+    } catch (err) {
+      data = {error: parseError(err)};
+    }
+
+    buildResponse(res, data);
+  });
+
+  app.get('/Portfol.io/Games/History/:uid/:gameCode', async (req, res) => {
+    let data;
+
+    try {
+      data = await getValueHistory(req.params.uid, req.params.gameCode);
     } catch (err) {
       data = {error: parseError(err)};
     }
