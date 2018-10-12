@@ -57,7 +57,7 @@ class UpdateGame extends Component {
     // Server call to update the game
     axios.put(`http://localhost:8080/Portfol.io/Games/${this.props.currentGame.code}`, {
       game_name: this.state.game_name,
-      starting_amount: this.state.starting_amount,
+      starting_amount: parseFloat(this.state.starting_amount),
       trade_limit: this.state.trade_limit,
       start_time: this.state.startDate,
       end_time: this.state.endDate
@@ -86,6 +86,9 @@ class UpdateGame extends Component {
     this.setState({trade_limit: event.target.value});
   }
 
+  curName = (event) => {
+    this.setState({game_name: event.target.value});
+  }
 
     render() {
         return (
@@ -95,7 +98,7 @@ class UpdateGame extends Component {
                 <ModalHeader toggle={this.toggle}>Edit Game Settings</ModalHeader>
 
                 <ModalBody>
-                  <Input label="Floor Name" value={this.props.currentGame.game_name}  onChange={this.curName} id="floorName"/>
+                  <Input label={'Current Floor Name : "'+ this.props.currentGame.game_name +'"'} onChange={this.curName} id="floorName"/>
                   Select a new Start Time
                   <DatePicker value={this.state.startDate.toString()}
                               id="startDate" selected={this.state.startDate}
