@@ -1,8 +1,9 @@
 import bodyParser from 'body-parser';
 import {parseError, buildResponse} from '../utilities/controllerFunctions';
-import {getStock, getStockBatch, getStockIntraday, getTickers, loadTickers} from '../Models/stockDAO';
+import {getStock, getStockBatch, getStockIntraday, getTickers, loadTickers, getTicker} from '../Models/stockDAO';
 
 export default (app) => {
+  getTicker('AAPL');
   // Period is in the format : 'Monthly', 'Weekly', 'Daily', etc. Casing is important here.
   app.get('/Portfol.io/Stock/:stock/:period', async (req, res) => {
     let data, dateLimit;
@@ -16,20 +17,20 @@ export default (app) => {
         case 'Month':
           dateLimit.setMonth(dateLimit.getMonth() - 1);
           console.error(dateLimit);
-          data = await getStock(req.params.stock, "Daily", dateLimit);
+          data = await getStock(req.params.stock, "1m", dateLimit);
           break;
         case 'TriMonth':
           dateLimit.setMonth(dateLimit.getMonth() - 3);
           console.error(dateLimit);
-          data = await getStock(req.params.stock, "Daily", dateLimit);
+          data = await getStock(req.params.stock, "3m", dateLimit);
           break;
         case 'Year':
           dateLimit.setFullYear(dateLimit.getFullYear() - 1);
           console.error(dateLimit);
-          data = await getStock(req.params.stock, "Monthly", dateLimit);
+          data = await getStock(req.params.stock, "1y", dateLimit);
           break;
         default: // 'All'
-          data = await getStock(req.params.stock, "Monthly", 0);
+          data = await getStock(req.params.stock, "5y", 0);
       }
     } catch (err) {
       data = {error: parseError(err)};

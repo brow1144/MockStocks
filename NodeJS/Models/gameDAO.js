@@ -12,6 +12,8 @@ export function createGame(game) {
     }
   }
 
+  game.starting_amount = parseFloat(game.starting_amount).toFixed(2);
+
   return gameModel.create(game)
     .then((res) => {
       return Promise.resolve(res)
@@ -39,7 +41,7 @@ export function updateGameSettings(gameCode, game) {
   return gameModel.findOneAndUpdate(
     {code: gameCode},
     {game_name: game.game_name,
-    starting_amount: game.starting_amount,
+    starting_amount: parseFloat(game.starting_amount).toFixed(2),
     trade_limit: game.trade_limit,
     start_time: game.start_time,
     end_time: game.end_time},
