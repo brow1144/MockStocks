@@ -42,7 +42,7 @@ class Games extends Component {
       // Count down timer state
       countdown: "",
       // Count down message
-      countMessage: ""
+      countMessage: "Game Ends in: "
     };
   }
 
@@ -494,7 +494,7 @@ class Games extends Component {
                 <h5 className={"gamesText"}>Buying Power : ${this.state.buying_power}</h5>
               </Col>
             </Row>
-            {this.state.leader
+            {this.state.leader && (this.state.countMessage === "Game Starts in: ")
               ? <Row>
                 <Col md="1"/>
                 <Col md="1">
