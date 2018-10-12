@@ -2,7 +2,8 @@ import React, {Component} from 'react';
 
 //import {Input, Button} from 'mdbreact';
 import { Row, Col } from 'reactstrap';
-import NavBar from '../Components/NavBar';
+//import sizeMe from 'react-sizeme';
+//import Confetti from 'react-confetti';
 import MyStocks from '../Components/Games/MyStocks';
 import Leaderboard from '../Components/Games/Leaderboard';
 import CreateGame from '../Components/Games/CreateGame'
@@ -55,7 +56,6 @@ class Games extends Component {
   componentWillMount () {
     // Make server call for data
     this.fetchGames();
-    //this.timer();
   };
 
   /**
@@ -437,9 +437,10 @@ class Games extends Component {
 
 
         // If the count down is finished, write some text
+        console.log(self.state.userGame[0]);
         if (distance < 0) {
           self.setState({
-            countdown: 0 + "d " + 0 + "h " + 0 + "m " + 0 + "s ",
+            countdown: "Winner is " + self.state.userGame[0].username,
             countMessage: "Game Completed: "
           })
         }
