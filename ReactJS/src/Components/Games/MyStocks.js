@@ -17,7 +17,8 @@ class MyStocks extends Component {
             <th>#</th>
             <th>Stock</th>
             <th>Symbol</th>
-            <th>Value</th>
+            <th>Current Value</th>
+            <th>Total Value</th>
             <th>Owned</th>
           </tr>
           </thead>
@@ -30,6 +31,7 @@ class MyStocks extends Component {
                 <th/>
                 <th>{stock.symbol}</th>
                 <th>{stock.price}</th>
+                <th>{stock.total}</th>
                 <th>{stock.quantity}</th>
               </tr>)
             })
@@ -39,10 +41,16 @@ class MyStocks extends Component {
           </tbody>
           <tbody>
           <tr>
-            <th>Total </th>
-            <th> </th>
-            <th> </th>
-            <th>${this.props.currentUserStocks.totalAssets}</th>
+            <th>Total</th>
+            <th/>
+            <th/>
+            <th/>
+            {this.props.currentUserStocks.totalAssets
+              ?
+              <th>${this.props.currentUserStocks.totalAssets}</th>
+              :
+              <th/>
+            }
             <th>{this.props.currentUserStocks.totalOwned}</th>
           </tr>
           </tbody>
