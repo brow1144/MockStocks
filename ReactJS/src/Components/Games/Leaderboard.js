@@ -38,7 +38,7 @@ class Leaderboard extends Component {
             return (<tr key={key}>
               <th scope="row">{key + 1}</th>
               <th >{user.username}</th>
-              <th >${user.totalAssets.toLocaleString()}</th>
+              <th >${parseFloat((user.totalAssets).toFixed(2)).toLocaleString()}</th>
               {this.props.currentGame.trade_limit === 0
                 ?
                 <th>Unlimited</th>

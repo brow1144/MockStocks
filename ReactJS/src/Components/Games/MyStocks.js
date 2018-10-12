@@ -28,9 +28,9 @@ class MyStocks extends Component {
               return (<tr key={key}>
                 <th scope="row">{key + 1}</th>
                 <th>{stock.symbol}</th>
-                <th>{stock.price.toLocaleString()}</th>
+                <th>{parseFloat((stock.price).toFixed(2)).toLocaleString()}</th>
                 <th>{stock.quantity}</th>
-                <th>{stock.total.toLocaleString()}</th>
+                <th>{parseFloat((stock.total).toFixed(2)).toLocaleString()}</th>
               </tr>)
             })
             :
@@ -45,7 +45,7 @@ class MyStocks extends Component {
             <th>{this.props.currentUserStocks.totalOwned}</th>
             {this.props.currentUserStocks.totalAssets
               ?
-              <th>${this.props.currentUserStocks.totalAssets.toLocaleString()}</th>
+              <th>${(parseFloat(((this.props.currentUserStocks.totalAssets).toFixed(2)))-this.props.currentUserStocks.buying_power).toLocaleString()}</th>
               :
               <th/>
             }

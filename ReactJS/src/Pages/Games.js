@@ -163,7 +163,7 @@ class Games extends Component {
           // Check if game code is equal to the code
           if (self.state.currentGame.code === user.active_games[i].code && user.active_games[i].buying_power != null) {
             self.setState({
-              buying_power: parseFloat((user.active_games[i].buying_power).toFixed(2)),
+              buying_power: user.active_games[i].buying_power,
             })
           }
         }
@@ -207,17 +207,19 @@ class Games extends Component {
               let index = 0;
               for (let b in result.data) {
                 if (result.data.hasOwnProperty(b)) {
+
                   let tmpObj = {
-                    price: parseFloat((result.data[b].quote.latestPrice).toFixed(2)),
+                    price: result.data[b].quote.latestPrice,
                     quantity: stockQuantity[index],
                     symbol: result.data[b].quote.symbol,
-                    total: parseFloat((stockQuantity[index] * result.data[b].quote.latestPrice).toFixed(2))
+                    total: stockQuantity[index] * result.data[b].quote.latestPrice
                   };
                   // Push each object to the stockList to use when calculating total later
                   stockList.push(tmpObj);
                   // Add number of
                   totalOwned += stockQuantity[index];
 
+                  console.log(tmpObj)
                   // Index for list of stocks
                   index++;
                 }
@@ -227,14 +229,14 @@ class Games extends Component {
               for (let a = 0; a < stockList.length; a++) {
                 totalA += stockList[a].total;
               }
-              totalA = parseFloat((totalA).toFixed(2));
+
               tmp = {
                 code: user.active_games[i].code,
                 buying_power: user.active_games[i].buying_power,
                 trade_count: user.active_games[i].trade_count,
                 stocks: user.active_games[i].stocks,
                 username: user.username,
-                totalAssets: totalA,
+                totalAssets: totalA + user.active_games[i].buying_power,
                 totalOwned: totalOwned,
                 stocksArray: stockList
               }
@@ -244,9 +246,7 @@ class Games extends Component {
               if (tmp != null)
                 ug.push(tmp);
 
-              console.log("gonna sort")
               ug.sort(self.sortRank());
-              console.log("sorted")
 
               // Check if this is the current user
               if (flag === true) {
@@ -305,8 +305,6 @@ class Games extends Component {
         ug.push(tmp);
 
       ug.sort(self.sortRank);
-
-      console.log(ug)
       // Set the state
       self.setState({
         users: newArray,
@@ -491,7 +489,7 @@ class Games extends Component {
               }
               <Col md="6"/>
               <Col md="3">
-                <h5 className={"gamesText"}>Buying Power : ${this.state.buying_power}</h5>
+                <h5 className={"gamesText"}>Buying Power : ${parseFloat((this.state.buying_power).toFixed(2)).toLocaleString()}</h5>
               </Col>
             </Row>
             {this.state.leader && (this.state.countMessage === "Game Starts in: ")
