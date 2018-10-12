@@ -15,6 +15,7 @@ export const gameSchema = new mongoose.Schema({
 export const userSchema = new mongoose.Schema({
   _id: String,
   active_games: Array,
+  completed_games: Array,
   watchlist: Array,
   username: {
     type: String,

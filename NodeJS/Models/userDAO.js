@@ -391,6 +391,28 @@ export function updateValueHistory(uid, gameCode, value, time) {
     });
 }
 
+export async function getValueHistory(uid, gameCode) {
+  let userGame;
+
+  try {
+    userGame = await getUserGame(uid, gameCode);
+  } catch (error) {
+    return Promise.reject(error);
+  }
+
+  let graphData = [];
+  for (let i in userGame.value_history) {
+    if (userGame.value_history.hasOwnProperty(i)) {
+      graphData.push({
+        x: userGame.value_history[i].time,
+        y: userGame.value_history[i].value
+      });
+    }
+  }
+
+  return Promise.resolve(graphData);
+}
+
 // used for cleaning up the database
 export function clearValueHistory(uid, gameCode) {
   const findClause = {
@@ -448,6 +470,20 @@ export function getUserWatchlist(uid) {
 export function insertToUserWatchlist(uid, stockToInsert) {
   return userModel.findOneAndUpdate(
     {_id: uid}, {$push : {watchlist: stockToInsert}})
+    .then((updatedUser) => {
+      if (updatedUser === null)
+        return Promise.reject('UserError: User does not exist');
+      updatedUser.watchlist.push(stockToInsert);
+      return Promise.resolve(updatedUser.watchlist);
+    })
+    .catch((err) => {
+      return Promise.reject(err);
+    });
+}
+
+export function removeFromUserWatchlist(uid, stockToInsert) {
+  return userModel.findOneAndUpdate(
+    {_id: uid}, {$pull : {watchlist: stockToInsert}})
     .then((updatedUser) => {
       if (updatedUser === null)
         return Promise.reject('UserError: User does not exist');

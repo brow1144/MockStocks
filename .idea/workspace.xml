@@ -2,7 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="33c2180c-a31c-4e2a-a645-035ef9b7627f" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/NodeJS/Models/stockDAO.js" beforeDir="false" afterPath="$PROJECT_DIR$/NodeJS/Models/stockDAO.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/NodeJS/Controllers/scheduler.js" beforeDir="false" afterPath="$PROJECT_DIR$/NodeJS/Controllers/scheduler.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/NodeJS/Controllers/userController.js" beforeDir="false" afterPath="$PROJECT_DIR$/NodeJS/Controllers/userController.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/NodeJS/Models/gameDAO.js" beforeDir="false" afterPath="$PROJECT_DIR$/NodeJS/Models/gameDAO.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/NodeJS/Models/userDAO.js" beforeDir="false" afterPath="$PROJECT_DIR$/NodeJS/Models/userDAO.js" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -30,7 +34,7 @@
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
         <counts>
-          <entry key="js" value="42" />
+          <entry key="js" value="46" />
           <entry key="json" value="2" />
           <entry key="lock" value="1" />
           <entry key="md" value="1" />
@@ -39,28 +43,28 @@
       <usages-collector id="statistics.file.types.open">
         <counts>
           <entry key="JSON" value="2" />
-          <entry key="JavaScript" value="42" />
+          <entry key="JavaScript" value="46" />
           <entry key="PLAIN_TEXT" value="1" />
           <entry key="yarn.lock" value="1" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
-          <entry key="js" value="6031" />
+          <entry key="js" value="6600" />
           <entry key="json" value="26" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
           <entry key="JSON" value="26" />
-          <entry key="JavaScript" value="6031" />
+          <entry key="JavaScript" value="6600" />
         </counts>
       </usages-collector>
     </session>
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/NodeJS/Models/stockDAO.js">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="340">
@@ -73,10 +77,43 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/NodeJS/Controllers/stockController.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="119">
+              <caret line="7" column="15" selection-start-line="7" selection-start-column="15" selection-end-line="7" selection-end-column="15" />
+              <folding>
+                <element signature="e#0#37#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/NodeJS/Controllers/scheduler.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="221">
+              <caret line="21" column="2" lean-forward="true" selection-start-line="21" selection-start-column="5" selection-end-line="23" selection-end-column="8" />
+              <folding>
+                <element signature="e#0#37#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/NodeJS/Models/gameDAO.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="436">
+              <caret line="110" selection-start-line="110" selection-end-line="127" selection-end-column="1" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/NodeJS/Controllers/userController.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="561">
-              <caret line="37" column="13" selection-start-line="37" selection-start-column="13" selection-end-line="37" selection-end-column="13" />
+            <state relative-caret-position="731">
+              <caret line="59" column="19" lean-forward="true" selection-start-line="59" selection-start-column="19" selection-end-line="59" selection-end-column="19" />
             </state>
           </provider>
         </entry>
@@ -84,8 +121,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/NodeJS/Models/userDAO.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="266">
-              <caret line="433" column="41" lean-forward="true" selection-start-line="433" selection-start-column="41" selection-end-line="433" selection-end-column="41" />
+            <state relative-caret-position="487">
+              <caret line="461" column="22" selection-start-line="461" selection-start-column="16" selection-end-line="461" selection-end-column="22" />
               <folding>
                 <element signature="e#0#32#0" expanded="true" />
               </folding>
@@ -130,6 +167,9 @@
       <find>all</find>
       <find>user</find>
       <find>watch</find>
+      <find>getAll</find>
+      <find>remove</find>
+      <find>remo</find>
     </findStrings>
     <replaceStrings>
       <replace />
@@ -154,14 +194,16 @@
         <option value="$PROJECT_DIR$/NodeJS/utilities/MongooseSchemas.js" />
         <option value="$PROJECT_DIR$/NodeJS/Models/gameDAO.test.js" />
         <option value="$PROJECT_DIR$/NodeJS/package.json" />
-        <option value="$PROJECT_DIR$/NodeJS/Models/gameDAO.js" />
         <option value="$PROJECT_DIR$/ReactJS/src/Components/Games/GamesList.js" />
         <option value="$PROJECT_DIR$/ReactJS/src/Components/Games/GameList.test.js" />
         <option value="$PROJECT_DIR$/ReactJS/src/Pages/Games.js" />
         <option value="$PROJECT_DIR$/NodeJS/Controllers/stockController.js" />
-        <option value="$PROJECT_DIR$/NodeJS/Controllers/userController.js" />
-        <option value="$PROJECT_DIR$/NodeJS/Models/userDAO.js" />
         <option value="$PROJECT_DIR$/NodeJS/Models/stockDAO.js" />
+        <option value="$PROJECT_DIR$/NodeJS/Controllers/historyController.js" />
+        <option value="$PROJECT_DIR$/NodeJS/Models/userDAO.js" />
+        <option value="$PROJECT_DIR$/NodeJS/Controllers/userController.js" />
+        <option value="$PROJECT_DIR$/NodeJS/Models/gameDAO.js" />
+        <option value="$PROJECT_DIR$/NodeJS/Controllers/scheduler.js" />
       </list>
     </option>
   </component>
@@ -241,39 +283,6 @@
               <item name="Portfol.io" type="462c0819:PsiDirectoryNode" />
               <item name="NodeJS" type="462c0819:PsiDirectoryNode" />
               <item name="Models" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="Portfol.io" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Portfol.io" type="462c0819:PsiDirectoryNode" />
-              <item name="ReactJS" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="Portfol.io" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Portfol.io" type="462c0819:PsiDirectoryNode" />
-              <item name="ReactJS" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="Portfol.io" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Portfol.io" type="462c0819:PsiDirectoryNode" />
-              <item name="ReactJS" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="Components" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="Portfol.io" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Portfol.io" type="462c0819:PsiDirectoryNode" />
-              <item name="ReactJS" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="Components" type="462c0819:PsiDirectoryNode" />
-              <item name="Games" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="Portfol.io" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Portfol.io" type="462c0819:PsiDirectoryNode" />
-              <item name="ReactJS" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="Pages" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -389,12 +398,12 @@
       <workItem from="1538165420395" duration="8020000" />
       <workItem from="1539040373090" duration="5691000" />
       <workItem from="1539313239582" duration="1403000" />
-      <workItem from="1539363689078" duration="9111000" />
+      <workItem from="1539363689078" duration="18234000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="52606000" />
+    <option name="totallyTimeSpent" value="61729000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="689" y="0" width="1231" height="1040" extended-state="0" />
@@ -403,6 +412,7 @@
       <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.20117351" />
       <window_info id="Structure" order="1" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
+      <window_info anchor="bottom" id="Messages" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
       <window_info anchor="bottom" id="Run" order="2" />
@@ -535,13 +545,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/NodeJS/Models/gameDAO.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="521">
-          <caret line="31" selection-start-line="31" selection-end-line="31" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/ReactJS/src/Pages/Games.test.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="204">
@@ -583,16 +586,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/NodeJS/Controllers/stockController.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="275">
-          <caret line="28" column="20" selection-start-line="28" selection-start-column="20" selection-end-line="28" selection-end-column="20" />
-          <folding>
-            <element signature="e#0#37#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/NodeJS/Controllers/gameController.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="275">
@@ -603,25 +596,8 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/NodeJS/Controllers/historyController.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="833">
-          <caret line="49" column="28" selection-start-line="49" selection-start-column="28" selection-end-line="49" selection-end-column="28" />
-          <folding>
-            <element signature="e#0#37#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/NodeJS/utilities/controllerFunctions.js">
       <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/NodeJS/Controllers/userController.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="561">
-          <caret line="37" column="13" selection-start-line="37" selection-start-column="13" selection-end-line="37" selection-end-column="13" />
-        </state>
-      </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/NodeJS/utilities/MongooseModels.js">
       <provider selected="true" editor-type-id="text-editor">
@@ -640,12 +616,12 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/NodeJS/Models/userDAO.js">
+    <entry file="file://$PROJECT_DIR$/NodeJS/Controllers/historyController.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="266">
-          <caret line="433" column="41" lean-forward="true" selection-start-line="433" selection-start-column="41" selection-end-line="433" selection-end-column="41" />
+        <state relative-caret-position="476">
+          <caret line="136" column="5" lean-forward="true" selection-start-line="136" selection-start-column="5" selection-end-line="136" selection-end-column="5" />
           <folding>
-            <element signature="e#0#32#0" expanded="true" />
+            <element signature="e#0#37#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -656,6 +632,50 @@
           <caret line="20" column="1" lean-forward="true" selection-start-line="20" selection-start-column="1" selection-end-line="20" selection-end-column="1" />
           <folding>
             <element signature="e#0#26#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/NodeJS/Controllers/userController.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="731">
+          <caret line="59" column="19" lean-forward="true" selection-start-line="59" selection-start-column="19" selection-end-line="59" selection-end-column="19" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/NodeJS/Controllers/stockController.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="119">
+          <caret line="7" column="15" selection-start-line="7" selection-start-column="15" selection-end-line="7" selection-end-column="15" />
+          <folding>
+            <element signature="e#0#37#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/NodeJS/Models/userDAO.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="487">
+          <caret line="461" column="22" selection-start-line="461" selection-start-column="16" selection-end-line="461" selection-end-column="22" />
+          <folding>
+            <element signature="e#0#32#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/NodeJS/Models/gameDAO.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="436">
+          <caret line="110" selection-start-line="110" selection-end-line="127" selection-end-column="1" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/NodeJS/Controllers/scheduler.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="221">
+          <caret line="21" column="2" lean-forward="true" selection-start-line="21" selection-start-column="5" selection-end-line="23" selection-end-column="8" />
+          <folding>
+            <element signature="e#0#37#0" expanded="true" />
           </folding>
         </state>
       </provider>
