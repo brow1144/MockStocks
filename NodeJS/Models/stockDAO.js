@@ -66,11 +66,11 @@ export function getStockIntraday(stockTicker) {
 }
 
  export function getStockBatch(stockList) {
-   return axios.get(`https://www.alphavantage.co/query?function=BATCH_STOCK_QUOTES&symbols=${stockList}&apikey=WIOGAHD0RJEEZ59V`)
+   return axios.get(`https://api.iextrading.com/1.0/stock/market/batch?symbols=${stockList}&types=quote`)
      .then((response) => {
        // handle success
-       let data = response.data['Stock Quotes'];
-       return Promise.resolve({stockQuotes: data});
+       let data = response.data;
+       return Promise.resolve(data);
      })
      .catch((error) => {
        console.log(error);
