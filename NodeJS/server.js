@@ -1,9 +1,10 @@
 import express from 'express';
 import bodyParser from 'body-parser';
 
-import controller from './controllers/controller';
+import stockController from './controllers/stockController';
 import userController from './controllers/userController';
 import gameController from './controllers/gameController';
+import {runSchedulers} from './controllers/historyController';
 
 // connect to the database
 import db from './config/db';
@@ -21,9 +22,12 @@ app.options('/*', (req, res) => {
 });
 
 // run controllers
-controller(app);
+stockController(app);
 userController(app);
 gameController(app);
+
+// run history generator
+runSchedulers();
 
 // listen to port
 app.listen(8080, () => {

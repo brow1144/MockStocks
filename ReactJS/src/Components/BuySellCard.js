@@ -1,5 +1,9 @@
 import React, {Component} from 'react'
-import { Row, Col, Card, CardBody, CardTitle, Button } from 'mdbreact'
+import { Card, Modal, CardHeader, CardBody, CardTitle, CardText, Button } from 'mdbreact'
+
+import Buy from './Buy';
+import Sell from './Sell';
+import axios from 'axios';
 
 import '../Static/CSS/StockList.css'
 import '../Static/CSS/BuySellCard.css'
@@ -12,6 +16,9 @@ class BuySellCard extends Component {
     this.state = {
       cost: 0,
       finalPrice: 0,
+      selected: 'buy',
+      modal: false,
+      errorMessage: '',
     }
   }
 
@@ -26,60 +33,111 @@ class BuySellCard extends Component {
     }
   }
 
-  render() { 
+  buyStock = () => {
+
+    let self = this
+    
+    if (this.props.currentPrice === null || this.props.currentPrice === undefined || this.props.currentPrice === 0) {
+      self.setState({errorMessage: `We are having trouble getting the current price, try refreshing and submitting again!`, modal: true,})
+      return;
+    } else if (Number(this.state.cost) == 0) {
+      self.setState({errorMessage: `You entered an invalid number of stocks`, modal: true,})
+      return;
+    } 
+
+    axios.put(`http://localhost:8080/Portfol.io/Games/Buy/${this.props.uid}/${this.props.currentGame.code}/${this.props.stock}/${this.state.cost}/${this.props.currentPrice}`)
+    .then((data) => {
+
+      self.setState({errorMessage: `You have succesfuly bought ${this.state.cost} shares of ${this.props.stock}!`, modal: true,})
+      self.props.getGameData(this.props.currentGame.code)
+
+    }).catch((err) => {
+      self.setState({errorMessage: err.response.data.error.message, modal: true,})
+    });
+
+  }
+
+  sellStock = () => {
+    let self = this
+    if (this.props.currentPrice === null || this.props.currentPrice === undefined || this.props.currentPrice === 0) {
+      self.setState({errorMessage: `We are having trouble getting the current price, try refreshing and submitting again!`, modal: true,})
+      return;
+    } else if (Number(this.state.cost) == 0) {
+      self.setState({errorMessage: `You entered an invalid number of stocks`, modal: true,})
+      return;
+    } 
+
+    axios.put(`http://localhost:8080/Portfol.io/Games/Sell/${this.props.uid}/${this.props.currentGame.code}/${this.props.stock}/${this.state.cost}/${this.props.currentPrice}`)
+    .then((data) => {
+
+      self.setState({errorMessage: `You have succesfuly sold ${this.state.cost} shares of ${this.props.stock}!`, modal: true,})
+      self.props.getGameData(this.props.currentGame.code)
+    }).catch((err) => {
+      self.setState({errorMessage: err.response.data.error.message, modal: true,})
+    });
+  }
+
+  handleBuy = () => {
+    this.setState({
+      cost: 0,
+      finalPrice: 0,
+      selected: 'buy'
+    })
+  }
+
+  handleSell = () => {
+    this.setState({
+      cost: 0,
+      finalPrice: 0,
+      selected: 'sell'
+    })
+  }
+
+  toggle = () => {
+    this.setState({modal: !this.state.modal});
+  }
+
+  render() {
     return (
-      <div style={{position: 'fixed', width: 'inherit', maxWidth: 'inherit'}} className='z-depth-5' >
-        <Card style={{backgroundColor: '#1B1B1D', color: 'whitesmoke'}}>
+
+      <div>
+
+        <Modal isOpen={this.state.modal} toggle={this.toggle} side position="top-right">
+          <CardHeader color="info-color-dark lighten-1">Warning</CardHeader>
           <CardBody>
-            <div className="article-container-inner">
-              <CardTitle className='buyStock'>Buy {this.props.stock}</CardTitle>
-              <hr className='hr'/>
-            </div>
-            
-            <Row> 
-              <Col sm='6'>
-                <h6 className='leftText'>Shares</h6>
-              </Col>
-              <Col sm='6'>
-                <input className="form-control form-control-sm" value={this.state.cost} onChange={this.updateCost} style={{color: 'whitesmoke', backgroundColor: '#1B1B1D'}} type="number" placeholder="#" />
-              </Col>
-            </Row>
-
-            <br />
-
-            <Row> 
-              <Col sm='8'>
-                <h6 className='buySmallText' style={{color: '#009ddb', marginTop: '9px'}}>Market Price</h6>
-              </Col>
-              <Col sm='4'>
-                <p style={{marginTop: '7px', float: 'right', fontSize: '0.8em', color: 'whitesmoke'}}>${this.props.currentPriceFor}</p>
-              </Col>
-            </Row>
-            
-            <br />
-
-            <Row> 
-              <Col sm='6'>
-                <h6 className='leftText' style={{marginTop: '8px'}}>Cost</h6>
-              </Col>
-              <Col sm='6'>
-                <p id='finalCost' style={{marginTop: '7px', float: 'right', fontSize: '0.8em', color: 'whitesmoke'}}>${this.state.finalPrice}</p>
-              </Col>
-            </Row>
-
-            <br />
-
-            <Button color='blue' style={{margin: '0 auto', display: 'block', background: '#009ddb'}}>Submit Order</Button>
-
-            <hr className='hr' />
-
-            <p style={{textAlign: 'center', margin: '0 auto', display: 'block', fontSize: '0.8em', color: 'whitesmoke'}}>$6,000.23 Buying Power Available</p>
-
+              {/* <CardTitle>Info Box</CardTitle> */}
+              <CardText>{this.state.errorMessage}</CardText>
+              <Button onClick={this.toggle} color="primary">Close</Button>{' '}
           </CardBody>
-        </Card>
+        </Modal> 
+
+
+        <div style={{position: 'fixed', width: 'inherit', maxWidth: 'inherit'}} className='z-depth-5'>
+          <Card style={{backgroundColor: '#1B1B1D', color: 'whitesmoke'}}>
+
+            <div style={{textAlign: 'center'}}>
+              <br/>
+
+              <b onClick={this.handleBuy} className={`buy buyOrSell ${this.state.selected === 'buy' ? 'current' : ''}`}>Buy</b>
+              <b onClick={this.handleSell} className={`sell buyOrSell ${this.state.selected === 'sell' ? 'current' : ''}`}>Sell</b>
+            </div>
+
+            <hr className='hr'/>
+
+
+            {this.state.selected === 'buy'
+            ?
+              <Buy gameData={this.props.gameData} buyStock={this.buyStock} currentPriceFor={this.props.currentPriceFor} updateCost={this.updateCost} cost={this.state.cost} finalPrice={this.state.finalPrice}/>
+            :
+              <Sell gameData={this.props.gameData} sellStock={this.sellStock} currentPriceFor={this.props.currentPriceFor} updateCost={this.updateCost} cost={this.state.cost} finalPrice={this.state.finalPrice}/>
+            }
+
+          </Card>
+        </div>
+
       </div>
     );
   }
 }
 
-export default BuySellCard;
+export default BuySellCard

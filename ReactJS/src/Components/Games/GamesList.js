@@ -15,12 +15,11 @@ class GameList extends Component {
 
 
   render() {
-    console.error(this.props.myFloors);
     return (
-      <div >
+      <div className='z-depth-5'>
         <h5 className={"gamesText"}>Floor List</h5>
-        <Table dark>
-          <tbody>
+        <Table dark hover>
+          <tbody style={{cursor: 'pointer'}}>
           {this.props.myFloors.map((floor, key) => {
             return (<tr key={key}>
               <th id={key} onClick={() => {this.updateFloor(key)}} scope="row">{floor.game_name}</th>

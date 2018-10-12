@@ -1,5 +1,5 @@
 import {userModel} from '../utilities/MongooseModels';
-import {getUser, createUser, joinGame} from './userDAO';
+import {getUser, createUser, joinGame, leaveGame, updateUserBuyingPower} from './userDAO';
 
 userModel.findOne = jest.fn(() => {
   return {
@@ -45,14 +45,59 @@ describe('User Tests Positive Case', function () {
   it('should call findOneAndUpdate with the proper game object', async function () {
     const game = {
       code: '2352364',
+      buying_power: 1000,
+      trade_count: 0,
       stocks: []
     };
 
-    await joinGame('XFKSHFD3578132958IUDF', '2352364');
+    const updateClause = {
+      'game.code': {'$ne': game.code},
+      '$addToSet': {'active_games': game}
+    };
+
+    const options = {
+      new: true,
+      passRawResult: true
+    };
+
+    await joinGame('XFKSHFD3578132958IUDF', '2352364', 1000);
     expect(userModel.findOneAndUpdate).toHaveBeenCalledWith(
       {_id: 'XFKSHFD3578132958IUDF'},
-      {$push: {active_games: game}},
-      {new: true}
+      updateClause,
+      options
+    );
+  });
+
+  it('should call findOneAndUpdate with the proper game object', async function () {
+    const options = {
+      new: true,
+      passRawResult: true
+    };
+
+    await leaveGame('XFKSHFD3578132958IUDF', '2352364', 1000);
+    expect(userModel.findOneAndUpdate).toHaveBeenCalledWith(
+      {_id: 'XFKSHFD3578132958IUDF'},
+      {'$pull': {'active_games': {'code': '2352364'}}},
+      options
+    );
+  });
+
+  it('should call findOneAndUpdate with the proper game settings', async function () {
+    const findClause = {
+      '_id': '325FXYDF351235JLDSKG',
+      'active_games.code': '523535'
+    };
+
+    const options = {
+      new: true,
+      passRawResult: true
+    };
+
+    await updateUserBuyingPower('325FXYDF351235JLDSKG', '523535', 3000);
+    expect(userModel.findOneAndUpdate).toHaveBeenCalledWith(
+      findClause,
+      {'$set': {'active_games.$.buying_power': 3000}},
+      options
     );
   });
 });
