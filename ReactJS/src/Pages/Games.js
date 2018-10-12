@@ -244,6 +244,10 @@ class Games extends Component {
               if (tmp != null)
                 ug.push(tmp);
 
+              console.log("gonna sort")
+              ug.sort(self.sortRank());
+              console.log("sorted")
+
               // Check if this is the current user
               if (flag === true) {
                 self.setState({
@@ -291,7 +295,6 @@ class Games extends Component {
           })
         }
 
-        //ug.sort(self.sortRank);
 
         break;
       }
@@ -387,7 +390,6 @@ class Games extends Component {
    */
   sortRank = () => {
     return function(a, b) {
-      console.log(a.totalAssets)
       return b.totalAssets - a.totalAssets;
     };
   }
@@ -415,7 +417,7 @@ class Games extends Component {
             countMessage: "Game Ends in: "
           })
         } else {
-          distance = now - new Date(self.state.currentGame.start_time).getTime();
+          distance = new Date(self.state.currentGame.start_time).getTime() - now;
           self.setState({
             countMessage: "Game Starts in: "
           })
