@@ -95,7 +95,7 @@ let getPortfolioValues = async () => {
             }
 
             // update database
-            updateValueHistory(user._id, game.code, totalValue, Date.now());
+            updateValueHistory(user._id, game.code, parseFloat(totalValue.toFixed(2)), Date.now());
 
             // clear history for testing
             //clearValueHistory(user._id, game.code);

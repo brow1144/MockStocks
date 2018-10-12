@@ -391,6 +391,28 @@ export function updateValueHistory(uid, gameCode, value, time) {
     });
 }
 
+export async function getValueHistory(uid, gameCode) {
+  let userGame;
+
+  try {
+    userGame = await getUserGame(uid, gameCode);
+  } catch (error) {
+    return Promise.reject(error);
+  }
+
+  let graphData = [];
+  for (let i in userGame.value_history) {
+    if (userGame.value_history.hasOwnProperty(i)) {
+      graphData.push({
+        x: userGame.value_history[i].time,
+        y: userGame.value_history[i].value
+      });
+    }
+  }
+
+  return Promise.resolve(graphData);
+}
+
 // used for cleaning up the database
 export function clearValueHistory(uid, gameCode) {
   const findClause = {
@@ -458,4 +480,3 @@ export function insertToUserWatchlist(uid, stockToInsert) {
       return Promise.reject(err);
     });
 }
-
