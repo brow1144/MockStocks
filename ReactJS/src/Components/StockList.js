@@ -15,22 +15,22 @@ class StockList extends Component {
           <CardBody>
               <div className="article-container-inner">
                 <CardTitle stlyle={{borderBottom: '2px solid whitesmoke'}} >Watchlist</CardTitle>
-                <hr className='hr'/>
+
               </div>
 
             {this.props.watchlist.map((stock, key) => {
               return (
                 <div>
-                  <StockCard stockTicker={stock.symbol} stockChange={stock.changePercent}/>
+                  <hr className='hr'/>
+                  {stock.changePercent >= 0
+                    ?<StockCard stockTicker={stock.symbol}
+                               stockChange={'+' + parseFloat(stock.changePercent).toFixed(2)}/>
+                    :<StockCard stockTicker={stock.symbol}
+                                stockChange={parseFloat(stock.changePercent).toFixed(2)}/>
+                  }
                 </div>
               )
             })}
-
-              <StockCard stockTicker={'AAPL'} stockChange={'+0.68%'}/> <hr className='hr'/>
-              <StockCard stockTicker={'MSFT'} stockChange={'-0.15%'}/> <hr className='hr'/>
-              <StockCard stockTicker={'DVMT'} stockChange={'+2.58%'}/> <hr className='hr'/>
-              <StockCard stockTicker={'VMW'} stockChange={'+0.94%'}/>  <hr className='hr'/>
-              <StockCard stockTicker={'PVTL'} stockChange={'+0.69%'}/> 
           </CardBody>
         </Card>
       </div>

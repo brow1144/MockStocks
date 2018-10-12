@@ -88,18 +88,18 @@ class Home extends Component {
 
   fetchWatchlist = () => {
     let self = this;
-    axios.get(`/Portfol.io/Watchlist/${this.state.uid}`)
+    axios.get(`http://localhost:8080/Portfol.io/Watchlist/${this.props.uid}`)
       .then(function (response) {
         // handle success
         let watchlist = response.data;
 
-        if (watchlist.games.length !== 0) {
+        if (watchlist.length !== 0) {
           // Set up the game data
-          self.setWatchlist(watchlist.games);
+          self.setWatchlist(watchlist);
 
         } else { // No watchlist return
           // Get the current user's email
-          axios.get(`http://localhost:8080/Portfol.io/${self.state.uid}`)
+          axios.get(`http://localhost:8080/Portfol.io/${self.props.uid}`)
             .then(function (response) {
               // handle success
               let user = response.data;
