@@ -1,5 +1,5 @@
 import schedule from 'node-schedule';
-import {getAllUsers, updateValueHistory} from '../Models/userDAO';
+import {getAllUsers, updateValueHistory, clearValueHistory} from '../Models/userDAO';
 import {getStockBatch} from '../Models/stockDAO';
 
 export async function runSchedulers() {
@@ -65,9 +65,8 @@ export async function runSchedulers() {
 
             let totalValue = 0;
             for (let k in stocksInGame) {
-              if (stocksInGame.hasOwnProperty(k)) {
+              if (stocksInGame.hasOwnProperty(k))
                 totalValue += stocksInGame[k].quantity * stocksInGame[k].price;
-              }
             }
             totalValue += game.buying_power;
 
@@ -75,6 +74,9 @@ export async function runSchedulers() {
 
             // update database
             //updateValueHistory(user._id, game.code, totalValue, Date.now());
+
+            // clear history for testing
+            clearValueHistory(user._id, game.code);
 
           // end of game
           }
