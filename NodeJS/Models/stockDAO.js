@@ -3,43 +3,61 @@ import {tickerModel} from "../utilities/MongooseModels";
 
 // TODO: IMPLEMENT REJECTIONS AND THEN WRITE TESTS FOR THEM
 
-export function formatStocks(data, dataAccessString, dateLimit) {
+export function formatStocks(data, dateLimit) {
   let stockData = [];
+
   for (let i in data) {
-    const stockDate = new Date(i).getTime();
+    console.log(data[i]);
+    const stockDate = new Date(data[i]['date']).getTime();
     if (!dateLimit || stockDate >= dateLimit) {
       stockData.unshift({
         x: stockDate,
-        y: parseFloat(data[i][dataAccessString]),
+        y: parseFloat(data[i]['close']),
       })
     }
   }
   return stockData;
 }
 
+export function formatDaily(data) {
+  let stockData = [];
+
+  for (let i in data) {
+    let timeArr = data[i]['minute'].split(':');
+    console.log(timeArr);
+    let stockDate = new Date();
+    stockDate.setHours(timeArr[0], timeArr[1]);
+    stockDate = stockDate.getTime();
+    stockData.unshift({
+      x: stockDate,
+      y: parseFloat(data[i]['close']),
+    })
+  }
+  return stockData;
+}
+
 export function getStock(stockTicker, period, dateLimit) {
-  period = period ? period : 'Monthly';
-  return axios.get(`https://www.alphavantage.co/query?function=TIME_SERIES_${period.toUpperCase()}_ADJUSTED&symbol=${stockTicker}&apikey=WIOGAHD0RJEEZ59V`)
+  return axios.get(`https://api.iextrading.com/1.0/stock/${stockTicker}/chart/${period}`)
     .then((response) => {
       // handle success
       // This api is inconsistent so apparently we need two different types of response
-      let data = period === 'Daily' ? response.data[`Time Series (${period})`] : response.data[`${period} Adjusted Time Series`];
-      const stockData = formatStocks(data, '5. adjusted close', dateLimit);
+      let data = response.data;
+      const stockData = formatStocks(data, dateLimit);
       return Promise.resolve(stockData);
     })
     .catch((error) => {
       console.log(error);
     })
 }
-
+// TODO : CHANGE THIS AWAY FROM BEING ITS OWN FUNCTION
 export function getStockIntraday(stockTicker) {
-  return axios.get(`https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY&symbol=${stockTicker}&interval=1min&apikey=WIOGAHD0RJEEZ59V`)
+  return axios.get(`https://api.iextrading.com/1.0/stock/${stockTicker}/chart/1d`)
     .then((response) => {
       // handle success
       // This api is inconsistent so apparently we need two different types of response
-      let data = response.data['Time Series (1min)'];
+      let data = response.data;
 
-      const stockData = formatStocks(data, '4. close');
+      const stockData = formatDaily(data);
       return Promise.resolve(stockData);
     })
     .catch((error) => {
@@ -48,11 +66,11 @@ export function getStockIntraday(stockTicker) {
 }
 
  export function getStockBatch(stockList) {
-   return axios.get(`https://www.alphavantage.co/query?function=BATCH_STOCK_QUOTES&symbols=${stockList}&apikey=WIOGAHD0RJEEZ59V`)
+   return axios.get(`https://api.iextrading.com/1.0/stock/market/batch?symbols=${stockList}&types=quote`)
      .then((response) => {
        // handle success
-       let data = response.data['Stock Quotes'];
-       return Promise.resolve({stockQuotes: data});
+       let data = response.data;
+       return Promise.resolve(data);
      })
      .catch((error) => {
        console.log(error);
@@ -72,7 +90,12 @@ export function loadTickers() {
       const tickers = data.map(ticker => {
         return {
           symbol: ticker.symbol,
-          company: ticker.name
+          company: ticker.name,
+          buyCount: 0,
+          sellCount: 0,
+          currentCount: 0,
+          dailyBuyCount: 0,
+          weeklyBuyCount: 0
         };
       });
       //const tickMod = new tickerModel({tickers: tickers});
@@ -92,3 +115,87 @@ export function getTickers() {
     return Promise.reject(err)
   })
 }
+
+export function getTicker(name) {
+  return tickerModel.findOne({'tickers.symbol': name}, {'tickers.$': 1, '_id': 0})
+  .then((ticker) => {
+    return Promise.resolve(ticker.tickers[0]);
+  })
+  .catch((err) => {
+    return Promise.reject(err)
+  })
+}
+
+export async function updateTickerBuy(name, quantity) {
+  let ticker;
+
+  try {
+    ticker = await getTicker(name);
+  } catch (error) {
+    return Promise.reject(error);
+  }
+
+  const updateClause = {
+    '$set': {
+      'tickers.$.buyCount': ticker.buyCount + quantity,
+      'tickers.$.currentCount': ticker.currentCount + quantity,
+      'tickers.$.dailyBuyCount': ticker.dailyBuyCount + quantity,
+      'tickers.$.weeklyBuyCount': ticker.weeklyBuyCount + quantity
+    }
+  };
+
+  const options = {
+    new: true,
+    passRawResult: true
+  };
+
+  return tickerModel.findOneAndUpdate(
+    {'tickers.symbol': name},
+    updateClause,
+    options)
+    .then((updatedTicker) => {
+      if (updatedTicker === null)
+        return Promise.reject('UserError: Ticker not found');
+
+      return Promise.resolve(updatedTicker);
+    })
+    .catch((err) => {
+      return Promise.reject(err);
+    });
+};
+
+export async function updateTickerSell(name, quantity) {
+  let ticker;
+
+  try {
+    ticker = await getTicker(name);
+  } catch (error) {
+    return Promise.reject(error);
+  }
+
+  const updateClause = {
+    '$set': {
+      'tickers.$.sellCount': ticker.sellCount + quantity,
+      'tickers.$.currentCount': ticker.currentCount - quantity
+    }
+  };
+
+  const options = {
+    new: true,
+    passRawResult: true
+  };
+
+  return tickerModel.findOneAndUpdate(
+    {'tickers.symbol': name},
+    updateClause,
+    options)
+    .then((updatedTicker) => {
+      if (updatedTicker === null)
+        return Promise.reject('UserError: Ticker not found');
+
+      return Promise.resolve(updatedTicker);
+    })
+    .catch((err) => {
+      return Promise.reject(err);
+    });
+};
