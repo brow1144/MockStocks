@@ -5,14 +5,7 @@ import StockCard from '../Components/StockCard'
 
 import '../Static/CSS/StockList.css'
 
-import axios from 'axios';
-
 class StockList extends Component {
-
-
-  getWatchlist = () => {
-    axios.get('/Portfol.io/Watchlist/:uid');
-  }
 
 
   render() { 
@@ -24,6 +17,15 @@ class StockList extends Component {
                 <CardTitle stlyle={{borderBottom: '2px solid whitesmoke'}} >Watchlist</CardTitle>
                 <hr className='hr'/>
               </div>
+
+            {this.props.watchlist.map((stock, key) => {
+              return (
+                <div>
+                  <StockCard stockTicker={stock.symbol} stockChange={stock.changePercent}/>
+                </div>
+              )
+            })}
+
               <StockCard stockTicker={'AAPL'} stockChange={'+0.68%'}/> <hr className='hr'/>
               <StockCard stockTicker={'MSFT'} stockChange={'-0.15%'}/> <hr className='hr'/>
               <StockCard stockTicker={'DVMT'} stockChange={'+2.58%'}/> <hr className='hr'/>
