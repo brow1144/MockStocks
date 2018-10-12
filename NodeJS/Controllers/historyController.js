@@ -85,8 +85,6 @@ export async function runSchedulers() {
       // end of user
       }
     }
-
-    //console.log(stockMap);
   } catch (error) {
     console.log(error);
   }
