@@ -1,6 +1,6 @@
 import bodyParser from 'body-parser';
 import {parseError, buildResponse} from '../utilities/controllerFunctions';
-import {getUser, createUser, getUserGame, getUserWatchlist, insertToUserWatchlist, getValueHistory} from '../Models/userDAO';
+import {getUser, createUser, getUserGame, getUserWatchlist, insertToUserWatchlist, getValueHistory, removeFromUserWatchlist} from '../Models/userDAO';
 
 export default (app) => {
   app.post('/Portfol.io/CreateAccount', async (req, res) => {
@@ -38,6 +38,18 @@ export default (app) => {
     let data;
     try {
       data = await insertToUserWatchlist(req.params.uid, req.params.stockSymbol);
+    } catch (err) {
+      data = {error: parseError(err)};
+    }
+
+    buildResponse(res, data);
+  });
+
+  // insert to a user's watchlist
+  app.delete('/Portfol.io/Watchlist/:uid/:stockSymbol', async (req, res) => {
+    let data;
+    try {
+      data = await removeFromUserWatchlist(req.params.uid, req.params.stockSymbol);
     } catch (err) {
       data = {error: parseError(err)};
     }
