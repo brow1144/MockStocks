@@ -2,11 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="33c2180c-a31c-4e2a-a645-035ef9b7627f" name="Default" comment="">
-      <change beforePath="" afterPath="$PROJECT_DIR$/ReactJS/src/Components/Games/Leaderboard.test.js" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change beforePath="$PROJECT_DIR$/ReactJS/src/Components/Games/GameList.test.js" afterPath="$PROJECT_DIR$/ReactJS/src/Components/Games/GameList.test.js" />
-      <change beforePath="$PROJECT_DIR$/ReactJS/src/Components/Games/Leaderboard.js" afterPath="$PROJECT_DIR$/ReactJS/src/Components/Games/Leaderboard.js" />
-      <change beforePath="$PROJECT_DIR$/ReactJS/src/Pages/Games.js" afterPath="$PROJECT_DIR$/ReactJS/src/Pages/Games.js" />
+      <change beforePath="$PROJECT_DIR$/ReactJS/src/Components/Games/CreateGame.js" afterPath="$PROJECT_DIR$/ReactJS/src/Components/Games/CreateGame.js" />
+      <change beforePath="$PROJECT_DIR$/ReactJS/src/Components/Games/UpdateGame.js" afterPath="$PROJECT_DIR$/ReactJS/src/Components/Games/UpdateGame.js" />
+      <change beforePath="$PROJECT_DIR$/ReactJS/src/Components/StockList.js" afterPath="$PROJECT_DIR$/ReactJS/src/Components/StockList.js" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -62,26 +61,22 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="Games.test.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/ReactJS/src/Pages/Games.test.js">
+      <file leaf-file-name="Games.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/ReactJS/src/Pages/Games.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="252">
-              <caret line="15" column="2" lean-forward="false" selection-start-line="15" selection-start-column="2" selection-end-line="15" selection-end-column="2" />
-              <folding>
-                <element signature="e#0#26#0" expanded="true" />
-              </folding>
+            <state relative-caret-position="4058">
+              <caret line="461" column="0" lean-forward="false" selection-start-line="461" selection-start-column="0" selection-end-line="461" selection-end-column="0" />
+              <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Home.test.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/ReactJS/src/Pages/Home.test.js">
+      <file leaf-file-name="Home.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/ReactJS/src/Pages/Home.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="753">
-              <caret line="51" column="36" lean-forward="false" selection-start-line="51" selection-start-column="36" selection-end-line="51" selection-end-column="48" />
-              <folding>
-                <element signature="e#0#26#0" expanded="true" />
-              </folding>
+            <state relative-caret-position="571">
+              <caret line="157" column="17" lean-forward="false" selection-start-line="157" selection-start-column="11" selection-end-line="157" selection-end-column="17" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -89,8 +84,18 @@
       <file leaf-file-name="GamesList.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/ReactJS/src/Components/Games/GamesList.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="273">
-              <caret line="13" column="4" lean-forward="true" selection-start-line="13" selection-start-column="4" selection-end-line="13" selection-end-column="4" />
+            <state relative-caret-position="391">
+              <caret line="24" column="28" lean-forward="false" selection-start-line="24" selection-start-column="28" selection-end-line="24" selection-end-column="28" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="StockList.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/ReactJS/src/Components/StockList.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="578">
+              <caret line="34" column="41" lean-forward="false" selection-start-line="34" selection-start-column="41" selection-end-line="34" selection-end-column="41" />
               <folding>
                 <element signature="e#0#38#0" expanded="true" />
               </folding>
@@ -98,33 +103,53 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Games.js" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/ReactJS/src/Pages/Games.js">
+      <file leaf-file-name="UpdateGame.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/ReactJS/src/Components/Games/UpdateGame.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="501">
-              <caret line="276" column="21" lean-forward="true" selection-start-line="276" selection-start-column="21" selection-end-line="276" selection-end-column="21" />
+            <state relative-caret-position="-221">
+              <caret line="22" column="0" lean-forward="false" selection-start-line="22" selection-start-column="0" selection-end-line="22" selection-end-column="0" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Leaderboard.test.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/ReactJS/src/Components/Games/Leaderboard.test.js">
+      <file leaf-file-name="CreateGame.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/ReactJS/src/Components/Games/CreateGame.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="399">
-              <caret line="20" column="40" lean-forward="false" selection-start-line="20" selection-start-column="40" selection-end-line="20" selection-end-column="40" />
+            <state relative-caret-position="200">
+              <caret line="141" column="22" lean-forward="true" selection-start-line="141" selection-start-column="22" selection-end-line="141" selection-end-column="22" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="gameController.js" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/NodeJS/Controllers/gameController.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="323">
+              <caret line="19" column="13" lean-forward="true" selection-start-line="19" selection-start-column="13" selection-end-line="19" selection-end-column="13" />
               <folding>
-                <element signature="e#0#26#0" expanded="true" />
+                <element signature="e#0#37#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Leaderboard.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/ReactJS/src/Components/Games/Leaderboard.js">
+      <file leaf-file-name="gameDAO.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/NodeJS/Models/gameDAO.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="858">
-              <caret line="54" column="25" lean-forward="true" selection-start-line="54" selection-start-column="25" selection-end-line="54" selection-end-column="25" />
+            <state relative-caret-position="34">
+              <caret line="4" column="4" lean-forward="true" selection-start-line="4" selection-start-column="4" selection-end-line="4" selection-end-column="4" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="StockCard.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/ReactJS/src/Components/StockCard.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="0">
+              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
               <folding>
                 <element signature="e#0#38#0" expanded="true" />
               </folding>
@@ -147,6 +172,9 @@
       <find>threeMonths</find>
       <find>all</find>
       <find>user</find>
+      <find>stockl</find>
+      <find>floor</find>
+      <find>dupl</find>
     </findStrings>
     <replaceStrings>
       <replace />
@@ -180,6 +208,9 @@
         <option value="$PROJECT_DIR$/ReactJS/src/Components/Games/Leaderboard.test.js" />
         <option value="$PROJECT_DIR$/ReactJS/src/Pages/Games.js" />
         <option value="$PROJECT_DIR$/ReactJS/src/Components/Games/Leaderboard.js" />
+        <option value="$PROJECT_DIR$/ReactJS/src/Components/StockList.js" />
+        <option value="$PROJECT_DIR$/ReactJS/src/Components/Games/UpdateGame.js" />
+        <option value="$PROJECT_DIR$/ReactJS/src/Components/Games/CreateGame.js" />
       </list>
     </option>
   </component>
@@ -207,7 +238,7 @@
     </packageJsonPaths>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="953" />
+    <option name="x" value="-7" />
     <option name="width" value="974" />
     <option name="height" value="1047" />
   </component>
@@ -248,50 +279,6 @@
     </navigator>
     <panes>
       <pane id="Scratches" />
-      <pane id="ProjectPane">
-        <subPane>
-          <expand>
-            <path>
-              <item name="Portfol.io" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Portfol.io" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="Portfol.io" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Portfol.io" type="462c0819:PsiDirectoryNode" />
-              <item name="ReactJS" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="Portfol.io" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Portfol.io" type="462c0819:PsiDirectoryNode" />
-              <item name="ReactJS" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="Portfol.io" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Portfol.io" type="462c0819:PsiDirectoryNode" />
-              <item name="ReactJS" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="Components" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="Portfol.io" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Portfol.io" type="462c0819:PsiDirectoryNode" />
-              <item name="ReactJS" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="Components" type="462c0819:PsiDirectoryNode" />
-              <item name="Games" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="Portfol.io" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Portfol.io" type="462c0819:PsiDirectoryNode" />
-              <item name="ReactJS" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="Pages" type="462c0819:PsiDirectoryNode" />
-            </path>
-          </expand>
-          <select />
-        </subPane>
-      </pane>
       <pane id="Scope">
         <subPane subId="Scope 'Project Files'; set:Project Files; class com.intellij.psi.search.scope.ProjectFilesScope">
           <expand>
@@ -357,6 +344,74 @@
           <select />
         </subPane>
       </pane>
+      <pane id="ProjectPane">
+        <subPane>
+          <expand>
+            <path>
+              <item name="Portfol.io" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Portfol.io" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Portfol.io" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Portfol.io" type="462c0819:PsiDirectoryNode" />
+              <item name="NodeJS" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Portfol.io" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Portfol.io" type="462c0819:PsiDirectoryNode" />
+              <item name="NodeJS" type="462c0819:PsiDirectoryNode" />
+              <item name="Controllers" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Portfol.io" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Portfol.io" type="462c0819:PsiDirectoryNode" />
+              <item name="NodeJS" type="462c0819:PsiDirectoryNode" />
+              <item name="Models" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Portfol.io" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Portfol.io" type="462c0819:PsiDirectoryNode" />
+              <item name="ReactJS" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Portfol.io" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Portfol.io" type="462c0819:PsiDirectoryNode" />
+              <item name="ReactJS" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Portfol.io" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Portfol.io" type="462c0819:PsiDirectoryNode" />
+              <item name="ReactJS" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="Components" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Portfol.io" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Portfol.io" type="462c0819:PsiDirectoryNode" />
+              <item name="ReactJS" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="Components" type="462c0819:PsiDirectoryNode" />
+              <item name="Games" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Portfol.io" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Portfol.io" type="462c0819:PsiDirectoryNode" />
+              <item name="ReactJS" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="Pages" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Portfol.io" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Portfol.io" type="462c0819:PsiDirectoryNode" />
+              <item name="ReactJS" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="Static" type="462c0819:PsiDirectoryNode" />
+            </path>
+          </expand>
+          <select />
+        </subPane>
+      </pane>
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -403,17 +458,18 @@
       <workItem from="1537494443429" duration="3456000" />
       <workItem from="1538165420395" duration="8020000" />
       <workItem from="1538853023005" duration="9498000" />
+      <workItem from="1539306228290" duration="3136000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="46076000" />
+    <option name="totallyTimeSpent" value="49212000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-9" y="-9" width="1938" height="1098" extended-state="6" />
+    <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.18697916" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.09322917" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Docker" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="false" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="10" side_tool="true" content_ui="tabs" />
@@ -443,21 +499,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/ReactJS/src/Pages/SignIn.test.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="459">
-          <caret line="27" column="59" lean-forward="true" selection-start-line="27" selection-start-column="59" selection-end-line="27" selection-end-column="59" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/NodeJS/Models/testMongo.js" />
-    <entry file="file://$PROJECT_DIR$/NodeJS/Models/stockDAO.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="170">
-          <caret line="10" column="17" lean-forward="false" selection-start-line="10" selection-start-column="17" selection-end-line="10" selection-end-column="17" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/ReactJS/src/Pages/SignIn.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="51">
@@ -573,7 +614,7 @@
         <state relative-caret-position="252">
           <caret line="13" column="36" lean-forward="false" selection-start-line="13" selection-start-column="36" selection-end-line="13" selection-end-column="36" />
           <folding>
-            <element signature="e#0#38#0" expanded="true" />
+            <element signature="e#0#38#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -636,25 +677,11 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/ReactJS/src/Pages/StockPage.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="228">
-          <caret line="24" column="24" lean-forward="false" selection-start-line="24" selection-start-column="24" selection-end-line="24" selection-end-column="24" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/NodeJS/Controllers/controller.js" />
     <entry file="file://$PROJECT_DIR$/ReactJS/src/Pages/CreateUser.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="609">
           <caret line="69" column="13" lean-forward="false" selection-start-line="63" selection-start-column="12" selection-end-line="69" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/ReactJS/src/Pages/Home.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="168">
-          <caret line="70" column="8" lean-forward="false" selection-start-line="70" selection-start-column="8" selection-end-line="70" selection-end-column="8" />
         </state>
       </provider>
     </entry>
@@ -687,16 +714,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/NodeJS/Models/gameDAO.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="521">
-          <caret line="31" column="0" lean-forward="false" selection-start-line="31" selection-start-column="0" selection-end-line="31" selection-end-column="0" />
-          <folding>
-            <element signature="e#0#32#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/NodeJS/Controllers/userController.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="567">
@@ -711,29 +728,29 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/ReactJS/src/Components/Games/UpdateGame.js">
+    <entry file="file://$PROJECT_DIR$/ReactJS/src/Components/Games/GameList.test.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="210">
-          <caret line="21" column="20" lean-forward="false" selection-start-line="21" selection-start-column="20" selection-end-line="21" selection-end-column="20" />
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="42" selection-end-column="3" />
           <folding>
-            <element signature="e#0#38#0" expanded="false" />
+            <element signature="e#0#26#0" expanded="false" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/ReactJS/src/Components/Games/CreateGame.js">
+    <entry file="file://$PROJECT_DIR$/ReactJS/src/Components/Games/Leaderboard.test.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="282">
-          <caret line="90" column="27" lean-forward="false" selection-start-line="90" selection-start-column="27" selection-end-line="90" selection-end-column="27" />
+        <state relative-caret-position="289">
+          <caret line="20" column="40" lean-forward="false" selection-start-line="20" selection-start-column="40" selection-end-line="20" selection-end-column="40" />
           <folding>
-            <element signature="e#0#38#0" expanded="false" />
+            <element signature="e#0#26#0" expanded="false" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/ReactJS/src/Pages/Games.test.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="252">
+        <state relative-caret-position="17">
           <caret line="15" column="2" lean-forward="false" selection-start-line="15" selection-start-column="2" selection-end-line="15" selection-end-column="2" />
           <folding>
             <element signature="e#0#26#0" expanded="true" />
@@ -743,7 +760,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/ReactJS/src/Pages/Home.test.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="753">
+        <state relative-caret-position="482">
           <caret line="51" column="36" lean-forward="false" selection-start-line="51" selection-start-column="36" selection-end-line="51" selection-end-column="48" />
           <folding>
             <element signature="e#0#26#0" expanded="true" />
@@ -751,51 +768,99 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/ReactJS/src/Components/Games/GameList.test.js">
+    <entry file="file://$PROJECT_DIR$/ReactJS/src/Pages/Games.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="42" selection-end-column="3" />
-          <folding>
-            <element signature="e#0#26#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/ReactJS/src/Components/Games/GamesList.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="273">
-          <caret line="13" column="4" lean-forward="true" selection-start-line="13" selection-start-column="4" selection-end-line="13" selection-end-column="4" />
-          <folding>
-            <element signature="e#0#38#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/ReactJS/src/Components/Games/Leaderboard.test.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="399">
-          <caret line="20" column="40" lean-forward="false" selection-start-line="20" selection-start-column="40" selection-end-line="20" selection-end-column="40" />
-          <folding>
-            <element signature="e#0#26#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="4058">
+          <caret line="461" column="0" lean-forward="false" selection-start-line="461" selection-start-column="0" selection-end-line="461" selection-end-column="0" />
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/ReactJS/src/Components/Games/Leaderboard.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="858">
-          <caret line="54" column="25" lean-forward="true" selection-start-line="54" selection-start-column="25" selection-end-line="54" selection-end-column="25" />
+        <state relative-caret-position="853">
+          <caret line="56" column="25" lean-forward="false" selection-start-line="56" selection-start-column="25" selection-end-line="56" selection-end-column="25" />
+          <folding>
+            <element signature="e#0#38#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ReactJS/src/Pages/StockPage.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1816">
+          <caret line="24" column="22" lean-forward="true" selection-start-line="24" selection-start-column="22" selection-end-line="24" selection-end-column="22" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ReactJS/src/Pages/Home.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="571">
+          <caret line="157" column="17" lean-forward="false" selection-start-line="157" selection-start-column="11" selection-end-line="157" selection-end-column="17" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ReactJS/src/Components/Games/GamesList.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="391">
+          <caret line="24" column="28" lean-forward="false" selection-start-line="24" selection-start-column="28" selection-end-line="24" selection-end-column="28" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ReactJS/src/Components/StockCard.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
             <element signature="e#0#38#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/ReactJS/src/Pages/Games.js">
+    <entry file="file://$PROJECT_DIR$/ReactJS/src/Components/StockList.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="501">
-          <caret line="276" column="21" lean-forward="true" selection-start-line="276" selection-start-column="21" selection-end-line="276" selection-end-column="21" />
+        <state relative-caret-position="578">
+          <caret line="34" column="41" lean-forward="false" selection-start-line="34" selection-start-column="41" selection-end-line="34" selection-end-column="41" />
+          <folding>
+            <element signature="e#0#38#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ReactJS/src/Components/Games/UpdateGame.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-221">
+          <caret line="22" column="0" lean-forward="false" selection-start-line="22" selection-start-column="0" selection-end-line="22" selection-end-column="0" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ReactJS/src/Components/Games/CreateGame.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="200">
+          <caret line="141" column="22" lean-forward="true" selection-start-line="141" selection-start-column="22" selection-end-line="141" selection-end-column="22" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/NodeJS/Models/gameDAO.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="34">
+          <caret line="4" column="4" lean-forward="true" selection-start-line="4" selection-start-column="4" selection-end-line="4" selection-end-column="4" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/NodeJS/Controllers/gameController.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="323">
+          <caret line="19" column="13" lean-forward="true" selection-start-line="19" selection-start-column="13" selection-end-line="19" selection-end-column="13" />
+          <folding>
+            <element signature="e#0#37#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

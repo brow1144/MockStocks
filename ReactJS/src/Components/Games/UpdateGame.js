@@ -20,6 +20,7 @@ class UpdateGame extends Component {
       game_name: "",
       starting_amount: 0,
       trade_limit: 0
+
     };
 
   }

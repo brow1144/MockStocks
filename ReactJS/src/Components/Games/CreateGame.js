@@ -144,7 +144,7 @@ class CreateGame extends Component {
       }).catch((error) => {
       if (error.response && error.response.data) {
         console.log(error.response.data.error);
-        if (error.response.data.error.message.errmsg.includes("duplicate")) {
+        if (error.response.data.error.message.errmsg && error.response.data.error.message.errmsg.includes("duplicate")) {
             self.createIt();
         }
       } else {
