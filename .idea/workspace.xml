@@ -1,12 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="33c2180c-a31c-4e2a-a645-035ef9b7627f" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/NodeJS/Controllers/scheduler.js" beforeDir="false" afterPath="$PROJECT_DIR$/NodeJS/Controllers/scheduler.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/NodeJS/Models/gameDAO.js" beforeDir="false" afterPath="$PROJECT_DIR$/NodeJS/Models/gameDAO.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/NodeJS/Models/userDAO.js" beforeDir="false" afterPath="$PROJECT_DIR$/NodeJS/Models/userDAO.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/NodeJS/utilities/MongooseSchemas.js" beforeDir="false" afterPath="$PROJECT_DIR$/NodeJS/utilities/MongooseSchemas.js" afterDir="false" />
-    </list>
+    <list default="true" id="33c2180c-a31c-4e2a-a645-035ef9b7627f" name="Default" comment="" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -17,7 +12,7 @@
     <session id="1100487319">
       <usages-collector id="statistics.lifecycle.project">
         <counts>
-          <entry key="project.closed" value="7" />
+          <entry key="project.closed" value="8" />
           <entry key="project.open.time.40" value="1" />
           <entry key="project.open.time.44" value="1" />
           <entry key="project.open.time.47" value="1" />
@@ -381,11 +376,10 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="64764000" />
+    <option name="totallyTimeSpent" value="64795000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="689" y="0" width="1231" height="1040" extended-state="0" />
-    <editor active="true" />
     <layout>
       <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.20117351" />
       <window_info id="Structure" order="1" weight="0.25" />

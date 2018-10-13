@@ -20,18 +20,18 @@ export function runSchedules() {
     clearCounters(true);
   });
 
-  // let checkGames = schedule.scheduleJob('00 00 * * *', () => {
-  //   checkActiveGames();
-  // });
+  let checkGames = schedule.scheduleJob('00 00 * * *', () => {
+    checkActiveGames();
+  });
 
   let clearWeeklyCounters = schedule.scheduleJob('00 00 * * 00', () => {
     clearCounters(false);
   });
 
   // runs every minute for testing purposes
-  let test = schedule.scheduleJob('* * * * *', () => {
-    checkActiveGames();
-  });
+  // let test = schedule.scheduleJob('* * * * *', () => {
+  //   checkActiveGames();
+  // });
 }
 
 const checkActiveGames = () => {
@@ -41,7 +41,6 @@ const checkActiveGames = () => {
         if (game.end_time < new Date() && !game.completed) {
           _.forEach(game.active_players, (player) => {
             makeGameInactive(player, game);
-            console.error(game.name);
           });
         }
 
