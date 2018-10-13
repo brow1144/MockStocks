@@ -129,6 +129,33 @@ export function getTicker(name) {
     })
 }
 
+export async function getTrendingStocks(timePeriod){
+  let tickers;
+  try {
+    tickers = await getTickers();
+    tickers = tickers.toObject().tickers;
+  } catch (error) {
+    return Promise.reject(error);
+  }
+
+  if(timePeriod === 'day'){
+    tickers.sort(sortByDaily());
+    let topTen = new Array();
+    for(let i = 0; i < 10; i++){
+      topTen.push(tickers[i]);
+    }
+    return topTen;
+  }
+
+
+}
+
+function sortByDaily(){
+  return function(a, b) {
+    return b.dailyBuyCount - a.dailyBuyCount;
+  }
+}
+
 export async function updateTickerBuy(name, quantity) {
   let ticker;
 
