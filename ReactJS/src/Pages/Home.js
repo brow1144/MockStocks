@@ -21,6 +21,7 @@ class Home extends Component {
 
     this.state = {
       stockData: [],
+      watchlist: [],
       currentPrice: 0,
       visible: false,
       visibleData: false,
@@ -30,6 +31,7 @@ class Home extends Component {
 
   componentWillMount() {
     this.getData();
+    this.fetchWatchlist();
   }
 
   showDataFromAPI = (stockData) => {
@@ -83,6 +85,58 @@ class Home extends Component {
     }, () => this.getData());
 
   };
+
+  fetchWatchlist = () => {
+    let self = this;
+    axios.get(`http://localhost:8080/Portfol.io/Watchlist/${this.props.uid}`)
+      .then(function (response) {
+        // handle success
+        let watchlist = response.data;
+
+        if (watchlist.length !== 0) {
+          // Set up the game data
+          self.setWatchlist(watchlist);
+
+        } else { // No watchlist return
+          // Get the current user's email
+          axios.get(`http://localhost:8080/Portfol.io/${self.props.uid}`)
+            .then(function (response) {
+              // handle success
+              let user = response.data;
+
+              self.setState({
+                email: user.email,
+              })
+
+            }).catch(function (err) {
+            console.log("Cannot get watchlist for the current user");
+
+            if (err.response && err.response.data)
+              console.log(err.response.data.error);
+            else
+              console.log(err);
+          })
+        }
+      })
+      .catch(function (error) {
+        // handle error
+        console.log(`Oh no! Our API didn't respond. Please refresh and try again`)
+        console.log(`Btw here is the error message\n\n`)
+
+        if (error.response && error.response.data)
+          console.log(error.response.data.error);
+        else
+          console.log(error);
+      })
+  }
+
+  setWatchlist = (watchlist) => {
+    let self = this;
+    console.log("got eem");
+    self.setState({
+      watchlist: watchlist,
+    })
+  }
 
   render() {
 
@@ -155,7 +209,7 @@ class Home extends Component {
         </Col>
         <Col md='1'/>
         <Col style={{paddingTop: '6em'}} md='2'>
-          <StockList />
+          <StockList watchlist={this.state.watchlist} />
         </Col>
 
         <Col md='1'/>

@@ -10,6 +10,7 @@ class StockCard extends Component {
       <div>
         <p className='inline'>{this.props.stockTicker}</p>
         <p className='inline percentage'>{this.props.stockChange}</p>
+        <p className='inline percentage'>${this.props.close}</p>
       </div>
     );
   }
