@@ -90,7 +90,7 @@ class Home extends Component {
     
     //TODO If no game, don't show graph
 
-    if (this.props.curretGame !== {}) {
+    if (this.props.curretGame !== {} && this.props.currentGame !== null && this.props.currentGame !== undefined) {
       axios.get(`http://localhost:8080/Portfol.io/Games/History/${this.props.uid}/${this.props.currentGame.code}`)
       .then((response) => {
         // handle success
