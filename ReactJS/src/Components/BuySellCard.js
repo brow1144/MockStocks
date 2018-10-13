@@ -23,6 +23,10 @@ class BuySellCard extends Component {
     }
   }
 
+  componentWillMount() {
+    this.fetchWatchlist();
+  }
+
   updateCost = (ev) => {
     if (ev.target.value < 0) {
       this.setState({cost: 0, finalPrice: 0})
@@ -157,13 +161,13 @@ class BuySellCard extends Component {
 
   isWatching =()=>{
     for (let k in this.state.watchlist) {
-      if (this.state.watchlist.hasOwnProperty(k)) {
+      console.log(this.props.stock)
+      console.log(this.state.watchlist[k].symbol)
         if (this.state.watchlist[k].symbol === this.props.stock) {
-          return this.props.stock.symbol === this.state.watchlist[k].symbol;
+          return true;
         }
-      }
     }
-
+    return false;
   }
 
   toggle = () => {
@@ -204,9 +208,10 @@ class BuySellCard extends Component {
             :
               <Sell gameData={this.props.gameData} sellStock={this.sellStock} currentPriceFor={this.props.currentPriceFor} updateCost={this.updateCost} cost={this.state.cost} finalPrice={this.state.finalPrice}/>
             }
-            {this.isWatching()
+
+            {!this.isWatching()
               ?<Button color="blue" onClick={this.watchStock} block>
-              +Add to watchlist
+                +Add to watchlist
               </Button>
 
               :<Button color="red" onClick={this.removeStock} block>
