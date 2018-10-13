@@ -64,6 +64,16 @@ class StockPage extends Component {
       .then((response) => {
         // handle success
         let stockData = response.data;
+        // let prev = 0
+        // for (let i in stockData) {
+        //   console.log(stockData[i].x)
+        //   console.log(prev)
+        //   if (stockData[i].x > prev) {
+        //     console.log("Out of Order!")
+        //     // return
+        //   }
+        //   prev = stockData[i].x
+        // }
         this.showDataFromAPI(stockData);
       })
       .catch((error) => {
