@@ -209,7 +209,7 @@ class BuySellCard extends Component {
               +Add to watchlist
               </Button>
 
-              :<Button color="red" onClick={this.removeStock()} block>
+              :<Button color="red" onClick={this.removeStock} block>
                 -Remove from watchlist
               </Button>
             }
