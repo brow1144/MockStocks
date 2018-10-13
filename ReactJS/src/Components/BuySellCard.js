@@ -20,11 +20,13 @@ class BuySellCard extends Component {
       selected: 'buy',
       modal: false,
       errorMessage: '',
+      watching: true
     }
   }
 
   componentWillMount() {
     this.fetchWatchlist();
+    this.isWatching();
   }
 
   updateCost = (ev) => {
@@ -84,10 +86,16 @@ class BuySellCard extends Component {
 
   watchStock =()=>{
     axios.post(`http://localhost:8080/Portfol.io/Watchlist/${this.props.uid}/${this.props.stock}`);
+    this.setState({
+      watching: !this.state.watching
+    })
   }
 
   removeStock =()=>{
     axios.delete(`http://localhost:8080/Portfol.io/Watchlist/${this.props.uid}/${this.props.stock}`);
+    this.setState({
+      watching: !this.state.watching
+    })
   }
 
   fetchWatchlist = () => {
@@ -100,7 +108,7 @@ class BuySellCard extends Component {
         if (watchlist.length !== 0) {
           // Set up the game data
           self.setWatchlist(watchlist);
-
+          self.isWatching();
         } else { // No watchlist return
           // Get the current user's email
           axios.get(`http://localhost:8080/Portfol.io/${self.props.uid}`)
@@ -160,13 +168,20 @@ class BuySellCard extends Component {
   }
 
   isWatching =()=>{
+    let self = this;
+    console.log(this.state.watchlist)
     for (let k in this.state.watchlist) {
-      console.log(this.props.stock)
-      console.log(this.state.watchlist[k].symbol)
+      console.log("trying")
         if (this.state.watchlist[k].symbol === this.props.stock) {
+          self.setState({
+            watching: true
+          })
           return true;
         }
     }
+    self.setState({
+      watching: false
+    })
     return false;
   }
 
@@ -209,7 +224,7 @@ class BuySellCard extends Component {
               <Sell gameData={this.props.gameData} sellStock={this.sellStock} currentPriceFor={this.props.currentPriceFor} updateCost={this.updateCost} cost={this.state.cost} finalPrice={this.state.finalPrice}/>
             }
 
-            {!this.isWatching()
+            {!this.state.watching
               ?<Button color="blue" onClick={this.watchStock} block>
                 +Add to watchlist
               </Button>
