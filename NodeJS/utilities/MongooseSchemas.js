@@ -9,7 +9,8 @@ export const gameSchema = new mongoose.Schema({
   trade_limit: Number,
   start_time: Date,
   end_time: Date,
-  active_players: Array
+  active_players: Array,
+  completed: Boolean
 });
 
 export const userSchema = new mongoose.Schema({

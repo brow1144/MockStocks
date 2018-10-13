@@ -13,6 +13,7 @@ export function createGame(game) {
   }
 
   game.starting_amount = parseFloat(parseFloat(game.starting_amount).toFixed(2));
+  game.completed = false;
 
   return gameModel.create(game)
     .then((res) => {
@@ -150,5 +151,14 @@ export function getAllGames() {
     })
     .catch((err) => {
       return Promise.reject(err);
+    });
+}
+
+export function completeGame(gameCode) {
+  return gameModel.findOneAndUpdate(
+    {code: gameCode},
+    {'completed': true})
+    .catch((err) => {
+      console.error(err);
     });
 }

@@ -1,8 +1,9 @@
 import schedule from 'node-schedule';
 import {tickerModel} from '../utilities/MongooseModels';
-import {getAllUsers, updateValueHistory, clearValueHistory} from '../Models/userDAO';
+import {getAllUsers, updateValueHistory, clearValueHistory, makeGameInactive} from '../Models/userDAO';
 import {getStockBatch, getTickers} from '../Models/stockDAO';
-import {getAllGames} from "../Models/gameDAO";
+import {completeGame, getAllGames} from "../Models/gameDAO";
+import _ from 'lodash';
 
 export function runSchedules() {
   // update portofolio values every weekday at 9:30 am
@@ -37,11 +38,14 @@ const checkActiveGames = () => {
   getAllGames()
     .then((games) => {
       _.forEach(games, (game) => {
-        if (game.end_time < new Date()) {
+        if (game.end_time < new Date() && !game.completed) {
           _.forEach(game.active_players, (player) => {
-
+            makeGameInactive(player, game);
+            console.error(game.name);
           });
         }
+
+        completeGame(game.code);
       });
     })
     .catch((err) => {

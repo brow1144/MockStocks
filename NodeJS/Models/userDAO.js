@@ -104,7 +104,7 @@ export function leaveGame(uid, gameCode) {
     });
 }
 
-export function makeGameInactive(uid, gameCode) {
+export function makeGameInactive(uid, game) {
   const options = {
     new: true,
     passRawResult: true
@@ -112,7 +112,7 @@ export function makeGameInactive(uid, gameCode) {
 
   return userModel.findOneAndUpdate(
     {_id: uid},
-    {'$pull': {'active_games': {'code': gameCode}}},
+    {'$pull': {'active_games': {'code': game.code}}, '$push': {'completed_games': game}},
     options)
     .then((updatedUser) => {
       if (updatedUser === null)
