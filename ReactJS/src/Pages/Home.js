@@ -34,12 +34,19 @@ class Home extends Component {
     this.fetchWatchlist();
   }
 
+  componentWillReceiveProps(props) {
+    const { currentGame } = this.props;
+
+    this.stateGetData(this.props.currentGame);
+  }
+
   showDataFromAPI = (stockData) => {
+
     let withCommas = Number(parseFloat(stockData[stockData.length-1]['y']).toFixed(2)).toLocaleString('en');
 
     this.setState({visible: false})
 
-    if (Object.keys(stockData).length < 5) {
+    if ((stockData).length < 5) {
       this.setState({visibleData: true})
     } else {
       this.setState({
@@ -48,11 +55,14 @@ class Home extends Component {
         currentPriceFor: withCommas
       })
     }
-  }
+  } 
 
-  getData() {
+  stateGetData = (game) => {
     let self = this;
-    axios.get(`http://localhost:8080/Portfol.io/Stock/MSFT/${this.state.selected}`)
+    
+    //TODO If no game, don't show graph
+  
+      axios.get(`http://localhost:8080/Portfol.io/Games/History/${this.props.uid}/${game.code}`)
       .then((response) => {
         // handle success
         let stockData = response.data;
@@ -72,7 +82,59 @@ class Home extends Component {
         // console.log(`Btw here is the error message\n\n`);
         // console.log(error);
       })
+    
   }
+
+  getData = () => {
+    let self = this;
+    
+    //TODO If no game, don't show graph
+
+    if (this.props.curretGame !== {}) {
+      axios.get(`http://localhost:8080/Portfol.io/Games/History/${this.props.uid}/${this.props.currentGame.code}`)
+      .then((response) => {
+        // handle success
+        let stockData = response.data;
+        this.showDataFromAPI(stockData);
+      })
+      .catch((error) => {
+        // handle error
+
+        self.setState({visible: true})
+
+        console.log(`Oh no! Our API didn't respond. Please refresh and try again`);
+
+        if (error.response && error.response.data)
+          console.log(error.response.data.error);
+        else
+          console.log(error);
+        // console.log(`Btw here is the error message\n\n`);
+        // console.log(error);
+      })
+    }
+  }
+
+  //   axios.get(`http://localhost:8080/Portfol.io/Stock/MSFT/${this.state.selected}`)
+  //     .then((response) => {
+  //       // handle success
+  //       let stockData = response.data;
+  //       this.showDataFromAPI(stockData);
+  //     })
+  //     .catch((error) => {
+  //       // handle error
+
+  //       self.setState({visible: true})
+
+  //       console.log(`Oh no! Our API didn't respond. Please refresh and try again`);
+
+  //       if (error.response && error.response.data)
+  //         console.log(error.response.data.error);
+  //       else
+  //         console.log(error);
+  //       // console.log(`Btw here is the error message\n\n`);
+  //       // console.log(error);
+  //     })
+  // }
 
   onDismiss = () => {
     this.setState({ visible: false })
@@ -132,7 +194,7 @@ class Home extends Component {
 
   setWatchlist = (watchlist) => {
     let self = this;
-    console.log("got eem");
+    // console.log("got eem");
     self.setState({
       watchlist: watchlist,
     })
@@ -149,7 +211,7 @@ class Home extends Component {
         }
       },
       series: [{
-          name: 'MSFT',
+          // name: 'MSFT',
           data: this.state.stockData,
       }],
       xAxis: {
@@ -193,18 +255,19 @@ class Home extends Component {
           {errorMessage}
           {notEnoughData}
 
-          <b id='day' onClick={() => this.handleTimeChange('Day')} className={`timeFrame ${this.state.selected === 'Day' ? 'selected' : ''}`}>1D</b>
+          {/* <b id='day' onClick={() => this.handleTimeChange('Day')} className={`timeFrame ${this.state.selected === 'Day' ? 'selected' : ''}`}>1D</b>
           <b id='month' onClick={() => this.handleTimeChange('Month')} className={`timeFrame ${this.state.selected === 'Month' ? 'selected' : ''}`}>1M</b>
           <b id='triMonth' onClick={() => this.handleTimeChange('TriMonth')} className={`timeFrame ${this.state.selected === 'TriMonth' ? 'selected' : ''}`}>3M</b>
           <b id='year' onClick={() => this.handleTimeChange('Year')} className={`timeFrame ${this.state.selected === 'Year' ? 'selected' : ''}`}>1Y</b>
-          <b id='all' onClick={() => this.handleTimeChange('All')} className={`timeFrame ${this.state.selected === 'All' ? 'selected' : ''}`}>All</b>
-
+          <b id='all' onClick={() => this.handleTimeChange('All')} className={`timeFrame ${this.state.selected === 'All' ? 'selected' : ''}`}>All</b> */}
+   
           <HighchartsReact
             className='highcharts-container'
             highcharts={Highcharts}
             constructorType={'stockChart'}
             options={stockOptions}
           />
+         
 
         </Col>
         <Col md='1'/>
