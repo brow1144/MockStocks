@@ -83,7 +83,7 @@ class BuySellCard extends Component {
   }
 
   removeStock =()=>{
-    axios.post(`http://localhost:8080/Portfol.io/Watchlist/${this.props.uid}/${this.props.stock}`);
+    axios.delete(`http://localhost:8080/Portfol.io/Watchlist/${this.props.uid}/${this.props.stock}`);
   }
 
   fetchWatchlist = () => {
