@@ -28,26 +28,26 @@ export function runSchedules() {
   });
 
   // runs every minute for testing purposes
-  // let test = schedule.scheduleJob('* * * * *', () => {
-  //   checkActiveGames();
-  // });
+  let test = schedule.scheduleJob('* * * * *', () => {
+    checkActiveGames();
+  });
 }
 
-// const checkActiveGames = () => {
-//   getAllGames()
-//     .then((games) => {
-//       _.forEach(games, (game) => {
-//         if (game.end_time < new Date()) {
-//           _.forEach(game.active_players, (player) => {
-//
-//           });
-//         }
-//       });
-//     })
-//     .catch((err) => {
-//       console.error(err)
-//     });
-// };
+const checkActiveGames = () => {
+  getAllGames()
+    .then((games) => {
+      _.forEach(games, (game) => {
+        if (game.end_time < new Date()) {
+          _.forEach(game.active_players, (player) => {
+
+          });
+        }
+      });
+    })
+    .catch((err) => {
+      console.error(err)
+    });
+};
 
 let getPortfolioValues = async () => {
   let stockMap = [];

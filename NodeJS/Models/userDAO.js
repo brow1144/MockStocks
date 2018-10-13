@@ -81,9 +81,30 @@ export function joinGame(uid, gameCode, starting_amount) {
     .catch((err) => {
       return Promise.reject(err);
     });
-};
+}
 
 export function leaveGame(uid, gameCode) {
+  const options = {
+    new: true,
+    passRawResult: true
+  };
+
+  return userModel.findOneAndUpdate(
+    {_id: uid},
+    {'$pull': {'active_games': {'code': gameCode}}},
+    options)
+    .then((updatedUser) => {
+      if (updatedUser === null)
+        return Promise.reject('UserError: User does not exist');
+
+      return Promise.resolve(updatedUser);
+    })
+    .catch((err) => {
+      return Promise.reject(err);
+    });
+}
+
+export function makeGameInactive(uid, gameCode) {
   const options = {
     new: true,
     passRawResult: true
