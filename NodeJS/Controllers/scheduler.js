@@ -1,8 +1,9 @@
 import schedule from 'node-schedule';
 import {tickerModel} from '../utilities/MongooseModels';
-import {getAllUsers, updateValueHistory, clearValueHistory} from '../Models/userDAO';
+import {getAllUsers, updateValueHistory, clearValueHistory, makeGameInactive} from '../Models/userDAO';
 import {getStockBatch, getTickers} from '../Models/stockDAO';
-import {getAllGames} from "../Models/gameDAO";
+import {completeGame, getAllGames} from "../Models/gameDAO";
+import _ from 'lodash';
 
 export function runSchedules() {
   // update portofolio values every weekday at 9:30 am
@@ -19,9 +20,9 @@ export function runSchedules() {
     clearCounters(true);
   });
 
-  // let checkGames = schedule.scheduleJob('00 00 * * *', () => {
-  //   checkActiveGames();
-  // });
+  let checkGames = schedule.scheduleJob('00 00 * * *', () => {
+    checkActiveGames();
+  });
 
   let clearWeeklyCounters = schedule.scheduleJob('00 00 * * 00', () => {
     clearCounters(false);
@@ -33,21 +34,23 @@ export function runSchedules() {
   // });
 }
 
-// const checkActiveGames = () => {
-//   getAllGames()
-//     .then((games) => {
-//       _.forEach(games, (game) => {
-//         if (game.end_time < new Date()) {
-//           _.forEach(game.active_players, (player) => {
-//
-//           });
-//         }
-//       });
-//     })
-//     .catch((err) => {
-//       console.error(err)
-//     });
-// };
+const checkActiveGames = () => {
+  getAllGames()
+    .then((games) => {
+      _.forEach(games, (game) => {
+        if (game.end_time < new Date() && !game.completed) {
+          _.forEach(game.active_players, (player) => {
+            makeGameInactive(player, game);
+          });
+        }
+
+        completeGame(game.code);
+      });
+    })
+    .catch((err) => {
+      console.error(err)
+    });
+};
 
 let getPortfolioValues = async () => {
   let stockMap = [];
