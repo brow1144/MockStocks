@@ -29,14 +29,13 @@ class Trending extends Component {
       .then((response) => {
         // handle success
         let topTen = response.data;
-        console.log(topTen);
-        self.setState({topTen: topTen});
+        self.setState({
+          topTen: topTen,
+          visible: true
+        });
       })
       .catch((error) => {
         // handle error
-
-        self.setState({visible: true})
-
         console.log(`Oh no! Our API didn't respond. Please refresh and try again`);
         console.log(`Btw here is the error message\n\n`);
 
@@ -48,52 +47,43 @@ class Trending extends Component {
   }
 
   render() {
-    return (
-      <div>
+    if(this.state.visible){
+      return (
+        <div>
 
-        <Row  style={{paddingTop: '10em'}} className='blackBackground body_div'>
-          <Col sm='2' md='2'/>
-          <Col sm='8' md='8'>
-            <h5 style={{color: 'whitesmoke'}}>Trending Stocks</h5>
-            <Table dark>
-              <thead>
-              <tr>
-                <th>#</th>
-                <th>Stock</th>
-                <th>Symbol</th>
-                <th>Value</th>
-                <th>Shares Purchased Today</th>
-              </tr>
-              </thead>
-              <tbody>
-              <tr>
-                <th scope="row">1</th>
-                <td>Apple</td>
-                <td>AAPL</td>
-                <td>$110.10</td>
-                <td>21</td>
-              </tr>
-              <tr>
-                <th scope="row">2</th>
-                <td>Apple</td>
-                <td>AAPL</td>
-                <td>$110.10</td>
-                <td>16</td>
-              </tr>
-              <tr>
-                <th scope="row">3</th>
-                <td>Apple</td>
-                <td>AAPL</td>
-                <td>$110.10</td>
-                <td>9</td>
-              </tr>
-              </tbody>
-            </Table>
-          </Col>
-        </Row>
+          <Row  style={{paddingTop: '10em'}} className='blackBackground body_div'>
+            <Col sm='2' md='2'/>
+            <Col sm='8' md='8'>
+              <h5 style={{color: 'whitesmoke'}}>Trending Stocks</h5>
+              <Table dark className='z-depth-5'>
+                <thead>
+                <tr>
+                  <th>#</th>
+                  <th>Stock</th>
+                  <th>Symbol</th>
+                  <th>Daily Shares Purchased</th>
+                </tr>
+                </thead>
+                <tbody>
+                {this.state.topTen.map((ticker, key) => {
+                  return (<tr key={key}>
+                    <th scope="row">{key + 1}</th>
+                    <th>{ticker.company}</th>
+                    <th>{ticker.symbol}</th>
+                    <th>{ticker.dailyBuyCount}</th>
+                  </tr>)
+                })}
+                </tbody>
+              </Table>
+            </Col>
+          </Row>
 
-      </div>
-    )
+        </div>
+      )
+    }
+    else {
+      return "Loading";
+    }
   }
 
 }
