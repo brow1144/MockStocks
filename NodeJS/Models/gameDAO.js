@@ -13,6 +13,7 @@ export function createGame(game) {
   }
 
   game.starting_amount = parseFloat(parseFloat(game.starting_amount).toFixed(2));
+  game.completed = false;
 
   return gameModel.create(game)
     .then((res) => {
@@ -108,25 +109,6 @@ export function removeUserFromGame(uid, gameCode) {
     });
 }
 
-export function removeGameFromUser(uid, gameCode) {
-  return gameModel.findOneAndUpdate(
-    {code: gameCode},
-    {'$pull': {'active_players': uid}},
-    {passRawResult: true})
-    .then((originalGame) => {
-      if (originalGame === null)
-        return Promise.reject('UserError: Game does not exist');
-
-      if (!originalGame.active_players.includes(uid))
-        return Promise.reject('UserError: User is not in game');
-
-      return Promise.resolve(originalGame);
-    })
-    .catch((err) => {
-      return Promise.reject(err);
-    });
-}
-
 export function getGamesByUser(uid) {
   const findClause = {active_players: uid};
   return gameModel.find(findClause)
@@ -169,5 +151,14 @@ export function getAllGames() {
     })
     .catch((err) => {
       return Promise.reject(err);
+    });
+}
+
+export function completeGame(gameCode) {
+  return gameModel.findOneAndUpdate(
+    {code: gameCode},
+    {'completed': true})
+    .catch((err) => {
+      console.error(err);
     });
 }

@@ -16,10 +16,17 @@ class BuySellCard extends Component {
     this.state = {
       cost: 0,
       finalPrice: 0,
+      watchlist: [],
       selected: 'buy',
       modal: false,
       errorMessage: '',
+      watching: true
     }
+  }
+
+  componentWillMount() {
+    this.fetchWatchlist();
+    this.isWatching();
   }
 
   updateCost = (ev) => {
@@ -77,6 +84,73 @@ class BuySellCard extends Component {
     });
   }
 
+  watchStock =()=>{
+    axios.post(`http://localhost:8080/Portfol.io/Watchlist/${this.props.uid}/${this.props.stock}`);
+    this.setState({
+      watching: !this.state.watching
+    })
+  }
+
+  removeStock =()=>{
+    axios.delete(`http://localhost:8080/Portfol.io/Watchlist/${this.props.uid}/${this.props.stock}`);
+    this.setState({
+      watching: !this.state.watching
+    })
+  }
+
+  fetchWatchlist = () => {
+    let self = this;
+    axios.get(`http://localhost:8080/Portfol.io/Watchlist/${this.props.uid}`)
+      .then(function (response) {
+        // handle success
+        let watchlist = response.data;
+
+        if (watchlist.length !== 0) {
+          // Set up the game data
+          self.setWatchlist(watchlist);
+          self.isWatching();
+        } else { // No watchlist return
+          // Get the current user's email
+          axios.get(`http://localhost:8080/Portfol.io/${self.props.uid}`)
+            .then(function (response) {
+              // handle success
+              let user = response.data;
+
+              self.setState({
+                email: user.email,
+              })
+
+            }).catch(function (err) {
+            console.log("Cannot get watchlist for the current user");
+
+            if (err.response && err.response.data)
+              console.log(err.response.data.error);
+            else
+              console.log(err);
+          })
+        }
+      })
+      .catch(function (error) {
+        // handle error
+        console.log(`Oh no! Our API didn't respond. Please refresh and try again`)
+        console.log(`Btw here is the error message\n\n`)
+
+        if (error.response && error.response.data)
+          console.log(error.response.data.error);
+        else
+          console.log(error);
+      })
+  }
+
+  setWatchlist = (watchlist) => {
+    let self = this;
+    console.log("got eem");
+    self.setState({
+      watchlist: watchlist,
+    })
+  }
+
+
   handleBuy = () => {
     this.setState({
       cost: 0,
@@ -91,6 +165,24 @@ class BuySellCard extends Component {
       finalPrice: 0,
       selected: 'sell'
     })
+  }
+
+  isWatching =()=>{
+    let self = this;
+    console.log(this.state.watchlist)
+    for (let k in this.state.watchlist) {
+      console.log("trying")
+        if (this.state.watchlist[k].symbol === this.props.stock) {
+          self.setState({
+            watching: true
+          })
+          return true;
+        }
+    }
+    self.setState({
+      watching: false
+    })
+    return false;
   }
 
   toggle = () => {
@@ -132,6 +224,15 @@ class BuySellCard extends Component {
               <Sell gameData={this.props.gameData} sellStock={this.sellStock} currentPriceFor={this.props.currentPriceFor} updateCost={this.updateCost} cost={this.state.cost} finalPrice={this.state.finalPrice}/>
             }
 
+            {!this.state.watching
+              ?<Button color="blue" onClick={this.watchStock} block>
+                +Add to watchlist
+              </Button>
+
+              :<Button color="red" onClick={this.removeStock} block>
+                -Remove from watchlist
+              </Button>
+            }
           </Card>
         </div>
 

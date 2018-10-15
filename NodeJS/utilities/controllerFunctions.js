@@ -13,15 +13,15 @@ export function parseError(err) {
   }
 
   return error;
-};
+}
 
 export function buildResponse(res, data) {
   res.header("Access-Control-Allow-Origin", "*");
-  res.header("Access-Control-Allow-Methods", "GET, POST, PUT, OPTIONS");
+  res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
 
   if (data.error)
     res.status(data.error.status).json(data);
   else
     res.status(200).json(data);
-};
+}
