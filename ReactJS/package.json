@@ -17,9 +17,11 @@
     "react": "^16.5.0",
     "react-autosuggest": "^9.4.0",
     "react-awesome-button": "^5.0.0",
+    "react-confetti": "^2.3.0",
     "react-datepicker": "^1.6.0",
     "react-dom": "^16.5.0",
     "react-router-dom": "^4.3.1",
+    "react-sizeme": "^2.5.2",
     "reactstrap": "^6.4.0"
   },
   "devDependencies": {
