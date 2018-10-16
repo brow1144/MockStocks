@@ -36,7 +36,7 @@ class Leaderboard extends Component {
   /**
    * Displays graph of user's history
    */
-  showGraph = (uid, username) => {
+  showGraph = (uid, user) => {
     let self = this;
     self.setState({
       stockData: [],
@@ -49,8 +49,14 @@ class Leaderboard extends Component {
       .then((response) => {
         // handle success
         let stockData = response.data;
+        // Adds a current data point to the leaderboard graph
+        let currentPoint = {
+          x: Date.now(),
+          y: user.totalAssets,
+        }
+        stockData.push(currentPoint);
 
-        self.showDataFromAPI(stockData, username);
+        self.showDataFromAPI(stockData, user.username);
       })
       .catch((error) => {
         // handle error
@@ -147,8 +153,8 @@ class Leaderboard extends Component {
       <div  className='z-depth-5 blackBackground'>
         <h5 className={"gamesText"}>Leaderboard</h5>
         <Modal centered={true} size={"lg"} isOpen={this.state.open} toggle={this.close}>
-          <ModalHeader className="blackBackground gameText" toggle={this.close}>
-            <h3 style={{color: 'whitesmoke'}}>{this.state.name}</h3>
+          <ModalHeader style={{color: 'whitesmoke'}} className="blackBackground gameText" toggle={this.close}>
+           {this.state.name}
             </ModalHeader>
           <ModalBody className='blackBackground'>
             <h2 className='stockPrice'>${this.state.currentPriceFor}</h2>
@@ -177,7 +183,7 @@ class Leaderboard extends Component {
           <tbody style={{cursor: 'pointer'}}>
 
           {this.props.userGame.map((user, key) => {
-            return (<tr onClick={() => this.showGraph(user.uid, user.username)} key={key}>
+            return (<tr onClick={() => this.showGraph(user.uid, user)} key={key}>
               <th scope="row">{key + 1}</th>
               <th >{user.username}</th>
               <th >${parseFloat((user.totalAssets).toFixed(2)).toLocaleString()}</th>
