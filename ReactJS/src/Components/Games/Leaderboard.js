@@ -51,8 +51,8 @@ class Leaderboard extends Component {
         let stockData = response.data;
         // Adds a current data point to the leaderboard graph
         let currentPoint = {
-          value: user.totalAssets,
-          time: Date.now(),
+          x: Date.now(),
+          y: user.totalAssets,
         }
         stockData.push(currentPoint);
 
@@ -153,8 +153,8 @@ class Leaderboard extends Component {
       <div  className='z-depth-5 blackBackground'>
         <h5 className={"gamesText"}>Leaderboard</h5>
         <Modal centered={true} size={"lg"} isOpen={this.state.open} toggle={this.close}>
-          <ModalHeader className="blackBackground gameText" toggle={this.close}>
-            <h3 style={{color: 'whitesmoke'}}>{this.state.name}</h3>
+          <ModalHeader style={{color: 'whitesmoke'}} className="blackBackground gameText" toggle={this.close}>
+           {this.state.name}
             </ModalHeader>
           <ModalBody className='blackBackground'>
             <h2 className='stockPrice'>${this.state.currentPriceFor}</h2>
