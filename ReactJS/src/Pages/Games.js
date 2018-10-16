@@ -278,7 +278,7 @@ class Games extends Component {
             trade_count: user.active_games[i].trade_count,
             stocks: user.active_games[i].stocks,
             username: user.username,
-            totalAssets: 0,
+            totalAssets: user.active_games[i].buying_power,
             totalOwned: 0,
             stocksArray: []
           }
