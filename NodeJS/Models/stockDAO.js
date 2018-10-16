@@ -129,7 +129,7 @@ export function getTicker(name) {
     })
 }
 
-export async function getTrendingStocks(timePeriod){
+export async function getTrendingStocks(timePeriod) {
   let tickers;
   try {
     tickers = await getTickers();
@@ -138,16 +138,14 @@ export async function getTrendingStocks(timePeriod){
     return Promise.reject(error);
   }
 
-  if(timePeriod === 'day'){
+  if (timePeriod === 'day'){
     tickers.sort(sortByDaily());
     let topTen = new Array();
-    for(let i = 0; i < 10; i++){
+    for (let i = 0; i < 10; i++)
       topTen.push(tickers[i]);
-    }
-    return topTen;
+
+    return Promise.resolve(topTen);
   }
-
-
 }
 
 function sortByDaily(){

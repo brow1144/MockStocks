@@ -1,5 +1,6 @@
 import {gameModel} from '../utilities/MongooseModels';
-import {getGamesByUser, createGame, addUserToGame, removeUserFromGame, updateGameSettings} from './gameDAO';
+import {getGamesByUser, createGame, addUserToGame, removeUserFromGame,
+  updateGameSettings, getGame, getAllGames} from './gameDAO';
 
 gameModel.find = jest.fn(() => {
   return {
@@ -84,6 +85,16 @@ describe('Game Tests Positive Case', function () {
   it('should call find with the proper find clause', async function () {
     await getGamesByUser('Rawley123');
     expect(gameModel.find).toHaveBeenCalledWith({active_players: 'Rawley123'});
+  });
+
+  it('should call find with the proper find clause', async function () {
+    await getGame('23523');
+    expect(gameModel.find).toHaveBeenCalledWith({'code': '23523'});
+  });
+
+  it('should call find with the proper find clause', async function () {
+    await getAllGames();
+    expect(gameModel.find).toHaveBeenCalledWith({});
   });
 });
 
