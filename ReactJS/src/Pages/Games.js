@@ -219,7 +219,6 @@ class Games extends Component {
                   // Add number of
                   totalOwned += stockQuantity[index];
 
-                  console.log(tmpObj)
                   // Index for list of stocks
                   index++;
                 }
@@ -236,6 +235,7 @@ class Games extends Component {
                 trade_count: user.active_games[i].trade_count,
                 stocks: user.active_games[i].stocks,
                 username: user.username,
+                uid: user._id,
                 totalAssets: totalA + user.active_games[i].buying_power,
                 totalOwned: totalOwned,
                 stocksArray: stockList
@@ -428,22 +428,26 @@ class Games extends Component {
         let minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
         let seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
-        // Display the result in the element with id="demo"
-        /*document.getElementById("demo").innerHTML = days + "d " + hours + "h "
-          + minutes + "m " + seconds + "s ";*/
         self.setState({
           countdown: days + "d " + hours + "h " + minutes + "m " + seconds + "s "
         })
 
 
         // If the count down is finished, write some text
-        console.log(self.state.userGame[0]);
         if (distance < 0) {
-          self.setState({
-            countdown: "Winner is " + self.state.userGame[0].username,
-            countMessage: "Game Completed: "
-          })
-        }
+          if (self.state.userGame[0] == null) {
+            self.setState({
+              countMessage: "Game Complete",
+              countdown: "",
+            })
+          } else {
+            self.setState({
+              countdown: "Winner is " + self.state.userGame[0].username,
+              countMessage: "Game Completed: "
+            })
+          }
+          }
+
       }
 
 
