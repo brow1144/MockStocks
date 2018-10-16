@@ -1,5 +1,6 @@
 import axios from 'axios';
 import {tickerModel} from "../utilities/MongooseModels";
+import _ from 'lodash';
 
 // TODO: IMPLEMENT REJECTIONS AND THEN WRITE TESTS FOR THEM
 
