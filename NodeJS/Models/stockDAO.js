@@ -33,7 +33,6 @@ export function formatDaily(data) {
       x: stockDate,
       y: parseFloat(data[i]['close']),
     });
-    console.error(parseFloat(data[i]['close']));
   }
   return stockData;
 }
@@ -45,6 +44,7 @@ export function getStock(stockTicker, period, dateLimit) {
       // This api is inconsistent so apparently we need two different types of response
       let data = response.data;
       const stockData = formatStocks(data, dateLimit);
+      _.sortBy(stockData, (stock) => {return stock.x});
       return Promise.resolve(stockData);
     })
     .catch((error) => {
@@ -61,6 +61,7 @@ export function getStockIntraday(stockTicker) {
       let data = response.data;
 
       const stockData = formatDaily(data);
+      _.sortBy(stockData, (stock) => {return stock.x});
       return Promise.resolve(stockData);
     })
     .catch((error) => {
