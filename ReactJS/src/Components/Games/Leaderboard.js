@@ -184,10 +184,10 @@ class Leaderboard extends Component {
           <tbody style={{cursor: 'pointer'}}>
 
           {this.props.userGame.map((user, key) => {
-            return (<tr onClick={() => this.showGraph(user.uid, user)} key={key}>
+            return (<tr id={key} onClick={() => this.showGraph(user.uid, user)} key={key}>
               <th scope="row">{key + 1}</th>
-              <th >{user.username}</th>
-              <th >${parseFloat((user.totalAssets).toFixed(2)).toLocaleString()}</th>
+              <th id={"name"}>{user.username}</th>
+              <th id={"total" + key}>${parseFloat((user.totalAssets).toFixed(2)).toLocaleString()}</th>
               {this.props.currentGame.trade_limit === 0
                 ?
                 <th>Unlimited</th>
