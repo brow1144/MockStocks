@@ -515,4 +515,3 @@ export function removeFromUserWatchlist(uid, stockToInsert) {
       return Promise.reject(err);
     });
 }
-
