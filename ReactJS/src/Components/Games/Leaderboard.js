@@ -37,6 +37,7 @@ class Leaderboard extends Component {
    * Displays graph of user's history
    */
   showGraph = (uid, user) => {
+
     let self = this;
     self.setState({
       stockData: [],
