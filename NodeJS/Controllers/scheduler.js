@@ -20,7 +20,8 @@ export function runSchedules() {
     clearCounters(true);
   });
 
-  let checkGames = schedule.scheduleJob('00 00 * * *', () => {
+  // check active games once per hour
+  let checkGames = schedule.scheduleJob('00 * * * *', () => {
     checkActiveGames();
   });
 
