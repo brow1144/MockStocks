@@ -39,7 +39,7 @@ class Buy extends Component {
 
         <br />
 
-        <Button onClick={this.props.buyStock} color='blue' style={{margin: '0 auto', display: 'block', background: '#009ddb'}}>Submit Order</Button>
+        <Button id='buyButton' onClick={this.props.buyStock} color='blue' style={{margin: '0 auto', display: 'block', background: '#009ddb'}}>Submit Order</Button>
 
         <hr className='hr' />
 

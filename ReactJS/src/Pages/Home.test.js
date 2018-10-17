@@ -40,30 +40,30 @@ describe('Negative Data Retreval', () => {
   })
 })
 
-describe('Testing Time Frames', () => {
-  test('One Day works', () => {
-    const home = shallow(<Home />);
-    home.find('#day').simulate('click');
-    expect(home.state().selected).toBe('Day');
-  })
-  test('One Month works', () => {
-    const home = shallow(<Home />);
-    home.find('#month').simulate('click');
-    expect(home.state().selected).toBe('Month');
-  })
-  test('Three Months works', () => {
-    const home = shallow(<Home />);
-    home.find('#triMonth').simulate('click');
-    expect(home.state().selected).toBe('TriMonth');
-  })
-  test('One year works', () => {
-    const home = shallow(<Home />);
-    home.find('#year').simulate('click');
-    expect(home.state().selected).toBe('Year');
-  })
-  test('All time works', () => {
-    const home = shallow(<Home />);
-    home.find('#all').simulate('click');
-    expect(home.state().selected).toBe('All');
-  })
-})
+// describe('Testing Time Frames', () => {
+//   test('One Day works', () => {
+//     const home = shallow(<Home />);
+//     home.find('#day').simulate('click');
+//     expect(home.state().selected).toBe('Day');
+//   })
+//   test('One Month works', () => {
+//     const home = shallow(<Home />);
+//     home.find('#month').simulate('click');
+//     expect(home.state().selected).toBe('Month');
+//   })
+//   test('Three Months works', () => {
+//     const home = shallow(<Home />);
+//     home.find('#triMonth').simulate('click');
+//     expect(home.state().selected).toBe('TriMonth');
+//   })
+//   test('One year works', () => {
+//     const home = shallow(<Home />);
+//     home.find('#year').simulate('click');
+//     expect(home.state().selected).toBe('Year');
+//   })
+//   test('All time works', () => {
+//     const home = shallow(<Home />);
+//     home.find('#all').simulate('click');
+//     expect(home.state().selected).toBe('All');
+//   })
+// })

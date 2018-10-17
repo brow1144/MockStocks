@@ -47,10 +47,11 @@ class StockPage extends Component {
 
     this.setState({visible: false})
 
-    if (Object.keys(stockData).length < 5) {
+    if ((stockData).length < 5) {
       this.setState({visibleData: true})
     } else {
       this.setState({
+        visibleData: false,
         stockData: stockData,
         currentPrice: stockData[stockData.length-1]['y'],
         currentPriceFor: withCommas
@@ -65,6 +66,16 @@ class StockPage extends Component {
       .then((response) => {
         // handle success
         let stockData = response.data;
+        // let prev = 0
+        // for (let i in stockData) {
+        //   console.log(stockData[i].x)
+        //   console.log(prev)
+        //   if (stockData[i].x > prev) {
+        //     console.log("Out of Order!")
+        //     // return
+        //   }
+        //   prev = stockData[i].x
+        // }
         this.showDataFromAPI(stockData);
       })
       .catch((error) => {

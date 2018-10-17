@@ -12,3 +12,5 @@ A safe learning environment for novice investors
 * [Defect Log](https://docs.google.com/document/d/1-i3nZfClmnp39QwG-rMEzGkm_6ZhF7eWnCptI8HzwNs/edit?usp=sharing)
 
 * [Incremental and Regression Testing](https://docs.google.com/document/d/1lT-yx6m98mpyCBRERJ3idEcfOkGUYpReDNfmw4Dmyf8/edit?usp=sharing)
+
+* [Defect Log Sprint 2](https://docs.google.com/document/d/1jidBFzN4HGWDMcPH0r7AtLlh7pCgm5l-pUZDmG9cYPM/edit?usp=sharing)

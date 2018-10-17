@@ -2,7 +2,8 @@ import React, {Component} from 'react';
 
 //import {Input, Button} from 'mdbreact';
 import { Row, Col } from 'reactstrap';
-import NavBar from '../Components/NavBar';
+//import sizeMe from 'react-sizeme';
+//import Confetti from 'react-confetti';
 import MyStocks from '../Components/Games/MyStocks';
 import Leaderboard from '../Components/Games/Leaderboard';
 import CreateGame from '../Components/Games/CreateGame'
@@ -42,7 +43,7 @@ class Games extends Component {
       // Count down timer state
       countdown: "",
       // Count down message
-      countMessage: "Game Ends in: "
+      countMessage: ""
     };
   }
 
@@ -55,7 +56,6 @@ class Games extends Component {
   componentWillMount () {
     // Make server call for data
     this.fetchGames();
-    //this.timer();
   };
 
   /**
@@ -219,7 +219,6 @@ class Games extends Component {
                   // Add number of
                   totalOwned += stockQuantity[index];
 
-                  console.log(tmpObj)
                   // Index for list of stocks
                   index++;
                 }
@@ -236,6 +235,7 @@ class Games extends Component {
                 trade_count: user.active_games[i].trade_count,
                 stocks: user.active_games[i].stocks,
                 username: user.username,
+                uid: user._id,
                 totalAssets: totalA + user.active_games[i].buying_power,
                 totalOwned: totalOwned,
                 stocksArray: stockList
@@ -278,7 +278,7 @@ class Games extends Component {
             trade_count: user.active_games[i].trade_count,
             stocks: user.active_games[i].stocks,
             username: user.username,
-            totalAssets: 0,
+            totalAssets: user.active_games[i].buying_power,
             totalOwned: 0,
             stocksArray: []
           }
@@ -403,6 +403,7 @@ class Games extends Component {
     let self = this;
     let x = setInterval(function() {
 
+      console.log("HERE")
       // Get todays date and time
       let now = Date.now();
 
@@ -428,9 +429,6 @@ class Games extends Component {
         let minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
         let seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
-        // Display the result in the element with id="demo"
-        /*document.getElementById("demo").innerHTML = days + "d " + hours + "h "
-          + minutes + "m " + seconds + "s ";*/
         self.setState({
           countdown: days + "d " + hours + "h " + minutes + "m " + seconds + "s "
         })
@@ -438,11 +436,19 @@ class Games extends Component {
 
         // If the count down is finished, write some text
         if (distance < 0) {
-          self.setState({
-            countdown: 0 + "d " + 0 + "h " + 0 + "m " + 0 + "s ",
-            countMessage: "Game Completed: "
-          })
-        }
+          if (self.state.userGame[0] == null) {
+            self.setState({
+              countMessage: "Game Complete",
+              countdown: "",
+            })
+          } else {
+            self.setState({
+              countdown: "Winner is " + self.state.userGame[0].username,
+              countMessage: "Game Completed: "
+            })
+          }
+          }
+
       }
 
 

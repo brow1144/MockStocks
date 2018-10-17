@@ -1,5 +1,6 @@
 import axios from 'axios';
 import {tickerModel} from "../utilities/MongooseModels";
+import _ from 'lodash';
 
 // TODO: IMPLEMENT REJECTIONS AND THEN WRITE TESTS FOR THEM
 
@@ -33,7 +34,6 @@ export function formatDaily(data) {
       x: stockDate,
       y: parseFloat(data[i]['close']),
     });
-    console.error(parseFloat(data[i]['close']));
   }
   return stockData;
 }
@@ -45,6 +45,7 @@ export function getStock(stockTicker, period, dateLimit) {
       // This api is inconsistent so apparently we need two different types of response
       let data = response.data;
       const stockData = formatStocks(data, dateLimit);
+      _.sortBy(stockData, (stock) => {return stock.x});
       return Promise.resolve(stockData);
     })
     .catch((error) => {
@@ -61,6 +62,7 @@ export function getStockIntraday(stockTicker) {
       let data = response.data;
 
       const stockData = formatDaily(data);
+      _.sortBy(stockData, (stock) => {return stock.x});
       return Promise.resolve(stockData);
     })
     .catch((error) => {
@@ -129,7 +131,7 @@ export function getTicker(name) {
     })
 }
 
-export async function getTrendingStocks(timePeriod){
+export async function getTrendingStocks(timePeriod) {
   let tickers;
   try {
     tickers = await getTickers();
@@ -138,16 +140,14 @@ export async function getTrendingStocks(timePeriod){
     return Promise.reject(error);
   }
 
-  if(timePeriod === 'day'){
+  if (timePeriod === 'day'){
     tickers.sort(sortByDaily());
     let topTen = new Array();
-    for(let i = 0; i < 10; i++){
+    for (let i = 0; i < 10; i++)
       topTen.push(tickers[i]);
-    }
-    return topTen;
+
+    return Promise.resolve(topTen);
   }
-
-
 }
 
 function sortByDaily(){
