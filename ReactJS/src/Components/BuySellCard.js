@@ -169,7 +169,6 @@ class BuySellCard extends Component {
 
   isWatching =()=>{
     let self = this;
-    console.log(this.state.watchlist)
     for (let k in this.state.watchlist) {
       console.log("trying")
         if (this.state.watchlist[k].symbol === this.props.stock) {
@@ -210,8 +209,8 @@ class BuySellCard extends Component {
             <div style={{textAlign: 'center'}}>
               <br/>
 
-              <b onClick={this.handleBuy} className={`buy buyOrSell ${this.state.selected === 'buy' ? 'current' : ''}`}>Buy</b>
-              <b onClick={this.handleSell} className={`sell buyOrSell ${this.state.selected === 'sell' ? 'current' : ''}`}>Sell</b>
+              <b id='buySwitch' onClick={this.handleBuy} className={`buy buyOrSell ${this.state.selected === 'buy' ? 'current' : ''}`}>Buy</b>
+              <b id='sellSwitch' onClick={this.handleSell} className={`sell buyOrSell ${this.state.selected === 'sell' ? 'current' : ''}`}>Sell</b>
             </div>
 
             <hr className='hr'/>

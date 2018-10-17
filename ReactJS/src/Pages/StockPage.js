@@ -46,10 +46,11 @@ class StockPage extends Component {
 
     this.setState({visible: false})
 
-    if (Object.keys(stockData).length < 5) {
+    if ((stockData).length < 5) {
       this.setState({visibleData: true})
     } else {
       this.setState({
+        visibleData: false,
         stockData: stockData,
         currentPrice: stockData[stockData.length-1]['y'],
         currentPriceFor: withCommas
