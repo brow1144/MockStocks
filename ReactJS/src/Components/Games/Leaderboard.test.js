@@ -77,7 +77,7 @@ describe('Checks that leaderboard displays users` data correct', () => {
       <Leaderboard userGame={badGame} currentGame={currentGame} updateGame={update} />
     );
     const texts = wrapper.find('th').map(node => node.text());
-    expect(texts.length).toBe(4);
+    expect(texts.length).toBe(0);
   })
 });
 
