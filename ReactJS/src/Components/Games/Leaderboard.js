@@ -151,7 +151,7 @@ class Leaderboard extends Component {
     }
 
     return (
-      <div  className='z-depth-5 blackBackground'>
+      <div  className='blackBackground'>
         <h5 className={"gamesText"}>Leaderboard</h5>
         <Modal centered={true} size={"lg"} isOpen={this.state.open} toggle={this.close}>
           <ModalHeader style={{color: 'whitesmoke'}} className="blackBackground gameText" toggle={this.close}>
@@ -172,7 +172,9 @@ class Leaderboard extends Component {
 
           </ModalBody>
         </Modal>
-        <Table className={"cenText"} dark hover>
+        {this.props.userGame.length !== 0
+          ?
+        <Table className={"z-depth-5 cenText"} dark hover>
           <thead>
           <tr>
             <th>Rank</th>
@@ -182,22 +184,28 @@ class Leaderboard extends Component {
           </tr>
           </thead>
           <tbody style={{cursor: 'pointer'}}>
-
-          {this.props.userGame.map((user, key) => {
-            return (<tr onClick={() => this.showGraph(user.uid, user)} key={key}>
-              <th scope="row">{key + 1}</th>
-              <th >{user.username}</th>
-              <th >${parseFloat((user.totalAssets).toFixed(2)).toLocaleString()}</th>
-              {this.props.currentGame.trade_limit === 0
-                ?
-                <th>Unlimited</th>
-                :
-                <th>{this.props.currentGame.trade_limit - user.trade_count} / {this.props.currentGame.trade_limit}</th>
-              }
-            </tr>)
-          })}
+            {this.props.userGame.map((user, key) => {
+              return (<tr id={key} onClick={() => this.showGraph(user.uid, user)} key={key}>
+                <th scope="row">{key + 1}</th>
+                <th id={"name"}>{user.username}</th>
+                <th id={"total" + key}>${parseFloat((user.totalAssets).toFixed(2)).toLocaleString()}</th>
+                {this.props.currentGame.trade_limit === 0
+                  ?
+                  <th>Unlimited</th>
+                  :
+                  <th>{this.props.currentGame.trade_limit - user.trade_count} / {this.props.currentGame.trade_limit}</th>
+                }
+              </tr>)
+            })}
           </tbody>
         </Table>
+        :
+        <div>
+          <br/>
+          <p className={"gamesText"}>There are no users in the game</p>
+        </div>
+
+        }
       </div>
     );
   }
