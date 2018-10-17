@@ -43,7 +43,7 @@ class Games extends Component {
       // Count down timer state
       countdown: "",
       // Count down message
-      countMessage: "Game Ends in: "
+      countMessage: ""
     };
   }
 
@@ -403,6 +403,7 @@ class Games extends Component {
     let self = this;
     let x = setInterval(function() {
 
+      console.log("HERE")
       // Get todays date and time
       let now = Date.now();
 
