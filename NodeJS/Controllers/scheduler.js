@@ -43,9 +43,9 @@ const checkActiveGames = () => {
           _.forEach(game.active_players, (player) => {
             makeGameInactive(player, game);
           });
+          completeGame(game.code);
         }
 
-        completeGame(game.code);
       });
     })
     .catch((err) => {
