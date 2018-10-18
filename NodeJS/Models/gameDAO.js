@@ -214,7 +214,10 @@ export async function getTotalValues(gameCode) {
             let totalValue;
 
             if (completed) {
-              totalValue = game.value_history[game.value_history.length - 1].value;
+              if (game.value_history)
+                totalValue = game.value_history[game.value_history.length - 1].value;
+              else
+                totalValue = game.buying_power;
             } else {
               for (let k in game.stocks) {
                 if (game.stocks.hasOwnProperty(k)) {
@@ -279,7 +282,6 @@ export async function getTotalValues(gameCode) {
     return Promise.reject(error);
   }
 
-  console.log(valueList);
   return Promise.resolve(valueList);
 }
 
