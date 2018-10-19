@@ -144,9 +144,19 @@ export async function getTrendingStocks(timePeriod) {
   if (timePeriod === 'day') {
     tickers.sort(sortByDaily());
     let topTen = new Array();
-    for (let i = 0; i < 10; i++)
+    for (let i = 0; i < 10; i++){
       topTen.push(tickers[i]);
+    }
+    return Promise.resolve(topTen);
+  }
 
+  else if (timePeriod === 'week') {
+    tickers.sort(sortByWeekly());
+    let topTen = new Array();
+    for (let i = 0; i < 10; i++){
+      topTen.push(tickers[i]);
+    }
+    console.log(topTen);
     return Promise.resolve(topTen);
   }
 }
@@ -154,6 +164,12 @@ export async function getTrendingStocks(timePeriod) {
 function sortByDaily() {
   return function (a, b) {
     return b.dailyBuyCount - a.dailyBuyCount;
+  }
+}
+
+function sortByWeekly() {
+  return function (a, b) {
+    return b.weeklyBuyCount - a.weeklyBuyCount;
   }
 }
 
