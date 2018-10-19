@@ -120,24 +120,47 @@ class Games extends Component {
         self.props.updateCurrentGame(games[0]);
         self.props.getGameData(games[0].code);
         // Call to the server to get all user objects for the current game
-        for (let x = 0; x < self.state.currentGame.active_players.length; x++) {
-          axios.get(`http://localhost:8080/Portfol.io/${self.state.currentGame.active_players[x]}`)
-            .then(function (response) {
-              // handle success
-              if (response != null) {
-                self.processUser(response.data, x);
-                self.leaderCheck();
-              }
 
-            }).catch(function (err) {
-            console.log("Cannot get users for the current game");
+          if (self.currentGame.completed === false) {
+            for (let x = 0; x < self.state.currentGame.active_players.length; x++) {
 
-            if (err.response && err.response.data)
-              console.log(err.response.data.error);
-            else
-              console.log(err);
-          })
-        }
+              axios.get(`http://localhost:8080/Portfol.io/${self.state.currentGame.active_players[x]}`)
+                .then(function (response) {
+                  // handle success
+                  if (response != null) {
+                    self.processUser(response.data, x);
+                    self.leaderCheck();
+                  }
+
+                }).catch(function (err) {
+                console.log("Cannot get users for the current game");
+
+                if (err.response && err.response.data)
+                  console.log(err.response.data.error);
+                else
+                  console.log(err);
+              })
+            }
+          } else {
+            axios.get(`http://localhost:8080/Portfol.io/Games/Totals/${self.state.currentGame.code}`)
+              .then(function (response) {
+                // handle success
+                if (response != null) {
+                  self.setState({
+                    userGame: response.data,
+                  })
+                }
+
+              }).catch(function (err) {
+              console.log("Cannot get users for the current game");
+
+              if (err.response && err.response.data)
+                console.log(err.response.data.error);
+              else
+                console.log(err);
+            })
+          }
+
       })
   }
 
@@ -448,8 +471,8 @@ class Games extends Component {
       if (distance < 0 && this.state.countMessage === "Game Ends in: ") {
         if (self.state.userGame[0] == null) {
           self.setState({
-            countMessage: "Game Completed ",
             countdown: "",
+            countMessage: "Game Completed ",
           })
         } else {
           if (self.state.winner === false) {
