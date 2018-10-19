@@ -271,7 +271,7 @@ export async function getTotalValues(gameCode) {
             }
 
             valueList.push({
-              player: users[i]._id,
+              player: users[i].username,
               value: totalValue
             });
           }
@@ -290,7 +290,6 @@ export async function getWinner(gameCode) {
 
   try {
     totalValues = await getTotalValues(gameCode);
-    console.log(totalValues);
   } catch (error) {
     return Promise.reject(error);
   }

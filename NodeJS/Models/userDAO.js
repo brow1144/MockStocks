@@ -1,4 +1,3 @@
-import mongoose from 'mongoose';
 import {userModel} from '../utilities/MongooseModels';
 import {getGame} from './gameDAO';
 import _ from 'lodash';
