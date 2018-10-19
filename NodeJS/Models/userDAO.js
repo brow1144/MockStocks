@@ -365,18 +365,40 @@ export function removeStock(uid, gameCode, stockName, quantity) {
 }
 
 // get user's information for a particular game object
-export function getUserGame(uid, gameCode) {
-  const returnClause = {
-    '_id': 0, // exclude _id
-    'active_games': {'$elemMatch': {'code': gameCode}}
-  };
+export async function getUserGame(uid, gameCode) {
+  let completed;
+  let returnClause;
+
+  try {
+    let game = await getGame(gameCode);
+    game = game[0];
+    completed = game.completed;
+  } catch (error) {
+    return Promise.reject(error);
+  }
+
+  if (completed) {
+    returnClause = {
+      '_id': 0, // exclude _id
+      'completed_games': {'$elemMatch': {'code': gameCode}}
+    };
+  } else {
+    returnClause = {
+      '_id': 0, // exclude _id
+      'active_games': {'$elemMatch': {'code': gameCode}}
+    };
+  }
 
   return userModel.findOne({'_id': uid}, returnClause)
     .then((game) => {
-      if (game && game.active_games[0])
-        return Promise.resolve(game.active_games[0]);
-      else
+      if (game) {
+        if (game.active_games && game.active_games[0])
+          return Promise.resolve(game.active_games[0]);
+        else if (game.completed_games && game.completed_games[0])
+          return Promise.resolve(game.completed_games[0]);
+      } else {
         return Promise.reject('UserError: User or game not found');
+      }
     })
     .catch((err) => {
       return Promise.reject(err);
