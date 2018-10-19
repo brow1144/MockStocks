@@ -522,7 +522,7 @@ class Games extends Component {
                 if (response.data != null) {
                   self.setState({
                     countdown: "Winner is " + response.data.username,
-                    countMessage: "Game Completed ",
+                    countMessage: "Game Completed: ",
                   })
                 }
 
