@@ -50,6 +50,7 @@ describe('Negative Buy', () => {
 })
 
 
+
 describe('Positive Sell', () => {
   test('Valid Number of Stocks (3)', () => {
     ev.target.value = 3;
@@ -73,6 +74,24 @@ describe('Negative Sell', () => {
   })
 
   test('Dont enter a number', () => {
+    ev.target.value = 0;
+    const buySellCard = shallow(<BuySellCard />);
+    buySellCard.setProps({currentPrice: 50})
+    buySellCard.setState({cost: 0})
+    buySellCard.instance().buyStock();
+    expect(buySellCard.state().errorMessage).toBe('You entered an invalid number of stocks');
+  })
+})
+
+describe('Watchlist function', () => {
+  test('Watchlist add', () => {
+    ev.target.value = 0;
+    const buySellCard = shallow(<BuySellCard />);
+    buySellCard.instance().updateCost(ev);
+    expect(buySellCard.state().cost).toBe(0);
+  })
+
+  test('Watchlist remove', () => {
     ev.target.value = 0;
     const buySellCard = shallow(<BuySellCard />);
     buySellCard.setProps({currentPrice: 50})
