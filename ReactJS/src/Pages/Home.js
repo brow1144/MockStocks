@@ -25,6 +25,7 @@ class Home extends Component {
       currentPrice: 0,
       visible: false,
       visibleData: false,
+      watchlistFetched: false,
       selected: 'Day',
     }
   }
@@ -197,8 +198,9 @@ class Home extends Component {
     // console.log("got eem");
     self.setState({
       watchlist: watchlist,
+      watchlistFetched: true,
     })
-  }
+  };
 
   render() {
 
@@ -271,9 +273,14 @@ class Home extends Component {
 
         </Col>
         <Col md='1'/>
-        <Col style={{paddingTop: '6em'}} md='2'>
-          <StockList watchlist={this.state.watchlist} />
-        </Col>
+        {this.state.watchlistFetched
+          ?
+          <Col style={{paddingTop: '6em'}} md='2'>
+            <StockList watchlist={this.state.watchlist} />
+          </Col>
+          :
+          <Col style={{paddingTop: '6em'}} md='2'/>
+        }
 
         <Col md='1'/>
       </Row>
