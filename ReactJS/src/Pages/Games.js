@@ -121,7 +121,7 @@ class Games extends Component {
         self.props.getGameData(games[0].code);
         // Call to the server to get all user objects for the current game
 
-          if (self.currentGame.completed === false) {
+          if (self.state.currentGame.completed === false) {
             for (let x = 0; x < self.state.currentGame.active_players.length; x++) {
 
               axios.get(`http://localhost:8080/Portfol.io/${self.state.currentGame.active_players[x]}`)
@@ -146,6 +146,7 @@ class Games extends Component {
               .then(function (response) {
                 // handle success
                 if (response != null) {
+                  console.log(response.data)
                   self.setState({
                     userGame: response.data,
                   })
