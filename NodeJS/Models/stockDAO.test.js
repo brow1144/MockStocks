@@ -195,14 +195,20 @@ describe('Positive Stock Calls', function () {
 });
 
 describe('stockDAO for getTicker', function () {
-  it('should call findOneAndUpdate with the correct information', async function () {
-    let ticker = {
-      buyCount: 5,
-      currentCount: 14,
-      dailyBuyCount: 3,
-      weeklyBuyCount: 1
-    };
+  let ticker = {
+    buyCount: 5,
+    currentCount: 14,
+    dailyBuyCount: 3,
+    weeklyBuyCount: 1,
+    sellCount: 22
+  };
 
+  const options = {
+    new: true,
+    passRawResult: true
+  };
+
+  it('should call findOneAndUpdate with the correct information', async function () {
     const updateClause = {
       '$set': {
         'tickers.$.buyCount': ticker.buyCount + 10,
@@ -210,11 +216,6 @@ describe('stockDAO for getTicker', function () {
         'tickers.$.dailyBuyCount': ticker.dailyBuyCount + 10,
         'tickers.$.weeklyBuyCount': ticker.weeklyBuyCount + 10
       }
-    };
-
-    const options = {
-      new: true,
-      passRawResult: true
     };
 
     await updateTickerBuy('AAPL', 10);
@@ -226,21 +227,11 @@ describe('stockDAO for getTicker', function () {
   });
 
   it('should call findOneAndUpdate with the correct information', async function () {
-    let ticker = {
-      sellCount: 22,
-      currentCount: 14
-    };
-
     const updateClause = {
       '$set': {
         'tickers.$.sellCount': ticker.sellCount + 10,
         'tickers.$.currentCount': ticker.currentCount - 10
       }
-    };
-
-    const options = {
-      new: true,
-      passRawResult: true
     };
 
     await updateTickerSell('AAPL', 10);

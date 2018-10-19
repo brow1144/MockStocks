@@ -34,6 +34,37 @@ class StockPage extends Component {
 
   componentWillMount() {
     this.getData();
+    let self = this;
+    // Cache Stuff Go here eventually
+    axios.get(`http://localhost:8080/Portfol.io/Stock/${this.props.stock}/${this.state.selected}`)
+      .then((response) => {
+        // handle success
+        let stockData = response.data;
+        
+        let withCommas = Number(parseFloat(stockData[stockData.length - 1]['y']).toFixed(2)).toLocaleString('en');
+        
+        if ((stockData).length < 5) {
+          this.setState({visibleData: true})
+        } else {
+          this.setState({
+            currentPriceFor: withCommas
+          })
+        }
+
+      })
+      .catch((error) => {
+        // handle error
+
+        self.setState({visible: true})
+
+        console.log(`Oh no! Our API didn't respond. Please refresh and try again`);
+        console.log(`Btw here is the error message\n\n`);
+
+        if (error.response && error.response.data)
+          console.log(error.response.data.error);
+        else
+          console.log(error);
+      })
   }
 
   componentDidUpdate(prevProps) {
@@ -54,7 +85,7 @@ class StockPage extends Component {
         visibleData: false,
         stockData: stockData,
         currentPrice: stockData[0]['y'],
-        currentPriceFor: withCommas
+        // currentPriceFor: withCommas
       })
     }
   }
@@ -66,16 +97,6 @@ class StockPage extends Component {
       .then((response) => {
         // handle success
         let stockData = response.data;
-        // let prev = 0
-        // for (let i in stockData) {
-        //   console.log(stockData[i].x)
-        //   console.log(prev)
-        //   if (stockData[i].x > prev) {
-        //     console.log("Out of Order!")
-        //     // return
-        //   }
-        //   prev = stockData[i].x
-        // }
         this.showDataFromAPI(stockData);
       })
       .catch((error) => {
@@ -164,7 +185,7 @@ class StockPage extends Component {
           <b id='month' onClick={() => this.handleTimeChange('Month')} className={`timeFrame ${this.state.selected === 'Month' ? 'selected' : ''}`}>1M</b>
           <b id='triMonth' onClick={() => this.handleTimeChange('TriMonth')} className={`timeFrame ${this.state.selected === 'TriMonth' ? 'selected' : ''}`}>3M</b>
           <b id='year' onClick={() => this.handleTimeChange('Year')} className={`timeFrame ${this.state.selected === 'Year' ? 'selected' : ''}`}>1Y</b>
-          <b id='all' onClick={() => this.handleTimeChange('All')} className={`timeFrame ${this.state.selected === 'All' ? 'selected' : ''}`}>All</b>
+          {/* <b id='all' onClick={() => this.handleTimeChange('All')} className={`timeFrame ${this.state.selected === 'All' ? 'selected' : ''}`}>All</b> */}
 
           <HighchartsReact
             className='highcharts-container'
