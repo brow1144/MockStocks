@@ -26,6 +26,10 @@ class Trending extends Component {
     this.getDailyData();
   }
 
+  isVisible() {
+    return this.state.visible;
+  }
+
   dailyActive() {
     return (this.state.selectedRange === "daily");
   };
@@ -45,7 +49,11 @@ class Trending extends Component {
     this.setState({
       selectedRange: "weekly",
     });
+
     if(this.state.weeklyTrending === null){
+      this.setState({
+        visible: false,
+      });
       this.getWeeklyData();
     } else {
       this.setState({
@@ -107,30 +115,24 @@ class Trending extends Component {
   };
 
   render() {
-    if(!this.state.visible){
-      return (
-        <div>
-          <h3 style={{color: 'white'}}>Fetching Stock Data...</h3>
-        </div>
-      )
-    } else {
-      return (
-        <div>
+    return (
+      <div>
 
-          <Row style={{paddingTop: '10em'}} className='blackBackground body_div'>
-            <Col sm='2' md='2'/>
-            <Col sm='5' md='5'>
-              <h3 style={{color: 'whitesmoke'}}>Trending Stocks</h3>
-            </Col>
-            <Col sm='4' md='4' >
-              <Button color="white" active={this.dailyActive()} onClick={this.dailyClicked}>Daily</Button>
-              <Button color="white" active={this.weeklyActive()} onClick={this.weeklyClicked}>Weekly</Button>
-            </Col>
-          </Row>
+        <Row style={{paddingTop: '10em'}} className='blackBackground body_div'>
+          <Col sm='2' md='2'/>
+          <Col sm='5' md='5'>
+            <h3 style={{color: 'whitesmoke'}}>Trending Stocks</h3>
+          </Col>
+          <Col sm='4' md='4' >
+            <Button color="white" active={this.dailyActive()} onClick={this.dailyClicked}>Daily</Button>
+            <Button color="white" active={this.weeklyActive()} onClick={this.weeklyClicked}>Weekly</Button>
+          </Col>
+        </Row>
 
-          <Row style={{paddingTop: '1em'}} className='blackBackground body_div'>
-            <Col sm='2' md='2'/>
-            <Col sm='8' md='8'>
+        <Row style={{paddingTop: '1em'}} className='blackBackground body_div'>
+          <Col sm='2' md='2'/>
+          <Col sm='8' md='8'>
+            {this.isVisible() ?
               <Table dark className='z-depth-5'>
                 <thead>
                 <tr>
@@ -155,12 +157,19 @@ class Trending extends Component {
                 })}
                 </tbody>
               </Table>
-            </Col>
-          </Row>
+              :
+              <Row>
+                <Col sm='4' md='4'/>
+                <Col sm='4' md='4'>
+                  <h4 style={{color: 'whitesmoke'}}>Fetching Stock Data...</h4>
+                </Col>
+              </Row>
+            }
+          </Col>
+        </Row>
 
-        </div>
-      )
-    }
+      </div>
+    )
   }
 
 }
