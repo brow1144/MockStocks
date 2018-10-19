@@ -18,17 +18,23 @@ userModel.findOneAndUpdate = jest.fn(() => {
   }
 });
 
+getAllUsers = jest.fn(() => {
+  // const users = [
+  //   'jmkoontz',
+  //   'putput'
+  // ];
+
+  return ['jmkoontz', 'putput'];
+});
+
 it('should have tests', function () {
   expect(true).toEqual(false);
 });
 
 describe('Positive scheduler tests', function () {
-  it('should calculate portfolio values for each user', function () {
-    await getAllUsers();
-    expect(userModel.find).toHaveBeenCalledWith(
-      {},
-      updateClause,
-      options
-    );
+  it('should calculate portfolio values for each user', async function () {
+    let users = await getPortfolioValues();
+    console.log(users);
+    expect(getAllUsers).toHaveBeenCalledWith();
   });
 });
