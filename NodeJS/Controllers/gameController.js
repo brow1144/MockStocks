@@ -1,6 +1,6 @@
 import bodyParser from 'body-parser';
 import {parseError, buildResponse} from '../utilities/controllerFunctions';
-import {createGame, updateGameSettings, addUserToGame, removeUserFromGame, getGamesByUser, getWinner} from "../Models/gameDAO";
+import {createGame, updateGameSettings, addUserToGame, removeUserFromGame, getGamesByUser, getTotalValues, getWinner} from "../Models/gameDAO";
 import {joinGame, leaveGame, buyStock, sellStock} from '../Models/userDAO';
 
 export default (app) => {
