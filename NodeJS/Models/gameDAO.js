@@ -121,14 +121,6 @@ export function getGamesByUser(uid) {
     });
 }
 
-// do we need this?
-export function getGamesById(gameId) {
-  const tickerList = mongoose.model('Ticker', tickerSchema);
-  return tickerList.find({}, {tickers: 1, _id: 0}).catch((err) => {
-    return Promise.reject(err)
-  })
-}
-
 export function getGame(gameCode) {
   return gameModel.find({'code': gameCode})
     .then((game) => {
@@ -148,7 +140,7 @@ export function getAllGames() {
       if (games)
         return Promise.resolve(games);
       else
-        return Promise.reject('No users found');
+        return Promise.reject('No Games found');
     })
     .catch((err) => {
       return Promise.reject(err);
@@ -214,7 +206,7 @@ export async function getTotalValues(gameCode) {
             let totalValue;
 
             if (completed) {
-              if (game.value_history)
+              if (game.value_history && game.value_history.length)
                 totalValue = game.value_history[game.value_history.length - 1].value;
               else
                 totalValue = game.buying_power;
@@ -271,8 +263,9 @@ export async function getTotalValues(gameCode) {
             }
 
             valueList.push({
-              player: users[i]._id,
-              value: totalValue
+              username: users[i].username,
+              totalAssets: totalValue,
+              trade_count: game.trade_count
             });
           }
         }
@@ -290,7 +283,6 @@ export async function getWinner(gameCode) {
 
   try {
     totalValues = await getTotalValues(gameCode);
-    console.log(totalValues);
   } catch (error) {
     return Promise.reject(error);
   }

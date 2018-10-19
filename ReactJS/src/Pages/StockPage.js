@@ -43,7 +43,7 @@ class StockPage extends Component {
   }
 
   showDataFromAPI = (stockData) => {
-    let withCommas = Number(parseFloat(stockData[stockData.length-1]['y']).toFixed(2)).toLocaleString('en');
+    let withCommas = Number(parseFloat(stockData[0]['y']).toFixed(2)).toLocaleString('en');
 
     this.setState({visible: false})
 
@@ -53,7 +53,7 @@ class StockPage extends Component {
       this.setState({
         visibleData: false,
         stockData: stockData,
-        currentPrice: stockData[stockData.length-1]['y'],
+        currentPrice: stockData[0]['y'],
         currentPriceFor: withCommas
       })
     }

@@ -1,6 +1,6 @@
 import bodyParser from 'body-parser';
 import {parseError, buildResponse} from '../utilities/controllerFunctions';
-import {createGame, updateGameSettings, addUserToGame, removeUserFromGame, getGamesByUser, getWinner} from "../Models/gameDAO";
+import {createGame, updateGameSettings, addUserToGame, removeUserFromGame, getGamesByUser, getTotalValues, getWinner} from "../Models/gameDAO";
 import {joinGame, leaveGame, buyStock, sellStock} from '../Models/userDAO';
 
 export default (app) => {
@@ -113,6 +113,18 @@ export default (app) => {
 
     try {
       data = await sellStock(req.params.uid, req.params.gameCode, req.params.stockName, req.params.quantity, req.params.pricePerShare);
+    } catch (err) {
+      data = {error: parseError(err)};
+    }
+
+    buildResponse(res, data);
+  });
+
+  app.get('/Portfol.io/Games/Totals/:gameCode', async (req, res) => {
+    let data;
+
+    try {
+      data = await getTotalValues(req.params.gameCode);
     } catch (err) {
       data = {error: parseError(err)};
     }
