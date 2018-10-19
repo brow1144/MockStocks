@@ -357,6 +357,7 @@ class Games extends Component {
           userGame: [],
           currentUserStocks: {},
           buying_power: 0,
+          winner: false,
         }, () => {
           self.leaderCheck();
           self.props.updateCurrentGame(newFloor);
@@ -414,7 +415,7 @@ class Games extends Component {
     // Get todays date and time
     let now = Date.now();
 
-    if (self.state.currentGame != undefined) {
+    if (self.state.currentGame != undefined && self.state.winner === false) {
       // Find the distance between now and the count down date
       let distance;
       if (new Date(self.state.currentGame.start_time).getTime() < now) {
@@ -436,9 +437,11 @@ class Games extends Component {
       let minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
       let seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
-      self.setState({
-        countdown: days + "d " + hours + "h " + minutes + "m " + seconds + "s "
-      })
+      if (distance > 0) {
+        self.setState({
+          countdown: days + "d " + hours + "h " + minutes + "m " + seconds + "s "
+        })
+      }
 
 
       // If the count down is finished, write some text
@@ -453,12 +456,12 @@ class Games extends Component {
             axios.get(`http://localhost:8080/Portfol.io/Games/Winner/${this.state.currentGame.code}`) // Returns array of
               .then(function (response) {
                 // handle success
-                console.log(response.data)
+                console.log(response.data.player)
                 if (response.data != null) {
-                  this.setState({
+                  self.setState({
                     countdown: "Winner is " + response.data.player,
                     countMessage: "Game Completed: ",
-                    winner: false,
+                    winner: true,
                   })
                 }
 
@@ -526,7 +529,7 @@ class Games extends Component {
                 <h5 className={"gamesText"}>Buying Power : ${parseFloat((this.state.buying_power).toFixed(2)).toLocaleString()}</h5>
               </Col>
             </Row>
-            {this.state.leader && (this.state.countMessage === "Game Starts in: ")
+            {this.state.leader
               ? <Row>
                 <Col md="1"/>
                 <Col md="1">
