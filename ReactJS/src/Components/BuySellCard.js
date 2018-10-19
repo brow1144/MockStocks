@@ -22,15 +22,13 @@ class BuySellCard extends Component {
       selected: 'buy',
       modal: false,
       errorMessage: '',
-      watching: true,
-      gameOver: false
+      watching: true
     }
   }
 
   componentWillMount() {
     this.fetchWatchlist();
     this.isWatching();
-    this.gameOver();
   }
 
   updateCost = (ev) => {
@@ -44,17 +42,6 @@ class BuySellCard extends Component {
     }
   }
 
-  gameOver = () => {
-    let now = moment();
-    let start = new Date(this.props.currentGame.start_time);
-    let end = new Date(this.props.currentGame.end_time);
-
-    if( start > now ||  end < now) {
-      this.setState({gameOver: true})
-    } else {
-      this.setState({gameOver: false})
-    }
-  }
 
   buyStock = () => {
 
@@ -234,9 +221,9 @@ class BuySellCard extends Component {
 
             {this.state.selected === 'buy'
             ?
-              <Buy gameOver={this.state.gameOver} gameData={this.props.gameData} buyStock={this.buyStock} currentPriceFor={this.props.currentPriceFor} updateCost={this.updateCost} cost={this.state.cost} finalPrice={this.state.finalPrice}/>
+              <Buy gameOver={this.props.gameOver} gameData={this.props.gameData} buyStock={this.buyStock} currentPriceFor={this.props.currentPriceFor} updateCost={this.updateCost} cost={this.state.cost} finalPrice={this.state.finalPrice}/>
             :
-              <Sell gameOver={this.state.gameOver} gameData={this.props.gameData} sellStock={this.sellStock} currentPriceFor={this.props.currentPriceFor} updateCost={this.updateCost} cost={this.state.cost} finalPrice={this.state.finalPrice}/>
+              <Sell gameOver={this.props.gameOver} gameData={this.props.gameData} sellStock={this.sellStock} currentPriceFor={this.props.currentPriceFor} updateCost={this.updateCost} cost={this.state.cost} finalPrice={this.state.finalPrice}/>
             }
 
             {!this.state.watching

@@ -10,6 +10,7 @@ import {Row, Col, Modal, ModalHeader, ModalBody, ModalFooter, Button} from 'reac
 import '../Static/CSS/StockPage.css';
 
 import axios from 'axios'
+import moment from "moment/moment";
 
 class StockPage extends Component {
   constructor(props) {
@@ -23,6 +24,7 @@ class StockPage extends Component {
       visibleData: false,
       visible: false,
       timeout: false,
+      gameOver:false
       // stockCache: {
       //   month: {},
       //   threeMonths: {},
@@ -34,6 +36,7 @@ class StockPage extends Component {
 
   componentWillMount() {
     this.getData();
+    this.gameOver();
     let self = this;
     // Cache Stuff Go here eventually
     axios.get(`http://localhost:8080/Portfol.io/Stock/${this.props.stock}/${this.state.selected}`)
@@ -125,6 +128,19 @@ class StockPage extends Component {
     this.setState({timeout: false})
   }
 
+  gameOver = () => {
+    let now = moment();
+    let start = new Date(this.props.currentGame.start_time);
+    let end = new Date(this.props.currentGame.end_time);
+
+    if( start > now ||  end < now) {
+      this.setState({gameOver: true})
+    } else {
+      this.setState({gameOver: false})
+    }
+  }
+
+
   render() {
 
     const stockOptions = {
@@ -210,7 +226,7 @@ class StockPage extends Component {
         <Col style={{paddingTop: '6em'}} md='2'>
           {this.props.empty
             ?
-              <BuySellCard getGameData={this.props.getGameData} gameData={this.props.gameData} uid={this.props.uid} currentGame={this.props.currentGame} stock={this.props.stock} currentPriceFor={this.state.currentPriceFor} currentPrice={this.state.currentPrice}/>
+              <BuySellCard gameOver={this.state.gameOver} getGameData={this.props.getGameData} gameData={this.props.gameData} uid={this.props.uid} currentGame={this.props.currentGame} stock={this.props.stock} currentPriceFor={this.state.currentPriceFor} currentPrice={this.state.currentPrice}/>
             :
               null
           }
