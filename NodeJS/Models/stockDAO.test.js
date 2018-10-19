@@ -95,62 +95,78 @@ describe('Positive Stock Calls', function () {
     await getTicker('AAPL');
     expect(tickerModel.findOne).toHaveBeenCalledWith({'tickers.symbol': 'AAPL'}, {'tickers.$': 1, '_id': 0});
   });
-
-  // TODO mock getTicker
-  it('should call findOneAndUpdate with the correct information', async function () {
-    // let ticker = {
-    //   buyCount: 5,
-    //   currentCount: 2,
-    //   dailyBuyCount: 3,
-    //   weeklyBuyCount: 1
-    // };
-
-    const updateClause = {
-      '$set': {
-        'tickers.$.buyCount': ticker.buyCount + 10,
-        'tickers.$.currentCount': ticker.currentCount + 10,
-        'tickers.$.dailyBuyCount': ticker.dailyBuyCount + 10,
-        'tickers.$.weeklyBuyCount': ticker.weeklyBuyCount + 10
-      }
-    };
-
-    const options = {
-      new: true,
-      passRawResult: true
-    };
-
-    await updateTickerBuy('AAPL', 10);
-    expect(tickerModel.findOne).toHaveBeenCalledWith(
-      {'tickers.symbol': 'AAPL'},
-      updateClause,
-      options
-    );
-  });
-
-  // TODO mock getTicker
-  it('should call findOneAndUpdate with the correct information', async function () {
-    // let ticker = {
-    //   sellCount: 8,
-    //   currentCount: 14
-    // };
-
-    const updateClause = {
-      '$set': {
-        'tickers.$.sellCount': ticker.sellCount + 10,
-        'tickers.$.currentCount': ticker.currentCount - 10
-      }
-    };
-
-    const options = {
-      new: true,
-      passRawResult: true
-    };
-
-    await updateTickerSell('AAPL', 10);
-    expect(tickerModel.findOne).toHaveBeenCalledWith(
-      {'tickers.symbol': 'AAPL'},
-      updateClause,
-      options
-    );
-  });
 });
+
+// describe('stockDAO', function () {
+//   // TODO mock getTicker
+//   it('should call findOneAndUpdate with the correct information', async function () {
+//     let ticker = {
+//       buyCount: 5,
+//       currentCount: 2,
+//       dailyBuyCount: 3,
+//       weeklyBuyCount: 1
+//     };
+//
+//     const updateClause = {
+//       '$set': {
+//         'tickers.$.buyCount': ticker.buyCount + 10,
+//         'tickers.$.currentCount': ticker.currentCount + 10,
+//         'tickers.$.dailyBuyCount': ticker.dailyBuyCount + 10,
+//         'tickers.$.weeklyBuyCount': ticker.weeklyBuyCount + 10
+//       }
+//     };
+//
+//     const options = {
+//       new: true,
+//       passRawResult: true
+//     };
+//
+//     const mockGetTicker = jest.mock();
+//     //jest.spyOn(stockDAO, 'getTicker').mockImplementationOnce(mockGetTicker)
+//     jest.spyOn(stockDAO, 'getTicker').mockReturnValue(ticker);
+//
+//     await updateTickerBuy('AAPL', 10);
+//     expect(tickerModel.findOne).toHaveBeenCalledWith(
+//       {'tickers.symbol': 'AAPL'},
+//       updateClause,
+//       options
+//     );
+//
+//     stockDAO.getTicker.mockRestore();
+//   });
+//
+//   // TODO mock getTicker
+//   it('should call findOneAndUpdate with the correct information', async function () {
+//     let ticker = {
+//       sellCount: 8,
+//       currentCount: 14
+//     };
+//     //console.log(ticker.sellCount);
+//
+//     const updateClause = {
+//       '$set': {
+//         'tickers.$.sellCount': ticker.sellCount + 10,
+//         'tickers.$.currentCount': ticker.currentCount - 10
+//       }
+//     };
+//
+//     const options = {
+//       new: true,
+//       passRawResult: true
+//     };
+//
+//     const mockGetTicker = jest.mock();
+//     //jest.spyOn(stockDAO, 'getTicker').mockImplementationOnce(mockGetTicker);
+//     mockGetTicker.spyOn(stockDAO, 'getTicker').mockReturnValue(ticker);
+//
+//     await updateTickerSell('AAPL', 10);
+//     stockDAO.getTicker.mockRestore();
+//
+//     expect(tickerModel.findOne).toHaveBeenCalledWith(
+//       {'tickers.symbol': 'AAPL'},
+//       updateClause,
+//       options
+//     );
+//
+//   });
+// });

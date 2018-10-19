@@ -1,6 +1,7 @@
 import mongoose from 'mongoose';
 import {gameModel, userModel} from '../utilities/MongooseModels';
-import {updateUserBuyingPower} from './userDAO';
+import {updateUserBuyingPower, getUser} from './userDAO';
+import {getStockBatch} from './stockDAO';
 
 export function createGame(game) {
   for (let i in game) {
@@ -161,4 +162,147 @@ export function completeGame(gameCode) {
     .catch((err) => {
       console.error(err);
     });
+}
+
+async function getUsersInGame(gameCode) {
+  let game;
+  try {
+    game = await getGame(gameCode);
+    game = game[0];
+  } catch (error) {
+    return Promise.reject(error);
+  }
+
+  let users = game.active_players.toObject();
+  let userObjList = [];
+  for (let i in users) {
+    if (users.hasOwnProperty(i)) {
+      try {
+        let user = await getUser(users[i]);
+        userObjList.push(user);
+      } catch (error) {
+        return Promise.reject(error);
+      }
+    }
+  }
+
+  return Promise.resolve(userObjList);
+}
+
+export async function getTotalValues(gameCode) {
+  let valueList = [];
+
+  try {
+    let gameObj = await getGame(gameCode);
+    let completed = gameObj[0].completed;
+
+    let users = await getUsersInGame(gameCode);
+    let stockMap = [];
+
+    for (let i in users) {
+      if (users.hasOwnProperty(i)) {
+        let games = users[i].active_games.toObject();
+
+        if (completed)
+          games = users[i].completed_games.toObject();
+
+        for (let j in games) {
+          if (games.hasOwnProperty(j) && games[j].code === gameCode) {
+            let game = games[j];
+            let stockString = '';
+            let stocksInGame = [];
+            let totalValue;
+
+            if (completed) {
+              if (game.value_history)
+                totalValue = game.value_history[game.value_history.length - 1].value;
+              else
+                totalValue = game.buying_power;
+            } else {
+              for (let k in game.stocks) {
+                if (game.stocks.hasOwnProperty(k)) {
+                  let exists = stockMap.some((stock) => {
+                    return stock.name === game.stocks[k].name;
+                  });
+
+                  if (!exists) {
+                    if (stockString.length === 0)
+                      stockString += game.stocks[k].name;
+                    else
+                      stockString += ', ' + game.stocks[k].name;
+
+                    stocksInGame.push({
+                      name: game.stocks[k].name,
+                      quantity: game.stocks[k].quantity,
+                      price: 0
+                    });
+                  } else {
+                    stocksInGame.push({
+                      name: game.stocks[k].name,
+                      quantity: game.stocks[k].quantity,
+                      price: stockMap.find((stock) => stock.name === game.stocks[k].name).price
+                    });
+                  }
+                }
+              }
+
+              if (stockString.length > 0) {
+                let data = await getStockBatch(stockString);
+
+                for (let k in data) {
+                  if (data.hasOwnProperty(k)) {
+                    let stockObj = {
+                      name: data[k].quote.symbol,
+                      price: data[k].quote.latestPrice
+                    };
+
+                    stockMap.push(stockObj);
+                    stocksInGame.find((stock) => stock.name === stockObj.name).price = stockObj.price;
+                  }
+                }
+              }
+
+              totalValue = game.buying_power;
+
+              for (let k in stocksInGame) {
+                if (stocksInGame.hasOwnProperty(k))
+                  totalValue += stocksInGame[k].quantity * stocksInGame[k].price;
+              }
+            }
+
+            valueList.push({
+              player: users[i]._id,
+              value: totalValue
+            });
+          }
+        }
+      }
+    }
+  } catch (error) {
+    return Promise.reject(error);
+  }
+
+  return Promise.resolve(valueList);
+}
+
+export async function getWinner(gameCode) {
+  let totalValues;
+
+  try {
+    totalValues = await getTotalValues(gameCode);
+    console.log(totalValues);
+  } catch (error) {
+    return Promise.reject(error);
+  }
+
+  let winner;
+  let maxValue = 0;
+  for (let i in totalValues) {
+    if (totalValues.hasOwnProperty(i) && totalValues[i].value > maxValue) {
+      winner = totalValues[i];
+      maxValue = totalValues[i].value;
+    }
+  }
+
+  return Promise.resolve(winner);
 }
