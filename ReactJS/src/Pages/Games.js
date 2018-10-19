@@ -448,7 +448,7 @@ class Games extends Component {
       if (distance < 0 && this.state.countMessage === "Game Ends in: ") {
         if (self.state.userGame[0] == null) {
           self.setState({
-            countMessage: "Game Complete",
+            countMessage: "Game Completed ",
             countdown: "",
           })
         } else {
@@ -460,7 +460,7 @@ class Games extends Component {
                 if (response.data != null) {
                   self.setState({
                     countdown: "Winner is " + response.data.player,
-                    countMessage: "Game Completed: ",
+                    countMessage: "Game Completed ",
                     winner: true,
                   })
                 }
