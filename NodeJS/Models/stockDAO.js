@@ -2,8 +2,6 @@ import axios from 'axios';
 import {tickerModel} from "../utilities/MongooseModels";
 import _ from 'lodash';
 
-// TODO: IMPLEMENT REJECTIONS AND THEN WRITE TESTS FOR THEM
-
 export function formatStocks(data, dateLimit) {
   let stockData = [];
 
@@ -43,16 +41,17 @@ export function getStock(stockTicker, period, dateLimit) {
       // This api is inconsistent so apparently we need two different types of response
       let data = response.data;
       const stockData = formatStocks(data, dateLimit);
-      _.sortBy(stockData, (stock) => {return stock.x});
+      _.sortBy(stockData, (stock) => {
+        return stock.x
+      });
       stockData.reverse();
       return Promise.resolve(stockData);
     })
     .catch((error) => {
-      console.log(error);
+      return Promise.reject(error);
     })
 }
 
-// TODO : CHANGE THIS AWAY FROM BEING ITS OWN FUNCTION
 export function getStockIntraday(stockTicker) {
   return axios.get(`https://api.iextrading.com/1.0/stock/${stockTicker}/chart/1d`)
     .then((response) => {
@@ -61,12 +60,14 @@ export function getStockIntraday(stockTicker) {
       let data = response.data;
 
       const stockData = formatDaily(data);
-      _.sortBy(stockData, (stock) => {return stock.x});
+      _.sortBy(stockData, (stock) => {
+        return stock.x
+      });
       stockData.reverse();
       return Promise.resolve(stockData);
     })
     .catch((error) => {
-      console.log(error);
+      return Promise.reject(error);
     })
 }
 
@@ -78,7 +79,7 @@ export function getStockBatch(stockList) {
       return Promise.resolve(data);
     })
     .catch((error) => {
-      console.log(error);
+      return Promise.reject(error);
     })
 }
 
@@ -140,7 +141,7 @@ export async function getTrendingStocks(timePeriod) {
     return Promise.reject(error);
   }
 
-  if (timePeriod === 'day'){
+  if (timePeriod === 'day') {
     tickers.sort(sortByDaily());
     let topTen = new Array();
     for (let i = 0; i < 10; i++)
@@ -150,8 +151,8 @@ export async function getTrendingStocks(timePeriod) {
   }
 }
 
-function sortByDaily(){
-  return function(a, b) {
+function sortByDaily() {
+  return function (a, b) {
     return b.dailyBuyCount - a.dailyBuyCount;
   }
 }
