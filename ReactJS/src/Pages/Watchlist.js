@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import { Row, Col, Table, Button } from 'reactstrap';
+import { Row, Col, Table, Button, ButtonDropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap';
 import { NavLink } from 'react-router-dom'
 import axios from "axios/index";
 
@@ -11,8 +11,18 @@ class Watchlist extends Component {
     this.state = {
       uid: props.uid,
       watchlist: [],
+      sortOpen: false,
       loaded: false,
     };
+
+    this.toggle = this.toggle.bind(this);
+    this.sortSelected = this.sortSelected.bind(this);
+    this.sortAlphabetical = this.sortAlphabetical.bind(this);
+    this.sortReverseAlphabetical = this.sortReverseAlphabetical.bind(this);
+    this.sortHighPrice = this.sortHighPrice.bind(this);
+    this.sortLowPrice = this.sortLowPrice.bind(this);
+    this.sortHighChange = this.sortHighChange.bind(this);
+    this.sortLowChange = this.sortLowChange.bind(this);
   }
 
   componentWillMount(){
@@ -22,6 +32,17 @@ class Watchlist extends Component {
   removeStock(index){
     console.log(index);
   };
+
+  toggle(){
+    let self = this;
+    self.setState({
+      sortOpen: !self.state.sortOpen,
+    });
+  }
+
+  sortSelected(e){
+    console.log(e.currentTarget.name);
+  }
 
   getWatchlist = () => {
     let self = this;
@@ -57,6 +78,25 @@ class Watchlist extends Component {
           <Col sm='2' md='2'/>
           <Col sm='6' md='6'>
             <h3 style={{color: 'whitesmoke'}}>Watchlist</h3>
+          </Col>
+          <Col sm='2' md='1'/>
+          <Col sm='2' md='2'>
+            <ButtonDropdown isOpen={this.state.sortOpen} toggle={this.toggle}>
+              <DropdownToggle caret color='grey' size='sm'>Sort By</DropdownToggle>
+              <DropdownMenu>
+                <DropdownItem name='alphabetical' onClick={this.sortSelected}>A - Z</DropdownItem>
+                <DropdownItem divider />
+                <DropdownItem name='reverse_alphabetical' onClick={this.sortSelected}>Z - A</DropdownItem>
+                <DropdownItem divider />
+                <DropdownItem name='high_price' onClick={this.sortSelected}>High Price</DropdownItem>
+                <DropdownItem divider />
+                <DropdownItem name='low_price' onClick={this.sortSelected}>Low Price</DropdownItem>
+                <DropdownItem divider />
+                <DropdownItem name='high_change' onClick={this.sortSelected}>High Change</DropdownItem>
+                <DropdownItem divider />
+                <DropdownItem name='low_change' onClick={this.sortSelected}>Low Change</DropdownItem>
+              </DropdownMenu>
+            </ButtonDropdown>
           </Col>
         </Row>
 
