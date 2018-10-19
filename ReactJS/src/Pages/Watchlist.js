@@ -11,18 +11,13 @@ class Watchlist extends Component {
     this.state = {
       uid: props.uid,
       watchlist: [],
+      sortedWatchlist: [],
       sortOpen: false,
       loaded: false,
     };
 
     this.toggle = this.toggle.bind(this);
     this.sortSelected = this.sortSelected.bind(this);
-    this.sortAlphabetical = this.sortAlphabetical.bind(this);
-    this.sortReverseAlphabetical = this.sortReverseAlphabetical.bind(this);
-    this.sortHighPrice = this.sortHighPrice.bind(this);
-    this.sortLowPrice = this.sortLowPrice.bind(this);
-    this.sortHighChange = this.sortHighChange.bind(this);
-    this.sortLowChange = this.sortLowChange.bind(this);
   }
 
   componentWillMount(){
@@ -41,7 +36,41 @@ class Watchlist extends Component {
   }
 
   sortSelected(e){
-    console.log(e.currentTarget.name);
+    let self = this;
+    let param = e.currentTarget.name;
+    let sortedList = self.state.sortedWatchlist.sort(this.sortFunc(param));
+    self.setState({
+      sortedWatchlist: sortedList,
+    });
+  }
+
+  sortFunc(sortParam){
+    switch(sortParam){
+      case "alphabetical":
+        return function (a, b) {
+          return b.symbol > a.symbol;
+        };
+      case "reverse_alphabetical":
+        return function (a, b) {
+          return a.symbol > b.symbol;
+        };
+      case "high_price":
+        return function (a, b) {
+          return b.close - a.close;
+        };
+      case "low_price":
+        return function (a, b) {
+          return a.close - b.close;
+        };
+      case "high_change":
+        return function (a, b) {
+          return b.changePercent - a.changePercent;
+        };
+      case "low_change":
+        return function (a, b) {
+          return a.changePercent - b.changePercent;
+        };
+    }
   }
 
   getWatchlist = () => {
@@ -54,6 +83,7 @@ class Watchlist extends Component {
         if (watchlist.length !== 0) {
           self.setState({
             watchlist: watchlist,
+            sortedWatchlist: watchlist,
             loaded: true,
           });
         }
@@ -116,7 +146,7 @@ class Watchlist extends Component {
                 </tr>
                 </thead>
                 <tbody>
-                {this.state.watchlist.map((stock, key) => {
+                {this.state.sortedWatchlist.map((stock, key) => {
                   return (
                     <tr key={key}>
                       <th scope="row"><NavLink to={`/Portfol.io/Stocks/${stock.symbol}`} style={{textDecoration: 'none', color: 'whitesmoke'}}>{key + 1}</NavLink></th>
