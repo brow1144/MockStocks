@@ -77,11 +77,14 @@ const createGame = shallow(<CreateGame />);
 describe('Positive Results', () => {
   test('Game creates with no errors', () => {
     //call sum here
-    expect(createGame.state().visible).toBe(false);
+    createGame.instance().createIt();
+
+    expect(createGame.state().modal).toBe(false);
   })
 
   test('Modal opens on click', () => {
-    createGame.instance().toggle(goodGame);
+    createGame.instance().setState({goodGame})
+    createGame.instance().toggle();
     expect(createGame.state().modal).toBe(true);
   })
 
