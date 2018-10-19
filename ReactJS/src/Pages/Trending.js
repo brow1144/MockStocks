@@ -10,12 +10,11 @@ class Trending extends Component {
     super(props);
 
     this.state = {
-      uid: localStorage.getItem('uid'),
       visible: false,
       dailyTrending: null,
       weeklyTrending: null,
       topTen: null,
-      selectedRange: "daily",
+      selectedRange: "daily"
     };
 
     this.dailyClicked = this.dailyClicked.bind(this);

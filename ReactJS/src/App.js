@@ -8,6 +8,7 @@ import Trending from './Pages/Trending'
 import Tips from './Pages/Tips'
 import Home from './Pages/Home'
 import StockPage from './Pages/StockPage'
+import Watchlist from './Pages/Watchlist'
 
 import firebase from './base'
 
@@ -97,6 +98,12 @@ class App extends Component {
         <Route path='/Portfol.io/Games' render={() => (
           this.signedIn()
             ? <Main uid={this.state.uid} component={Games}/>
+            : <Redirect to={`/Portfol.io/SignIn`}/>
+        )}/>
+
+        <Route path='/Portfol.io/Watchlist' render={() => (
+          this.signedIn()
+            ? <Main uid={this.state.uid} component={Watchlist}/>
             : <Redirect to={`/Portfol.io/SignIn`}/>
         )}/>
 

@@ -2,7 +2,6 @@ import React, {Component} from 'react';
 
 import { Row, Col } from 'reactstrap';
 import { Card, CardBody, CardTitle } from 'mdbreact'
-import NavBar from '../Components/NavBar';
 
 class Tips extends Component {
 

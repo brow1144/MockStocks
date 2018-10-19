@@ -156,7 +156,6 @@ export async function getTrendingStocks(timePeriod) {
     for (let i = 0; i < 10; i++){
       topTen.push(tickers[i]);
     }
-    console.log(topTen);
     return Promise.resolve(topTen);
   }
 }

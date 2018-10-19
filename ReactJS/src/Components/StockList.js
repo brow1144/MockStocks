@@ -1,5 +1,6 @@
 import React, {Component} from 'react'
 import { Card, CardBody, CardTitle } from 'mdbreact'
+import { NavLink } from 'react-router-dom';
 
 import StockCard from '../Components/StockCard'
 
@@ -7,18 +8,33 @@ import '../Static/CSS/StockList.css'
 
 class StockList extends Component {
 
+  componentWillMount(){
+    this.getTopRisers();
+  }
 
-  render() { 
+  getTopRisers(){
+    let watchlist = this.props.watchlist;
+    watchlist.sort(this.sortByChange());
+    return watchlist.slice(0,5);
+  }
+
+  sortByChange() {
+    return function (a, b){
+      return b.changePercent - a.changePercent;
+    }
+  }
+
+  render() {
     return (
       <div style={{position: 'fixed', width: 'inherit',maxWidth: 'inherit'}} className='z-depth-5' >
         <Card style={{backgroundColor: '#1B1B1D', color: 'whitesmoke'}}>
           <CardBody>
               <div className="article-container-inner">
-                <CardTitle stlyle={{borderBottom: '2px solid whitesmoke'}} >Watchlist</CardTitle>
+                <CardTitle stlyle={{borderBottom: '2px solid whitesmoke'}} >Watchlist Top Risers</CardTitle>
 
               </div>
 
-            {this.props.watchlist.map((stock, key) => {
+            {this.getTopRisers().map((stock, key) => {
               return (
                 <div>
                   <hr className='hr'/>
@@ -29,6 +45,10 @@ class StockList extends Component {
                 </div>
               )
             })}
+            <hr className='hr'/>
+            <NavLink to={'/Portfol.io/Watchlist'} style={{textDecoration: 'none'}}>
+              <b className='navText' style={{fontSize: '1em'}}>View Full Watchlist</b>
+            </NavLink>
           </CardBody>
         </Card>
       </div>
