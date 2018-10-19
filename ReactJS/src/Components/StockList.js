@@ -7,8 +7,7 @@ import '../Static/CSS/StockList.css'
 
 class StockList extends Component {
 
-
-  render() { 
+  render() {
     return (
       <div style={{position: 'fixed', width: 'inherit',maxWidth: 'inherit'}} className='z-depth-5' >
         <Card style={{backgroundColor: '#1B1B1D', color: 'whitesmoke'}}>
@@ -17,7 +16,6 @@ class StockList extends Component {
                 <CardTitle stlyle={{borderBottom: '2px solid whitesmoke'}} >Watchlist</CardTitle>
 
               </div>
-
             {this.props.watchlist.map((stock, key) => {
               return (
                 <div>
@@ -28,7 +26,8 @@ class StockList extends Component {
                   }
                 </div>
               )
-            })}
+            })
+            }
           </CardBody>
         </Card>
       </div>
