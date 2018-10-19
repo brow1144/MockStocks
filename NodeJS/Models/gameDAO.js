@@ -121,14 +121,6 @@ export function getGamesByUser(uid) {
     });
 }
 
-// do we need this?
-export function getGamesById(gameId) {
-  const tickerList = mongoose.model('Ticker', tickerSchema);
-  return tickerList.find({}, {tickers: 1, _id: 0}).catch((err) => {
-    return Promise.reject(err)
-  })
-}
-
 export function getGame(gameCode) {
   return gameModel.find({'code': gameCode})
     .then((game) => {
@@ -148,7 +140,7 @@ export function getAllGames() {
       if (games)
         return Promise.resolve(games);
       else
-        return Promise.reject('No users found');
+        return Promise.reject('No Games found');
     })
     .catch((err) => {
       return Promise.reject(err);

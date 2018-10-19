@@ -1,6 +1,8 @@
 import {gameModel} from '../utilities/MongooseModels';
-import {getGamesByUser, createGame, addUserToGame, removeUserFromGame,
-  updateGameSettings, getGame, getAllGames} from './gameDAO';
+import {
+  getGamesByUser, createGame, addUserToGame, removeUserFromGame,
+  updateGameSettings, getGame, getAllGames, completeGame
+} from './gameDAO';
 
 gameModel.find = jest.fn(() => {
   return {
@@ -22,7 +24,8 @@ gameModel.findOneAndUpdate = jest.fn(() => {
   return {
     then: jest.fn(() => {
       return {catch: jest.fn()}
-    })
+    }),
+    catch: jest.fn()
   }
 });
 
@@ -49,7 +52,7 @@ describe('Game Tests Positive Case', function () {
       trade_limit: 25,
       start_time: new Date('2018-05-18T16:00:00Z'),
       end_time: new Date('2018-07-18T16:00:00Z')
-    }
+    };
 
     const options = {
       new: true,
@@ -79,6 +82,14 @@ describe('Game Tests Positive Case', function () {
       {code: '2352364'},
       {'$pull': {'active_players': 'XFKSHFD3578132958IUDF'}},
       {passRawResult: true}
+    );
+  });
+
+  it('should call findOneAndUpdate with the proper input', async function () {
+    await completeGame('2352364');
+    expect(gameModel.findOneAndUpdate).toHaveBeenCalledWith(
+      {code: '2352364'},
+      {'completed' : true}
     );
   });
 
