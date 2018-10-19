@@ -4,6 +4,7 @@ import '../../Static/CSS/UpdateGame.css'
 import {Container, Button, Modal, ModalBody, ModalHeader, ModalFooter, Input} from 'mdbreact';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
+import {Alert} from 'reactstrap'
 
 import moment from 'moment';
 import axios from "axios/index";
@@ -19,8 +20,10 @@ class UpdateGame extends Component {
       endDate: moment(),
       game_name: "",
       starting_amount: 0,
-      trade_limit: 0
+      trade_limit: 0,
+      errMessage: "",
 
+      err: false
     };
 
   }
@@ -55,27 +58,41 @@ class UpdateGame extends Component {
   update = () => {
 
     // Server call to update the game
-    axios.put(`http://localhost:8080/Portfol.io/Games/${this.props.currentGame.code}`, {
-      game_name: this.state.game_name,
-      starting_amount: parseFloat(this.state.starting_amount),
-      trade_limit: this.state.trade_limit,
-      start_time: this.state.startDate,
-      end_time: this.state.endDate
-    }).then(() => {
-      window.location.reload();
+    if (this.state.starting_amount <= 0){
+      this.setState({err:true, errorMessage: "Invalid Buying Power"})
+    } else if(this.state.trade_limit <= 0) {
+      this.setState({err:true, errorMessage: "Invalid Trade Limit"})
+    } else if(this.state.game_name.length <= 0) {
+      this.setState({err:true, errorMessage: "Invalid Game Name"})
+    }
+    else {
+      axios.put(`http://localhost:8080/Portfol.io/Games/${this.props.currentGame.code}`, {
+        game_name: this.state.game_name,
+        starting_amount: parseFloat(this.state.starting_amount),
+        trade_limit: this.state.trade_limit,
+        start_time: this.state.startDate,
+        end_time: this.state.endDate
+      }).then(() => {
+        window.location.reload();
 
-    }).catch((err) => {
-      console.log("Cannot update the game");
+      }).catch((error) => {
+        console.log("Cannot update the game");
 
-      if (err.response && err.response.data)
-        console.log(err.response.data.error);
-      else
-        console.log(err);
-    });
+        if (error.response && error.response.data) {
+          this.setState({
+            err: true,
+            errorMessage: error.response.data.error.message,
+          });
+          console.log(error.response.data.error);
+        }
+        else
+          console.log(error);
+      });
 
-    this.setState({
-      modal:false
-    })
+      this.setState({
+        modal: false
+      })
+    }
   }
 
   curMoney = (event) => {
@@ -90,6 +107,10 @@ class UpdateGame extends Component {
     this.setState({game_name: event.target.value});
   }
 
+  dismiss = () => {
+    this.setState({err: false});
+  }
+
     render() {
         return (
             <Container>
@@ -98,6 +119,7 @@ class UpdateGame extends Component {
                 <ModalHeader toggle={this.toggle}>Edit Game Settings</ModalHeader>
 
                 <ModalBody>
+                  <Alert color="danger" toggle={this.dismiss} isOpen={this.state.err}>{this.state.errorMessage}</Alert>
                   <Input label={'Current Floor Name : "'+ this.props.currentGame.game_name +'"'} onChange={this.curName} id="floorName"/>
                   Select a new Start Time
                   <DatePicker value={this.state.startDate.toString()}

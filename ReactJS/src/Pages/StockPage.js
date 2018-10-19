@@ -5,7 +5,7 @@ import HighchartsReact from 'highcharts-react-official'
 
 import BuySellCard from '../Components/BuySellCard'
 
-import {Row, Col} from 'reactstrap'
+import {Row, Col, Modal, ModalHeader, ModalBody, ModalFooter, Button} from 'reactstrap'
 
 import '../Static/CSS/StockPage.css';
 
@@ -22,6 +22,7 @@ class StockPage extends Component {
       selected: 'Day',
       visibleData: false,
       visible: false,
+      timeout: false,
       // stockCache: {
       //   month: {},
       //   threeMonths: {},
@@ -99,6 +100,10 @@ class StockPage extends Component {
 
   };
 
+  timeoutToggle = () => {
+    this.setState({timeout: false})
+  }
+
   render() {
 
     const stockOptions = {
@@ -129,7 +134,6 @@ class StockPage extends Component {
         enabled: false
       },
     };
-
 
     let errorMessage;
     if (this.state.visible) {
@@ -169,6 +173,18 @@ class StockPage extends Component {
             options={stockOptions}
           />
         </Col>
+
+        <Modal isOpen={this.state.timeout} toggle={this.timeoutToggle}>
+          <ModalHeader toggle={this.toggle}>Modal title</ModalHeader>
+          <ModalBody>
+          Your game is over. Buying and selling stocks is now locked.
+          </ModalBody>
+          <ModalFooter>
+            <Button color="primary" onClick={this.toggle}>Do Something</Button>{' '}
+            <Button color="secondary" onClick={this.toggle}>Cancel</Button>
+          </ModalFooter>
+        </Modal>
+
         <Col md='1'/>
         <Col style={{paddingTop: '6em'}} md='2'>
           {this.props.empty

@@ -64,6 +64,17 @@ const badDates = {
   end_time: null
 }
 
+const currentGame ={
+  code: "36955",
+  completed: false,
+  end_time: "2018-12-26T02:49:09.372Z",
+  game_name: "Spaff4New",
+  leader_email: "r@r.com",
+  start_time: "2018-12-13T02:49:09.372Z",
+  starting_amount: 123456,
+  trade_limit: 123
+}
+
 const then = jest.fn(() => {
   return {catch: jest.fn()};
 })
@@ -72,16 +83,34 @@ axios.get = jest.fn((url) => {
   return {then: then, catch: jest.fn()};
 });
 
-const updateGame = shallow(<UpdateGame />);
+const updateGame = shallow(<UpdateGame currentGame={currentGame}/>);
 
-describe('Positive Data Retreval', () => {
-  test('Window Opens', () => {
-    updateGame.instance().toggle();
-    expect(updateGame.state().modal).toBe(true);
+describe('Bad Data Tests', () => {
+
+  test('Bad Trade Limit', () => {
+    updateGame.setState({
+      trade_limit: -1
+      }
+    );
+    updateGame.instance().update();
+    expect(updateGame.state().err).toBe(true);
   })
 
-  test('Window Closes', () => {
+  test('Bad Buying Power', () => {
+    updateGame.setState({
+        starting_amount: -1
+      }
+    );
     updateGame.instance().update();
-    expect(updateGame.state().modal).toBe(false);
+    expect(updateGame.state().err).toBe(true);
+  })
+
+  test('Bad Name', () => {
+    updateGame.setState({
+        game_name: ""
+      }
+    );
+    updateGame.instance().update();
+    expect(updateGame.state().err).toBe(true);
   })
 })
