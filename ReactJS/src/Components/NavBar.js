@@ -97,11 +97,13 @@ class NavBar extends Component {
         </Col>
         {this.props.currentGame !== null && this.props.currentGame !== undefined && this.props.currentGame !== {}
           ?
-            <Col className='navText' sm='1' md='1'>
+          <Col className='navText' sm='1' md='1'>
+            <NavLink to={'/Portfol.io/Games'} style={{textDecoration: 'none'}}>
               <b className='navText' style={{fontSize: '1em'}}>Current Floor: {this.props.currentGame.game_name} ({this.props.currentGame.code})</b>
-            </Col>
+            </NavLink>
+          </Col>
           :
-            null
+          null
         }
         
         <Col className='navText' sm='1' md='1'>

@@ -76,6 +76,7 @@ class Games extends Component {
 
         } else { // No games return
           // Get the current user's email
+
           axios.get(`http://localhost:8080/Portfol.io/${self.state.uid}`)
             .then(function (response) {
               // handle success
@@ -120,24 +121,49 @@ class Games extends Component {
         self.props.updateCurrentGame(games[0]);
         self.props.getGameData(games[0].code);
         // Call to the server to get all user objects for the current game
-        for (let x = 0; x < self.state.currentGame.active_players.length; x++) {
-          axios.get(`http://localhost:8080/Portfol.io/${self.state.currentGame.active_players[x]}`)
-            .then(function (response) {
-              // handle success
-              if (response != null) {
-                self.processUser(response.data, x);
-                self.leaderCheck();
-              }
 
-            }).catch(function (err) {
-            console.log("Cannot get users for the current game");
+          if (self.state.currentGame.completed === false) {
+            for (let x = 0; x < self.state.currentGame.active_players.length; x++) {
 
-            if (err.response && err.response.data)
-              console.log(err.response.data.error);
-            else
-              console.log(err);
-          })
-        }
+              axios.get(`http://localhost:8080/Portfol.io/${self.state.currentGame.active_players[x]}`)
+                .then(function (response) {
+                  // handle success
+                  if (response != null) {
+                    self.processUser(response.data, x);
+                    self.leaderCheck();
+                  }
+
+                }).catch(function (err) {
+                console.log("Cannot get users for the current game");
+
+                if (err.response && err.response.data)
+                  console.log(err.response.data.error);
+                else
+                  console.log(err);
+              })
+            }
+          } else {
+            axios.get(`http://localhost:8080/Portfol.io/Games/Totals/${self.state.currentGame.code}`)
+              .then(function (response) {
+                // handle success
+                if (response != null) {
+                  let array = response.data;
+                  array.sort(self.sortRank());
+                  self.setState({
+                    userGame: array,
+                  })
+                }
+
+              }).catch(function (err) {
+              console.log("Cannot get users for the completed game");
+
+              if (err.response && err.response.data)
+                console.log(err.response.data.error);
+              else
+                console.log(err);
+            })
+          }
+
       })
   }
 
@@ -363,12 +389,16 @@ class Games extends Component {
           self.props.updateCurrentGame(newFloor);
           self.props.getGameData(newFloor.code)
 
+        if (self.state.currentGame.completed === false) {
           for (let x = 0; x < self.state.currentGame.active_players.length; x++) {
+
             axios.get(`http://localhost:8080/Portfol.io/${self.state.currentGame.active_players[x]}`)
               .then(function (response) {
                 // handle success
-                let user = response.data;
-                self.processUser(user, x)
+                if (response != null) {
+                  self.processUser(response.data, x);
+                  self.leaderCheck();
+                }
 
               }).catch(function (err) {
               console.log("Cannot get users for the current game");
@@ -379,6 +409,28 @@ class Games extends Component {
                 console.log(err);
             })
           }
+        } else {
+          axios.get(`http://localhost:8080/Portfol.io/Games/Totals/${self.state.currentGame.code}`)
+            .then(function (response) {
+              // handle success
+              if (response != null) {
+                console.log(response.data)
+                let array = response.data;
+                array.sort(self.sortRank());
+                self.setState({
+                  userGame: response.data,
+                })
+              }
+
+            }).catch(function (err) {
+            console.log("Cannot get users for the completed game");
+
+            if (err.response && err.response.data)
+              console.log(err.response.data.error);
+            else
+              console.log(err);
+          })
+        }
 
         }
       )
@@ -405,7 +457,9 @@ class Games extends Component {
 
   timer = () => {
     let self = this;
-    let x = setInterval(function() {self.setTime()}, 1000);
+    let x;
+    if (self.state.currentGame != undefined)
+      x = setInterval(function() {self.setTime()}, 1000);
   }
 
   setTime = () => {
@@ -415,53 +469,60 @@ class Games extends Component {
     // Get todays date and time
     let now = Date.now();
 
-    if (self.state.currentGame != undefined && self.state.winner === false) {
-      // Find the distance between now and the count down date
-      let distance;
-      if (new Date(self.state.currentGame.start_time).getTime() < now) {
-        distance = new Date(self.state.currentGame.end_time).getTime() - now;
+    // Find the distance between now and the count down date
+    let distance;
+    if (new Date(self.state.currentGame.start_time).getTime() < now) {
+      distance = new Date(self.state.currentGame.end_time).getTime() - now;
+      if (self.state.winner === false) {
         self.setState({
           countMessage: "Game Ends in: "
         })
-      } else {
-        distance = new Date(self.state.currentGame.start_time).getTime() - now;
+      }
+    } else {
+      distance = new Date(self.state.currentGame.start_time).getTime() - now;
+      if (self.state.winner === false) {
         self.setState({
           countMessage: "Game Starts in: "
         })
       }
+    }
 
 
-      // Time calculations for days, hours, minutes and seconds
-      let days = Math.floor(distance / (1000 * 60 * 60 * 24));
-      let hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-      let minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-      let seconds = Math.floor((distance % (1000 * 60)) / 1000);
+    // Time calculations for days, hours, minutes and seconds
+    let days = Math.floor(distance / (1000 * 60 * 60 * 24));
+    let hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    let minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+    let seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
-      if (distance > 0) {
+    if (distance > 0) {
+      self.setState({
+        countdown: days + "d " + hours + "h " + minutes + "m " + seconds + "s "
+      })
+    }
+
+    // If the count down is finished, write some text
+    if (distance < 0) {
+      if (self.state.userGame[0] == null) {
         self.setState({
-          countdown: days + "d " + hours + "h " + minutes + "m " + seconds + "s "
+          countdown: "",
+          countMessage: "Game Completed ",
         })
-      }
-
-
-      // If the count down is finished, write some text
-      if (distance < 0 && this.state.countMessage === "Game Ends in: ") {
-        if (self.state.userGame[0] == null) {
+      } else {
+        // Make a call to find the winner
+        if (self.state.winner === false) {
           self.setState({
-            countMessage: "Game Completed ",
-            countdown: "",
-          })
-        } else {
-          if (self.state.winner === false) {
-            axios.get(`http://localhost:8080/Portfol.io/Games/Winner/${this.state.currentGame.code}`) // Returns array of
+            winner: true,
+          }, () => {
+            console.log("CALLING FOR WINNER")
+            axios.get(`http://localhost:8080/Portfol.io/Games/Winner/${this.state.currentGame.code}`) // Returns winner's name
               .then(function (response) {
-                // handle success
+                // handle
+                console.log("Here")
                 console.log(response.data.player)
                 if (response.data != null) {
                   self.setState({
-                    countdown: "Winner is " + response.data.player,
-                    countMessage: "Game Completed ",
-                    winner: true,
+                    countdown: "Winner is " + response.data.username,
+                    countMessage: "Game Completed: ",
                   })
                 }
 
@@ -473,7 +534,7 @@ class Games extends Component {
               else
                 console.log(err);
             })
-          }
+          })
         }
       }
     }

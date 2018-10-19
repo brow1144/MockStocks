@@ -19,13 +19,27 @@ axios.get = jest.fn(() => {
   }
 });
 
-tickerModel.findOne = jest.fn(() => {
+tickerModel.findOneAndUpdate = jest.fn(() => {
   return {
     then: jest.fn(() => {
       return {catch: jest.fn()}
-    }),
-    catch: jest.fn()
+    })
   }
+});
+
+tickerModel.findOne = jest.fn(() => {
+  return Promise.resolve(
+    {
+      tickers:
+        [{
+          symbol: 'AAPL',
+          buyCount: 5,
+          currentCount: 14,
+          dailyBuyCount: 3,
+          weeklyBuyCount: 1,
+          sellCount: 22
+        }]
+    });
 });
 
 const monthCall = 'https://api.iextrading.com/1.0/stock/MSFT/chart/Monthly';
@@ -181,20 +195,20 @@ describe('Positive Stock Calls', function () {
 });
 
 describe('stockDAO for getTicker', function () {
+  let ticker = {
+    buyCount: 5,
+    currentCount: 14,
+    dailyBuyCount: 3,
+    weeklyBuyCount: 1,
+    sellCount: 22
+  };
 
-  beforeAll(() => {
-    // jest.mock('./stockDAO.js');
-    getTicker.mockImplementation(() => {console.error('mocked')});
-  });
-  // TODO mock getTicker
+  const options = {
+    new: true,
+    passRawResult: true
+  };
+
   it('should call findOneAndUpdate with the correct information', async function () {
-    let ticker = {
-      buyCount: 5,
-      currentCount: 2,
-      dailyBuyCount: 3,
-      weeklyBuyCount: 1
-    };
-
     const updateClause = {
       '$set': {
         'tickers.$.buyCount': ticker.buyCount + 10,
@@ -204,33 +218,15 @@ describe('stockDAO for getTicker', function () {
       }
     };
 
-    const options = {
-      new: true,
-      passRawResult: true
-    };
-
-    const mockGetTicker = jest.mock();
-    //jest.spyOn(stockDAO, 'getTicker').mockImplementationOnce(mockGetTicker)
-    //jest.spyOn(stockDAO, 'getTicker').mockReturnValue(ticker);
-
     await updateTickerBuy('AAPL', 10);
-    expect(tickerModel.findOne).toHaveBeenCalledWith(
+    expect(tickerModel.findOneAndUpdate).toHaveBeenCalledWith(
       {'tickers.symbol': 'AAPL'},
       updateClause,
       options
     );
-
-    stockDAO.getTicker.mockRestore();
   });
-  // TODO mock getTicker
 
   it('should call findOneAndUpdate with the correct information', async function () {
-    let ticker = {
-      sellCount: 8,
-      currentCount: 14
-    };
-    //console.log(ticker.sellCount);
-
     const updateClause = {
       '$set': {
         'tickers.$.sellCount': ticker.sellCount + 10,
@@ -238,23 +234,11 @@ describe('stockDAO for getTicker', function () {
       }
     };
 
-    const options = {
-      new: true,
-      passRawResult: true
-    };
-
-    const mockGetTicker = jest.mock();
-    //jest.spyOn(stockDAO, 'getTicker').mockImplementationOnce(mockGetTicker);
-    mockGetTicker.spyOn(stockDAO, 'getTicker').mockReturnValue(ticker);
-
     await updateTickerSell('AAPL', 10);
-    stockDAO.getTicker.mockRestore();
-
-    expect(tickerModel.findOne).toHaveBeenCalledWith(
+    expect(tickerModel.findOneAndUpdate).toHaveBeenCalledWith(
       {'tickers.symbol': 'AAPL'},
       updateClause,
       options
     );
-
   });
 });
