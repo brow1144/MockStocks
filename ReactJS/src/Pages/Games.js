@@ -354,6 +354,7 @@ class Games extends Component {
           users: [],
           userGame: [],
           currentUserStocks: {},
+          buying_power: 0,
         }, () => {
           self.leaderCheck();
           self.props.updateCurrentGame(newFloor);
@@ -452,7 +453,6 @@ class Games extends Component {
           })
         }
       }
-      console.log(self.state.countMessage)
 
     }
 
