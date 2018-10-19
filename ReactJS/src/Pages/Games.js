@@ -43,7 +43,9 @@ class Games extends Component {
       // Count down timer state
       countdown: "",
       // Count down message
-      countMessage: ""
+      countMessage: "",
+      // Bool to check if a winner was found
+      winner: false,
     };
   }
 
@@ -440,22 +442,44 @@ class Games extends Component {
 
 
       // If the count down is finished, write some text
-      if (distance < 0) {
+      if (distance < 0 && this.state.countMessage === "Game Ends in: ") {
         if (self.state.userGame[0] == null) {
           self.setState({
             countMessage: "Game Complete",
             countdown: "",
           })
         } else {
-          self.setState({
-            countdown: "Winner is " + self.state.userGame[0].username,
-            countMessage: "Game Completed: "
-          })
+          if (self.state.winner === false) {
+            axios.get(`http://localhost:8080/Portfol.io/Games/Winner/${this.state.currentGame.code}`) // Returns array of
+              .then(function (response) {
+                // handle success
+                console.log(response.data)
+                if (response.data != null) {
+                  this.setState({
+                    countdown: "Winner is " + response.data.player,
+                    countMessage: "Game Completed: ",
+                    winner: false,
+                  })
+                }
+
+              }).catch(function (err) {
+              console.log("Cannot get winner");
+
+              if (err.response && err.response.data)
+                console.log(err.response.data.error);
+              else
+                console.log(err);
+            })
+          }
         }
       }
-
     }
+  }
 
+  /**
+   * Server call to get the winner
+   */
+  getWinrar = () => {
 
   }
 
