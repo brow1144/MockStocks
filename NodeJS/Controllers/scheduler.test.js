@@ -2,13 +2,13 @@ import {userModel} from '../utilities/MongooseModels';
 import {getAllUsers} from '../Models/userDAO';
 import {getPortfolioValues, clearCounters} from './scheduler';
 
-userModel.find = jest.fn(() => {
-  return {
-    then: jest.fn(() => {
-      return {catch: jest.fn()}
-    })
-  }
-});
+// userModel.find = jest.fn(() => {
+//   return {
+//     then: jest.fn(() => {
+//       return {catch: jest.fn()}
+//     })
+//   }
+// });
 
 userModel.findOneAndUpdate = jest.fn(() => {
   return {
@@ -18,13 +18,31 @@ userModel.findOneAndUpdate = jest.fn(() => {
   }
 });
 
-getAllUsers = jest.fn(() => {
-  // const users = [
-  //   'jmkoontz',
-  //   'putput'
-  // ];
+// getAllUsers = jest.fn(() => {
+//   // const users = [
+//   //   'jmkoontz',
+//   //   'putput'
+//   // ];
+//
+//   return ['jmkoontz', 'putput'];
+// });
 
-  return ['jmkoontz', 'putput'];
+userModel.find = jest.fn(() => {
+  // let obj = [
+  //   'df',
+  //   'dsf'
+  // ]
+  // let test = {
+  //   name: 'asdf',
+  //   type: 'water'
+  // }
+  // let obj2 = [
+  //   {name: 'asdf', type: 'water'}
+  // ]
+  return Promise.resolve(
+      [{uid: 'jmkoontz'},
+      {uid: 'putput'}]
+    );
 });
 
 it('should have tests', function () {
@@ -35,6 +53,6 @@ describe('Positive scheduler tests', function () {
   it('should calculate portfolio values for each user', async function () {
     let users = await getPortfolioValues();
     console.log(users);
-    expect(getAllUsers).toHaveBeenCalledWith();
+    expect().toHaveBeenCalledWith();
   });
 });
