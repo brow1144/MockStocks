@@ -147,13 +147,15 @@ class Games extends Component {
                 // handle success
                 if (response != null) {
                   console.log(response.data)
+                  let array = response.data;
+                  array.sort(self.sortRank);
                   self.setState({
                     userGame: response.data,
                   })
                 }
 
               }).catch(function (err) {
-              console.log("Cannot get users for the current game");
+              console.log("Cannot get users for the completed game");
 
               if (err.response && err.response.data)
                 console.log(err.response.data.error);
