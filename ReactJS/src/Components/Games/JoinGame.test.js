@@ -4,7 +4,7 @@ import CreateGame from './CreateGame';
 import axios from 'axios';
 
 //STICK TEST DATA HERE
-const validCode = 12345;
+const validCode = 54862;
 const invalidCodeShort = 1234;
 const invalidCodeLong = 123456;
 
@@ -22,7 +22,9 @@ const createGame = shallow(<CreateGame />);
 describe('Positive Results', () => {
   test('Joins with no errors', () => {
     //call sum here
-    expect(createGame.state().visible).toBe(false);
+    createGame.instance().setState({code: validCode});
+    createGame.instance().joinIt();
+    expect(createGame.state().err).toBe(false);
   })
 
   test('Join game window opens on click', () => {
@@ -31,7 +33,9 @@ describe('Positive Results', () => {
   })
 
   test('Join game window closes after submission', () => {
+    createGame.instance().setState({code: validCode});
     createGame.instance().joinIt();
+    createGame.instance().toggle();
     expect(createGame.state().joinGame).toBe(false);
   })
 

@@ -30,6 +30,7 @@ class CreateGame extends Component {
       starting_amount: "",
       trade_limit: "",
 
+      badDates: false,
       errMessage: "",
       err: false
     };
@@ -79,13 +80,10 @@ class CreateGame extends Component {
   }
 
   joinIt = () => {
-    console.log("--1")
     console.log(this.state.code);
     let gameId = this.state.code;
     console.log(this.props.uid);
     console.log(gameId);
-
-    console.log("--2");
 
     axios.put(`http://localhost:8080/Portfol.io/Games/${this.props.uid}/${gameId}`)
       .then((response) => {
@@ -120,40 +118,45 @@ class CreateGame extends Component {
 
   createIt = () => {
     let self = this;
-    console.log("--3");
     let gameId = self.generateId();
-    console.log("--4");
-    console.log();
-    axios.post(`http://localhost:8080/Portfol.io/Games`,
-      {
-        code: gameId,
-        game_name: self.state.game_name,
-        leader_email: self.props.email,
-        starting_amount: self.state.starting_amount,
-        trade_limit: self.state.trade_limit,
-        start_time: self.state.startDate,
-        end_time: self.state.endDate
-      }).then(() => {
-        console.log("--5");
+
+    if (self.state.startDate < self.state.endDate) {
+
+      axios.post(`http://localhost:8080/Portfol.io/Games`,
+        {
+          code: gameId,
+          game_name: self.state.game_name,
+          leader_email: self.props.email,
+          starting_amount: self.state.starting_amount,
+          trade_limit: self.state.trade_limit,
+          start_time: self.state.startDate,
+          end_time: self.state.endDate
+        }).then(() => {
 
         self.setState({
           code: gameId
         });
         self.joinIt();
-        console.log("--6");
       }).catch((error) => {
-      if (error.response && error.response.data) {
-        console.log(error.response.data.error);
-        if (error.response.data.error.message.errmsg && error.response.data.error.message.errmsg.includes("duplicate")) {
+        if (error.response && error.response.data) {
+          console.log(error.response.data.error);
+          if (error.response.data.error.message.errmsg && error.response.data.error.message.errmsg.includes("duplicate")) {
             self.createIt();
+          }
+        } else {
+          console.log(error);
         }
-      } else {
-        console.log(error);
-      }
 
 
       });
-    this.toggle();
+
+      this.toggle();
+    } else if (self.state.startDate >= self.state.endDate || self.state.startDate == null || self.state.endDate == null){
+      self.setState({
+        badDates: true
+      })
+    }
+
   }
 
   curName = (event) => {
@@ -184,6 +187,10 @@ class CreateGame extends Component {
     this.setState({err: false});
   }
 
+  dateReset = () =>{
+    this.setState({badDates: false});
+  }
+
   render() {
 
     return (
@@ -198,8 +205,7 @@ class CreateGame extends Component {
               <Input  value={this.state.code}  onChange={this.curCode} id="floorCode" label="Floor Code"/>
               <Button color="grey" onClick={this.joinIt}>Join</Button>
             </ModalBody>
-            :
-            this.state.createGame === true
+            : this.state.createGame === true
               ?
               <ModalBody>
                 <Input value={this.state.game_name}  onChange={this.curName} id="floorName" label="Floor name"/>
@@ -216,6 +222,11 @@ class CreateGame extends Component {
                             dateFormat="LLL"/>
                 <Input value={this.state.starting_amount}  onChange={this.curMoney} id="startingMoney" label="Starting Money (USD)"/>
                 <Input value={this.state.trade_limit}  onChange={this.curLimit} id="transLimit" label="Transaction Limit (0 for Unlimited)"/>
+                {this.state.badDates === true
+                  ?
+                  <Alert color="danger" isOpen={this.state.badDates} toggle={this.dateReset}>Invalid dates. Make sure start date is before end date</Alert>
+                  : null
+                }
                 <Button color="grey" onClick={this.createIt}>Submit</Button>
               </ModalBody>
               : null
