@@ -1,7 +1,21 @@
 import {userModel} from '../utilities/MongooseModels';
-import {getUser, createUser, joinGame, leaveGame, updateUserBuyingPower, buyStock,
-  sellStock, removeStock, getUserGame, updateValueHistory, getValueHistory, clearValueHistory} from './userDAO';
-import {getGame} from './gameDAO';
+import {
+  getUser,
+  createUser,
+  joinGame,
+  leaveGame,
+  updateUserBuyingPower,
+  buyStock,
+  sellStock,
+  removeStock,
+  getUserGame,
+  updateValueHistory,
+  getValueHistory,
+  clearValueHistory,
+  getUserWatchlist,
+  insertToUserWatchlist, removeFromUserWatchlist
+} from './userDAO';
+import * as stockDAO from './stockDAO';
 
 userModel.findOne = jest.fn(() => {
   return {
@@ -150,6 +164,57 @@ describe('User Tests Positive Case', function () {
       {'$push': {'active_games.$.value_history': valueEntry}},
       options
     );
+  });
+});
+
+describe('Tests for watchlist', function () {
+
+  let returnData;
+  beforeAll(async () => {
+    userModel.findOne = jest.fn(() => {
+      return Promise.resolve({watchlist: ['MSFT', 'AAPL']})
+    });
+
+    userModel.findOneAndUpdate = jest.fn(() => {
+      return {
+        then: jest.fn(() => {
+          return {catch: jest.fn()}
+        })
+      }
+    });
+    jest.mock('./stockDAO');
+    stockDAO.getStockBatch = jest.fn(() => {
+      return {
+        stock: {
+          quote: {
+            symbol: 'MSFT',
+            close: 22,
+            changePercent: 45.01
+          }
+        }
+      }
+    });
+
+
+    returnData = await getUserWatchlist('22');
+  });
+
+  it('should call findOne with the right information', function () {
+    expect(userModel.findOne).toHaveBeenCalledWith({_id: '22'});
+  });
+
+  it('should call findOneAndUpdate with the right information', function () {
+    insertToUserWatchlist('22', {stock: 13});
+    expect(userModel.findOneAndUpdate).toHaveBeenCalledWith({_id: '22'}, {$push: {watchlist: {stock: 13}}});
+  });
+
+  it('should call findOneAndUpdate with the right information', function () {
+    removeFromUserWatchlist('22', {stock: 13});
+    expect(userModel.findOneAndUpdate).toHaveBeenCalledWith({_id: '22'}, {$pull: {watchlist: {stock: 13}}});
+  });
+
+  it('should call getStockBatch with a string of symbols', function () {
+    expect(stockDAO.getStockBatch).toHaveBeenCalledWith('MSFT,AAPL');
   });
 });
 

@@ -529,7 +529,7 @@ export function removeFromUserWatchlist(uid, stockToInsert) {
     .then((updatedUser) => {
       if (updatedUser === null)
         return Promise.reject('UserError: User does not exist');
-      updatedUser.watchlist.push(stockToInsert);
+      updatedUser.watchlist.splice( updatedUser.watchlist.indexOf(stockToInsert), 1 );
       return Promise.resolve(updatedUser.watchlist);
     })
     .catch((err) => {
