@@ -59,12 +59,12 @@ class Main extends Component {
   getGameData = (game) => {
     let self = this
     axios.get(`http://localhost:8080/Portfol.io/${self.props.uid}/${game}`)
-    .then((data) => {
-      self.setState({gameData: data.data})
-    })
-    .catch((error) => {
-      console.log(error)
-    })
+      .then((data) => {
+        self.setState({gameData: data.data})
+      })
+      .catch((error) => {
+        console.log(error)
+      })
   }
 
   updateCurrentGame = (game) => {
