@@ -104,68 +104,6 @@ describe('User Tests Positive Case', function () {
     );
   });
 
-  // TODO figure out mocking
-  it('should call findOneAndUpdate with the proper settings', async function () {
-    const stock = {
-      name: 'AAPL',
-      quantity: 25
-    };
-
-    const findClause = {
-      '_id': '325FXYDF351235JLDSKG',
-      'active_games.code': '523535'
-    };
-
-    const updateClause = {
-      '$inc': {'active_games.$.trade_count': 1},
-      '$set': {'active_games.$.buying_power': 3000},
-      '$push': {'active_games.$.stocks': stock}
-    };
-
-    const options = {
-      new: true,
-      passRawResult: true
-    };
-
-    await buyStock('325FXYDF351235JLDSKG', '523535', 'AAPL', 25, 3000);
-    expect(userModel.findOneAndUpdate).toHaveBeenCalledWith(
-      findClause,
-      updateClause,
-      options
-    );
-  });
-
-  // TODO figure out mocking
-  it('should call findOneAndUpdate with the proper settings', async function () {
-    const stock = {
-      name: 'AAPL',
-      quantity: 25
-    };
-
-    const findClause = {
-      '_id': '325FXYDF351235JLDSKG',
-      'active_games.code': '523535'
-    };
-
-    const updateClause = {
-      '$inc': {'active_games.$.trade_count': 1},
-      '$set': {'active_games.$.buying_power': 3000},
-      '$push': {'active_games.$.stocks': stock}
-    };
-
-    const options = {
-      new: true,
-      passRawResult: true
-    };
-
-    await sellStock('325FXYDF351235JLDSKG', '523535', 'AAPL', 25, 3000);
-    expect(userModel.findOneAndUpdate).toHaveBeenCalledWith(
-      findClause,
-      updateClause,
-      options
-    );
-  });
-
   it('should call findOneAndUpdate with the proper settings', async function () {
     const stock = {
       name: 'AAPL',
@@ -190,19 +128,6 @@ describe('User Tests Positive Case', function () {
     );
   });
 
-  it('should call findOne with the proper settings', async function () {
-    const returnClause = {
-      '_id': 0,
-      'active_games': {'$elemMatch': {'code': '523535'}}
-    };
-
-    await getUserGame('325FXYDF351235JLDSKG', '523535');
-    expect(userModel.findOne).toHaveBeenCalledWith(
-      {'_id': '325FXYDF351235JLDSKG'},
-      returnClause
-    );
-  });
-
   it('should call findOneAndUpdate with the proper settings', async function () {
     const valueEntry = {
       value: 4500,
@@ -223,30 +148,6 @@ describe('User Tests Positive Case', function () {
     expect(userModel.findOneAndUpdate).toHaveBeenCalledWith(
       findClause,
       {'$push': {'active_games.$.value_history': valueEntry}},
-      options
-    );
-  });
-
-  // TODO complete
-  it('should call findOne with the proper settings', async function () {
-    await getValueHistory('325FXYDF351235JLDSKG', '523535');
-  });
-
-  it('should call findOneAndUpdate with the proper settings', async function () {
-    const findClause = {
-      '_id': '325FXYDF351235JLDSKG',
-      'active_games.code': '523535'
-    };
-
-    const options = {
-      new: true,
-      passRawResult: true
-    };
-
-    await clearValueHistory('325FXYDF351235JLDSKG', '523535');
-    expect(userModel.findOneAndUpdate).toHaveBeenCalledWith(
-      findClause,
-      {'$set': {'active_games.$.value_history': []}},
       options
     );
   });
