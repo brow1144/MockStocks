@@ -416,7 +416,7 @@ class Games extends Component {
               if (response != null) {
                 console.log(response.data)
                 let array = response.data;
-                array.sort(self.sortRank);
+                array.sort(self.sortRank());
                 self.setState({
                   userGame: response.data,
                 })
