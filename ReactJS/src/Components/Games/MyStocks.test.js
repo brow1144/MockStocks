@@ -30,57 +30,16 @@ const noStocks = {buying_power: 5234,
   username: "jerbear"};
 
 describe('Checks that My Stocks displays users` data correct', () => {
-  let wrapper = mount(
+  let wrapper = shallow(
     <MyStocks currentUserStocks={curUserStocks} />
   );
-  let obj = [];
-  let texts = wrapper.find('th').map(node => node.text());
 
-  for (let x  = 5; x < texts.length-5; x += 5) {
-    let tmp = {
-      symbol: texts[x+1],
-      price: texts[x+2],
-      owned: texts[x+3],
-      total: texts[x+4],
-    }
-    obj.push(tmp)
-  }
 
-  test('Check the correct amount of stocks are being made', () => {
+  test('The correct amount of stocks are being displayed', () => {
     expect(wrapper.find('tr').length).toBe(6);
   })
-  test('Check the symbol of each stock is displayed', () => {
-    expect(obj[0].symbol === "SSL").toBe(true);
-    expect(obj[1].symbol === "DWPP").toBe(true);
-    expect(obj[2].symbol === "JKJ").toBe(true);
-    expect(obj[3].symbol === "DJD").toBe(true);
-  })
-  test('Check the total value of each stock is displayed correctly', () => {
-    expect(obj[0].total === '$185').toBe(true);
-    expect(obj[1].total === '$349.67').toBe(true);
-    expect(obj[2].total === '$342.51').toBe(true);
-    expect(obj[3].total === '$5,780.51').toBe(true);
-  })
-  test('Check the current value of each stock is displayed correctly', () => {
-    expect(obj[0].price === '$37').toBe(true);
-    expect(obj[1].price === '$29.14').toBe(true);
-    expect(obj[2].price === '$171.25').toBe(true);
-    expect(obj[3].price === '$35.25').toBe(true);
-  })
-  test('Check the number of each stock owned is displayed correctly', () => {
-    expect(obj[0].owned === '5').toBe(true);
-    expect(obj[1].owned === '12').toBe(true);
-    expect(obj[2].owned === '2').toBe(true);
-    expect(obj[3].owned === '164').toBe(true);
-  })
-  test('Check the number of each stock owned is displayed correctly', () => {
-    expect(obj[0].owned === '5').toBe(true);
-    expect(obj[1].owned === '12').toBe(true);
-    expect(obj[2].owned === '2').toBe(true);
-    expect(obj[3].owned === '164').toBe(true);
-  })
 });
-describe('Checks that My Stocks displays handles no stocks correctly', () => {
+describe('Checks that MyStocks displays handles no stocks correctly', () => {
   let wrapper = mount(
     <MyStocks currentUserStocks={noStocks} />
   );

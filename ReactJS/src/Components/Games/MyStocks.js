@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
-import { Table } from 'reactstrap'
+import { Table, Button } from 'reactstrap'
 import '../../Static/CSS/Games.css';
-import { NavLink } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 
 class MyStocks extends Component {
 
@@ -9,11 +9,12 @@ class MyStocks extends Component {
     super(props);
   }
 
-  /**
-   * Sends the use to that stock's page
-   */
-  openStock = () => {
-    //to=(`/Portfol.io/Stocks/${stock.symbol}`)
+  static contextTypes = {
+    router: {}
+  }
+
+  switchPage = (symbol) => {
+    this.context.router.push(`/Portfol.io/Stocks/${symbol}`);
   }
 
   render() {
@@ -35,12 +36,12 @@ class MyStocks extends Component {
             <tbody>
             {this.props.currentUserStocks.stocksArray.map((stock, key) => {
               return (
-                  <tr onClick={() => this.openStock()} key={key}>
-                    <th scope="row"><NavLink to={`/Portfol.io/Stocks/${stock.symbol}`} style={{textDecoration: 'none', color: 'whitesmoke'}}>{key + 1}</NavLink></th>
-                    <th><NavLink to={`/Portfol.io/Stocks/${stock.symbol}`} style={{textDecoration: 'none', color: 'whitesmoke'}}>{stock.symbol}</NavLink></th>
-                    <th><NavLink to={`/Portfol.io/Stocks/${stock.symbol}`} style={{textDecoration: 'none', color: 'whitesmoke'}}>${parseFloat((stock.price).toFixed(2)).toLocaleString()}</NavLink></th>
-                    <th><NavLink to={`/Portfol.io/Stocks/${stock.symbol}`} style={{textDecoration: 'none', color: 'whitesmoke'}}>{stock.quantity}</NavLink></th>
-                    <th><NavLink to={`/Portfol.io/Stocks/${stock.symbol}`} style={{textDecoration: 'none', color: 'whitesmoke'}}>${parseFloat((stock.total).toFixed(2)).toLocaleString()}</NavLink></th>
+                  <tr key={key}>
+                    <th scope="row"><Link to={`/Portfol.io/Stocks/${stock.symbol}`} style={{textDecoration: 'none', color: 'whitesmoke'}}>{key + 1}</Link></th>
+                    <th><Link to={`/Portfol.io/Stocks/${stock.symbol}`} style={{textDecoration: 'none', color: 'whitesmoke'}}>{stock.symbol}</Link></th>
+                    <th><Link to={`/Portfol.io/Stocks/${stock.symbol}`} style={{textDecoration: 'none', color: 'whitesmoke'}}>${parseFloat((stock.price).toFixed(2)).toLocaleString()}</Link></th>
+                    <th><Link to={`/Portfol.io/Stocks/${stock.symbol}`} style={{textDecoration: 'none', color: 'whitesmoke'}}>{stock.quantity}</Link></th>
+                    <th><Link to={`/Portfol.io/Stocks/${stock.symbol}`} style={{textDecoration: 'none', color: 'whitesmoke'}}>${parseFloat((stock.total).toFixed(2)).toLocaleString()}</Link></th>
                   </tr>
               )
             })}
