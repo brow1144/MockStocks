@@ -46,6 +46,6 @@ describe('Checks that MyStocks displays handles no stocks correctly', () => {
 
   test('Check the table doesn`t display', () => {
     expect(wrapper.find('tr').length).toBe(2);
-  })
-
+  });
 });
+
