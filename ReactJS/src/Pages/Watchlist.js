@@ -11,7 +11,6 @@ class Watchlist extends Component {
     this.state = {
       uid: props.uid,
       watchlist: [],
-      sortedWatchlist: [],
       sortOpen: false,
       loaded: false,
     };
@@ -25,7 +24,30 @@ class Watchlist extends Component {
   }
 
   removeStock(index){
-    console.log(index);
+    let removeItem = this.state.watchlist[index];
+    let sl = this.state.watchlist;
+    sl.splice(index, 1);
+    this.setState({
+      watchlist: sl,
+    });
+
+    axios.delete(`http://localhost:8080/Portfol.io/Watchlist/${this.state.uid}/${removeItem.symbol}`)
+      .then(function (response) {
+        // handle success
+        let data = response.data;
+        console.log(data);
+
+      })
+      .catch(function (error) {
+        // handle error
+        console.log(`Oh no! Our API didn't respond. Please refresh and try again`)
+        console.log(`Btw here is the error message\n\n`)
+
+        if (error.response && error.response.data)
+          console.log(error.response.data.error);
+        else
+          console.log(error);
+      })
   };
 
   toggle(){
@@ -38,9 +60,9 @@ class Watchlist extends Component {
   sortSelected(e){
     let self = this;
     let param = e.currentTarget.name;
-    let sortedList = self.state.sortedWatchlist.sort(this.sortFunc(param));
+    let sortedList = self.state.watchlist.sort(this.sortFunc(param));
     self.setState({
-      sortedWatchlist: sortedList,
+      watchlist: sortedList,
     });
   }
 
@@ -48,11 +70,11 @@ class Watchlist extends Component {
     switch(sortParam){
       case "alphabetical":
         return function (a, b) {
-          return b.symbol > a.symbol;
+          return b.symbol < a.symbol;
         };
       case "reverse_alphabetical":
         return function (a, b) {
-          return a.symbol > b.symbol;
+          return a.symbol < b.symbol;
         };
       case "high_price":
         return function (a, b) {
