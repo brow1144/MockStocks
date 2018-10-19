@@ -23,8 +23,8 @@ class StockList extends Component {
                 <div>
                   <hr className='hr'/>
                   {stock.changePercent >= 0
-                    ?<StockCard close={stock.close} stockTicker={stock.symbol} stockChange={'+' + parseFloat(stock.changePercent).toFixed(4) + "%"}/>
-                    :<StockCard close={stock.close} stockTicker={stock.symbol} stockChange={parseFloat(stock.changePercent).toFixed(4) + "%"}/>
+                    ?<StockCard stockColor='green' close={stock.close} stockTicker={stock.symbol} stockChange={'+' + parseFloat(stock.changePercent).toFixed(4) + "%"}/>
+                    :<StockCard stockColor='red' close={stock.close} stockTicker={stock.symbol} stockChange={parseFloat(stock.changePercent).toFixed(4) + "%"}/>
                   }
                 </div>
               )
