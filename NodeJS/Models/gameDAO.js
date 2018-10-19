@@ -214,7 +214,7 @@ export async function getTotalValues(gameCode) {
             let totalValue;
 
             if (completed) {
-              if (game.value_history)
+              if (game.value_history && game.value_history.length)
                 totalValue = game.value_history[game.value_history.length - 1].value;
               else
                 totalValue = game.buying_power;
@@ -272,7 +272,8 @@ export async function getTotalValues(gameCode) {
 
             valueList.push({
               player: users[i].username,
-              value: totalValue
+              value: totalValue,
+              trade_count: trade_count
             });
           }
         }

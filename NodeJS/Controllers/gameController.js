@@ -120,6 +120,18 @@ export default (app) => {
     buildResponse(res, data);
   });
 
+  app.get('/Portfol.io/Games/Totals/:gameCode', async (req, res) => {
+    let data;
+
+    try {
+      data = await getTotalValues(req.params.gameCode);
+    } catch (err) {
+      data = {error: parseError(err)};
+    }
+
+    buildResponse(res, data);
+  });
+
   app.get('/Portfol.io/Games/Winner/:gameCode', async (req, res) => {
     let data;
 
