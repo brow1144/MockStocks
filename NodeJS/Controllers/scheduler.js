@@ -21,7 +21,7 @@ export function runSchedules() {
   });
 
   // check active games once per hour
-  let checkGames = schedule.scheduleJob('00 * * * *', () => {
+  let checkGames = schedule.scheduleJob('00,30 * * * *', () => {
     checkActiveGames();
   });
 
@@ -53,7 +53,7 @@ const checkActiveGames = () => {
     });
 };
 
-let getPortfolioValues = async () => {
+export async function getPortfolioValues() {
   let stockMap = [];
 
   try {
@@ -137,7 +137,7 @@ let getPortfolioValues = async () => {
   }
 };
 
-let clearCounters = async (daily) => {
+export async function clearCounters(daily) {
   let tickers;
   let updateClause;
 
