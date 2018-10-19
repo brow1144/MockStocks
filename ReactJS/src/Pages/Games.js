@@ -398,6 +398,7 @@ class Games extends Component {
                 if (response != null) {
                   self.processUser(response.data, x);
                   self.leaderCheck();
+                  self.props.gameOverFunc();
                 }
 
               }).catch(function (err) {
@@ -421,6 +422,7 @@ class Games extends Component {
                   userGame: response.data,
                 })
               }
+              self.props.gameOverFunc();
 
             }).catch(function (err) {
             console.log("Cannot get users for the completed game");
