@@ -147,11 +147,10 @@ class Games extends Component {
               .then(function (response) {
                 // handle success
                 if (response != null) {
-                  console.log(response.data)
                   let array = response.data;
-                  array.sort(self.sortRank);
+                  array.sort(self.sortRank());
                   self.setState({
-                    userGame: response.data,
+                    userGame: array,
                   })
                 }
 
@@ -470,54 +469,60 @@ class Games extends Component {
     // Get todays date and time
     let now = Date.now();
 
-    if (self.state.winner === false) {
-      // Find the distance between now and the count down date
-      console.log("Counting")
-      let distance;
-      if (new Date(self.state.currentGame.start_time).getTime() < now) {
-        distance = new Date(self.state.currentGame.end_time).getTime() - now;
+    // Find the distance between now and the count down date
+    let distance;
+    if (new Date(self.state.currentGame.start_time).getTime() < now) {
+      distance = new Date(self.state.currentGame.end_time).getTime() - now;
+      if (self.state.winner === false) {
         self.setState({
           countMessage: "Game Ends in: "
         })
-      } else {
-        distance = new Date(self.state.currentGame.start_time).getTime() - now;
+      }
+    } else {
+      distance = new Date(self.state.currentGame.start_time).getTime() - now;
+      if (self.state.winner === false) {
         self.setState({
           countMessage: "Game Starts in: "
         })
       }
+    }
 
 
-      // Time calculations for days, hours, minutes and seconds
-      let days = Math.floor(distance / (1000 * 60 * 60 * 24));
-      let hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-      let minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-      let seconds = Math.floor((distance % (1000 * 60)) / 1000);
+    // Time calculations for days, hours, minutes and seconds
+    let days = Math.floor(distance / (1000 * 60 * 60 * 24));
+    let hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    let minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+    let seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
-      if (distance > 0) {
+    if (distance > 0) {
+      self.setState({
+        countdown: days + "d " + hours + "h " + minutes + "m " + seconds + "s "
+      })
+    }
+
+    // If the count down is finished, write some text
+    if (distance < 0) {
+      if (self.state.userGame[0] == null) {
         self.setState({
-          countdown: days + "d " + hours + "h " + minutes + "m " + seconds + "s "
+          countdown: "",
+          countMessage: "Game Completed ",
         })
-      }
-
-      // If the count down is finished, write some text
-      if (distance < 0) {
-        if (self.state.userGame[0] == null) {
+      } else {
+        // Make a call to find the winner
+        if (self.state.winner === false) {
           self.setState({
-            countdown: "",
-            countMessage: "Game Completed ",
-          })
-        } else {
-          if (self.state.winner === false) {
-            console.log("Here")
-            axios.get(`http://localhost:8080/Portfol.io/Games/Winner/${this.state.currentGame.code}`) // Returns array of
+            winner: true,
+          }, () => {
+            console.log("CALLING FOR WINNER")
+            axios.get(`http://localhost:8080/Portfol.io/Games/Winner/${this.state.currentGame.code}`) // Returns winner's name
               .then(function (response) {
-                // handle success
+                // handle
+                console.log("Here")
                 console.log(response.data.player)
                 if (response.data != null) {
                   self.setState({
                     countdown: "Winner is " + response.data.username,
                     countMessage: "Game Completed ",
-                    winner: true,
                   })
                 }
 
@@ -529,16 +534,9 @@ class Games extends Component {
               else
                 console.log(err);
             })
-          }
+          })
         }
       }
-    } else {
-        self.setState({
-          countdown: self.state.countdown,
-          countMessage: "Game Completed ",
-          winner: true,
-        })
-
     }
   }
 
