@@ -9,7 +9,6 @@ export function formatStocks(data, dateLimit) {
 
   for (let i in data) {
     if (!data[i]['close']) continue;
-
     const stockDate = new Date(data[i]['date']).getTime();
     if (!dateLimit || stockDate >= dateLimit) {
       stockData.unshift({
@@ -25,7 +24,6 @@ export function formatDaily(data) {
   let stockData = [];
   for (let i in data) {
     if (!data[i]['close']) continue;
-
     let timeArr = data[i]['minute'].split(':');
     let stockDate = new Date();
     stockDate.setHours(timeArr[0], timeArr[1]);
@@ -46,6 +44,7 @@ export function getStock(stockTicker, period, dateLimit) {
       let data = response.data;
       const stockData = formatStocks(data, dateLimit);
       _.sortBy(stockData, (stock) => {return stock.x});
+      stockData.reverse();
       return Promise.resolve(stockData);
     })
     .catch((error) => {
@@ -63,6 +62,7 @@ export function getStockIntraday(stockTicker) {
 
       const stockData = formatDaily(data);
       _.sortBy(stockData, (stock) => {return stock.x});
+      stockData.reverse();
       return Promise.resolve(stockData);
     })
     .catch((error) => {
