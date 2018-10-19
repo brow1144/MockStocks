@@ -121,10 +121,7 @@ class CreateGame extends Component {
 
   createIt = () => {
     let self = this;
-    console.log("--3");
     let gameId = self.generateId();
-    console.log("--4");
-    console.log();
 
     if (self.state.startDate < self.state.endDate) {
 
@@ -138,13 +135,11 @@ class CreateGame extends Component {
           start_time: self.state.startDate,
           end_time: self.state.endDate
         }).then(() => {
-        console.log("--5");
 
         self.setState({
           code: gameId
         });
         self.joinIt();
-        console.log("--6");
       }).catch((error) => {
         if (error.response && error.response.data) {
           console.log(error.response.data.error);
@@ -159,7 +154,7 @@ class CreateGame extends Component {
       });
 
       this.toggle();
-    } else {
+    } else if (self.state.startDate >= self.state.endDate || self.state.startDate == null || self.state.endDate == null){
       self.setState({
         badDates: true
       })
@@ -232,7 +227,7 @@ class CreateGame extends Component {
                 <Input value={this.state.trade_limit}  onChange={this.curLimit} id="transLimit" label="Transaction Limit (0 for Unlimited)"/>
                 {this.state.badDates === true
                   ?
-                  <Alert color="danger" isOpen={this.state.badDates} toggle={this.dateReset}>Make sure your start is before your end!</Alert>
+                  <Alert color="danger" isOpen={this.state.badDates} toggle={this.dateReset}>Invalid dates. Make sure start date is before end date</Alert>
                   : null
                 }
                 <Button color="grey" onClick={this.createIt}>Submit</Button>

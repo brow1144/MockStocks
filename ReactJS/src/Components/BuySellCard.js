@@ -8,6 +8,8 @@ import axios from 'axios';
 import '../Static/CSS/StockList.css'
 import '../Static/CSS/BuySellCard.css'
 
+import moment from 'moment';
+
 class BuySellCard extends Component {
 
   constructor(props) {
@@ -20,13 +22,15 @@ class BuySellCard extends Component {
       selected: 'buy',
       modal: false,
       errorMessage: '',
-      watching: true
+      watching: true,
+      gameOver: false
     }
   }
 
   componentWillMount() {
     this.fetchWatchlist();
     this.isWatching();
+    this.gameOver();
   }
 
   updateCost = (ev) => {
@@ -37,6 +41,18 @@ class BuySellCard extends Component {
         finalPrice: Number(parseFloat((ev.target.value * this.props.currentPrice * 100) / 100).toFixed(2)).toLocaleString('en'),
         cost: ev.target.value
       });
+    }
+  }
+
+  gameOver = () => {
+    let now = moment();
+    let start = new Date(this.props.currentGame.start_time);
+    let end = new Date(this.props.currentGame.end_time);
+
+    if( start > now ||  end < now) {
+      this.setState({gameOver: true})
+    } else {
+      this.setState({gameOver: false})
     }
   }
 
@@ -218,9 +234,9 @@ class BuySellCard extends Component {
 
             {this.state.selected === 'buy'
             ?
-              <Buy gameData={this.props.gameData} buyStock={this.buyStock} currentPriceFor={this.props.currentPriceFor} updateCost={this.updateCost} cost={this.state.cost} finalPrice={this.state.finalPrice}/>
+              <Buy gameOver={this.state.gameOver} gameData={this.props.gameData} buyStock={this.buyStock} currentPriceFor={this.props.currentPriceFor} updateCost={this.updateCost} cost={this.state.cost} finalPrice={this.state.finalPrice}/>
             :
-              <Sell gameData={this.props.gameData} sellStock={this.sellStock} currentPriceFor={this.props.currentPriceFor} updateCost={this.updateCost} cost={this.state.cost} finalPrice={this.state.finalPrice}/>
+              <Sell gameOver={this.state.gameOver} gameData={this.props.gameData} sellStock={this.sellStock} currentPriceFor={this.props.currentPriceFor} updateCost={this.updateCost} cost={this.state.cost} finalPrice={this.state.finalPrice}/>
             }
 
             {!this.state.watching
