@@ -20,12 +20,12 @@ axios.get = jest.fn(() => {
 });
 
 tickerModel.findOne = jest.fn(() => {
-  return {
-    then: jest.fn(() => {
-      return {catch: jest.fn()}
-    }),
-    catch: jest.fn()
-  }
+  return Promise.resolve(
+    {
+      tickers: [
+        {symbol: "poppy"}
+      ]
+    });
 });
 
 const monthCall = 'https://api.iextrading.com/1.0/stock/MSFT/chart/Monthly';
@@ -181,11 +181,6 @@ describe('Positive Stock Calls', function () {
 });
 
 describe('stockDAO for getTicker', function () {
-
-  beforeAll(() => {
-    // jest.mock('./stockDAO.js');
-    getTicker.mockImplementation(() => {console.error('mocked')});
-  });
   // TODO mock getTicker
   it('should call findOneAndUpdate with the correct information', async function () {
     let ticker = {
@@ -194,6 +189,7 @@ describe('stockDAO for getTicker', function () {
       dailyBuyCount: 3,
       weeklyBuyCount: 1
     };
+
 
     const updateClause = {
       '$set': {
