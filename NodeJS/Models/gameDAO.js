@@ -290,9 +290,9 @@ export async function getWinner(gameCode) {
   let winner;
   let maxValue = 0;
   for (let i in totalValues) {
-    if (totalValues.hasOwnProperty(i) && totalValues[i].value > maxValue) {
+    if (totalValues.hasOwnProperty(i) && totalValues[i].totalAssets > maxValue) {
       winner = totalValues[i];
-      maxValue = totalValues[i].value;
+      maxValue = totalValues[i].totalAssets;
     }
   }
 
