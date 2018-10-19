@@ -80,13 +80,10 @@ class CreateGame extends Component {
   }
 
   joinIt = () => {
-    console.log("--1")
     console.log(this.state.code);
     let gameId = this.state.code;
     console.log(this.props.uid);
     console.log(gameId);
-
-    console.log("--2");
 
     axios.put(`http://localhost:8080/Portfol.io/Games/${this.props.uid}/${gameId}`)
       .then((response) => {
