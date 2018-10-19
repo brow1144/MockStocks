@@ -18,7 +18,7 @@ class StockList extends Component {
               </div>
             {this.props.watchlist.map((stock, key) => {
               return (
-                <div>
+                <div key={key}>
                   <hr className='hr'/>
                   {stock.changePercent >= 0
                     ?<StockCard close={stock.close} stockTicker={stock.symbol} stockChange={'+' + parseFloat(stock.changePercent).toFixed(4) + "%"}/>
