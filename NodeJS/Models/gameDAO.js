@@ -265,7 +265,7 @@ export async function getTotalValues(gameCode) {
             valueList.push({
               player: users[i].username,
               value: totalValue,
-              trade_count: users[i].trade_count
+              trade_count: game.trade_count
             });
           }
         }
