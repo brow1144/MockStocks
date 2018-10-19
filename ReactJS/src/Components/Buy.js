@@ -39,8 +39,15 @@ class Buy extends Component {
 
         <br />
 
-        <Button id='buyButton' onClick={this.props.buyStock} color='blue' style={{margin: '0 auto', display: 'block', background: '#009ddb'}}>Submit Order</Button>
+        <Button id='buyButton' disabled={this.props.gameOver} onClick={this.props.buyStock} color='blue' style={{margin: '0 auto', display: 'block', background: '#009ddb'}}>Submit Order</Button>
+        {this.props.gameOver
+          ?<div>
+            <br/>
+            <p style={{textAlign: 'center', margin: '0 auto', display: 'block', fontSize: '0.8em', color: 'whitesmoke'}}>Game completed. Buy/Sell locked.</p>
+          </div>
 
+          :null
+          }
         <hr className='hr' />
 
         <p style={{textAlign: 'center', margin: '0 auto', display: 'block', fontSize: '0.8em', color: 'whitesmoke'}}>${Number(parseFloat((this.props.gameData.buying_power * 100) / 100).toFixed(2)).toLocaleString('en')} Buying Power Available</p>
