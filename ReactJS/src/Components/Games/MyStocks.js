@@ -1,11 +1,19 @@
 import React, {Component} from 'react'
 import { Table } from 'reactstrap'
 import '../../Static/CSS/Games.css';
+import { NavLink } from 'react-router-dom'
 
 class MyStocks extends Component {
 
   constructor(props) {
     super(props);
+  }
+
+  /**
+   * Sends the use to that stock's page
+   */
+  openStock = () => {
+    //to=(`/Portfol.io/Stocks/${stock.symbol}`)
   }
 
   render() {
@@ -26,13 +34,15 @@ class MyStocks extends Component {
             </thead>
             <tbody>
             {this.props.currentUserStocks.stocksArray.map((stock, key) => {
-              return (<tr key={key}>
-                <th scope="row">{key + 1}</th>
-                <th>{stock.symbol}</th>
-                <th>${parseFloat((stock.price).toFixed(2)).toLocaleString()}</th>
-                <th>{stock.quantity}</th>
-                <th>${parseFloat((stock.total).toFixed(2)).toLocaleString()}</th>
-              </tr>)
+              return (
+                  <tr onClick={() => this.openStock()} key={key}>
+                    <th scope="row"><NavLink to={`/Portfol.io/Stocks/${stock.symbol}`} style={{textDecoration: 'none', color: 'whitesmoke'}}>{key + 1}</NavLink></th>
+                    <th><NavLink to={`/Portfol.io/Stocks/${stock.symbol}`} style={{textDecoration: 'none', color: 'whitesmoke'}}>{stock.symbol}</NavLink></th>
+                    <th><NavLink to={`/Portfol.io/Stocks/${stock.symbol}`} style={{textDecoration: 'none', color: 'whitesmoke'}}>${parseFloat((stock.price).toFixed(2)).toLocaleString()}</NavLink></th>
+                    <th><NavLink to={`/Portfol.io/Stocks/${stock.symbol}`} style={{textDecoration: 'none', color: 'whitesmoke'}}>{stock.quantity}</NavLink></th>
+                    <th><NavLink to={`/Portfol.io/Stocks/${stock.symbol}`} style={{textDecoration: 'none', color: 'whitesmoke'}}>${parseFloat((stock.total).toFixed(2)).toLocaleString()}</NavLink></th>
+                  </tr>
+              )
             })}
             </tbody>
             <tbody>

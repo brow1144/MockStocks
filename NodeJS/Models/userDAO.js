@@ -1,4 +1,3 @@
-import mongoose from 'mongoose';
 import {userModel} from '../utilities/MongooseModels';
 import {getGame} from './gameDAO';
 import _ from 'lodash';
@@ -110,10 +109,13 @@ export function makeGameInactive(uid, game) {
     passRawResult: true
   };
 
-  return userModel.findOneAndUpdate(
-    {_id: uid},
-    {'$pull': {'active_games': {'code': game.code}}, '$push': {'completed_games': game}},
-    options)
+  return getUserGame(uid, game.code)
+    .then((userGame) => {
+      return userModel.findOneAndUpdate(
+        {_id: uid},
+        {'$pull': {'active_games': {'code': game.code}}, '$push': {'completed_games': userGame}},
+        options)
+    })
     .then((updatedUser) => {
       if (updatedUser === null)
         return Promise.reject('UserError: User does not exist');
@@ -462,16 +464,13 @@ export function clearValueHistory(uid, gameCode) {
 }
 
 export function getUserWatchlist(uid) {
-  console.error(uid);
   return userModel.findOne({_id: uid})
     .then((foundUser) => {
       if (foundUser === null)
         return Promise.reject('UserError: User does not exist');
       return Promise.resolve(foundUser.watchlist);
     }).then((watchlist) => {
-      console.error(watchlist);
       let batchCall = _.join(watchlist, ',');
-      console.error(batchCall);
       return getStockBatch(batchCall);
     }).then((stocks) => {
       stocks = _.map(stocks, (stock) => {
@@ -490,7 +489,7 @@ export function getUserWatchlist(uid) {
 
 export function insertToUserWatchlist(uid, stockToInsert) {
   return userModel.findOneAndUpdate(
-    {_id: uid}, {$push : {watchlist: stockToInsert}})
+    {_id: uid}, {$push: {watchlist: stockToInsert}})
     .then((updatedUser) => {
       if (updatedUser === null)
         return Promise.reject('UserError: User does not exist');
@@ -504,7 +503,7 @@ export function insertToUserWatchlist(uid, stockToInsert) {
 
 export function removeFromUserWatchlist(uid, stockToInsert) {
   return userModel.findOneAndUpdate(
-    {_id: uid}, {$pull : {watchlist: stockToInsert}})
+    {_id: uid}, {$pull: {watchlist: stockToInsert}})
     .then((updatedUser) => {
       if (updatedUser === null)
         return Promise.reject('UserError: User does not exist');
