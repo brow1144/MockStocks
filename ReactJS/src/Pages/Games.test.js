@@ -110,6 +110,6 @@ describe('Checks that countdown displays correctly', () => {
     }
     game.setState({currentGame: currentGame});
     game.instance().setTime();
-    expect(game.state().countMessage).toBe("Game Complete");
+    expect(game.state().countMessage).toBe("Game Completed ");
   })
 })

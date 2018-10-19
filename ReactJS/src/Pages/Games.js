@@ -414,7 +414,6 @@ class Games extends Component {
             .then(function (response) {
               // handle success
               if (response != null) {
-                console.log(response.data)
                 let array = response.data;
                 array.sort(self.sortRank());
                 self.setState({
@@ -431,7 +430,6 @@ class Games extends Component {
               console.log(err);
           })
         }
-
         }
       )
     }
@@ -513,12 +511,9 @@ class Games extends Component {
           self.setState({
             winner: true,
           }, () => {
-            console.log("CALLING FOR WINNER")
             axios.get(`http://localhost:8080/Portfol.io/Games/Winner/${this.state.currentGame.code}`) // Returns winner's name
               .then(function (response) {
                 // handle
-                console.log("Here")
-                console.log(response.data.player)
                 if (response.data != null) {
                   self.setState({
                     countdown: "Winner is " + response.data.username,
