@@ -43,7 +43,9 @@ class Games extends Component {
       // Count down timer state
       countdown: "",
       // Count down message
-      countMessage: ""
+      countMessage: "",
+      // Bool to check if a winner was found
+      winner: false,
     };
   }
 
@@ -354,6 +356,8 @@ class Games extends Component {
           users: [],
           userGame: [],
           currentUserStocks: {},
+          buying_power: 0,
+          winner: false,
         }, () => {
           self.leaderCheck();
           self.props.updateCurrentGame(newFloor);
@@ -401,58 +405,85 @@ class Games extends Component {
 
   timer = () => {
     let self = this;
-    let x = setInterval(function() {
+    let x = setInterval(function() {self.setTime()}, 1000);
+  }
 
-      console.log("HERE")
-      // Get todays date and time
-      let now = Date.now();
+  setTime = () => {
 
-      if (self.state.currentGame != undefined) {
-        // Find the distance between now and the count down date
-        let distance;
-        if (new Date(self.state.currentGame.start_time).getTime() < now) {
-          distance = new Date(self.state.currentGame.end_time).getTime() - now;
-          self.setState({
-            countMessage: "Game Ends in: "
-          })
-        } else {
-          distance = new Date(self.state.currentGame.start_time).getTime() - now;
-          self.setState({
-            countMessage: "Game Starts in: "
-          })
-        }
+    let self = this;
 
+    // Get todays date and time
+    let now = Date.now();
 
-        // Time calculations for days, hours, minutes and seconds
-        let days = Math.floor(distance / (1000 * 60 * 60 * 24));
-        let hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-        let minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-        let seconds = Math.floor((distance % (1000 * 60)) / 1000);
-
+    if (self.state.currentGame != undefined && self.state.winner === false) {
+      // Find the distance between now and the count down date
+      let distance;
+      if (new Date(self.state.currentGame.start_time).getTime() < now) {
+        distance = new Date(self.state.currentGame.end_time).getTime() - now;
         self.setState({
-          countdown: days + "d " + hours + "h " + minutes + "m " + seconds + "s "
+          countMessage: "Game Ends in: "
         })
-
-
-        // If the count down is finished, write some text
-        if (distance < 0) {
-          if (self.state.userGame[0] == null) {
-            self.setState({
-              countMessage: "Game Complete",
-              countdown: "",
-            })
-          } else {
-            self.setState({
-              countdown: "Winner is " + self.state.userGame[0].username,
-              countMessage: "Game Completed: "
-            })
-          }
-          }
-
+      } else {
+        distance = new Date(self.state.currentGame.start_time).getTime() - now;
+        self.setState({
+          countMessage: "Game Starts in: "
+        })
       }
 
 
-    }, 1000);
+      // Time calculations for days, hours, minutes and seconds
+      let days = Math.floor(distance / (1000 * 60 * 60 * 24));
+      let hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      let minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+      let seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+      if (distance > 0) {
+        self.setState({
+          countdown: days + "d " + hours + "h " + minutes + "m " + seconds + "s "
+        })
+      }
+
+
+      // If the count down is finished, write some text
+      if (distance < 0 && this.state.countMessage === "Game Ends in: ") {
+        if (self.state.userGame[0] == null) {
+          self.setState({
+            countMessage: "Game Completed ",
+            countdown: "",
+          })
+        } else {
+          if (self.state.winner === false) {
+            axios.get(`http://localhost:8080/Portfol.io/Games/Winner/${this.state.currentGame.code}`) // Returns array of
+              .then(function (response) {
+                // handle success
+                console.log(response.data.player)
+                if (response.data != null) {
+                  self.setState({
+                    countdown: "Winner is " + response.data.player,
+                    countMessage: "Game Completed ",
+                    winner: true,
+                  })
+                }
+
+              }).catch(function (err) {
+              console.log("Cannot get winner");
+
+              if (err.response && err.response.data)
+                console.log(err.response.data.error);
+              else
+                console.log(err);
+            })
+          }
+        }
+      }
+    }
+  }
+
+  /**
+   * Server call to get the winner
+   */
+  getWinrar = () => {
+
   }
 
   render() {
@@ -498,7 +529,7 @@ class Games extends Component {
                 <h5 className={"gamesText"}>Buying Power : ${parseFloat((this.state.buying_power).toFixed(2)).toLocaleString()}</h5>
               </Col>
             </Row>
-            {this.state.leader && (this.state.countMessage === "Game Starts in: ")
+            {this.state.leader
               ? <Row>
                 <Col md="1"/>
                 <Col md="1">

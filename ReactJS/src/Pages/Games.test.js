@@ -12,7 +12,7 @@ const userList = [{_id: "kObyyRI68of2Prc0RkjnJfN6Joc2", active_games: games, use
                   {_id: "931QxmJBWbRAgx6sWaIV1J9b5Gd2", active_games: games, username: "jlion", email: "j@gmail.com"}];
 
 const notStart = new Date("2018-10-19T15:30:11.000Z");
-const started = new Date("2018-11-01T02:13:00.000Z");
+const started = new Date("2018-10-01T02:13:00.000Z");
 const notEnd = new Date("2018-11-03T16:00:11.000Z");
 const ended = new Date("2018-10-19T15:30:11.000Z");
 
@@ -80,25 +80,36 @@ describe('Checks that users are correctly stored after being retrieved', () => {
   })
 })
 
-/* This is broken for the timer, its goof
+// This is broken for the timer, its goof
 describe('Checks that countdown displays correctly', () => {
   test('The game has not began', () => {
     let game = mount(<Games />);
-    game.setState({start_time: notEnd, end_time: notEnd,});
-    game.instance().timer();
+    let currentGame = {
+      start_time: notEnd,
+      end_time: notEnd,
+    }
+    game.setState({currentGame: currentGame});
+    game.instance().setTime();
     expect(game.state().countMessage).toBe("Game Starts in: ");
   })
   test('The game has began', () => {
     let game = mount(<Games />);
-    game.setState({start_time: started, end_time: notEnd,});
-    game.instance().timer();
+    let currentGame = {
+      start_time: started,
+      end_time: notEnd,
+    }
+    game.setState({currentGame: currentGame});
+    game.instance().setTime();
     expect(game.state().countMessage).toBe("Game Ends in: ");
   })
-})*/
-
-/*
-const notStart = new Date("2018-10-19T15:30:11.000Z");
-const started = new Date("2018-11-01T02:13:00.000Z");
-const notEnd = new Date("2018-12-03T16:00:11.000Z");
-const ended = new Date("2018-10-19T15:30:11.000Z");
- */
+  test('The game has ended', () => {
+    let game = mount(<Games />);
+    let currentGame = {
+      start_time: started,
+      end_time: started,
+    }
+    game.setState({currentGame: currentGame});
+    game.instance().setTime();
+    expect(game.state().countMessage).toBe("Game Complete");
+  })
+})
