@@ -35,7 +35,7 @@ export function runSchedules() {
   // });
 }
 
-const checkActiveGames = () => {
+export const checkActiveGames = () => {
   getAllGames()
     .then((games) => {
       _.forEach(games, (game) => {
