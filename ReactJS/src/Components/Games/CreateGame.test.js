@@ -103,7 +103,7 @@ describe('Positive Results', () => {
   })
 
   test('Modal opens on click', () => {
-    createGame.instance().setState({goodGame})
+    createGame.instance().setState({goodGame});
     createGame.instance().toggle();
     expect(createGame.state().modal).toBe(true);
   })
