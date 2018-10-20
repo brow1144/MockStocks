@@ -47,7 +47,8 @@ class StockPage extends Component {
           this.setState({visibleData: true})
         } else {
           this.setState({
-            currentPriceFor: withCommas
+            currentPriceFor: withCommas,
+            currentPrice: stockData[stockData.length - 1]['y'],
           })
         }
 
@@ -84,7 +85,7 @@ class StockPage extends Component {
       this.setState({
         visibleData: false,
         stockData: stockData,
-        currentPrice: stockData[0]['y'],
+        // currentPrice: stockData[0]['y'],
         // currentPriceFor: withCommas
       })
     }

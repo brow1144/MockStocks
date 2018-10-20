@@ -20,12 +20,14 @@ const ev = {
 describe('Positive Buy', () => {
   test('Valid Number of Stocks (3)', () => {
     const buySellCard = shallow(<BuySellCard />);
+    buySellCard.setProps({currentGame: {start_time: 0}});
     buySellCard.instance().updateCost(ev);
     expect(buySellCard.state().cost).toBe("3");
   })
 
   test('Click Buy', () => {
     const buySellCard = shallow(<BuySellCard />);
+    buySellCard.setProps({currentGame: {start_time: 0}});
     buySellCard.find('#buySwitch').simulate('click');
     expect(buySellCard.state().selected).toBe("buy");
   })
@@ -35,6 +37,7 @@ describe('Negative Buy', () => {
   test('Valid Number of Stocks (0)', () => {
     ev.target.value = 0;
     const buySellCard = shallow(<BuySellCard />);
+    buySellCard.setProps({currentGame: {start_time: 0}});
     buySellCard.instance().updateCost(ev);
     expect(buySellCard.state().cost).toBe(0);
   })
@@ -42,6 +45,7 @@ describe('Negative Buy', () => {
   test('Dont enter a number', () => {
     ev.target.value = 0;
     const buySellCard = shallow(<BuySellCard />);
+    buySellCard.setProps({currentGame: {start_time: 0}});
     buySellCard.setProps({currentPrice: 50})
     buySellCard.setState({cost: 0})
     buySellCard.instance().buyStock();
@@ -54,13 +58,15 @@ describe('Positive Sell', () => {
   test('Valid Number of Stocks (3)', () => {
     ev.target.value = 3;
     const buySellCard = shallow(<BuySellCard />);
+    buySellCard.setProps({currentGame: {start_time: 0}});
     buySellCard.instance().updateCost(ev);
     expect(buySellCard.state().cost).toBe(3);
   })
   test('Click Sell', () => {
     const buySellCard = shallow(<BuySellCard />);
+    buySellCard.setProps({currentGame: {start_time: 9999999}});
     buySellCard.find('#sellSwitch').simulate('click');
-    expect(buySellCard.state().selected).toBe("buy");
+    expect(buySellCard.state().selected).toBe("sell");
   })
 })
 
@@ -68,6 +74,7 @@ describe('Negative Sell', () => {
   test('Valid Number of Stocks (0)', () => {
     ev.target.value = 0;
     const buySellCard = shallow(<BuySellCard />);
+    buySellCard.setProps({currentGame: {start_time: 0}});
     buySellCard.instance().updateCost(ev);
     expect(buySellCard.state().cost).toBe(0);
   })
@@ -75,6 +82,7 @@ describe('Negative Sell', () => {
   test('Dont enter a number', () => {
     ev.target.value = 0;
     const buySellCard = shallow(<BuySellCard />);
+    buySellCard.setProps({currentGame: {start_time: 0}});
     buySellCard.setProps({currentPrice: 50})
     buySellCard.setState({cost: 0})
     buySellCard.instance().buyStock();

@@ -46,6 +46,10 @@ class BuySellCard extends Component {
 
   gameOver = () => {
     let now = moment();
+    if (this.props.currentGame === null || this.props.currentGame === undefined || this.props.currentGame === {}) {
+      this.setState({gameOver: true});
+      return
+    }
     let start = new Date(this.props.currentGame.start_time);
     let end = new Date(this.props.currentGame.end_time);
 
