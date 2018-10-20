@@ -105,7 +105,6 @@ class Watchlist extends Component {
         if (watchlist.length !== 0) {
           self.setState({
             watchlist: watchlist,
-            sortedWatchlist: watchlist,
             loaded: true,
           });
         }
@@ -168,7 +167,7 @@ class Watchlist extends Component {
                 </tr>
                 </thead>
                 <tbody>
-                {this.state.sortedWatchlist.map((stock, key) => {
+                {this.state.watchlist.map((stock, key) => {
                   return (
                     <tr key={key}>
                       <th scope="row"><NavLink to={`/Portfol.io/Stocks/${stock.symbol}`} style={{textDecoration: 'none', color: 'whitesmoke'}}>{key + 1}</NavLink></th>
