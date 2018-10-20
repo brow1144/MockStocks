@@ -45,9 +45,9 @@ class StockList extends Component {
             })}
             <hr className='hr'/>
             <BrowserRouter>
-            <NavLink to={'/Portfol.io/Watchlist'} style={{textDecoration: 'none'}}>
-              <b className='navText' style={{fontSize: '1em'}}>View Full Watchlist</b>
-            </NavLink>
+              <NavLink to={'/Portfol.io/Watchlist'} style={{textDecoration: 'none'}}>
+                <b className='navText' style={{fontSize: '1em'}}>View Full Watchlist</b>
+              </NavLink>
             </BrowserRouter>
           </CardBody>
         </Card>
