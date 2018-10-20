@@ -2,6 +2,7 @@ import React, {Component} from 'react'
 import axios from 'axios';
 
 import NavBar from './Components/NavBar'
+import moment from "moment";
 
 class Main extends Component {
 
@@ -12,12 +13,30 @@ class Main extends Component {
       currentGame: {},
       empty: false,
       gameData: {},
+      gameOver: false
     }
   }
 
   componentWillMount() {
-    this.fetchGames()
+    console.log("mounting")
+    this.fetchGames();
   }
+
+  gameOver = () => {
+    let now = moment();
+    let start = new Date(this.state.currentGame.start_time);
+    let end = new Date(this.state.currentGame.end_time);
+
+    console.log(this.state.currentGame)
+    if( start > now ||  end < now) {
+      this.setState({gameOver: true})
+      console.log("game is over")
+    } else {
+      this.setState({gameOver: false})
+      console.log("game is not over")
+    }
+  }
+
 
   /**
    * Initial call to data base for all the games
@@ -36,6 +55,7 @@ class Main extends Component {
             empty: true,
           }, () => {
             self.getGameData(gameData.games[0].code)
+            self.gameOver();
           });
 
         } else { // No games return
@@ -81,7 +101,7 @@ class Main extends Component {
           <NavBar currentGame={this.state.currentGame}/>     
         </div>  
 
-        <this.props.component getGameData={this.getGameData} gameData={this.state.gameData} uid={this.props.uid} empty={this.state.empty} currentGame={this.state.currentGame} updateCurrentGame={this.updateCurrentGame} stock={this.props.stock}/>
+        <this.props.component gameOverFunc={this.gameOver} gameOver={this.state.gameOver} getGameData={this.getGameData} gameData={this.state.gameData} uid={this.props.uid} empty={this.state.empty} currentGame={this.state.currentGame} updateCurrentGame={this.updateCurrentGame} stock={this.props.stock}/>
       </div>
     );
   }

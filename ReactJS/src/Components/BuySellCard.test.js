@@ -8,6 +8,14 @@ axios.get = jest.fn((url) => {
   return {then: then, catch: jest.fn()};
 });
 
+axios.delete = jest.fn((url) => {
+  return {then: then, catch: jest.fn()};
+});
+
+axios.post = jest.fn((url) => {
+  return {then: then, catch: jest.fn()};
+});
+
 const then = jest.fn(() => {
   return {catch: jest.fn()};
 })
@@ -33,6 +41,8 @@ describe('Positive Buy', () => {
   })
 })
 
+
+
 describe('Negative Buy', () => {
   test('Valid Number of Stocks (0)', () => {
     ev.target.value = 0;
@@ -54,6 +64,7 @@ describe('Negative Buy', () => {
 })
 
 
+
 describe('Positive Sell', () => {
   test('Valid Number of Stocks (3)', () => {
     ev.target.value = 3;
@@ -69,6 +80,7 @@ describe('Positive Sell', () => {
     expect(buySellCard.state().selected).toBe("sell");
   })
 })
+
 
 describe('Negative Sell', () => {
   test('Valid Number of Stocks (0)', () => {
@@ -87,5 +99,27 @@ describe('Negative Sell', () => {
     buySellCard.setState({cost: 0})
     buySellCard.instance().buyStock();
     expect(buySellCard.state().errorMessage).toBe('You entered an invalid number of stocks');
+  })
+})
+
+const currentGame = {
+  start_time: "2018-10-05T01:32:53.377Z",
+  end_time:"2018-11-02T01:32:53.377Z"
+}
+
+describe('Watchlist function', () => {
+  test('Watchlist add', () => {
+    const buySellCard = shallow(<BuySellCard />);
+    buySellCard.setState({watching: false})
+    buySellCard.instance().watchStock();
+    expect(buySellCard.state().watching).toBe(true);
+  })
+
+  test('Watchlist remove', () => {
+    const buySellCard = shallow(<BuySellCard />);
+    buySellCard.setProps({currentGame: currentGame});
+    buySellCard.setState({watching: true})
+    buySellCard.instance().removeStock();
+    expect(buySellCard.state().watching).toBe(false);
   })
 })
