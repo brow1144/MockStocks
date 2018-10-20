@@ -42,7 +42,6 @@ class BuySellCard extends Component {
     }
   }
 
-
   buyStock = () => {
 
     let self = this
