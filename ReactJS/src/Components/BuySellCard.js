@@ -152,7 +152,6 @@ class BuySellCard extends Component {
     })
   }
 
-
   handleBuy = () => {
     this.setState({
       cost: 0,
@@ -192,7 +191,6 @@ class BuySellCard extends Component {
 
   render() {
     return (
-
       <div>
 
         <Modal isOpen={this.state.modal} toggle={this.toggle} side position="top-right">
@@ -216,7 +214,6 @@ class BuySellCard extends Component {
             </div>
 
             <hr className='hr'/>
-
 
             {this.state.selected === 'buy'
             ?
