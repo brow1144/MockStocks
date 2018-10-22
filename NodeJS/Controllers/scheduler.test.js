@@ -1,59 +1,47 @@
-import {userModel} from '../utilities/MongooseModels';
 import {getPortfolioValues, clearCounters, checkActiveGames} from './scheduler';
 import * as gameDAO from "../Models/gameDAO";
 import * as userDAO from "../Models/userDAO";
+import * as stockDAO from "../Models/stockDAO";
 
-jest.mock('../Models/gameDAO');
-jest.mock('../Models/userDAO');
-
-// userModel.find = jest.fn(() => {
-//   return {
-//     then: jest.fn(() => {
-//       return {catch: jest.fn()}
-//     })
-//   }
-// });
-
-userModel.findOneAndUpdate = jest.fn(() => {
-  return {
-    then: jest.fn(() => {
-      return {catch: jest.fn()}
-    })
-  }
-});
-
-// getAllUsers = jest.fn(() => {
-//   // const users = [
-//   //   'jmkoontz',
-//   //   'putput'
-//   // ];
-//
-//   return ['jmkoontz', 'putput'];
-// });
-
-userModel.find = jest.fn(() => {
-  // let obj = [
-  //   'df',
-  //   'dsf'
-  // ]
-  // let test = {
-  //   name: 'asdf',
-  //   type: 'water'
-  // }
-  // let obj2 = [
-  //   {name: 'asdf', type: 'water'}
-  // ]
-  return Promise.resolve(
-    [{uid: 'jmkoontz'},
-      {uid: 'putput'}]
-  );
-});
+// jest.mock('../Models/gameDAO');
+// jest.mock('../Models/userDAO');
 
 describe('Positive scheduler tests', function () {
+  const gameObj = {
+    code: 123,
+    active_players: [{
+      name: 'germy'
+    }],
+    completed: false,
+    end_time: new Date('2018-09-19 12:00:43.799')
+  };
+
+  const userListObj = {
+    [{uid: 'jmkoontz'},
+      {uid: 'putput'}]
+  };
+
+  beforeAll(async () => {
+    userDAO.getAllUsers = jest.fn(() => {
+      return Promise.resolve([userListObj]);
+    });
+    stockDAO.getStockBatch = jest.fn();
+    userDAO.updateValueHistory = jest.fn();
+    getPortfolioValues();
+  });
+
+  it('should call getStockBatch properly', function () {
+    expect(userDAO.makeGameInactive).toHaveBeenCalledWith()
+  });
+
+  it('should call updateValueHistory properly', function () {
+    expect(gameDAO.completeGame).toHaveBeenCalledWith()
+  });
+
   it('should calculate portfolio values for each user', async function () {
-    let users = await getPortfolioValues();
-    console.log(users);
-    expect().toHaveBeenCalledWith();
+    // let users = await getPortfolioValues();
+    // console.log(users);
+    // expect().toHaveBeenCalledWith();
   });
 });
 
