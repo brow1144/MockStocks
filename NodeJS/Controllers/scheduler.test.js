@@ -1,47 +1,133 @@
+import mongoose from 'mongoose';
 import {getPortfolioValues, clearCounters, checkActiveGames} from './scheduler';
+import {userModel, tickerModel} from '../utilities/MongooseModels';
 import * as gameDAO from "../Models/gameDAO";
 import * as userDAO from "../Models/userDAO";
 import * as stockDAO from "../Models/stockDAO";
 
-// jest.mock('../Models/gameDAO');
-// jest.mock('../Models/userDAO');
-
-describe('Positive scheduler tests', function () {
-  const gameObj = {
-    code: 123,
-    active_players: [{
-      name: 'germy'
-    }],
-    completed: false,
-    end_time: new Date('2018-09-19 12:00:43.799')
+describe('getPortfolioValues Tests', function () {
+  let user1 = {
+    _id: '3525AFDSFSFD32',
+    active_games: [
+      {
+        code: '12532',
+        buying_power: 1000,
+        stocks: [
+          {
+            name: 'AAPL',
+            quantity: 20
+          },
+          {
+            name: 'GOOG',
+            quantity: 10
+          }
+        ]
+      }
+    ]
   };
 
-  const userListObj = {
-    [{uid: 'jmkoontz'},
-      {uid: 'putput'}]
-  };
+  const userListObj = [
+    userModel.hydrate(user1)
+  ];
+
+  const stockBatch = [
+    {
+      quote: {
+        symbol: 'AAPL',
+        latestPrice: 1000
+      }
+    },
+    {
+      quote: {
+        symbol: 'GOOG',
+        latestPrice: 300
+      }
+    }
+  ];
 
   beforeAll(async () => {
     userDAO.getAllUsers = jest.fn(() => {
-      return Promise.resolve([userListObj]);
+      return Promise.resolve(userListObj);
     });
-    stockDAO.getStockBatch = jest.fn();
+
+    stockDAO.getStockBatch = jest.fn(() => {
+      return Promise.resolve(stockBatch);
+    });
+
     userDAO.updateValueHistory = jest.fn();
-    getPortfolioValues();
+    await getPortfolioValues();
   });
 
   it('should call getStockBatch properly', function () {
-    expect(userDAO.makeGameInactive).toHaveBeenCalledWith()
+    expect(stockDAO.getStockBatch).toHaveBeenCalledWith('AAPL, GOOG');
   });
 
   it('should call updateValueHistory properly', function () {
-    expect(gameDAO.completeGame).toHaveBeenCalledWith()
+    expect(userDAO.updateValueHistory).toHaveBeenCalledWith(
+      '3525AFDSFSFD32',
+      '12532',
+      24000,
+      expect.any(Number)
+    );
+  });
+});
+
+describe('clearCounters Tests', function () {
+  let tickers = {
+    tickers: [
+      {
+        symbol: 'AAPL',
+        dailyBuyCount: 5,
+        weeklyBuyCount: 15
+      },
+      {
+        symbol: 'GOOG',
+        dailyBuyCount: 2,
+        weeklyBuyCount: 40
+      }
+    ]
+  };
+
+  const options = {
+    new: true,
+    passRawResult: true
+  };
+
+  beforeAll(async () => {
+    stockDAO.getTickers = jest.fn(() => {
+      return Promise.resolve(tickerModel.hydrate(tickers));
+    });
+
+    tickerModel.findOneAndUpdate = jest.fn(() => {
+      return {
+        then: jest.fn(() => {
+          return {catch: jest.fn()}
+        })
+      }
+    });
   });
 
-  it('should calculate portfolio values for each user', async function () {
-    // let users = await getPortfolioValues();
-    // console.log(users);
-    // expect().toHaveBeenCalledWith();
+  it('should call getTickers properly', async function () {
+    await clearCounters(true);
+    expect(stockDAO.getTickers).toHaveBeenCalledWith();
+  });
+
+  it('should call findOneAndUpdate properly for daily', async function () {
+    await clearCounters(true);
+    expect(tickerModel.findOneAndUpdate).toHaveBeenCalledWith(
+      {'tickers.symbol': tickers.tickers[0].symbol},
+      {'$set': {'tickers.$.dailyBuyCount': 0}},
+      options
+    );
+  });
+
+  it('should call findOneAndUpdate properly for weekly', async function () {
+    await clearCounters(true);
+    expect(tickerModel.findOneAndUpdate).toHaveBeenCalledWith(
+      {'tickers.symbol': tickers.tickers[0].symbol},
+      {'$set': {'tickers.$.dailyBuyCount': 0}},
+      options
+    );
   });
 });
 
