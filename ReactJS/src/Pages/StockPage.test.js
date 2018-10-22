@@ -61,9 +61,4 @@ describe('Testing Time Frames', () => {
     stockPage.find('#year').simulate('click');
     expect(stockPage.state().selected).toBe('Year');
   })
-  test('All time works', () => {
-    const stockPage = shallow(<StockPage />);
-    stockPage.find('#all').simulate('click');
-    expect(stockPage.state().selected).toBe('All');
-  })
 })

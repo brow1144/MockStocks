@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 import { Card, CardBody, CardTitle } from 'mdbreact'
-import { NavLink } from 'react-router-dom';
+import { NavLink, BrowserRouter} from 'react-router-dom';
 
 import StockCard from '../Components/StockCard'
 
@@ -23,7 +23,6 @@ class StockList extends Component {
       return b.changePercent - a.changePercent;
     }
   }
-
   render() {
     return (
       <div style={{position: 'fixed', width: 'inherit',maxWidth: 'inherit'}} className='z-depth-5' >
@@ -33,10 +32,9 @@ class StockList extends Component {
                 <CardTitle stlyle={{borderBottom: '2px solid whitesmoke'}} >Watchlist Top Risers</CardTitle>
 
               </div>
-
             {this.getTopRisers().map((stock, key) => {
               return (
-                <div>
+                <div key={key}>
                   <hr className='hr'/>
                   {stock.changePercent >= 0
                     ?<StockCard stockColor='green' close={stock.close} stockTicker={stock.symbol} stockChange={'+' + parseFloat(stock.changePercent).toFixed(4) + "%"}/>
@@ -46,9 +44,11 @@ class StockList extends Component {
               )
             })}
             <hr className='hr'/>
-            <NavLink to={'/Portfol.io/Watchlist'} style={{textDecoration: 'none'}}>
-              <b className='navText' style={{fontSize: '1em'}}>View Full Watchlist</b>
-            </NavLink>
+            <BrowserRouter>
+              <NavLink to={'/Portfol.io/Watchlist'} style={{textDecoration: 'none'}}>
+                <b className='navText' style={{fontSize: '1em'}}>View Full Watchlist</b>
+              </NavLink>
+            </BrowserRouter>
           </CardBody>
         </Card>
       </div>

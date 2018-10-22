@@ -2,6 +2,7 @@ import React from 'react';
 import {shallow} from 'enzyme';
 import CreateGame from './CreateGame';
 import axios from 'axios';
+import moment from "moment/moment";
 
 //STICK TEST DATA HERE
 const goodGame = {
@@ -73,17 +74,36 @@ axios.get = jest.fn((url) => {
 });
 
 const createGame = shallow(<CreateGame />);
+createGame.setState({
+  modal: false,
+
+  waiting: true,
+  joinGame: false,
+  createGame: false,
+
+  code: 0,
+  game_name: "",
+  leader_email: "",
+  startDate: moment(),
+  endDate: moment(),
+  starting_amount: "",
+  trade_limit: "",
+
+  badDates: false,
+  errMessage: "",
+  err: false
+})
+
 
 describe('Positive Results', () => {
   test('Game creates with no errors', () => {
     //call sum here
     createGame.instance().createIt();
-
     expect(createGame.state().modal).toBe(false);
   })
 
   test('Modal opens on click', () => {
-    createGame.instance().setState({goodGame})
+    createGame.instance().setState({goodGame});
     createGame.instance().toggle();
     expect(createGame.state().modal).toBe(true);
   })
