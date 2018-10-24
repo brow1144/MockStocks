@@ -72,7 +72,7 @@ class NavBar extends Component {
 
   clearSearch = () => {
     this.setState({tickersShowing: []})
-    this.reloadPage();
+    // this.reloadPage();
   }
 
   firebaseOut = () => {
