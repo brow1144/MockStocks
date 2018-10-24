@@ -89,17 +89,30 @@ class BuySellCard extends Component {
   }
 
   watchStock =()=>{
-    axios.post(`http://localhost:8080/Portfol.io/Watchlist/${this.props.uid}/${this.props.stock}`);
-    this.setState({
-      watching: !this.state.watching
-    })
+    let self = this;
+    axios.post(`http://localhost:8080/Portfol.io/Watchlist/${this.props.uid}/${this.props.stock}`)
+      .then((data) => {
+      this.setState({
+        watching: !self.state.watching
+      })
+      self.props.reloadPage();
+    }).catch((err) => {
+      console.log("Problem watching stock")
+    });
+
   }
 
   removeStock =()=>{
-    axios.delete(`http://localhost:8080/Portfol.io/Watchlist/${this.props.uid}/${this.props.stock}`);
-    this.setState({
-      watching: !this.state.watching
-    })
+    let self = this;
+    axios.delete(`http://localhost:8080/Portfol.io/Watchlist/${this.props.uid}/${this.props.stock}`)
+  .then((data) => {
+      this.setState({
+        watching: !self.state.watching
+      })
+      self.props.reloadPage();
+    }).catch((err) => {
+      console.log("Problem watching stock")
+    });
   }
 
   fetchWatchlist = () => {
