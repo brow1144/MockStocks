@@ -170,7 +170,7 @@ class Watchlist extends Component {
                 {this.state.watchlist.map((stock, key) => {
                   return (
                     <tr key={key}>
-                      <th scope="row"><NavLink to={`/Portfol.io/Stocks/${stock.symbol}`} style={{textDecoration: 'none', color: 'whitesmoke'}}>{key + 1}</NavLink></th>
+                      <th scope="row"><NavLink to={`/Portfolio/Stocks/${stock.symbol}`} style={{textDecoration: 'none', color: 'whitesmoke'}}>{key + 1}</NavLink></th>
                       <th><h5 style={{textDecoration: 'none', color: 'whitesmoke'}}>{stock.symbol}</h5></th>
                       <th><h5 style={{textDecoration: 'none', color: 'whitesmoke'}}>${stock.close}</h5></th>
                       {stock.changePercent >= 0

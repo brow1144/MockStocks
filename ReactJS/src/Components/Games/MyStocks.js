@@ -14,7 +14,7 @@ class MyStocks extends Component {
   }
 
   switchPage = (symbol) => {
-    this.context.router.push(`/Portfol.io/Stocks/${symbol}`);
+    this.context.router.push(`/Portfolio/Stocks/${symbol}`);
   }
 
   render() {
@@ -37,11 +37,11 @@ class MyStocks extends Component {
             {this.props.currentUserStocks.stocksArray.map((stock, key) => {
               return (
                   <tr key={key}>
-                    <th scope="row"><Link to={`/Portfol.io/Stocks/${stock.symbol}`} style={{textDecoration: 'none', color: 'whitesmoke'}}>{key + 1}</Link></th>
-                    <th><Link to={`/Portfol.io/Stocks/${stock.symbol}`} style={{textDecoration: 'none', color: 'whitesmoke'}}>{stock.symbol}</Link></th>
-                    <th><Link to={`/Portfol.io/Stocks/${stock.symbol}`} style={{textDecoration: 'none', color: 'whitesmoke'}}>${parseFloat((stock.price).toFixed(2)).toLocaleString()}</Link></th>
-                    <th><Link to={`/Portfol.io/Stocks/${stock.symbol}`} style={{textDecoration: 'none', color: 'whitesmoke'}}>{stock.quantity}</Link></th>
-                    <th><Link to={`/Portfol.io/Stocks/${stock.symbol}`} style={{textDecoration: 'none', color: 'whitesmoke'}}>${parseFloat((stock.total).toFixed(2)).toLocaleString()}</Link></th>
+                    <th scope="row"><Link to={`/Portfolio/Stocks/${stock.symbol}`} style={{textDecoration: 'none', color: 'whitesmoke'}}>{key + 1}</Link></th>
+                    <th><Link to={`/Portfolio/Stocks/${stock.symbol}`} style={{textDecoration: 'none', color: 'whitesmoke'}}>{stock.symbol}</Link></th>
+                    <th><Link to={`/Portfolio/Stocks/${stock.symbol}`} style={{textDecoration: 'none', color: 'whitesmoke'}}>${parseFloat((stock.price).toFixed(2)).toLocaleString()}</Link></th>
+                    <th><Link to={`/Portfolio/Stocks/${stock.symbol}`} style={{textDecoration: 'none', color: 'whitesmoke'}}>{stock.quantity}</Link></th>
+                    <th><Link to={`/Portfolio/Stocks/${stock.symbol}`} style={{textDecoration: 'none', color: 'whitesmoke'}}>${parseFloat((stock.total).toFixed(2)).toLocaleString()}</Link></th>
                   </tr>
               )
             })}

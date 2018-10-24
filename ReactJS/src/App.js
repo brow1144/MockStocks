@@ -71,57 +71,57 @@ class App extends Component {
     return (
       <Switch>
 
-        <Route path='/Portfol.io/Home' render={() => (
+        <Route path='/Portfolio/Home' render={() => (
           this.signedIn()
             ? <Main uid={this.state.uid} component={Home}/>
-            : <Redirect to={`/Portfol.io/SignIn`}/>
+            : <Redirect to={`/Portfolio/SignIn`}/>
         )}/>
 
-        <Route path='/Portfol.io/Stocks/:stock' render={(match) => (
+        <Route path='/Portfolio/Stocks/:stock' render={(match) => (
           this.signedIn()
             ? <Main uid={this.state.uid} component={StockPage} stock={match.match.params.stock} />
-            : <Redirect to={`/Portfol.io/SignIn`}/>
+            : <Redirect to={`/Portfolio/SignIn`}/>
         )}/>
 
-        <Route path='/Portfol.io/Trending' render={() => (
+        <Route path='/Portfolio/Trending' render={() => (
           this.signedIn()
             ? <Main uid={this.state.uid} component={Trending}/>
-            : <Redirect to={`/Portfol.io/SignIn`}/>
+            : <Redirect to={`/Portfolio/SignIn`}/>
         )}/>
 
-        <Route path='/Portfol.io/Tips' render={() => (
+        <Route path='/Portfolio/Tips' render={() => (
           this.signedIn()
             ? <Main uid={this.state.uid} component={Tips}/>
-            : <Redirect to={`/Portfol.io/SignIn`}/>
+            : <Redirect to={`/Portfolio/SignIn`}/>
         )}/>
 
-        <Route path='/Portfol.io/Games' render={() => (
+        <Route path='/Portfolio/Games' render={() => (
           this.signedIn()
             ? <Main uid={this.state.uid} component={Games}/>
-            : <Redirect to={`/Portfol.io/SignIn`}/>
+            : <Redirect to={`/Portfolio/SignIn`}/>
         )}/>
 
-        <Route path='/Portfol.io/Watchlist' render={() => (
+        <Route path='/Portfolio/Watchlist' render={() => (
           this.signedIn()
             ? <Main uid={this.state.uid} component={Watchlist}/>
-            : <Redirect to={`/Portfol.io/SignIn`}/>
+            : <Redirect to={`/Portfolio/SignIn`}/>
         )}/>
 
-        <Route path='/Portfol.io/SignIn' render={() => (
+        <Route path='/Portfolio/SignIn' render={() => (
           !this.signedIn()
             ? <SignIn/>
-            : <Redirect to={`/Portfol.io/Home`}/>
+            : <Redirect to={`/Portfolio/Home`}/>
         )}/>
 
-        <Route path='/Portfol.io/CreateAccount' render={() => (
+        <Route path='/Portfolio/CreateAccount' render={() => (
           !this.signedIn()
             ? <CreateUser/>
-            : <Redirect to={`/Portfol.io/Home`}/>
+            : <Redirect to={`/Portfolio/Home`}/>
         )}/>
 
         <Route render={() => {
           return (
-            <Redirect to={`/Portfol.io/Home`} />
+            <Redirect to={`/Portfolio/Home`} />
           )
         }}/>
 

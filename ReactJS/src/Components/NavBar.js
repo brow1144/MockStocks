@@ -104,7 +104,7 @@ class NavBar extends Component {
     return (
       <Row style={{backgroundColor: '#1B1B1D'}}>
         <Col className='title' sm='2'>
-          <NavLink to={'/Portfol.io/Home'} style={{textDecoration: 'none'}}>
+          <NavLink to={'/Portfolio/Home'} style={{textDecoration: 'none'}}>
             <b className='navText' style={{fontSize: '1em'}}>Portfol.io</b>
           </NavLink>
         </Col>
@@ -122,7 +122,7 @@ class NavBar extends Component {
         {this.props.currentGame !== null && this.props.currentGame !== undefined && this.props.currentGame !== {}
           ?
           <Col className='navText' sm='1' md='1'>
-            <NavLink to={'/Portfol.io/Games'} style={{textDecoration: 'none'}}>
+            <NavLink to={'/Portfolio/Games'} style={{textDecoration: 'none'}}>
               <b className='navText' style={{fontSize: '1em'}}>Current Floor: {this.props.currentGame.game_name} ({this.props.currentGame.code})</b>
             </NavLink>
           </Col>
@@ -131,27 +131,27 @@ class NavBar extends Component {
         }
         
         <Col className='navText' sm='1' md='1'>
-          <NavLink to={'/Portfol.io/Home'} style={{textDecoration: 'none'}}>
+          <NavLink to={'/Portfolio/Home'} style={{textDecoration: 'none'}}>
             <b className='navText' style={{fontSize: '1em'}}>Home</b>
           </NavLink>
         </Col>
         <Col className='navText' sm='1' md='1'>
-          <NavLink to={'/Portfol.io/Trending'} style={{textDecoration: 'none'}}>
+          <NavLink to={'/Portfolio/Trending'} style={{textDecoration: 'none'}}>
             <b className='navText' style={{fontSize: '1em'}}>Trending</b>
           </NavLink>
         </Col>
         <Col className='navText' sm='1' md='1'>
-          <NavLink to={'/Portfol.io/Games'} style={{textDecoration: 'none'}}>
+          <NavLink to={'/Portfolio/Games'} style={{textDecoration: 'none'}}>
             <b className='navText' style={{fontSize: '1em'}}>Games</b>
           </NavLink>
         </Col>
         <Col className='navText' sm='1' md='1'>
-          <NavLink to={'/Portfol.io/Tips'} style={{textDecoration: 'none'}}>
+          <NavLink to={'/Portfolio/Tips'} style={{textDecoration: 'none'}}>
             <b className='navText' style={{fontSize: '1em'}}>Tips</b>
           </NavLink>
         </Col>
         <Col className='navText' sm='1' md='1'>
-          <NavLink onClick={this.handleSignOut} to={'/Portfol.io'} style={{textDecoration: 'none'}}>
+          <NavLink onClick={this.handleSignOut} to={'/Portfolio'} style={{textDecoration: 'none'}}>
             <b className='navText' style={{fontSize: '1em'}}>Sign Out</b>
           </NavLink>
         </Col>
