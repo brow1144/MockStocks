@@ -32,6 +32,10 @@ class SignIn extends Component {
     let self = this;
     fireauth.signInWithEmailAndPassword(ev.target.email.value, ev.target.password.value)
       .catch(function(err) {
+        //Defect #2
+        // if (err.message === "The password is invalid or the user does not have a password.") {
+        //   return;
+        // }
         self.setState({visible: true, errorMessage: err.message})
     });
   };

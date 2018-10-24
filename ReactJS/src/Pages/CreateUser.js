@@ -38,8 +38,12 @@ class CreateUser extends Component {
     ev.preventDefault();
     let target = ev.target;
 
-    if ( target.username.value === ''
-      || target.email.value === ''
+    // Defect #1
+    // if (target.username.value === '') {
+    //   return;
+    // }
+
+    if ( target.username.value === '' || target.email.value === ''
       || target.password.value === ''
       || target.confirmPassword.value === '') {
         this.setState({visible: true, message: 'Please fill out the entire form!'});
@@ -48,8 +52,11 @@ class CreateUser extends Component {
     } else if (!this.validateEmail(ev.target.email.value)) {
       this.setState({visible: true, message: 'Please enter a real email address'});
     } else  {
-      if (target.password.value !== target.confirmPassword.value)
+      if (target.password.value !== target.confirmPassword.value) {
+        // Defect #5
         this.setState({visible: true, message: 'Passwords Don\'t Match!'});
+        return;
+      }
       else {
         let self = this;
         //creates user with email and password
