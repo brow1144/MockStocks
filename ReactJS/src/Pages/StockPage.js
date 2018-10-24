@@ -17,8 +17,8 @@ class StockPage extends Component {
 
     this.state = {
       stockData: [],
-      currentPrice: 0,
-      currentPriceFor: '',
+      // currentPrice: 0,
+      // currentPriceFor: '',
       selected: 'Day',
       visibleData: false,
       visible: false,
@@ -36,36 +36,36 @@ class StockPage extends Component {
     this.getData();
     let self = this;
     // Cache Stuff Go here eventually
-    axios.get(`http://localhost:8080/Portfol.io/Stock/${this.props.stock}/${this.state.selected}`)
-      .then((response) => {
-        // handle success
-        let stockData = response.data;
+    // axios.get(`http://localhost:8080/Portfol.io/Stock/${this.props.stock}/${this.state.selected}`)
+    //   .then((response) => {
+    //     // handle success
+    //     let stockData = response.data;
         
-        let withCommas = Number(parseFloat(stockData[stockData.length - 1]['y']).toFixed(2)).toLocaleString('en');
+    //     let withCommas = Number(parseFloat(stockData[stockData.length - 1]['y']).toFixed(2)).toLocaleString('en');
         
-        if ((stockData).length < 5) {
-          this.setState({visibleData: true})
-        } else {
-          this.setState({
-            currentPriceFor: withCommas,
-            currentPrice: stockData[stockData.length - 1]['y'],
-          })
-        }
+    //     if ((stockData).length < 5) {
+    //       this.setState({visibleData: true})
+    //     } else {
+    //       this.setState({
+    //         currentPriceFor: withCommas,
+    //         currentPrice: stockData[stockData.length - 1]['y'],
+    //       })
+    //     }
 
-      })
-      .catch((error) => {
-        // handle error
+    //   })
+    //   .catch((error) => {
+    //     // handle error
 
-        self.setState({visible: true})
+    //     self.setState({visible: true})
 
-        console.log(`Oh no! Our API didn't respond. Please refresh and try again`);
-        console.log(`Btw here is the error message\n\n`);
+    //     console.log(`Oh no! Our API didn't respond. Please refresh and try again`);
+    //     console.log(`Btw here is the error message\n\n`);
 
-        if (error.response && error.response.data)
-          console.log(error.response.data.error);
-        else
-          console.log(error);
-      })
+    //     if (error.response && error.response.data)
+    //       console.log(error.response.data.error);
+    //     else
+    //       console.log(error);
+    //   })
   }
 
   componentDidUpdate(prevProps) {
@@ -177,7 +177,7 @@ class StockPage extends Component {
         <Col style={{paddingTop: '7em'}} md='6'>
 
           <h1 className='stockTitle'>{this.props.stock}</h1>
-          <h2 className='stockPrice'>${this.state.currentPriceFor}</h2>
+          <h2 className='stockPrice'>${this.props.currentPriceFor}</h2>
 
           {errorMessage}
           {errorMessage2}
@@ -211,7 +211,7 @@ class StockPage extends Component {
         <Col style={{paddingTop: '6em'}} md='2'>
           {this.props.empty
             ?
-              <BuySellCard gameOver={this.props.gameOver} getGameData={this.props.getGameData} gameData={this.props.gameData} uid={this.props.uid} currentGame={this.props.currentGame} stock={this.props.stock} currentPriceFor={this.state.currentPriceFor} currentPrice={this.state.currentPrice}/>
+              <BuySellCard gameOver={this.props.gameOver} getGameData={this.props.getGameData} gameData={this.props.gameData} uid={this.props.uid} currentGame={this.props.currentGame} stock={this.props.stock} currentPriceFor={this.props.currentPriceFor} currentPrice={this.props.currentPrice}/>
             :
               null
           }

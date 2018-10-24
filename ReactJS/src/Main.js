@@ -18,9 +18,49 @@ class Main extends Component {
   }
 
   componentWillMount() {
-    console.log("mounting")
     this.fetchGames();
+    this.fetchPrice();
   }
+
+  componentDidUpdate(prevProps) {
+    if (prevProps.stock !== this.props.stock) {
+      this.fetchPrice();
+    }
+  }
+  
+  fetchPrice = () => {
+    let self = this
+    axios.get(`http://localhost:8080/Portfol.io/Stock/${this.props.stock}/Day}`)
+        .then((response) => {
+          // handle success
+          let stockData = response.data;
+          
+          let withCommas = Number(parseFloat(stockData[stockData.length - 1]['y']).toFixed(2)).toLocaleString('en');
+          
+          if ((stockData).length < 5) {
+            this.setState({visibleData: true})
+          } else {
+            this.setState({
+              currentPriceFor: withCommas,
+              currentPrice: stockData[stockData.length - 1]['y'],
+            })
+          }
+
+        })
+        .catch((error) => {
+          // handle error
+
+          self.setState({visible: true})
+
+          console.log(`Oh no! Our API didn't respond. Please refresh and try again`);
+          console.log(`Btw here is the error message\n\n`);
+
+          if (error.response && error.response.data)
+            console.log(error.response.data.error);
+          else
+            console.log(error);
+        })
+    }
 
   gameOver = () => {
     let now = moment();
@@ -101,7 +141,7 @@ class Main extends Component {
           <NavBar currentGame={this.state.currentGame}/>     
         </div>  
 
-        <this.props.component gameOverFunc={this.gameOver} gameOver={this.state.gameOver} getGameData={this.getGameData} gameData={this.state.gameData} uid={this.props.uid} empty={this.state.empty} currentGame={this.state.currentGame} updateCurrentGame={this.updateCurrentGame} stock={this.props.stock}/>
+        <this.props.component currentPriceFor={this.state.currentPriceFor} currentPrice={this.state.currentPrice} gameOverFunc={this.gameOver} gameOver={this.state.gameOver} getGameData={this.getGameData} gameData={this.state.gameData} uid={this.props.uid} empty={this.state.empty} currentGame={this.state.currentGame} updateCurrentGame={this.updateCurrentGame} stock={this.props.stock}/>
       </div>
     );
   }
