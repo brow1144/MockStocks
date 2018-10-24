@@ -63,8 +63,16 @@ class NavBar extends Component {
     })
   }
 
+  /**
+   * Reload the page
+   */
+  reloadPage = () => {
+    window.location.reload();
+  }
+
   clearSearch = () => {
     this.setState({tickersShowing: []})
+    this.reloadPage();
   }
 
   firebaseOut = () => {
