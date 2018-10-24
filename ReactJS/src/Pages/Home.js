@@ -74,7 +74,7 @@ class Home extends Component {
 
         self.setState({visible: true})
 
-        console.log(`Oh no! Our API didn't respond. Please refresh and try again`);
+        console.log(`No data to be shown`);
 
         if (error.response && error.response.data)
           console.log(error.response.data.error);
@@ -235,7 +235,7 @@ class Home extends Component {
 
     let errorMessage;
     if (this.state.visible) {
-      errorMessage = <p style={{color: 'whitesmoke'}}>Oh no! Our API did not respond, please refresh to get the updated data!</p>
+      errorMessage = <p style={{color: 'whitesmoke'}}>No data to show</p>
     } else {
       errorMessage = null;
     }

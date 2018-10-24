@@ -9,6 +9,8 @@ import { NavLink } from 'react-router-dom';
 
 import axios from 'axios'
 
+import { fireauth } from '../base';
+
 import '../Static/CSS/NavBar.css';
 
 class NavBar extends Component {
@@ -64,6 +66,20 @@ class NavBar extends Component {
   clearSearch = () => {
     this.setState({tickersShowing: []})
   }
+
+  firebaseOut = () => {
+    fireauth.signOut().then(() => {
+      console.log("User Signed out")
+    })
+  };
+
+  handleSignOut = () => {
+    localStorage.removeItem('uid');
+    sessionStorage.removeItem('uid');
+    this.setState({uid: null});
+    this.firebaseOut();
+    window.location.reload();
+  };
 
   render() {
 
@@ -124,6 +140,11 @@ class NavBar extends Component {
         <Col className='navText' sm='1' md='1'>
           <NavLink to={'/Portfol.io/Tips'} style={{textDecoration: 'none'}}>
             <b className='navText' style={{fontSize: '1em'}}>Tips</b>
+          </NavLink>
+        </Col>
+        <Col className='navText' sm='1' md='1'>
+          <NavLink onClick={this.handleSignOut} to={'/Portfol.io'} style={{textDecoration: 'none'}}>
+            <b className='navText' style={{fontSize: '1em'}}>Sign Out</b>
           </NavLink>
         </Col>
         <Col className='blackBack' sm='1' />
