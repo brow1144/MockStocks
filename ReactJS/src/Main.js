@@ -13,21 +13,97 @@ class Main extends Component {
       currentGame: {},
       empty: false,
       gameData: {},
-      gameOver: false
+      gameOver: false,
+      watching: false,
+      watchlist: []
     }
   }
 
   componentWillMount() {
     this.fetchGames();
     this.fetchPrice();
+    this.fetchWatchlist();
   }
 
   componentDidUpdate(prevProps) {
     if (prevProps.stock !== this.props.stock) {
       this.fetchPrice();
+      this.isWatching();
     }
   }
-  
+
+  isWatching =()=>{
+    let self = this;
+    //console.log(this.state.watchlist)
+    for (let k in this.state.watchlist) {
+      ///console.log("trying")
+      if (this.state.watchlist[k].symbol === this.props.stock) {
+        ///console.log("true")
+        self.setState({
+          watching: true
+        })
+        return true;
+      }
+    }
+    ///console.log("false")
+    self.setState({
+      watching: false
+    })
+    return false;
+  }
+
+  fetchWatchlist = () => {
+    let self = this;
+    axios.get(`http://localhost:8080/Portfol.io/Watchlist/${this.props.uid}`)
+      .then(function (response) {
+        // handle success
+        let watchlist = response.data;
+
+        if (watchlist.length !== 0) {
+          // Set up the game data
+          self.setWatchlist(watchlist);
+          self.isWatching();
+        } else { // No watchlist return
+          // Get the current user's email
+          axios.get(`http://localhost:8080/Portfol.io/${self.props.uid}`)
+            .then(function (response) {
+              // handle success
+              let user = response.data;
+
+              self.setState({
+                email: user.email,
+              })
+
+            }).catch(function (err) {
+            console.log("Cannot get watchlist for the current user");
+
+            if (err.response && err.response.data)
+              console.log(err.response.data.error);
+            else
+              console.log(err);
+          })
+        }
+      })
+      .catch(function (error) {
+        // handle error
+        console.log(`Oh no! Our API didn't respond. Please refresh and try again`)
+        console.log(`Btw here is the error message\n\n`)
+
+        if (error.response && error.response.data)
+          console.log(error.response.data.error);
+        else
+          console.log(error);
+      })
+  }
+
+  setWatchlist = (watchlist) => {
+    let self = this;
+    //console.log("got eem");
+    self.setState({
+      watchlist: watchlist,
+    })
+  }
+
   fetchPrice = () => {
     let self = this
     axios.get(`http://localhost:8080/Portfol.io/Stock/${this.props.stock}/Day}`)
@@ -67,13 +143,13 @@ class Main extends Component {
     let start = new Date(this.state.currentGame.start_time);
     let end = new Date(this.state.currentGame.end_time);
 
-    console.log(this.state.currentGame)
+    //console.log(this.state.currentGame)
     if( start > now ||  end < now) {
       this.setState({gameOver: true})
-      console.log("game is over")
+      //console.log("game is over")
     } else {
       this.setState({gameOver: false})
-      console.log("game is not over")
+      //console.log("game is not over")
     }
   }
 
@@ -141,7 +217,7 @@ class Main extends Component {
           <NavBar currentGame={this.state.currentGame}/>     
         </div>  
 
-        <this.props.component currentPriceFor={this.state.currentPriceFor} currentPrice={this.state.currentPrice} gameOverFunc={this.gameOver} gameOver={this.state.gameOver} getGameData={this.getGameData} gameData={this.state.gameData} uid={this.props.uid} empty={this.state.empty} currentGame={this.state.currentGame} updateCurrentGame={this.updateCurrentGame} stock={this.props.stock}/>
+        <this.props.component watching={this.state.watching} currentPriceFor={this.state.currentPriceFor} currentPrice={this.state.currentPrice} gameOverFunc={this.gameOver} gameOver={this.state.gameOver} getGameData={this.getGameData} gameData={this.state.gameData} uid={this.props.uid} empty={this.state.empty} currentGame={this.state.currentGame} updateCurrentGame={this.updateCurrentGame} stock={this.props.stock}/>
       </div>
     );
   }

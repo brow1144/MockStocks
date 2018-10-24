@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Row, Col, CardBody, Button, CardTitle } from 'mdbreact'
+import { Row, Col, CardBody, Button } from 'mdbreact'
 
 class Buy extends Component {
   
