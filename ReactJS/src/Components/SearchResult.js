@@ -10,7 +10,7 @@ class SearchResult extends Component {
 
     return (
       <div className='searchHover'>
-        <NavLink to={`/Portfol.io/Stocks/${this.props.symbol}`} onClick={this.props.clearSearch} style={{textDecoration: 'none'}}>
+        <NavLink to={`/Portfolio/Stocks/${this.props.symbol}`} onClick={this.props.clearSearch} style={{textDecoration: 'none'}}>
           <p className='symbol'>{this.props.symbol}</p>
           <p className='company'>{this.props.company}</p>
         </NavLink>

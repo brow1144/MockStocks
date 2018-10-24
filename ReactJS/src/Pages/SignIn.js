@@ -73,7 +73,7 @@ class SignIn extends Component {
               <Input id='pass' name='password' label="Password" type="password"/>
               <br/>
               <Button className='signInButton' type='submit' color="blue" >Sign In!</Button>
-              <NavLink style={{textDecoration: 'none'}} to="/Portfol.io/CreateAccount">Sign Up!</NavLink>
+              <NavLink style={{textDecoration: 'none'}} to="/Portfolio/CreateAccount">Sign Up!</NavLink>
             </Form>
           </article>
         </div>

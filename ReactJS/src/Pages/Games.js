@@ -587,7 +587,7 @@ class Games extends Component {
                 <h5 className={"gamesText"}>Buying Power : ${parseFloat((this.state.buying_power).toFixed(2)).toLocaleString()}</h5>
               </Col>
             </Row>
-            {this.state.leader
+            {this.state.leader && this.state.countMessage === "Game Starts in: "
               ? <Row>
                 <Col md="1"/>
                 <Col md="1">

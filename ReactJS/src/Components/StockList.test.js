@@ -1,5 +1,5 @@
 import React from 'react';
-import {mount} from 'enzyme';
+import {shallow} from 'enzyme';
 import StockList from './StockList';
 import axios from 'axios';
 
@@ -27,13 +27,12 @@ const watchlist = [
     symbol: "TST"},
 ];
 
-const stocklist = mount(<StockList watchlist={watchlist}/>);
-const texts = stocklist.find('p').map(node => node.text());
-console.log(texts)
-
-
 describe('Positive Results', () => {
+
   test('Watchlist renders correct amount of stocks', () => {
+    const stocklist = shallow(<StockList watchlist={watchlist}/>);
+    const texts = stocklist.find('p').map(node => node.text());
     expect(texts.length/3).toBe(watchlist.length);
   })
+
 })
