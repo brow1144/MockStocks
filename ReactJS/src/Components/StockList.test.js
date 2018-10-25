@@ -12,27 +12,43 @@ axios.get = jest.fn((url) => {
 });
 
 
-const watchlist = [
-  {changePercent: 0.00,
-    close: 100.00,
-    symbol: "TST"},
-  {changePercent: 0.00,
-    close: 100.00,
-    symbol: "TST"},
-  {changePercent: 0.00,
-    close: 100.00,
-    symbol: "TST"},
-  {changePercent: 0.00,
-    close: 100.00,
-    symbol: "TST"},
+const full_watchlist = [
+  {changePercent: 1.00, close: 100.00, symbol: "TST"},
+  {changePercent: 2.00, close: 100.00, symbol: "TST"},
+  {changePercent: 3.00, close: 100.00, symbol: "TST"},
+  {changePercent: 4.00, close: 100.00, symbol: "TST"},
+  {changePercent: 5.00, close: 100.00, symbol: "TST"},
+  {changePercent: 6.00, close: 100.00, symbol: "TST"},
 ];
+
+const correctRisers = [
+  {changePercent: 6.00, close: 100.00, symbol: "TST"},
+  {changePercent: 5.00, close: 100.00, symbol: "TST"},
+  {changePercent: 4.00, close: 100.00, symbol: "TST"},
+  {changePercent: 3.00, close: 100.00, symbol: "TST"},
+  {changePercent: 2.00, close: 100.00, symbol: "TST"},
+];
+
+const empty_watchlist = [];
 
 describe('Positive Results', () => {
 
-  test('Watchlist renders correct amount of stocks', () => {
-    const stocklist = shallow(<StockList watchlist={watchlist}/>);
-    const texts = stocklist.find('p').map(node => node.text());
-    expect(texts.length/3).toBe(watchlist.length);
-  })
+  test('Watchlist returns correct number of top risers', () => {
+    const stocklist = shallow(<StockList watchlist={full_watchlist}/>);
+    const topRisers = stocklist.instance().getTopRisers();
+    expect(topRisers.length).toBe(5);
+  });
 
-})
+  test('Watchlist correctly displays top risers', () => {
+    const stocklist = shallow(<StockList watchlist={full_watchlist}/>);
+    const divs = stocklist.find('hr');
+    expect(divs.length).toBe(5);
+  });
+
+  test('Watchlist displays top risers in correct order of change percent', () => {
+    const stocklist = shallow(<StockList watchlist={full_watchlist}/>);
+    const topRisers = stocklist.instance().getTopRisers();
+    expect(topRisers).toEqual(correctRisers);
+  });
+
+});
