@@ -13,10 +13,6 @@ class MyStocks extends Component {
     router: {}
   }
 
-  switchPage = (symbol) => {
-    this.context.router.push(`/Portfolio/Stocks/${symbol}`);
-  }
-
   render() {
     return (
       <div >

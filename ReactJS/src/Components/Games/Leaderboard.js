@@ -33,6 +33,13 @@ class Leaderboard extends Component {
     };
   }
 
+  componentWillMount () {
+    this.setState({
+      visible: false,
+      visibleData: false,
+    })
+  }
+
   /**
    * Displays graph of user's history
    */
@@ -158,17 +165,26 @@ class Leaderboard extends Component {
            {this.state.name}
             </ModalHeader>
           <ModalBody className='blackBackground'>
-            <h2 className='stockPrice'>${this.state.currentPriceFor}</h2>
 
-            <br />
-            {notEnoughData}
             {errorMessage}
-            <HighchartsReact
-              className='highcharts-container'
-              highcharts={Highcharts}
-              constructorType={'stockChart'}
-              options={stockOptions}
-            />
+            {this.state.visibleData
+              ?
+              <div>
+              {notEnoughData}
+              </div>
+              :
+              <div>
+                <h2 className='stockPrice'>${this.state.currentPriceFor}</h2>
+                <br />
+              <HighchartsReact
+                className='highcharts-container'
+                highcharts={Highcharts}
+                constructorType={'stockChart'}
+                options={stockOptions}
+              />
+              </div>
+            }
+
 
           </ModalBody>
         </Modal>
