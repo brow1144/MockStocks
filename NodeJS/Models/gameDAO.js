@@ -55,15 +55,16 @@ export function updateGameSettings(gameCode, game) {
         return Promise.reject('UserError: Game does not exist');
 
       // update buying power for each active player
-      for (let i in updatedGame.active_players.toObject()) {
-        if (updatedGame.active_players.hasOwnProperty(i)) {
-          try {
-            await updateUserBuyingPower(updatedGame.active_players[i], gameCode, game.starting_amount);
-          } catch (error) {
-            return Promise.reject(error);
-          }
-        }
-      }
+      // defect #13
+      // for (let i in updatedGame.active_players.toObject()) {
+      //   if (updatedGame.active_players.hasOwnProperty(i)) {
+      //     try {
+      //       await updateUserBuyingPower(updatedGame.active_players[i], gameCode, game.starting_amount);
+      //     } catch (error) {
+      //       return Promise.reject(error);
+      //     }
+      //   }
+      // }
 
       return Promise.resolve(updatedGame);
     })

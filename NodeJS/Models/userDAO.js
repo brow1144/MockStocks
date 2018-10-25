@@ -171,10 +171,14 @@ export async function buyStock(uid, gameCode, stockName, quantity, pricePerShare
     return Promise.reject(error);
   }
 
-  if (userGame.trade_count >= game.trade_limit && game.trade_limit !== 0)
+  // defect #10
+  //if (userGame.trade_count >= game.trade_limit && game.trade_limit !== 0)
+  if (userGame.trade_count >= game.trade_limit)
     return Promise.reject('UserError: Trade limit exceeded');
 
-  const price = quantity * pricePerShare;
+  // defect #12
+  //const price = quantity * pricePerShare;
+  const price = pricePerShare;
   if (userGame.buying_power >= price)
     buying_power = userGame.buying_power - price;
   else
@@ -253,7 +257,9 @@ export async function sellStock(uid, gameCode, stockName, quantity, pricePerShar
     return Promise.reject(error);
   }
 
-  if (userGame.trade_count >= game.trade_limit && game.trade_limit !== 0)
+  // defect #10
+  //if (userGame.trade_count >= game.trade_limit && game.trade_limit !== 0)
+  if (userGame.trade_count >= game.trade_limit)
     return Promise.reject('UserError: Trade limit exceeded');
 
   const price = quantity * pricePerShare;
@@ -295,7 +301,8 @@ export async function sellStock(uid, gameCode, stockName, quantity, pricePerShar
 
   if (quantity > 0) {
     updateClause = {
-      '$inc': {'active_games.$.trade_count': 1},
+      // defect #11
+      //'$inc': {'active_games.$.trade_count': 1},
       '$set': {'active_games.$.buying_power': buying_power},
       '$push': {'active_games.$.stocks': stock}
     };
