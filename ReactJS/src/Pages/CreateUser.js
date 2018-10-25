@@ -39,11 +39,11 @@ class CreateUser extends Component {
     let target = ev.target;
 
     // Defect #1
-    // if (target.username.value === '') {
-    //   return;
-    // }
+    if (target.username.value === '') {
+      return;
+    }
 
-    if ( target.username.value === '' || target.email.value === ''
+    if ( target.email.value === ''
       || target.password.value === ''
       || target.confirmPassword.value === '') {
         this.setState({visible: true, message: 'Please fill out the entire form!'});
@@ -54,7 +54,7 @@ class CreateUser extends Component {
     } else  {
       if (target.password.value !== target.confirmPassword.value) {
         // Defect #5
-        this.setState({visible: true, message: 'Passwords Don\'t Match!'});
+        // this.setState({visible: true, message: 'Passwords Don\'t Match!'});
         return;
       }
       else {

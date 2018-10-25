@@ -45,7 +45,7 @@ class BuySellCard extends Component {
       return;
     } else if (Number(this.state.cost) === 0) {
       // Defect #3
-      self.setState({errorMessage: `You entered an invalid number of stocks`, modal: true,})
+      // self.setState({errorMessage: `You entered an invalid number of stocks`, modal: true,})
       return;
     } 
 
@@ -65,7 +65,7 @@ class BuySellCard extends Component {
     let self = this
     if (this.props.currentPrice === null || this.props.currentPrice === undefined || this.props.currentPrice === 0) {
       // Defect #4
-      self.setState({errorMessage: `We are having trouble getting the current price, try refreshing and submitting again!`, modal: true,})
+      // self.setState({errorMessage: `We are having trouble getting the current price, try refreshing and submitting again!`, modal: true,})
       return;
     } else if (Number(this.state.cost) === 0) {
       self.setState({errorMessage: `You entered an invalid number of stocks`, modal: true,})
