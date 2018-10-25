@@ -32,20 +32,47 @@ class Main extends Component {
     }
   }
 
+  watchStock =()=>{
+    let self = this;
+    axios.post(`http://localhost:8080/Portfol.io/Watchlist/${this.props.uid}/${this.props.stock}`)
+      .then((data) => {
+        console.log("watched")
+        //self.props.reloadPage();
+      }).catch((err) => {
+      console.log("Problem watching stock")
+    });
+    this.setState({
+      watching: !self.state.watching
+    })
+  }
+
+  removeStock =()=>{
+    let self = this;
+    axios.delete(`http://localhost:8080/Portfol.io/Watchlist/${this.props.uid}/${this.props.stock}`)
+      .then((data) => {
+        console.log("removed")
+      }).catch((err) => {
+      console.log("Problem removing stock")
+    });
+    this.setState({
+      watching: !self.state.watching
+    })
+  }
+
   isWatching =()=>{
     let self = this;
-    //console.log(this.state.watchlist)
+    console.log(this.state.watchlist)
     for (let k in this.state.watchlist) {
       ///console.log("trying")
       if (this.state.watchlist[k].symbol === this.props.stock) {
-        ///console.log("true")
+        console.log("true")
         self.setState({
           watching: true
         })
         return true;
       }
     }
-    ///console.log("false")
+    console.log("false")
     self.setState({
       watching: false
     })
@@ -217,7 +244,11 @@ class Main extends Component {
           <NavBar currentGame={this.state.currentGame}/>     
         </div>  
 
-        <this.props.component watching={this.state.watching} currentPriceFor={this.state.currentPriceFor} currentPrice={this.state.currentPrice} gameOverFunc={this.gameOver} gameOver={this.state.gameOver} getGameData={this.getGameData} gameData={this.state.gameData} uid={this.props.uid} empty={this.state.empty} currentGame={this.state.currentGame} updateCurrentGame={this.updateCurrentGame} stock={this.props.stock}/>
+        <this.props.component removeStock={this.removeStock} watchStock={this.watchStock} watching={this.state.watching}
+                              currentPriceFor={this.state.currentPriceFor} currentPrice={this.state.currentPrice}
+                              gameOverFunc={this.gameOver} gameOver={this.state.gameOver} getGameData={this.getGameData}
+                              gameData={this.state.gameData} uid={this.props.uid} empty={this.state.empty}
+                              currentGame={this.state.currentGame} updateCurrentGame={this.updateCurrentGame} stock={this.props.stock}/>
       </div>
     );
   }

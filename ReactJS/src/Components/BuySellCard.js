@@ -20,7 +20,7 @@ class BuySellCard extends Component {
       selected: 'buy',
       modal: false,
       errorMessage: '',
-      watching: true
+      watch: true
     }
   }
 
@@ -82,33 +82,6 @@ class BuySellCard extends Component {
     });
   }
 
-  watchStock =()=>{
-    let self = this;
-    axios.post(`http://localhost:8080/Portfol.io/Watchlist/${this.props.uid}/${this.props.stock}`)
-      .then((data) => {
-      this.setState({
-        watching: !self.state.watching
-      })
-      //self.props.reloadPage();
-    }).catch((err) => {
-      console.log("Problem watching stock")
-    });
-
-  }
-
-  removeStock =()=>{
-    let self = this;
-    axios.delete(`http://localhost:8080/Portfol.io/Watchlist/${this.props.uid}/${this.props.stock}`)
-  .then((data) => {
-      this.setState({
-        watching: !self.state.watching
-      })
-      //self.props.reloadPage();
-    }).catch((err) => {
-      console.log("Problem watching stock")
-    });
-  }
-
   handleBuy = () => {
     this.setState({
       cost: 0,
@@ -122,6 +95,18 @@ class BuySellCard extends Component {
       cost: 0,
       finalPrice: 0,
       selected: 'sell'
+    })
+  }
+
+  watch = () => {
+    this.setState({
+      watch: !this.state.watch
+    })
+  }
+
+  remove = () => {
+    this.setState({
+      watch: !this.state.watch
     })
   }
 
@@ -163,11 +148,11 @@ class BuySellCard extends Component {
             }
 
             {!this.props.watching
-              ?<Button color="blue" onClick={this.watchStock} block>
+              ?<Button color="blue" onClick={this.props.watchStock} block>
                 +Add to watchlist
               </Button>
 
-              :<Button color="red" onClick={this.removeStock} block>
+              :<Button color="red" onClick={this.props.removeStock} block>
                 -Remove from watchlist
               </Button>
             }
