@@ -16,6 +16,25 @@ const started = new Date("2018-10-01T02:13:00.000Z");
 const notEnd = new Date("2018-11-03T16:00:11.000Z");
 const ended = new Date("2018-10-19T15:30:11.000Z");
 
+const userGame = [{buying_power: 5234,
+  code: "59901",
+  stocks: [],
+  stocksArray: [],
+  totalAssets: 11868.349999999999,
+  totalOwned: 183,
+  trade_count: 4,
+  uid: "JGh7kXSEfITvkbZBcvrTkh4Ka0v2",
+  username: "jerbear"},
+  {buying_power: 1804,
+    code: "59901",
+    stocks: [],
+    stocksArray: [],
+    totalAssets: 9290.14,
+    totalOwned: 36,
+    trade_count: 54,
+    uid: "yyam7tjgc5c6mM6k4QLlnADJVN12",
+    username: "jmkoontz",}];
+
 const then = jest.fn(() => {
   return {catch: jest.fn()};
 })
@@ -111,5 +130,15 @@ describe('Checks that countdown displays correctly', () => {
     game.setState({currentGame: currentGame});
     game.instance().setTime();
     expect(game.state().countMessage).toBe("Game Completed ");
+  })
+  test('The winner has been set', () => {
+    let game = mount(<Games />);
+    let currentGame = {
+      start_time: started,
+      end_time: started,
+    }
+    game.setState({winner: false, currentGame: currentGame, userGame: userGame});
+    game.instance().setTime();
+    expect(game.state().winner).toBe(true);
   })
 })
