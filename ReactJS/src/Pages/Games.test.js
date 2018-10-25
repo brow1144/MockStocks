@@ -31,7 +31,7 @@ global.sessionStorage = {
 
 let game = shallow(<Games />);
 
-describe('Checks that the leader email displays properly', () => {
+describe('Checks that the leader email is set properly', () => {
   test('Current user is the leader', () => {
     game.setState({currentGame: games[0], email: "jeremyputput@gmail.com"});
     game.instance().leaderCheck();

@@ -34,10 +34,10 @@ describe('Checks that My Stocks displays users` data correct', () => {
     <MyStocks currentUserStocks={curUserStocks} />
   );
 
-
   test('The correct amount of stocks are being displayed', () => {
     expect(wrapper.find('tr').length).toBe(6);
   })
+
 });
 describe('Checks that MyStocks displays handles no stocks correctly', () => {
   let wrapper = mount(
