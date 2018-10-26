@@ -64,7 +64,6 @@ class MyStocks extends Component {
           :
           <div>
             <br/>
-            <p className={"gamesText"}>You currently have no stocks</p>
           </div>
 
         }
