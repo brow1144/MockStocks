@@ -12,7 +12,7 @@
     "nodemon": "^1.18.4"
   },
   "scripts": {
-    "start": "node index",
+    "start": "cd ./NodeJS && node index",
     "blast": "nodemon index",
     "test": "jest"
   },
