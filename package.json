@@ -12,7 +12,8 @@
     "nodemon": "^1.18.4"
   },
   "scripts": {
-    "start": "cd ./NodeJS && node index",
+    "heroku-prebuild": "cd NodeJS && yarn",
+    "start": "cd NodeJS && node index",
     "blast": "nodemon index",
     "test": "jest"
   },
