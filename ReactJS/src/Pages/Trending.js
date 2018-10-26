@@ -39,7 +39,7 @@ class Trending extends Component {
 
   dailyClicked() {
     this.setState({
-      //Eric defect 1, switching back to daily doesn't update table stocks
+      //Eric defect 14, switching back to daily doesn't update table stocks
       //topTen: this.state.dailyTrending,
       selectedRange: "daily",
       visible: true,
@@ -100,7 +100,7 @@ class Trending extends Component {
         self.setState({
           weeklyTrending: data,
           topTen: data,
-          //Eric defect 2, weekly trending never set to visible
+          //Eric defect 15, weekly trending never set to visible
           //visible: true
         });
       })

@@ -46,7 +46,7 @@ class Watchlist extends Component {
 
   removeStock(index){
     let sl = this.state.watchlist;
-    //Eric defect 3, removing an item from the watchlist removes 2 from the table
+    //Eric defect 16, removing an item from the watchlist removes 2 from the table
     sl.splice(index, 2);
     this.setState({
       watchlist: sl,
@@ -77,7 +77,7 @@ class Watchlist extends Component {
         };
       case "reverse_alphabetical":
         return function (a, b) {
-          //Eric defect 4, reverse alphabetical sorts by alphabetical
+          //Eric defect 17, reverse alphabetical sorts by alphabetical
           return a.symbol > b.symbol;
         };
       case "high_price":
