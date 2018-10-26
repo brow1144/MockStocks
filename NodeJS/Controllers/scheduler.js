@@ -8,24 +8,29 @@ import _ from 'lodash';
 export function runSchedules() {
   // update portofolio values every weekday at 9:30 am
   let marketOpen = schedule.scheduleJob('30 09 * * 1-5', () => {
+    console.log('Scheduler: Updating portfolio values at market open.')
     getPortfolioValues();
   });
 
   // update portofolio values every weekday at 4:00 pm
   let marketClose = schedule.scheduleJob('00 16 * * 1-5', () => {
+    console.log('Scheduler: Updating portfolio values at market close.')
     getPortfolioValues();
   });
 
   let clearDailyCounters = schedule.scheduleJob('00 00 * * *', () => {
+    console.log('Scheduler: Clearing daily counters.')
     clearCounters(true);
   });
 
   // check active games once per hour
   let checkGames = schedule.scheduleJob('00,30 * * * *', () => {
+    console.log('Scheduler: Checking active games.')
     checkActiveGames();
   });
 
   let clearWeeklyCounters = schedule.scheduleJob('00 00 * * 00', () => {
+    console.log('Scheduler: Clearing weekly counters.')
     clearCounters(false);
   });
 
