@@ -54,7 +54,7 @@ class MyStocks extends Component {
               <th>{this.props.currentUserStocks.totalOwned}</th>
               {this.props.currentUserStocks.totalAssets
                 ?
-                <th>${(parseFloat(((this.props.currentUserStocks.totalAssets).toFixed(2))) - this.props.currentUserStocks.buying_power).toLocaleString()}</th>
+                <th>${(parseFloat(((this.props.currentUserStocks.totalAssets).toFixed(2)))).toLocaleString()}</th>
                 :
                 <th/>
               }
