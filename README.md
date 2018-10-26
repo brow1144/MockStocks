@@ -16,3 +16,7 @@ A safe learning environment for novice investors
 * [Sprint 2 Defect Log](https://docs.google.com/document/d/1jidBFzN4HGWDMcPH0r7AtLlh7pCgm5l-pUZDmG9cYPM/edit?usp=sharing)
 
 * [Sprint 2 Incremental and Regression Testing](https://docs.google.com/document/d/1JKJgla2jJ36NdkbmoqT_DJEh6LWJwnuk1_2Yt6EMvwc/edit?usp=sharing)
+
+* [How to Run Portfol.io](https://docs.google.com/document/d/1k2_6HpVdeJ1OZEZ5cRR6tTSpyX3Nw49rAdoHdBaYSLM/edit?usp=sharing)
+
+* [Seeded-Defects Log](https://docs.google.com/document/d/198laQ9V0aCZa8Uk_it3T8iRmDzWzJJCP1p9wEi3me78/edit?usp=sharing)
