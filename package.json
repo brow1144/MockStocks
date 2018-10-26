@@ -14,8 +14,8 @@
   "scripts": {
     "heroku-prebuild": "cd NodeJS && yarn",
     "start": "cd NodeJS && node index",
-    "blast": "nodemon index",
-    "test": "jest"
+    "blast": "cd NodeJS && nodemon index",
+    "test": "cd NodeJS && jest"
   },
   "devDependencies": {
     "@babel/core": "^7.1.2",
