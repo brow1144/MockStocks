@@ -113,6 +113,18 @@ class Games extends Component {
    */
   setGameData = (games) => {
     let self = this;
+
+    // Check if a is already selected
+    if (self.props.currentGame) {
+      self.setState({
+        myFloors: games,
+        currentGame: self.props.currentGame,
+      }, () => {
+        self.timer();
+        self.props.updateCurrentGame(self.props.currentGame);
+        self.props.getGameData(self.props.currentGame.code);
+      })
+    } else { // No game is selected
       self.setState({
         myFloors: games,
         currentGame: games[0],
@@ -120,51 +132,53 @@ class Games extends Component {
         self.timer();
         self.props.updateCurrentGame(games[0]);
         self.props.getGameData(games[0].code);
-        // Call to the server to get all user objects for the current game
+      })
+    }
 
-          if (self.state.currentGame.completed === false) {
-            for (let x = 0; x < self.state.currentGame.active_players.length; x++) {
+    // Call to the server to get all user objects for the current game
+    if (self.state.currentGame.completed === false) {
+      for (let x = 0; x < self.state.currentGame.active_players.length; x++) {
 
-              axios.get(`http://localhost:8080/Portfol.io/${self.state.currentGame.active_players[x]}`)
-                .then(function (response) {
-                  // handle success
-                  if (response != null) {
-                    self.processUser(response.data, x);
-                    self.leaderCheck();
-                  }
-
-                }).catch(function (err) {
-                console.log("Cannot get users for the current game");
-
-                if (err.response && err.response.data)
-                  console.log(err.response.data.error);
-                else
-                  console.log(err);
-              })
+        axios.get(`http://localhost:8080/Portfol.io/${self.state.currentGame.active_players[x]}`)
+          .then(function (response) {
+            // handle success
+            if (response != null) {
+              self.processUser(response.data, x);
+              self.leaderCheck();
             }
-          } else {
-            axios.get(`http://localhost:8080/Portfol.io/Games/Totals/${self.state.currentGame.code}`)
-              .then(function (response) {
-                // handle success
-                if (response != null) {
-                  let array = response.data;
-                  array.sort(self.sortRank());
-                  self.setState({
-                    userGame: array,
-                  })
-                }
 
-              }).catch(function (err) {
-              console.log("Cannot get users for the completed game");
+          }).catch(function (err) {
+          console.log("Cannot get users for the current game");
 
-              if (err.response && err.response.data)
-                console.log(err.response.data.error);
-              else
-                console.log(err);
+          if (err.response && err.response.data)
+            console.log(err.response.data.error);
+          else
+            console.log(err);
+        })
+      }
+    } else {
+      axios.get(`http://localhost:8080/Portfol.io/Games/Totals/${self.state.currentGame.code}`)
+        .then(function (response) {
+          // handle success
+          if (response != null) {
+            let array = response.data;
+            array.sort(self.sortRank());
+            self.setState({
+              userGame: array,
             })
           }
 
+        }).catch(function (err) {
+        console.log("Cannot get users for the completed game");
+
+        if (err.response && err.response.data)
+          console.log(err.response.data.error);
+        else
+          console.log(err);
       })
+    }
+
+
   }
 
   /**

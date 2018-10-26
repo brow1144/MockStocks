@@ -6,6 +6,8 @@ import {completeGame, getAllGames} from "../Models/gameDAO";
 import _ from 'lodash';
 
 export function runSchedules() {
+  // *** Deactivated because the defect version is running ***
+  /*
   // update portofolio values every weekday at 9:30 am
   let marketOpen = schedule.scheduleJob('30 09 * * 1-5', () => {
     getPortfolioValues();
@@ -33,6 +35,7 @@ export function runSchedules() {
   // let test = schedule.scheduleJob('* * * * *', () => {
   //   checkActiveGames();
   // });
+  */
 }
 
 export const checkActiveGames = () => {
