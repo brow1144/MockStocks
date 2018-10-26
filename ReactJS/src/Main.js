@@ -139,18 +139,7 @@ class Main extends Component {
           let stockData = response.data;
           
           let withCommas = Number(parseFloat(stockData[stockData.length - 1]['y']).toFixed(2)).toLocaleString('en');
-          console.log(stockData)
 
-
-          let x = 0
-          for (let i in stockData) {
-            if (stockData[i].x > x) {
-              x = stockData[i].y;
-            }
-          }
-
-          console.log(x)
-          
           if ((stockData).length < 5) {
             this.setState({visibleData: true})
           } else {
