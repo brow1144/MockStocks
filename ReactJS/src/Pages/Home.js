@@ -235,7 +235,7 @@ class Home extends Component {
 
     let errorMessage;
     if (this.state.visible) {
-      errorMessage = <p style={{color: 'whitesmoke'}}>No data to show</p>
+      errorMessage = <p style={{color: 'whitesmoke'}}>No data to show, please join a game first!</p>
     } else {
       errorMessage = null;
     }
