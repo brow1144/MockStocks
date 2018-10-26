@@ -46,7 +46,7 @@ class Leaderboard extends Component {
     })
 
     // Get data to display graphs
-    axios.get(`http://localhost:8080/Portfol.io/Games/History/${uid}/${this.props.currentGame.code}`)
+    axios.get(`https://portfolio-408-defect.herokuapp.com/Portfol.io/Games/History/${uid}/${this.props.currentGame.code}`)
       .then((response) => {
         // handle success
         let stockData = response.data;

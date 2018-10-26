@@ -65,7 +65,7 @@ class Games extends Component {
    */
   fetchGames = () => {
     let self = this;
-    axios.get(`http://localhost:8080/Portfol.io/Games/By/User/${this.state.uid}`)
+    axios.get(`https://portfolio-408-defect.herokuapp.com/Portfol.io/Games/By/User/${this.state.uid}`)
       .then(function (response) {
         // handle success
         let gameData = response.data;
@@ -77,7 +77,7 @@ class Games extends Component {
         } else { // No games return
           // Get the current user's email
 
-          axios.get(`http://localhost:8080/Portfol.io/${self.state.uid}`)
+          axios.get(`https://portfolio-408-defect.herokuapp.com/Portfol.io/${self.state.uid}`)
             .then(function (response) {
               // handle success
               let user = response.data;
@@ -125,7 +125,7 @@ class Games extends Component {
           if (self.state.currentGame.completed === false) {
             for (let x = 0; x < self.state.currentGame.active_players.length; x++) {
 
-              axios.get(`http://localhost:8080/Portfol.io/${self.state.currentGame.active_players[x]}`)
+              axios.get(`https://portfolio-408-defect.herokuapp.com/Portfol.io/${self.state.currentGame.active_players[x]}`)
                 .then(function (response) {
                   // handle success
                   if (response != null) {
@@ -143,7 +143,7 @@ class Games extends Component {
               })
             }
           } else {
-            axios.get(`http://localhost:8080/Portfol.io/Games/Totals/${self.state.currentGame.code}`)
+            axios.get(`https://portfolio-408-defect.herokuapp.com/Portfol.io/Games/Totals/${self.state.currentGame.code}`)
               .then(function (response) {
                 // handle success
                 if (response != null) {
@@ -350,7 +350,7 @@ class Games extends Component {
    */
   async getStocks (stockString) {
 
-    return await axios.get(`http://localhost:8080/Portfol.io/Batch/Stock/${stockString}`);
+    return await axios.get(`https://portfolio-408-defect.herokuapp.com/Portfol.io/Batch/Stock/${stockString}`);
   }
 
   /**
@@ -392,7 +392,7 @@ class Games extends Component {
         if (self.state.currentGame.completed === false) {
           for (let x = 0; x < self.state.currentGame.active_players.length; x++) {
 
-            axios.get(`http://localhost:8080/Portfol.io/${self.state.currentGame.active_players[x]}`)
+            axios.get(`https://portfolio-408-defect.herokuapp.com/Portfol.io/${self.state.currentGame.active_players[x]}`)
               .then(function (response) {
                 // handle success
                 if (response != null) {
@@ -411,7 +411,7 @@ class Games extends Component {
             })
           }
         } else {
-          axios.get(`http://localhost:8080/Portfol.io/Games/Totals/${self.state.currentGame.code}`)
+          axios.get(`https://portfolio-408-defect.herokuapp.com/Portfol.io/Games/Totals/${self.state.currentGame.code}`)
             .then(function (response) {
               // handle success
               if (response != null) {
@@ -444,7 +444,7 @@ class Games extends Component {
    */
   sortRank = () => {
     return function(a, b) {
-      return b.totalAssets - a.totalAssets;
+      return a.totalAssets - b.totalAssets;
     };
   }
 
@@ -513,7 +513,7 @@ class Games extends Component {
           self.setState({
             winner: true,
           }, () => {
-            axios.get(`http://localhost:8080/Portfol.io/Games/Winner/${this.state.currentGame.code}`) // Returns winner's name
+            axios.get(`https://portfolio-408-defect.herokuapp.com/Portfol.io/Games/Winner/${this.state.currentGame.code}`) // Returns winner's name
               .then(function (response) {
                 // handle
                 if (response.data != null) {
@@ -573,15 +573,9 @@ class Games extends Component {
           <Col>
             <Row>
               <Col md="1"/>
-
-              {this.state.leader
-                ?
-                <Col md="2">
-                  <h5 className={"gamesText "}>Floor Code : {this.state.currentGame.code}</h5>
-                </Col>
-                :
-                <Col md="2"/>
-              }
+              <Col md="2">
+                <h5 className={"gamesText "}>Floor Code : {this.state.currentGame.code}</h5>
+              </Col>
               <Col md="6"/>
               <Col md="3">
                 <h5 className={"gamesText"}>Buying Power : ${parseFloat((this.state.buying_power).toFixed(2)).toLocaleString()}</h5>
