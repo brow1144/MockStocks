@@ -143,11 +143,12 @@ export async function getTrendingStocks(timePeriod) {
 
   if (timePeriod === 'day') {
     tickers.sort(sortByDaily());
-    let topTen = new Array();
+    let topTen = [];
     for (let i = 0; i < 10; i++){
       topTen.push(tickers[i]);
     }
-    return Promise.resolve(topTen);
+    // DEFECT #20 shuffle the array of top ten so it isn't in the proper order
+    return Promise.resolve(_.shuffle(topTen));
   }
 
   else if (timePeriod === 'week') {
