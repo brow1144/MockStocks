@@ -59,6 +59,8 @@ class Tips extends Component {
                   <p style={{color: 'whitesmoke', textAlign: 'center'}}>Using Portfol.io</p>
                 </CardTitle>
                 <hr className='hr'/>
+                <h5 style={{color: 'whitesmoke', textAlign: 'center'}}><b>Our Stock Data:</b>  <a style={{color: 'whitesmoke', textAlign: 'center'}} href="https://iextrading.com/api-exhibit-a/">Data provided for free by IEX. View IEX’s Terms of Use</a></h5>
+                <hr className='hr'/>
                 <h5 style={{color: 'whitesmoke', textAlign: 'center'}}><b>Purchasing Stock:</b> Use the search bar at the top of the screen to search for stocks by ticker or company name. Click one to be taken to a page where you can buy, sell, and look at price trends per share for that company!</h5>
                 <hr className='hr'/>
                 <h5 style={{color: 'whitesmoke', textAlign: 'center'}}><b>Trending Stocks:</b> View recent popular stocks by navigating to the Trending tab. From here you can view frequently purchased stocks, add them to your watchlist, and buy and sell them!</h5>

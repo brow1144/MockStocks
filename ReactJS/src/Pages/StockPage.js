@@ -200,7 +200,7 @@ class StockPage extends Component {
         <Modal isOpen={this.state.timeout} toggle={this.timeoutToggle}>
           <ModalHeader toggle={this.toggle}>Modal title</ModalHeader>
           <ModalBody>
-          Your game is over. Buying and selling stocks is now locked.
+            Your game is over. Buying and selling stocks is now locked.
           </ModalBody>
           <ModalFooter>
             <Button color="primary" onClick={this.toggle}>Do Something</Button>{' '}
