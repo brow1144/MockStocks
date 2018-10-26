@@ -1,10 +1,10 @@
 import express from 'express';
 import bodyParser from 'body-parser';
 
-import stockController from './controllers/stockController';
-import userController from './controllers/userController';
-import gameController from './controllers/gameController';
-import {runSchedules} from './controllers/scheduler';
+import stockController from './Controllers/stockController';
+import userController from './Controllers/userController';
+import gameController from './Controllers/gameController';
+import {runSchedules} from './Controllers/scheduler';
 
 // connect to the database
 import db from './config/db';
@@ -30,6 +30,7 @@ gameController(app);
 runSchedules();
 
 // listen to port
-app.listen(8080, () => {
+let port = process.env.PORT || 8080;
+app.listen(port, () => {
   console.log("Now listening on port 8080.");
 });
