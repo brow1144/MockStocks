@@ -133,12 +133,23 @@ class Main extends Component {
 
   fetchPrice = () => {
     let self = this
-    axios.get(`http://localhost:8080/Portfol.io/Stock/${this.props.stock}/Day}`)
+    axios.get(`http://localhost:8080/Portfol.io/Stock/${this.props.stock}/Day`)
         .then((response) => {
           // handle success
           let stockData = response.data;
           
           let withCommas = Number(parseFloat(stockData[stockData.length - 1]['y']).toFixed(2)).toLocaleString('en');
+          console.log(stockData)
+
+
+          let x = 0
+          for (let i in stockData) {
+            if (stockData[i].x > x) {
+              x = stockData[i].y;
+            }
+          }
+
+          console.log(x)
           
           if ((stockData).length < 5) {
             this.setState({visibleData: true})
