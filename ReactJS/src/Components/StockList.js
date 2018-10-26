@@ -19,6 +19,7 @@ class StockList extends Component {
       return b.changePercent - a.changePercent;
     }
   }
+
   render() {
     return (
       <div style={{position: 'fixed', width: 'inherit',maxWidth: 'inherit'}} className='z-depth-5' >
@@ -26,20 +27,20 @@ class StockList extends Component {
           <CardBody>
               <div className="article-container-inner">
                 <CardTitle style={{borderBottom: '2px solid whitesmoke'}} >Watchlist Top Risers</CardTitle>
-
               </div>
+
             {this.getTopRisers().map((stock, key) => {
               return (
                 <div key={key}>
-                  <hr className='hr'/>
                   {stock.changePercent >= 0
                     ?<StockCard stockColor='green' close={stock.close} stockTicker={stock.symbol} stockChange={'+' + parseFloat(stock.changePercent).toFixed(4) + "%"}/>
                     :<StockCard stockColor='red' close={stock.close} stockTicker={stock.symbol} stockChange={parseFloat(stock.changePercent).toFixed(4) + "%"}/>
                   }
+                  <hr className='hr'/>
                 </div>
               )
             })}
-            <hr className='hr'/>
+
             <NavLink to={'/Portfolio/Watchlist'} style={{textDecoration: 'none'}}>
               <b className='navText' style={{fontSize: '1em'}}>View Full Watchlist</b>
             </NavLink>

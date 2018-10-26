@@ -34,7 +34,7 @@ class StockPage extends Component {
 
   componentWillMount() {
     this.getData();
-    let self = this;
+    //let self = this;
     // Cache Stuff Go here eventually
     // axios.get(`http://localhost:8080/Portfol.io/Stock/${this.props.stock}/${this.state.selected}`)
     //   .then((response) => {
@@ -72,10 +72,11 @@ class StockPage extends Component {
     if(JSON.stringify(this.props.stock) !== JSON.stringify(prevProps.stock)) {
       this.getData();
     }
+    //console.log(this.props.watching)
   }
 
   showDataFromAPI = (stockData) => {
-    let withCommas = Number(parseFloat(stockData[0]['y']).toFixed(2)).toLocaleString('en');
+    //let withCommas = Number(parseFloat(stockData[0]['y']).toFixed(2)).toLocaleString('en');
 
     this.setState({visible: false})
 
@@ -211,7 +212,7 @@ class StockPage extends Component {
         <Col style={{paddingTop: '6em'}} md='2'>
           {this.props.empty
             ?
-              <BuySellCard gameOver={this.props.gameOver} getGameData={this.props.getGameData} gameData={this.props.gameData} uid={this.props.uid} currentGame={this.props.currentGame} stock={this.props.stock} currentPriceFor={this.props.currentPriceFor} currentPrice={this.props.currentPrice}/>
+              <BuySellCard removeStock={this.props.removeStock} watchStock={this.props.watchStock} watching={this.props.watching} gameOver={this.props.gameOver} getGameData={this.props.getGameData} gameData={this.props.gameData} uid={this.props.uid} currentGame={this.props.currentGame} stock={this.props.stock} currentPriceFor={this.props.currentPriceFor} currentPrice={this.props.currentPrice}/>
             :
               null
           }

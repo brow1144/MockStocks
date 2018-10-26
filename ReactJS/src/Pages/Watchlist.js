@@ -23,19 +23,13 @@ class Watchlist extends Component {
     this.getWatchlist();
   }
 
-  removeStock(index){
+  handleRemoveStock(index){
     let removeItem = this.state.watchlist[index];
-    let sl = this.state.watchlist;
-    sl.splice(index, 1);
-    this.setState({
-      watchlist: sl,
-    });
-
+    this.removeStock(index);
     axios.delete(`http://localhost:8080/Portfol.io/Watchlist/${this.state.uid}/${removeItem.symbol}`)
       .then(function (response) {
         // handle success
         let data = response.data;
-        console.log(data);
 
       })
       .catch(function (error) {
@@ -48,6 +42,14 @@ class Watchlist extends Component {
         else
           console.log(error);
       })
+  }
+
+  removeStock(index){
+    let sl = this.state.watchlist;
+    sl.splice(index, 1);
+    this.setState({
+      watchlist: sl,
+    });
   };
 
   toggle(){
@@ -102,12 +104,11 @@ class Watchlist extends Component {
         // handle success
         let watchlist = response.data;
 
-        if (watchlist.length !== 0) {
-          self.setState({
-            watchlist: watchlist,
-            loaded: true,
-          });
-        }
+        self.setState({
+          watchlist: watchlist,
+          loaded: true,
+        });
+
       })
       .catch(function (error) {
         // handle error
@@ -170,8 +171,8 @@ class Watchlist extends Component {
                 {this.state.watchlist.map((stock, key) => {
                   return (
                     <tr key={key}>
-                      <th scope="row"><NavLink to={`/Portfolio/Stocks/${stock.symbol}`} style={{textDecoration: 'none', color: 'whitesmoke'}}>{key + 1}</NavLink></th>
-                      <th><h5 style={{textDecoration: 'none', color: 'whitesmoke'}}>{stock.symbol}</h5></th>
+                      <th scope="row"><h5 style={{textDecoration: 'none', color: 'whitesmoke'}}>{key + 1}</h5></th>
+                      <th><NavLink to={`/Portfolio/Stocks/${stock.symbol}`} style={{textDecoration: 'none', color: 'whitesmoke'}}>{stock.symbol}</NavLink></th>
                       <th><h5 style={{textDecoration: 'none', color: 'whitesmoke'}}>${stock.close}</h5></th>
                       {stock.changePercent >= 0
                       ?
@@ -179,7 +180,7 @@ class Watchlist extends Component {
                       :
                         <th><h5 style={{textDecoration: 'none', color: 'red'}}>{parseFloat(stock.changePercent).toFixed(4) + "%"}</h5></th>
                       }
-                      <th><Button size='sm' color='red' onClick={() => this.removeStock(key)}>Remove</Button></th>
+                      <th><Button size='sm' color='red' onClick={() => this.handleRemoveStock(key)}>Remove</Button></th>
                     </tr>
                   )
                 })}
@@ -189,11 +190,22 @@ class Watchlist extends Component {
           </Row>
           :
           <Row style={{paddingTop: '1em'}} className='blackBackground body_div'>
-            <Col sm='4' md='4'/>
-            <Col sm='4' md='4'>
-              <h4 style={{color: 'whitesmoke'}}>Fetching Watchlist...</h4>
+            <Col md='2'/>
+            <Col md='8'>
+              <Table className='z-depth-5 cenText' dark hover>
+                <thead>
+                <tr>
+                  <th>#</th>
+                  <th>Symbol</th>
+                  <th>Price at Close</th>
+                  <th>Today's Change</th>
+                  <th/>
+                </tr>
+                </thead>
+              </Table>
             </Col>
           </Row>
+
         }
 
       </div>

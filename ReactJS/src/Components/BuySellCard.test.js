@@ -2,6 +2,7 @@ import React from 'react';
 import {shallow} from 'enzyme';
 import BuySellCard from './BuySellCard';
 import Buy from './Buy';
+import Main from '../Main'
 import axios from 'axios';
 
 axios.get = jest.fn((url) => {
@@ -110,16 +111,17 @@ const currentGame = {
 describe('Watchlist function', () => {
   test('Watchlist add', () => {
     const buySellCard = shallow(<BuySellCard />);
-    buySellCard.setState({watching: false})
-    buySellCard.instance().watchStock();
-    expect(buySellCard.state().watching).toBe(true);
+    buySellCard.setState({watch: false})
+    buySellCard.instance().watch();
+    expect(buySellCard.state().watch).toBe(true);
   })
+
 
   test('Watchlist remove', () => {
     const buySellCard = shallow(<BuySellCard />);
-    buySellCard.setProps({currentGame: currentGame});
-    buySellCard.setState({watching: true})
-    buySellCard.instance().removeStock();
-    expect(buySellCard.state().watching).toBe(false);
+    //buySellCard.setProps({currentGame: currentGame});
+    buySellCard.setState({watch: true});
+    buySellCard.instance().remove();
+    expect(buySellCard.state().watch).toBe(false);
   })
 })

@@ -30,7 +30,10 @@ gameController(app);
 runSchedules();
 
 // listen to port
-let port = process.env.PORT || 8080;
+let port = process.env.PORT;
+if (port == null || port === '')
+  port = 8080;
+
 app.listen(port, () => {
-  console.log("Now listening on port 8080.");
+  console.log("Now listening on port " + port + ".");
 });
