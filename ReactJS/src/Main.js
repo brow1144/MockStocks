@@ -34,7 +34,7 @@ class Main extends Component {
 
   watchStock =()=>{
     let self = this;
-    axios.post(`http://localhost:8080/Portfol.io/Watchlist/${this.props.uid}/${this.props.stock}`)
+    axios.post(`https://portfolio-408-defect.herokuapp.com//Portfol.io/Watchlist/${this.props.uid}/${this.props.stock}`)
       .then((data) => {
         console.log("watched")
         this.fetchWatchlist()
@@ -49,7 +49,7 @@ class Main extends Component {
 
   removeStock =()=>{
     let self = this;
-    axios.delete(`http://localhost:8080/Portfol.io/Watchlist/${this.props.uid}/${this.props.stock}`)
+    axios.delete(`https://portfolio-408-defect.herokuapp.com//Portfol.io/Watchlist/${this.props.uid}/${this.props.stock}`)
       .then((data) => {
         console.log("removed")
         this.fetchWatchlist()
@@ -83,7 +83,7 @@ class Main extends Component {
 
   fetchWatchlist = () => {
     let self = this;
-    axios.get(`http://localhost:8080/Portfol.io/Watchlist/${this.props.uid}`)
+    axios.get(`https://portfolio-408-defect.herokuapp.com//Portfol.io/Watchlist/${this.props.uid}`)
       .then(function (response) {
         // handle success
         let watchlist = response.data;
@@ -94,7 +94,7 @@ class Main extends Component {
           self.isWatching();
         } else { // No watchlist return
           // Get the current user's email
-          axios.get(`http://localhost:8080/Portfol.io/${self.props.uid}`)
+          axios.get(`https://portfolio-408-defect.herokuapp.com//Portfol.io/${self.props.uid}`)
             .then(function (response) {
               // handle success
               let user = response.data;
@@ -135,7 +135,7 @@ class Main extends Component {
 
   fetchPrice = () => {
     let self = this
-    axios.get(`http://localhost:8080/Portfol.io/Stock/${this.props.stock}/Day}`)
+    axios.get(`https://portfolio-408-defect.herokuapp.com//Portfol.io/Stock/${this.props.stock}/Day}`)
         .then((response) => {
           // handle success
           let stockData = response.data;
@@ -188,7 +188,7 @@ class Main extends Component {
    */
   fetchGames = () => {
     let self = this;
-    axios.get(`http://localhost:8080/Portfol.io/Games/By/User/${this.props.uid}`)
+    axios.get(`https://portfolio-408-defect.herokuapp.com//Portfol.io/Games/By/User/${this.props.uid}`)
       .then(function (response) {
         // handle success
         let gameData = response.data;
@@ -223,7 +223,7 @@ class Main extends Component {
 
   getGameData = (game) => {
     let self = this
-    axios.get(`http://localhost:8080/Portfol.io/${self.props.uid}/${game}`)
+    axios.get(`https://portfolio-408-defect.herokuapp.com//Portfol.io/${self.props.uid}/${game}`)
       .then((data) => {
         self.setState({gameData: data.data})
       })

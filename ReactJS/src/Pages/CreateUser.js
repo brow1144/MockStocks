@@ -61,7 +61,7 @@ class CreateUser extends Component {
         let self = this;
         //creates user with email and password
         fireauth.createUserWithEmailAndPassword(target.email.value, target.password.value).then((userData) => {
-          axios.post('http://localhost:8080/Portfol.io/CreateAccount', {
+          axios.post('https://portfolio-408-defect.herokuapp.com//Portfol.io/CreateAccount', {
             _id: userData.user.uid,
             username: target.username.value,
             email: target.email.value

@@ -27,7 +27,7 @@ class NavBar extends Component {
 
   componentWillMount() {
     let self = this
-    axios.get(`http://localhost:8080/Portfol.io/GetTickers`)
+    axios.get(`https://portfolio-408-defect.herokuapp.com//Portfol.io/GetTickers`)
       .then(function (response) {
         // handle success
         self.setState({tickers: response.data.tickers});

@@ -49,7 +49,7 @@ class BuySellCard extends Component {
       return;
     } 
 
-    axios.put(`http://localhost:8080/Portfol.io/Games/Buy/${this.props.uid}/${this.props.currentGame.code}/${this.props.stock}/${this.state.cost}/${this.props.currentPrice}`)
+    axios.put(`https://portfolio-408-defect.herokuapp.com//Portfol.io/Games/Buy/${this.props.uid}/${this.props.currentGame.code}/${this.props.stock}/${this.state.cost}/${this.props.currentPrice}`)
     .then((data) => {
 
       self.setState({errorMessage: `You have succesfuly bought ${this.state.cost} shares of ${this.props.stock}!`, modal: true,})
@@ -72,7 +72,7 @@ class BuySellCard extends Component {
       return;
     } 
 
-    axios.put(`http://localhost:8080/Portfol.io/Games/Sell/${this.props.uid}/${this.props.currentGame.code}/${this.props.stock}/${this.state.cost}/${this.props.currentPrice}`)
+    axios.put(`https://portfolio-408-defect.herokuapp.com//Portfol.io/Games/Sell/${this.props.uid}/${this.props.currentGame.code}/${this.props.stock}/${this.state.cost}/${this.props.currentPrice}`)
     .then((data) => {
 
       self.setState({errorMessage: `You have succesfuly sold ${this.state.cost} shares of ${this.props.stock}!`, modal: true,})

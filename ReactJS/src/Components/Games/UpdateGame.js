@@ -67,7 +67,7 @@ class UpdateGame extends Component {
       this.setState({err:true, errorMessage: "Invalid Game Name"})
     }
     else {
-      axios.put(`http://localhost:8080/Portfol.io/Games/${this.props.currentGame.code}`, {
+      axios.put(`https://portfolio-408-defect.herokuapp.com//Portfol.io/Games/${this.props.currentGame.code}`, {
         game_name: this.state.game_name,
         starting_amount: parseFloat(this.state.starting_amount),
         trade_limit: this.state.trade_limit,
