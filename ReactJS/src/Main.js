@@ -30,6 +30,7 @@ class Main extends Component {
       this.fetchPrice();
       this.isWatching();
     }
+
   }
 
   watchStock =()=>{
@@ -37,7 +38,7 @@ class Main extends Component {
     axios.post(`https://portfolio-408-main.herokuapp.com/Portfol.io/Watchlist/${this.props.uid}/${this.props.stock}`)
       .then((data) => {
         console.log("watched")
-        //self.props.reloadPage();
+        this.fetchWatchlist()
       }).catch((err) => {
       console.log("Problem watching stock")
     });
@@ -51,6 +52,7 @@ class Main extends Component {
     axios.delete(`https://portfolio-408-main.herokuapp.com/Portfol.io/Watchlist/${this.props.uid}/${this.props.stock}`)
       .then((data) => {
         console.log("removed")
+        this.fetchWatchlist()
       }).catch((err) => {
       console.log("Problem removing stock")
     });
@@ -61,9 +63,11 @@ class Main extends Component {
 
   isWatching =()=>{
     let self = this;
+    console.log('HEREEEE')
     console.log(this.state.watchlist)
     for (let k in this.state.watchlist) {
       ///console.log("trying")
+      console.log(this.state.watchlist[k].symbol)
       if (this.state.watchlist[k].symbol === this.props.stock) {
         console.log("true")
         self.setState({
