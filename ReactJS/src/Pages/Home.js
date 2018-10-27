@@ -273,13 +273,14 @@ class Home extends Component {
 
         </Col>
         <Col md='1'/>
-        {this.state.watchlistFetched
-          ?
+        {/* DEFECT #21 IF NO WATCHLIST PRESENT STILL SHOW IT*/}
+        {/*{this.state.watchlistFetched*/}
+          {/*?*/}
           <Col style={{paddingTop: '6em'}} md='2'>
             <StockList watchlist={this.state.watchlist} />
           </Col>
-          :
-          <Col style={{paddingTop: '6em'}} md='2'/>
+          {/*:*/}
+          {/*<Col style={{paddingTop: '6em'}} md='2'/>*/}
         }
 
         <Col md='1'/>

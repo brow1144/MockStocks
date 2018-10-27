@@ -270,9 +270,9 @@ export async function sellStock(uid, gameCode, stockName, quantity, pricePerShar
     if (userGame.stocks.hasOwnProperty(i)) {
       if (userGame.stocks[i].name === stockName) {
         owned = true;
-
-        if (userGame.stocks[i].quantity < quantity)
-          return Promise.reject('UserError: User does not own ' + quantity + ' shares of ' + stockName);
+        // Defect #18
+        // if (userGame.stocks[i].quantity < quantity)
+        //   return Promise.reject('UserError: User does not own ' + quantity + ' shares of ' + stockName);
 
         try {
           await removeStock(uid, gameCode, stockName, userGame.stocks[i].quantity);

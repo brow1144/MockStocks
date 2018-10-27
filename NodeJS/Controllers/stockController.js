@@ -26,7 +26,7 @@ export default (app) => {
         case 'Year':
           dateLimit.setFullYear(dateLimit.getFullYear() - 1);
           console.error(dateLimit);
-          data = await getStock(req.params.stock, "1y", dateLimit);
+          data = await getStock(req.params.stock, "6m", dateLimit); // DEFECT # 19 CHANGED 1y to 6m
           break;
         default: // 'All'
           data = await getStock(req.params.stock, "5y", 0);
