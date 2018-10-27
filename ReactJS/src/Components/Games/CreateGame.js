@@ -85,7 +85,7 @@ class CreateGame extends Component {
     console.log(this.props.uid);
     console.log(gameId);
 
-    axios.put(`http://localhost:8080/Portfol.io/Games/${this.props.uid}/${gameId}`)
+    axios.put(`https://portfolio-408-main.herokuapp.com/Portfol.io/Games/${this.props.uid}/${gameId}`)
       .then((response) => {
         // should probably update state with values from response
         this.setState({
@@ -122,7 +122,7 @@ class CreateGame extends Component {
 
     if (self.state.startDate < self.state.endDate) {
 
-      axios.post(`http://localhost:8080/Portfol.io/Games`,
+      axios.post(`https://portfolio-408-main.herokuapp.com/Portfol.io/Games`,
         {
           code: gameId,
           game_name: self.state.game_name,

@@ -63,7 +63,7 @@ class Trending extends Component {
 
   getDailyData = () => {
     let self = this;
-    axios.get(`http://localhost:8080/Portfol.io/Trending/day`)
+    axios.get(`https://portfolio-408-main.herokuapp.com/Portfol.io/Trending/day`)
       .then((response) => {
         //success
         let data = response.data;
@@ -90,7 +90,7 @@ class Trending extends Component {
 
   getWeeklyData = () => {
     let self = this;
-    axios.get(`http://localhost:8080/Portfol.io/Trending/week`)
+    axios.get(`https://portfolio-408-main.herokuapp.com/Portfol.io/Trending/week`)
       .then((response) => {
         //success
         let data = response.data;

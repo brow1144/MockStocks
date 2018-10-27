@@ -63,7 +63,7 @@ class Home extends Component {
     
     //TODO If no game, don't show graph
   
-      axios.get(`http://localhost:8080/Portfol.io/Games/History/${this.props.uid}/${game.code}`)
+      axios.get(`https://portfolio-408-main.herokuapp.com/Portfol.io/Games/History/${this.props.uid}/${game.code}`)
       .then((response) => {
         // handle success
         let stockData = response.data;
@@ -92,7 +92,7 @@ class Home extends Component {
     //TODO If no game, don't show graph
 
     if (this.props.currentGame !== {} && this.props.currentGame !== null && this.props.currentGame !== undefined) {
-      axios.get(`http://localhost:8080/Portfol.io/Games/History/${this.props.uid}/${this.props.currentGame.code}`)
+      axios.get(`https://portfolio-408-main.herokuapp.com/Portfol.io/Games/History/${this.props.uid}/${this.props.currentGame.code}`)
       .then((response) => {
         // handle success
         let stockData = response.data;
@@ -115,7 +115,7 @@ class Home extends Component {
     }
   }
 
-  //   axios.get(`http://localhost:8080/Portfol.io/Stock/MSFT/${this.state.selected}`)
+  //   axios.get(`https://portfolio-408-main.herokuapp.com/Portfol.io/Stock/MSFT/${this.state.selected}`)
   //     .then((response) => {
   //       // handle success
   //       let stockData = response.data;
@@ -151,7 +151,7 @@ class Home extends Component {
 
   fetchWatchlist = () => {
     let self = this;
-    axios.get(`http://localhost:8080/Portfol.io/Watchlist/${this.props.uid}`)
+    axios.get(`https://portfolio-408-main.herokuapp.com/Portfol.io/Watchlist/${this.props.uid}`)
       .then(function (response) {
         // handle success
         let watchlist = response.data;
@@ -162,7 +162,7 @@ class Home extends Component {
 
         } else { // No watchlist return
           // Get the current user's email
-          axios.get(`http://localhost:8080/Portfol.io/${self.props.uid}`)
+          axios.get(`https://portfolio-408-main.herokuapp.com/Portfol.io/${self.props.uid}`)
             .then(function (response) {
               // handle success
               let user = response.data;

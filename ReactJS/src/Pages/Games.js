@@ -65,7 +65,7 @@ class Games extends Component {
    */
   fetchGames = () => {
     let self = this;
-    axios.get(`http://localhost:8080/Portfol.io/Games/By/User/${this.state.uid}`)
+    axios.get(`https://portfolio-408-main.herokuapp.com/Portfol.io/Games/By/User/${this.state.uid}`)
       .then(function (response) {
         // handle success
         let gameData = response.data;
@@ -77,7 +77,7 @@ class Games extends Component {
         } else { // No games return
           // Get the current user's email
 
-          axios.get(`http://localhost:8080/Portfol.io/${self.state.uid}`)
+          axios.get(`https://portfolio-408-main.herokuapp.com/Portfol.io/${self.state.uid}`)
             .then(function (response) {
               // handle success
               let user = response.data;
@@ -139,7 +139,7 @@ class Games extends Component {
     if (self.state.currentGame.completed === false) {
       for (let x = 0; x < self.state.currentGame.active_players.length; x++) {
 
-        axios.get(`http://localhost:8080/Portfol.io/${self.state.currentGame.active_players[x]}`)
+        axios.get(`https://portfolio-408-main.herokuapp.com/Portfol.io/${self.state.currentGame.active_players[x]}`)
           .then(function (response) {
             // handle success
             if (response != null) {
@@ -157,7 +157,7 @@ class Games extends Component {
         })
       }
     } else {
-      axios.get(`http://localhost:8080/Portfol.io/Games/Totals/${self.state.currentGame.code}`)
+      axios.get(`https://portfolio-408-main.herokuapp.com/Portfol.io/Games/Totals/${self.state.currentGame.code}`)
         .then(function (response) {
           // handle success
           if (response != null) {
@@ -365,7 +365,7 @@ class Games extends Component {
    */
   async getStocks (stockString) {
 
-    return await axios.get(`http://localhost:8080/Portfol.io/Batch/Stock/${stockString}`);
+    return await axios.get(`https://portfolio-408-main.herokuapp.com/Portfol.io/Batch/Stock/${stockString}`);
   }
 
   /**
@@ -407,7 +407,7 @@ class Games extends Component {
         if (self.state.currentGame.completed === false) {
           for (let x = 0; x < self.state.currentGame.active_players.length; x++) {
 
-            axios.get(`http://localhost:8080/Portfol.io/${self.state.currentGame.active_players[x]}`)
+            axios.get(`https://portfolio-408-main.herokuapp.com/Portfol.io/${self.state.currentGame.active_players[x]}`)
               .then(function (response) {
                 // handle success
                 if (response != null) {
@@ -426,7 +426,7 @@ class Games extends Component {
             })
           }
         } else {
-          axios.get(`http://localhost:8080/Portfol.io/Games/Totals/${self.state.currentGame.code}`)
+          axios.get(`https://portfolio-408-main.herokuapp.com/Portfol.io/Games/Totals/${self.state.currentGame.code}`)
             .then(function (response) {
               // handle success
               if (response != null) {
@@ -528,7 +528,7 @@ class Games extends Component {
           self.setState({
             winner: true,
           }, () => {
-            axios.get(`http://localhost:8080/Portfol.io/Games/Winner/${this.state.currentGame.code}`) // Returns winner's name
+            axios.get(`https://portfolio-408-main.herokuapp.com/Portfol.io/Games/Winner/${this.state.currentGame.code}`) // Returns winner's name
               .then(function (response) {
                 // handle
                 if (response.data != null) {

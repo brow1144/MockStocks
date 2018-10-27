@@ -36,7 +36,7 @@ class StockPage extends Component {
     this.getData();
     //let self = this;
     // Cache Stuff Go here eventually
-    // axios.get(`http://localhost:8080/Portfol.io/Stock/${this.props.stock}/${this.state.selected}`)
+    // axios.get(`https://portfolio-408-main.herokuapp.com/Portfol.io/Stock/${this.props.stock}/${this.state.selected}`)
     //   .then((response) => {
     //     // handle success
     //     let stockData = response.data;
@@ -95,7 +95,7 @@ class StockPage extends Component {
   getData = () => {
     let self = this;
     // Cache Stuff Go here eventually
-    axios.get(`http://localhost:8080/Portfol.io/Stock/${this.props.stock}/${this.state.selected}`)
+    axios.get(`https://portfolio-408-main.herokuapp.com/Portfol.io/Stock/${this.props.stock}/${this.state.selected}`)
       .then((response) => {
         // handle success
         let stockData = response.data;

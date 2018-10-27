@@ -26,7 +26,7 @@ class Watchlist extends Component {
   handleRemoveStock(index){
     let removeItem = this.state.watchlist[index];
     this.removeStock(index);
-    axios.delete(`http://localhost:8080/Portfol.io/Watchlist/${this.state.uid}/${removeItem.symbol}`)
+    axios.delete(`https://portfolio-408-main.herokuapp.com/Portfol.io/Watchlist/${this.state.uid}/${removeItem.symbol}`)
       .then(function (response) {
         // handle success
         let data = response.data;
@@ -101,7 +101,7 @@ class Watchlist extends Component {
 
   getWatchlist = () => {
     let self = this;
-    axios.get(`http://localhost:8080/Portfol.io/Watchlist/${this.props.uid}`)
+    axios.get(`https://portfolio-408-main.herokuapp.com/Portfol.io/Watchlist/${this.props.uid}`)
       .then(function (response) {
         // handle success
         let watchlist = response.data;
