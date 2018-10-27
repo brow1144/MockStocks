@@ -73,12 +73,14 @@ class Watchlist extends Component {
     switch(sortParam){
       case "alphabetical":
         return function (a, b) {
-          return b.symbol < a.symbol;
+          // return b.symbol < a.symbol;
+          return a.symbol.localeCompare(b.symbol)
         };
       case "reverse_alphabetical":
         return function (a, b) {
           //Eric defect 17, reverse alphabetical sorts by alphabetical
-          return a.symbol > b.symbol;
+          // return a.symbol > b.symbol;
+          return a.symbol.localeCompare(b.symbol)
         };
       case "high_price":
         return function (a, b) {

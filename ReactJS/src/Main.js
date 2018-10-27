@@ -37,6 +37,7 @@ class Main extends Component {
     axios.post(`http://localhost:8080/Portfol.io/Watchlist/${this.props.uid}/${this.props.stock}`)
       .then((data) => {
         console.log("watched")
+        this.fetchWatchlist()
         //self.props.reloadPage();
       }).catch((err) => {
       console.log("Problem watching stock")
@@ -51,6 +52,7 @@ class Main extends Component {
     axios.delete(`http://localhost:8080/Portfol.io/Watchlist/${this.props.uid}/${this.props.stock}`)
       .then((data) => {
         console.log("removed")
+        this.fetchWatchlist()
       }).catch((err) => {
       console.log("Problem removing stock")
     });
