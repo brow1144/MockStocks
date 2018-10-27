@@ -58,9 +58,10 @@ class UpdateGame extends Component {
   update = () => {
 
     // Server call to update the game
-    if (this.state.starting_amount <= 0){
+    /*Defect 25: Removed check for negative buying power*/
+    /*if (this.state.starting_amount <= 0){
       this.setState({err:true, errorMessage: "Invalid Buying Power"})
-    } else if(this.state.trade_limit <= 0) {
+    } else */if(this.state.trade_limit <= 0) {
       this.setState({err:true, errorMessage: "Invalid Trade Limit"})
     } else if(this.state.game_name.length <= 0) {
       this.setState({err:true, errorMessage: "Invalid Game Name"})

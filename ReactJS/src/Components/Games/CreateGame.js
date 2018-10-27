@@ -120,6 +120,7 @@ class CreateGame extends Component {
     let self = this;
     let gameId = self.generateId();
 
+
     if (self.state.startDate < self.state.endDate) {
 
       axios.post(`http://localhost:8080/Portfol.io/Games`,
@@ -151,12 +152,15 @@ class CreateGame extends Component {
       });
 
       this.toggle();
-    } else if (self.state.startDate >= self.state.endDate || self.state.startDate == null || self.state.endDate == null){
+    }
+    /*Defect 23: Removed if statement for start before end*/
+    /*
+    else if (self.state.startDate >= self.state.endDate || self.state.startDate == null || self.state.endDate == null){
       self.setState({
         badDates: true
       })
     }
-
+    */
   }
 
   curName = (event) => {

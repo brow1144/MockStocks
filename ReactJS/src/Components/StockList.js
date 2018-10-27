@@ -14,9 +14,10 @@ class StockList extends Component {
     return watchlist.slice(0,5);
   }
 
+  /*Defect 24: switched order of variables in equation*/
   sortByChange() {
     return function (a, b){
-      return b.changePercent - a.changePercent;
+      return a.changePercent - b.changePercent;
     }
   }
 

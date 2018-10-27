@@ -114,6 +114,7 @@ class BuySellCard extends Component {
     this.setState({modal: !this.state.modal});
   }
 
+  /*Defect 22: Swapped display in conditional statements at line 151*/
   render() {
     return (
       <div>
@@ -147,14 +148,17 @@ class BuySellCard extends Component {
               <Sell gameOver={this.props.gameOver} gameData={this.props.gameData} sellStock={this.sellStock} currentPriceFor={this.props.currentPriceFor} updateCost={this.updateCost} cost={this.state.cost} finalPrice={this.state.finalPrice}/>
             }
 
+
             {!this.props.watching
-              ?<Button color="blue" onClick={this.props.watchStock} block>
+              ?<Button color="red" onClick={this.props.removeStock} block>
+              -Remove from watchlist
+              </Button>
+
+              :<Button color="blue" onClick={this.props.watchStock} block>
                 +Add to watchlist
               </Button>
 
-              :<Button color="red" onClick={this.props.removeStock} block>
-                -Remove from watchlist
-              </Button>
+
             }
           </Card>
         </div>
