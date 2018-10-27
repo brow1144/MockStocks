@@ -44,7 +44,7 @@ class Sell extends Component {
         {this.props.gameOver
           ?<div>
             <br/>
-            <p style={{textAlign: 'center', margin: '0 auto', display: 'block', fontSize: '0.8em', color: 'whitesmoke'}}>Game completed. Buy/Sell locked.</p>
+            <p style={{textAlign: 'center', margin: '0 auto', display: 'block', fontSize: '0.8em', color: 'whitesmoke'}}>Not currently valid play time. Buy/Sell locked.</p>
           </div>
 
           :null
