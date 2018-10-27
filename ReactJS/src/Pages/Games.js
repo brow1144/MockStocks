@@ -341,6 +341,7 @@ class Games extends Component {
         break;
       }
 
+      self.leaderCheck();
       // Make sure tmp is set
       // Add the tmp to the userGame obj state
       if (tmp != null)
