@@ -62,7 +62,6 @@ class Watchlist extends Component {
   sortSelected(e){
     let self = this;
     let param = e.currentTarget.name;
-    console.log(param)
     let sortedList = self.state.watchlist.sort(this.sortFunc(param));
     self.setState({
       watchlist: sortedList,
