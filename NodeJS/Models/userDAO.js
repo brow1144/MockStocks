@@ -492,6 +492,8 @@ export function getUserWatchlist(uid) {
         return Promise.reject('UserError: User does not exist');
       return Promise.resolve(foundUser.watchlist);
     }).then((watchlist) => {
+      if (watchlist.length === 0)
+        return Promise.resolve(watchlist);
       let batchCall = _.join(watchlist, ',');
       return getStockBatch(batchCall);
     }).then((stocks) => {
