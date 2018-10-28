@@ -125,7 +125,7 @@ export function getGamesByUser(uid) {
 export function getGame(gameCode) {
   return gameModel.find({'code': gameCode})
     .then((game) => {
-      if (game)
+      if (game && game.length)
         return Promise.resolve(game);
       else
         return Promise.reject('UserError: Game not found');
