@@ -67,7 +67,7 @@ export function getStockIntraday(stockTicker) {
       return Promise.resolve(stockData);
     })
     .catch((error) => {
-      return Promise.reject(error);
+      return Promise.reject('UserError: Stock not found');
     })
 }
 
