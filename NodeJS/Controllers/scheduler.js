@@ -6,15 +6,21 @@ import {completeGame, getAllGames} from "../Models/gameDAO";
 import _ from 'lodash';
 
 export function runSchedules() {
-  // update portofolio values every weekday at 9:30 am
-  let marketOpen = schedule.scheduleJob('30 09 * * 1-5', () => {
-    console.log('Scheduler: Updating portfolio values at market open.')
-    getPortfolioValues();
-  });
+  // // update portofolio values every weekday at 9:30 am
+  // let marketOpen = schedule.scheduleJob('30 09 * * 1-5', () => {
+  //   console.log('Scheduler: Updating portfolio values at market open.')
+  //   getPortfolioValues();
+  // });
+  //
+  // // update portofolio values every weekday at 4:00 pm
+  // let marketClose = schedule.scheduleJob('00 16 * * 1-5', () => {
+  //   console.log('Scheduler: Updating portfolio values at market close.')
+  //   getPortfolioValues();
+  // });
 
-  // update portofolio values every weekday at 4:00 pm
-  let marketClose = schedule.scheduleJob('00 16 * * 1-5', () => {
-    console.log('Scheduler: Updating portfolio values at market close.')
+  // update portofolio values throughout the day
+  let marketClose = schedule.scheduleJob('00 00,04,08,10,12,14,16,20, * * *', () => {
+    console.log('Scheduler: Updating portfolio values.')
     getPortfolioValues();
   });
 
