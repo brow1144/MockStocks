@@ -69,6 +69,7 @@ class Leaderboard extends Component {
       .catch((error) => {
         // handle error
 
+        self.props.alertModal();
         self.setState({visible: true})
 
         console.log(`Oh no! Our API didn't respond. Please refresh and try again`);
@@ -90,7 +91,7 @@ class Leaderboard extends Component {
       name: username
     })
 
-    if ((stockData).length < 5) {
+    if ((stockData).length < 1) {
       this.setState({visibleData: true})
     } else {
       this.setState({
