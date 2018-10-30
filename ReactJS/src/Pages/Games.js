@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 
 //import {Input, Button} from 'mdbreact';
-import { Row, Col } from 'reactstrap';
+import { Row, Col, Alert } from 'reactstrap';
 //import sizeMe from 'react-sizeme';
 //import Confetti from 'react-confetti';
 import MyStocks from '../Components/Games/MyStocks';
@@ -46,6 +46,8 @@ class Games extends Component {
       countMessage: "",
       // Bool to check if a winner was found
       winner: false,
+      // variable for the alert
+      alert: false,
     };
   }
 
@@ -306,6 +308,7 @@ class Games extends Component {
             trade_count: user.active_games[i].trade_count,
             stocks: user.active_games[i].stocks,
             username: user.username,
+            uid: user._id,
             totalAssets: user.active_games[i].buying_power,
             totalOwned: 0,
             stocksArray: []
@@ -538,10 +541,17 @@ class Games extends Component {
   }
 
   /**
-   * Server call to get the winner
+   * Toggle the alert
    */
-  getWinrar = () => {
-
+  alertModal = () => {
+    this.setState({
+      alert: true,
+    })
+  }
+  removeAlert = () => {
+    this.setState({
+      alert: false,
+    })
   }
 
   render() {
@@ -602,7 +612,8 @@ class Games extends Component {
                 <Row>
                 <Col md='1'/>
                 <Col md='5'>
-                  <Leaderboard currentGame={this.state.currentGame} userGame={this.state.userGame}/>
+                  <Alert color="danger" isOpen={this.state.alert} toggle={this.removeAlert}>There is not enough data to display this user's history</Alert>
+                  <Leaderboard alertModal={this.alertModal} currentGame={this.state.currentGame} userGame={this.state.userGame}/>
                 </Col>
 
                 <Col md='5'>

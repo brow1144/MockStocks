@@ -43,6 +43,8 @@ class Leaderboard extends Component {
       stockData: [],
       currentPrice: 0,
       currentPriceFor: 0,
+      visible: false,
+      visibleData: false,
     })
 
     // Get data to display graphs
@@ -62,6 +64,7 @@ class Leaderboard extends Component {
       .catch((error) => {
         // handle error
 
+        self.props.alertModal();
         self.setState({visible: true})
 
         console.log(`Oh no! Our API didn't respond. Please refresh and try again`);
@@ -83,7 +86,7 @@ class Leaderboard extends Component {
       name: username
     })
 
-    if ((stockData).length < 5) {
+    if ((stockData).length < 3) {
       this.setState({visibleData: true})
     } else {
       this.setState({
@@ -158,17 +161,27 @@ class Leaderboard extends Component {
            {this.state.name}
             </ModalHeader>
           <ModalBody className='blackBackground'>
-            <h2 className='stockPrice'>${this.state.currentPriceFor}</h2>
 
-            <br />
-            {notEnoughData}
-            {errorMessage}
-            <HighchartsReact
+            {this.state.visible || this.state.visibleData
+            ?
+              <div>
+              {notEnoughData}
+              {errorMessage}
+              </div>
+              :
+              <div>
+              <h2 className='stockPrice'>${this.state.currentPriceFor}</h2>
+
+              <br />
+              <HighchartsReact
               className='highcharts-container'
               highcharts={Highcharts}
               constructorType={'stockChart'}
               options={stockOptions}
-            />
+              />
+              </div>
+            }
+
 
           </ModalBody>
         </Modal>
