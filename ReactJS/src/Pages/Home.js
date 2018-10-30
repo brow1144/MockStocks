@@ -251,25 +251,26 @@ class Home extends Component {
       <Row style={{marginBottom: '1000em'}} className='blackBackground body_div'>
         <Col md='1'/>
         <Col style={{paddingTop: '7em'}} md='6'>
-          <h2 className='stockPrice'>${this.state.currentPriceFor}</h2>
-
-          <br />
-          {errorMessage}
-          {notEnoughData}
-
-          {/* <b id='day' onClick={() => this.handleTimeChange('Day')} className={`timeFrame ${this.state.selected === 'Day' ? 'selected' : ''}`}>1D</b>
-          <b id='month' onClick={() => this.handleTimeChange('Month')} className={`timeFrame ${this.state.selected === 'Month' ? 'selected' : ''}`}>1M</b>
-          <b id='triMonth' onClick={() => this.handleTimeChange('TriMonth')} className={`timeFrame ${this.state.selected === 'TriMonth' ? 'selected' : ''}`}>3M</b>
-          <b id='year' onClick={() => this.handleTimeChange('Year')} className={`timeFrame ${this.state.selected === 'Year' ? 'selected' : ''}`}>1Y</b>
-          <b id='all' onClick={() => this.handleTimeChange('All')} className={`timeFrame ${this.state.selected === 'All' ? 'selected' : ''}`}>All</b> */}
-   
-          <HighchartsReact
-            className='highcharts-container'
-            highcharts={Highcharts}
-            constructorType={'stockChart'}
-            options={stockOptions}
-          />
-         
+          <h3 className={'stockPrice'}>Your Portfolio History</h3>
+          <br/>
+          {this.state.visible || this.state.visibleData
+            ?
+            <div>
+              {notEnoughData}
+              {errorMessage}
+            </div>
+            :
+            <div>
+              <h2 className='stockPrice'>${this.state.currentPriceFor}</h2>
+              <br/>
+              <HighchartsReact
+                className='highcharts-container'
+                highcharts={Highcharts}
+                constructorType={'stockChart'}
+                options={stockOptions}
+              />
+            </div>
+          }
 
         </Col>
         <Col md='1'/>
