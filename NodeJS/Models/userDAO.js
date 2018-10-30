@@ -308,7 +308,8 @@ export async function sellStock(uid, gameCode, stockName, quantity, pricePerShar
     };
   } else {
     updateClause = {
-      '$inc': {'active_games.$.trade_count': 1},
+      // defect #11
+      //'$inc': {'active_games.$.trade_count': 1},
       '$set': {'active_games.$.buying_power': buying_power}
     };
   }
