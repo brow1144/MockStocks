@@ -48,7 +48,7 @@ export function getStock(stockTicker, period, dateLimit) {
       return Promise.resolve(stockData);
     })
     .catch((error) => {
-      return Promise.reject(error);
+      return Promise.reject('UserError: Stock not found');
     })
 }
 
@@ -79,7 +79,7 @@ export function getStockBatch(stockList) {
       return Promise.resolve(data);
     })
     .catch((error) => {
-      return Promise.reject(error);
+      return Promise.reject('UserError: One or more of the stocks was not found');
     })
 }
 
