@@ -60,9 +60,9 @@ class UpdateGame extends Component {
     // Server call to update the game
     if (this.state.starting_amount <= 0){
       this.setState({err:true, errorMessage: "Invalid Buying Power"})
-    } else if(this.state.trade_limit <= 0) {
+    } else if(this.state.trade_limit < 0) {
       this.setState({err:true, errorMessage: "Invalid Trade Limit"})
-    } else if(this.state.game_name.length <= 0) {
+    } else if(typeof this.state.game_name === 'undefined' || this.state.game_name.length <= 0) {
       this.setState({err:true, errorMessage: "Invalid Game Name"})
     }
     else {
