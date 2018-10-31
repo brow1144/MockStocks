@@ -167,6 +167,22 @@ class Games extends Component {
             array.sort(self.sortRank());
             self.setState({
               userGame: array,
+            }, () => {
+              axios.get(`https://portfolio-408-main.herokuapp.com/Portfol.io/${self.props.uid}`)
+                .then(function (response) {
+                  // handle success
+                  self.setState({
+                    email: response.data.email,
+                  })
+
+                }).catch(function (err) {
+                console.log("Cannot get users for the current game");
+
+                if (err.response && err.response.data)
+                  console.log(err.response.data.error);
+                else
+                  console.log(err);
+              })
             })
           }
 
@@ -196,6 +212,8 @@ class Games extends Component {
     let flag = false;
 
     // Check to see if given user is the current user
+    console.log(user._id)
+    console.log("Checking id")
     if (self.state.uid === user._id) {
       flag = true;
       self.setState({
