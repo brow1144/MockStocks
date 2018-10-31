@@ -95,11 +95,21 @@ class NavBar extends Component {
 
   handleEnterSearch = (ev) => {
     ev.preventDefault();
-    this.setState({
-      search: '',
-      tickersShowing: [],
-      enterSearch: ev.target.search.value
-    })
+
+    let found = false
+    for (let i in this.state.tickers) {
+      if (this.state.tickers[i].symbol === ev.target.search.value) {
+        found = true
+      }
+    }
+
+    if (found) {
+      this.setState({
+        search: '',
+        tickersShowing: [],
+        enterSearch: ev.target.search.value
+      })
+    }
   }
 
   render() {
@@ -126,7 +136,7 @@ class NavBar extends Component {
             ?
             <Redirect to={`/Portfolio/Stocks/${this.state.enterSearch}`} />
             :
-            null
+            <Redirect to={`/Portfolio/Home`} />
         }
         
         <Col className='title' sm='2'>
