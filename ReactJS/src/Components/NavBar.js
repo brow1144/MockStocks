@@ -27,6 +27,7 @@ class NavBar extends Component {
       tickersShowing: [],
       search: '',
       enterSearch: '',
+      counter: 0,
     }
   }
 
@@ -104,10 +105,12 @@ class NavBar extends Component {
     }
 
     if (found) {
+      let tmp = this.state.counter + 1
       this.setState({
         search: '',
         tickersShowing: [],
-        enterSearch: ev.target.search.value
+        enterSearch: ev.target.search.value,
+        counter: tmp,
       })
     }
   }
@@ -134,7 +137,7 @@ class NavBar extends Component {
         
         {this.state.enterSearch !== '' && this.state.enterSearch !== undefined && this.state.enterSearch !== null
             ?
-            <Redirect to={`/Portfolio/Stocks/${this.state.enterSearch}`} />
+            <Redirect to={`/Portfolio/Stocks/${this.state.enterSearch}/${this.state.counter}`} />
             :
             <Redirect to={`/Portfolio/Home`} />
         }
