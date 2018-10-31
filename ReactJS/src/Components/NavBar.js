@@ -1,5 +1,7 @@
 import React, {Component} from 'react';
 
+import { Redirect } from 'react-router'
+
 import SearchResult from '../Components/SearchResult';
 
 import {FormInline, Fa} from 'mdbreact'
@@ -13,6 +15,8 @@ import { fireauth } from '../base';
 
 import '../Static/CSS/NavBar.css';
 
+
+
 class NavBar extends Component {
 
   constructor(props) {
@@ -22,6 +26,7 @@ class NavBar extends Component {
       tickers: [],
       tickersShowing: [],
       search: '',
+      enterSearch: '',
     }
   }
 
@@ -88,6 +93,11 @@ class NavBar extends Component {
     window.location.reload();
   };
 
+  handleEnterSearch = (ev) => {
+    ev.preventDefault();
+    this.setState({enterSearch: ev.target.search.value})
+  }
+
   render() {
 
     const stocks = this.state.tickersShowing.map((stock) =>
@@ -100,7 +110,12 @@ class NavBar extends Component {
       />
     );
 
+    if (this.state.enterSearch !== '' && this.state.enterSearch !== undefined && this.state.enterSearch !== null) {
+      return <Redirect to={`/Portfolio/Stocks/${this.state.enterSearch}`} />
+    }
+
     return (
+      
       <Row style={{backgroundColor: '#1B1B1D'}}>
         <Col className='title' sm='2'>
           <NavLink to={'/Portfolio/Home'} style={{textDecoration: 'none'}}>
@@ -109,9 +124,9 @@ class NavBar extends Component {
         </Col>
         <Col style={{marginTop: '0.6em'}} className='blackBack' sm='4'>
           <div style={{marginBottom: '-20em'}} className='z-depth-5 blackBack'>
-            <FormInline className="md-form">
+            <FormInline onSubmit={this.handleEnterSearch} className="md-form">
               <Fa style={{color: 'whitesmoke'}} icon="search" />
-              <input id='search' value={this.state.search} onChange={this.findTickers} style={{zoom: '80%', color: 'whitesmoke'}} className="form-control form-control-sm ml-3 w-75" type="text" placeholder="Search" aria-label="Search"/>
+              <input id='search' value={this.state.search} onChange={this.findTickers} style={{zoom: '80%', color: 'whitesmoke'}} className="form-control form-control-sm ml-3 w-75 search" type="text" placeholder="Search" aria-label="Search"/>
             </FormInline>
 
           {stocks}
