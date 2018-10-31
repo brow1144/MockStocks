@@ -120,6 +120,15 @@ class CreateGame extends Component {
     let self = this;
     let gameId = self.generateId();
 
+    console.log(gameId)
+    console.log(self.state.game_name)
+    console.log(self.props.email)
+    console.log(self.state.starting_amount)
+    console.log(self.state.trade_limit)
+    console.log(self.state.startDate)
+    console.log(self.state.endDate)
+
+
     if (self.state.startDate < self.state.endDate) {
 
       axios.post(`https://portfolio-408-main.herokuapp.com/Portfol.io/Games`,

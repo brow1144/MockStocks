@@ -91,7 +91,7 @@ class Leaderboard extends Component {
       name: username
     })
 
-    if ((stockData).length < 1) {
+    if ((stockData).length < 3) {
       this.setState({visibleData: true})
     } else {
       this.setState({
