@@ -95,7 +95,11 @@ class NavBar extends Component {
 
   handleEnterSearch = (ev) => {
     ev.preventDefault();
-    this.setState({enterSearch: ev.target.search.value})
+    this.setState({
+      search: '',
+      tickersShowing: [],
+      enterSearch: ev.target.search.value
+    })
   }
 
   render() {
@@ -110,13 +114,21 @@ class NavBar extends Component {
       />
     );
 
-    if (this.state.enterSearch !== '' && this.state.enterSearch !== undefined && this.state.enterSearch !== null) {
-      return <Redirect to={`/Portfolio/Stocks/${this.state.enterSearch}`} />
-    }
+    // if (this.state.enterSearch !== '' && this.state.enterSearch !== undefined && this.state.enterSearch !== null) {
+    //   return <Redirect to={`/Portfolio/Stocks/${tmp}`} />
+    // }
 
     return (
       
       <Row style={{backgroundColor: '#1B1B1D'}}>
+        
+        {this.state.enterSearch !== '' && this.state.enterSearch !== undefined && this.state.enterSearch !== null
+            ?
+            <Redirect to={`/Portfolio/Stocks/${this.state.enterSearch}`} />
+            :
+            null
+        }
+        
         <Col className='title' sm='2'>
           <NavLink to={'/Portfolio/Home'} style={{textDecoration: 'none'}}>
             <b className='navText' style={{fontSize: '1em'}}>Portfol.io</b>
