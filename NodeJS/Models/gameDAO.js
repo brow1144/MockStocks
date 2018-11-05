@@ -263,6 +263,7 @@ export async function getTotalValues(gameCode) {
             }
 
             valueList.push({
+              uid: users[i]._id,
               username: users[i].username,
               totalAssets: totalValue,
               trade_count: game.trade_count

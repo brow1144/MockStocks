@@ -6,6 +6,10 @@ import {completeGame, getAllGames} from "../Models/gameDAO";
 import _ from 'lodash';
 
 export function runSchedules() {
+  let checkGames = schedule.scheduleJob('* * * * *', () => {
+    console.log('Scheduler: Checking active games.');
+    checkActiveGames();
+  });
   // *** Deactivated because the defect version is running ***
   /*
   // update portofolio values every weekday at 9:30 am
@@ -43,7 +47,9 @@ export const checkActiveGames = () => {
     .then((games) => {
       _.forEach(games, (game) => {
         if (game.end_time < new Date() && !game.completed) {
+          console.log(game);
           _.forEach(game.active_players, (player) => {
+            console.log(player);
             makeGameInactive(player, game);
           });
           completeGame(game.code);
