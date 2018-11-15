@@ -20,3 +20,7 @@ A safe learning environment for novice investors
 * [How to Run Portfol.io](https://docs.google.com/document/d/1k2_6HpVdeJ1OZEZ5cRR6tTSpyX3Nw49rAdoHdBaYSLM/edit?usp=sharing)
 
 * [Seeded-Defects Log](https://docs.google.com/document/d/198laQ9V0aCZa8Uk_it3T8iRmDzWzJJCP1p9wEi3me78/edit?usp=sharing)
+
+* [Phase 2 Test Plan](https://docs.google.com/document/d/1qk93YvCW9g9dSr6O5G10nQdWVw4OuSVEQXH2AVHLvSU/edit?usp=sharing)
+
+* [Phase 2 Defect Log](https://docs.google.com/document/d/1nl2fukRz0lFGpw23M5fKjGvWTadFXt4vGMv96lVlvfY/edit?usp=sharing)
