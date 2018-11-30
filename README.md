@@ -24,3 +24,5 @@ A safe learning environment for novice investors
 * [Phase 2 Test Plan](https://docs.google.com/document/d/1qk93YvCW9g9dSr6O5G10nQdWVw4OuSVEQXH2AVHLvSU/edit?usp=sharing)
 
 * [Phase 2 Defect Log](https://docs.google.com/document/d/1nl2fukRz0lFGpw23M5fKjGvWTadFXt4vGMv96lVlvfY/edit?usp=sharing)
+
+* [Phase 2 High Order Defect Log](https://docs.google.com/document/d/1MGsapnU-OYsbZ2fNnzkSRTbYPStjRppoRcsE2reIRJs/edit?usp=sharing)
